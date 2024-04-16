@@ -28,7 +28,7 @@ export interface IUser {
     role: string,
     firstName: string,
     lastName: string,
-    phoneNumber: string | null,
+    // phoneNumber: string | null,
     birthday: Date,
     gender: string,
     isBlocked: boolean,
