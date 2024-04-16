@@ -1,5 +1,5 @@
 import Button from '@mui/material/Button';
-import { styled, alpha } from '@mui/material/styles';
+import { styled } from '@mui/material/styles';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
@@ -8,8 +8,6 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Typography from '@mui/material/Typography';
 import { useNavigate } from "react-router-dom";
-
-const mainColor = '#FF7F50';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     '& .MuiDialogContent-root': {
@@ -23,7 +21,7 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
         backgroundColor: theme.palette.background.paper,
     },
     '& .MuiDialogTitle-root': {
-        backgroundColor: alpha(mainColor, 0.85),
+        backgroundColor: theme.palette.primary.main,
         color: theme.palette.primary.contrastText,
     },
     '& .MuiPaper-root': {
@@ -73,7 +71,7 @@ export default function CustomizedDialogs(props: CustomizedDialogsProps) {
                 </Typography>
             </DialogContent>
             <DialogActions>
-                <Button autoFocus onClick={handleClose} variant="contained" color="primary" sx={{ backgroundColor: mainColor }}>
+                <Button autoFocus onClick={handleClose} variant="contained" color="primary">
                     Ok
                 </Button>
             </DialogActions>
