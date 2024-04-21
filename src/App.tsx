@@ -1,11 +1,12 @@
-import './App.css'
+import { Route, Routes } from 'react-router-dom';
+import RealtorRegisterPage from './pages/account/register/RegisterPage';
 
-function App() {
-    return (
-      <>
+const App = () => {
+   return (
+      <Routes>
+         <Route path="*" element={<RealtorRegisterPage />} />
+      </Routes>
+   );
+};
 
-      </>
-    );
-}
-
-export default App
+export default App;
