@@ -1,6 +1,6 @@
 import { Status } from "../../utils/enum";
 
-export interface IUserRegister {
+export interface IRegisterModel {
    firstName: string,
    lastName: string,
    email: string,

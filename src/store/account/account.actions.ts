@@ -1,19 +1,19 @@
-import {createAsyncThunk} from "@reduxjs/toolkit";
-import {apiClient} from "../../utils/api/apiClient.ts";
-import {handleAxiosError} from "../../utils/error";
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import { apiClient } from "../../utils/api/apiClient.ts";
+import { handleAxiosError } from "../../utils/error";
 import {
-    IUserRegister,
+    IRegisterModel,
     IConfirmEmail,
     ILogin,
     IChangeEmail,
     IForgotPassword,
     IResetPassword
 } from "../../interfaces/account";
-import {AxiosRequestConfig} from "axios";
+import { AxiosRequestConfig } from "axios";
 
-export const userRegister = createAsyncThunk (
+export const userRegister = createAsyncThunk(
     'Authentication/register',
-    async(payload: IUserRegister, {rejectWithValue}) => {
+    async (payload: IRegisterModel, { rejectWithValue }) => {
         try {
             const response = await apiClient.post('/api/Authentication/register', payload);
             return response.status;
@@ -39,9 +39,9 @@ export const confirmEmail = createAsyncThunk(
     },
 );
 
-export const login = createAsyncThunk (
+export const login = createAsyncThunk(
     'Authentication/login',
-    async(payload: ILogin, { rejectWithValue }) => {
+    async (payload: ILogin, { rejectWithValue }) => {
         try {
             const response = await apiClient.post('/api/Authentication/login', payload);
             return response.data;
@@ -53,7 +53,7 @@ export const login = createAsyncThunk (
 
 export const changeEmail = createAsyncThunk(
     'Authentication/change-email',
-    async(payload: IChangeEmail, {rejectWithValue}) => {
+    async (payload: IChangeEmail, { rejectWithValue }) => {
         try {
             console.log("payload ", payload)
 
@@ -70,9 +70,9 @@ export const changeEmail = createAsyncThunk(
     },
 );
 
-export const forgotPassword = createAsyncThunk (
+export const forgotPassword = createAsyncThunk(
     'Authentication/forgot-password',
-    async (payload: IForgotPassword, {rejectWithValue}) => {
+    async (payload: IForgotPassword, { rejectWithValue }) => {
         try {
             const response = await apiClient.post('/api/Authentication/forgot-password', payload);
 
@@ -85,7 +85,7 @@ export const forgotPassword = createAsyncThunk (
 
 export const resetPassword = createAsyncThunk(
     'Authentication/reset-password',
-    async (payload : IResetPassword, { rejectWithValue }) => {
+    async (payload: IResetPassword, { rejectWithValue }) => {
         try {
             const response = await apiClient.post('/api/Authentication/reset-password', payload);
 
