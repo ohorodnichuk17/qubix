@@ -2,6 +2,8 @@ import { Route, Routes } from 'react-router-dom';
 import RegisterPage from './components/pages/RegisterPage/RegisterPage';
 import { ConfigProvider } from 'antd';
 import LoginPage from './components/pages/LoginPage/LoginPage';
+import ForgotPasswordPage from './components/pages/ForgotPasswordPage/ForgotPasswordPage';
+import ChangeEmailPage from './components/pages/ChangeEmailPage/ChangeEmailPage';
 
 const App = () => {
    return (
@@ -47,6 +49,8 @@ const App = () => {
          <Routes>
             <Route index element={<RegisterPage />} />
             <Route path='login' element={<LoginPage />} />
+            <Route path='forgot-password' element={<ForgotPasswordPage />} />
+            <Route path='change-email' element={<ChangeEmailPage />} />
          </Routes>
       </ConfigProvider>
    );
