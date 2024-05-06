@@ -44,7 +44,9 @@ export const login = createAsyncThunk(
     async (payload: ILogin, { rejectWithValue }) => {
         try {
             const response = await apiClient.post('/api/Authentication/login', payload);
-            return response.data;
+            console.log("response.data in login thunk: ", response.data);
+            
+            return response.data.token;
         } catch (error) {
             return rejectWithValue(handleAxiosError(error, 'Error'));
         }

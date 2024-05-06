@@ -20,7 +20,7 @@ const LoginPage: React.FC = () => {
    }
 
    return (
-      <Flex justify='center' align='center' wrap='wrap' gap={30} style={{ minHeight: '100vh' }}>
+      <Flex justify='center' align='center' wrap='wrap' gap={30} style={{ minHeight: '80vh' }}>
          <div style={{ marginRight: '50px' }}>
             <h1 style={{ color: '#FF7F50', fontFamily: 'Lilita One', fontSize: 48 }}>Quilt</h1>
             <p style={{ fontFamily: 'Lilita One', fontWeight: 'bold', fontSize: 24 }}>

@@ -21,22 +21,3 @@
 .ant-radio-wrapper:focus-within input[type="radio"]:not(:checked)+.ant-radio-inner::after {
     background-color: #FFA07A;
 }
-
-.logo-container {
-   position: absolute;
-   top: 0;
-   left: 0;
- }
-
- @media only screen and (max-width: 768px) {
-   .register-page {
-     min-height: 150vh; 
-   }
- }
- 
- @media only screen and (min-width: 769px) {
-   .register-page {
-     min-height: 115vh; 
-   }
- }
- 

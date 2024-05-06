@@ -7,7 +7,6 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import './RegisterPage.css';
 import avatar from '../../../assets/avatar.png';
-import Logo from '../../common/Logo.tsx';
 
 const { Link } = Typography;
 
@@ -42,12 +41,6 @@ const RegisterPage = () => {
    const onFinish = (values: IRegisterModel) => {
       const formData = new FormData();
 
-      Object.keys(values).forEach(key => {
-         if (values[key] !== undefined) {
-            formData.append(key, values[key]);
-         }
-      });
-
       axios.post('http://localhost:5181/api/Authentication/register', formData, {
          headers: {
             'Content-Type': 'multipart/form-data'
@@ -77,9 +70,6 @@ const RegisterPage = () => {
 
    return (
       <Row justify="center" align="middle" className="register-page">
-         <div className="logo-container">
-            <Logo />
-         </div>
          {/*<Col xs={24} sm={20} md={16} lg={12} xl={8}>*/}
          <Col xs={24} sm={20} md={16} lg={14} xl={12}>
 

@@ -4,6 +4,8 @@ import { ConfigProvider } from 'antd';
 import LoginPage from './components/pages/LoginPage/LoginPage';
 import ForgotPasswordPage from './components/pages/ForgotPasswordPage/ForgotPasswordPage';
 import ChangeEmailPage from './components/pages/ChangeEmailPage/ChangeEmailPage';
+import ResetPasswordPage from './components/pages/ResetPasswordPage/ResetPasswordPage';
+import ContainerDefault from './components/containers/ContainerDefault';
 
 const App = () => {
    return (
@@ -17,19 +19,19 @@ const App = () => {
                   defaultBg: '#FF7F50',
                   defaultHoverBg: '#FFA07A',
                   defaultActiveBg: '#FF6347',
-                  colorText: 'black',
-                  defaultColor: 'black',
-                  defaultHoverColor: 'black',
-                  defaultActiveColor: 'black',
-                  colorPrimaryActive: 'black',
+                  colorText: 'white',
+                  defaultColor: 'white',
+                  defaultHoverColor: 'white',
+                  defaultActiveColor: 'white',
+                  colorPrimaryActive: 'white',
                   defaultBorderColor: '#FF7F50',
                   defaultHoverBorderColor: '#FFA07A',
 
                   colorPrimaryBg: '#FF7F50',
-                  colorPrimaryText: 'black',
+                  colorPrimaryText: 'white',
 
-                  primaryColor: 'black',
-                  colorBgMask: 'black',
+                  primaryColor: 'white',
+                  colorBgMask: 'white',
                   colorPrimaryBorder: '#FF7F50',
                   colorPrimaryBorderHover: '#FFA07A',
                   colorPrimaryHover: '#FFA07A',
@@ -47,10 +49,13 @@ const App = () => {
       >
 
          <Routes>
-            <Route index element={<RegisterPage />} />
-            <Route path='login' element={<LoginPage />} />
-            <Route path='forgot-password' element={<ForgotPasswordPage />} />
-            <Route path='change-email' element={<ChangeEmailPage />} />
+            <Route path='/' element={<ContainerDefault />}>
+               <Route path='login' element={<LoginPage />} />
+               <Route path='register' element={<RegisterPage />} />
+               <Route path='forgot-password' element={<ForgotPasswordPage />} />
+               <Route path='reset-password' element={<ResetPasswordPage />} />
+               <Route path='change-email' element={<ChangeEmailPage />} />
+            </Route>
          </Routes>
       </ConfigProvider>
    );
