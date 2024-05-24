@@ -14,6 +14,7 @@ const ContainerDefault = () => {
                </Content>
             </Layout>
          </Content>
+         
          <Footer style={{ textAlign: 'center', position: 'fixed', bottom: "0", right: "0", left: "0", backgroundColor: '#f0f2f5', color: '#000', borderTop: '1px solid #e8e8e8' }}>
             Diploma Work "Quilt" ©2024 Crafted with ❤ by Quilt team
          </Footer>

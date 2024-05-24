@@ -6,6 +6,9 @@ import ForgotPasswordPage from './components/pages/ForgotPasswordPage/ForgotPass
 import ChangeEmailPage from './components/pages/ChangeEmailPage/ChangeEmailPage';
 import ResetPasswordPage from './components/pages/ResetPasswordPage/ResetPasswordPage';
 import ContainerDefault from './components/containers/ContainerDefault';
+import SetNewPasswordPage from './components/pages/SetNewPasswordPage/SetNewPasswordPage';
+import EmailSuccessfullyConfirmedPage from './components/pages/EmailSuccessfullyConfirmedPage/EmailSuccessfullyConfirmedPage';
+import EmailConfirmationRequired from './components/pages/EmailConfirmationRequired/EmailConfirmationRequired';
 
 const App = () => {
    return (
@@ -55,6 +58,9 @@ const App = () => {
                <Route path='forgot-password' element={<ForgotPasswordPage />} />
                <Route path='reset-password' element={<ResetPasswordPage />} />
                <Route path='change-email' element={<ChangeEmailPage />} />
+               <Route path='set-new-password' element={<SetNewPasswordPage />} />
+               <Route path='email-confirmed' element={<EmailSuccessfullyConfirmedPage />} />
+               <Route path='email-confirmation-required' element={<EmailConfirmationRequired />} />
             </Route>
          </Routes>
       </ConfigProvider>

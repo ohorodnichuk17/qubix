@@ -1,23 +1,26 @@
 import React from 'react';
 import { Form, Input, Button, Flex, Card, Divider } from 'antd';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { LockOutlined, MailOutlined } from '@ant-design/icons';
-import axios from 'axios';
 import './LoginPage.css';
+import { useAppDispatch } from '../../../hooks/redux';
+import { login } from '../../../store/account/account.actions';
+import { unwrapResult } from '@reduxjs/toolkit';
 
 const LoginPage: React.FC = () => {
+   const navigate = useNavigate();
+   const dispatch = useAppDispatch();
 
-   const onFinish = (values: any) => {
-      console.log(values);
-
-      axios.post('http://localhost:5181/api/Authentication/login', values)
-         .then(res => {
-            console.log(res);
-         })
-         .catch(error => {
-            console.error(error);
-         })
-   }
+   const onFinish = async (values: any) => {
+      try {
+         const response = await dispatch(login(values));
+         console.log(response)
+         unwrapResult(response);
+         navigate('/');
+      } catch (error) {
+         console.log(error);
+      }
+   };
 
    return (
       <Flex justify='center' align='center' wrap='wrap' gap={30} style={{ minHeight: '80vh' }}>

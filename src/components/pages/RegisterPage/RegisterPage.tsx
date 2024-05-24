@@ -296,7 +296,10 @@ const RegisterPage = () => {
 
 
                      <Form.Item>
-                        <Button htmlType="submit" style={{ width: '100%' }}>
+                        {/*<Button htmlType="submit" style={{ width: '100%' }}>
+                           Register
+                        </Button>*/}
+                        <Button href='/email-confirmation-required' style={{ width: '100%' }}>
                            Register
                         </Button>
                      </Form.Item>
