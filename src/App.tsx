@@ -9,6 +9,8 @@ import ContainerDefault from './components/containers/ContainerDefault';
 import SetNewPasswordPage from './components/pages/SetNewPasswordPage/SetNewPasswordPage';
 import EmailSuccessfullyConfirmedPage from './components/pages/EmailSuccessfullyConfirmedPage/EmailSuccessfullyConfirmedPage';
 import EmailConfirmationRequired from './components/pages/EmailConfirmationRequired/EmailConfirmationRequired';
+import { CreateStoryPage } from './components/pages/Story/CreateStoryPage/CreateStoryPage';
+// import CreateStoryPage from "./components/pages/Story/CreateStoryPage/some";
 
 const App = () => {
    return (
@@ -61,6 +63,10 @@ const App = () => {
                <Route path='set-new-password' element={<SetNewPasswordPage />} />
                <Route path='email-confirmed' element={<EmailSuccessfullyConfirmedPage />} />
                <Route path='email-confirmation-required' element={<EmailConfirmationRequired />} />
+
+               <Route path='story'>
+                  <Route index element={<CreateStoryPage />} />
+               </Route>
             </Route>
          </Routes>
       </ConfigProvider>

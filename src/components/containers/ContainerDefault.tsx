@@ -8,7 +8,7 @@ const ContainerDefault = () => {
       <Layout style={{ height: '100vh' }}>
          <HeaderDefault />
          <Content style={{ padding: '0 48px' }}>
-            <Layout style={{ padding: '24px 0' }}>
+            <Layout style={{ padding: '24px 0',height:'100%' }}>
                <Content style={{ padding: '0 24px', minHeight: 280 }}>
                   <Outlet />
                </Content>
