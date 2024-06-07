@@ -55,3 +55,18 @@
 .minimalist-button:hover {
    color: #FF7F50;
 }
+
+@media (max-width: 768px) {
+   .header-text {
+      display: none;
+   }
+
+   .minimalist-button {
+      display: none;
+   }
+
+   .minimalist-button.login,
+   .minimalist-button.register {
+      display: inline-block;
+   }
+}

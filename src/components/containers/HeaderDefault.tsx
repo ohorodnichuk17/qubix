@@ -68,12 +68,12 @@ const HeaderDefault = () => {
          ) : (
             <div style={{ display: 'flex', gap: '20px' }}>
                <Link to="/login" style={{ color: '#FFFAFA', textDecoration: 'none' }}>
-                  <Button icon={<UserOutlined />} className="minimalist-button">
+                  <Button icon={<UserOutlined />} className="minimalist-button login">
                      Login
                   </Button>
                </Link>
                <Link to="/register" style={{ color: '#FFFAFA', textDecoration: 'none' }}>
-                  <Button icon={<UserAddOutlined />} className="minimalist-button">
+                  <Button icon={<UserAddOutlined />} className="minimalist-button register">
                      Register
                   </Button>
                </Link>
