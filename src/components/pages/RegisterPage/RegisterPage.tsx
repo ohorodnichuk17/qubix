@@ -82,7 +82,6 @@ const RegisterPage = () => {
 
             <Space direction="vertical" size="large" style={{ width: '100%' }}>
 
-
                <Card>
                   <Flex justify='center'>
                      {previewImage && (
@@ -308,9 +307,10 @@ const RegisterPage = () => {
                         </Button>
                      </Form.Item>
                   </Form>
+                  <Link href="/authentication/login" style={{ color: '#FF7F50', textDecoration: 'none' }}>Already have an account? <span style={{ color: '#FF6347' }}>Sign in</span></Link>
                </Card>
 
-               <Link href="/authentication/login" style={{ color: '#FF7F50', textDecoration: 'none' }}>Already have an account? <span style={{ color: '#FF6347' }}>Sign in</span></Link>
+
             </Space>
          </Col>
       </Row>
