@@ -30,7 +30,7 @@ export const CreateStoryPage = () => {
         const formData = new FormData();
         formData.append("Content", "some content");
         formData.append("Image", story as Blob);
-        formData.append("UserId", account.token ?? '');
+        formData.append("UserId", account.user?.id ?? '');
 
         apiClient.post('http://localhost:5181/api/Story/create', formData)
             .then((res) => {
