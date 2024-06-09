@@ -1,5 +1,5 @@
 import { PlusOutlined } from "@ant-design/icons";
-import { Upload, Slider, UploadFile, UploadProps } from "antd";
+import { Upload, Slider, UploadFile, UploadProps, Collapse } from "antd";
 import { RcFile } from "antd/es/upload";
 import { useState } from "react";
 
@@ -28,25 +28,31 @@ const ImageStorySettings = ({ setImage, handleImageWidthChange, handleImageRotat
         handleImageChange(newFileList.length > 0 ? newFileList[0] : null);
     };
     return (
-        <>
-            <Upload
-                showUploadList={{ showPreviewIcon: false }}
-                fileList={fileList}
-                onChange={handleImageFileListChange}
-                beforeUpload={() => false}
-                accept="image/*"
-                listType="picture-card"
-                maxCount={1}>
-                <div>
-                    <PlusOutlined />
-                    <div style={{ marginTop: 8 }}>Upload</div>
-                </div>
-            </Upload>
-            <p>Scale: </p>
-            <Slider defaultValue={30} onChange={handleImageWidthChange} min={0} max={500} />
-            <p>Rotate: </p>
-            <Slider defaultValue={30} onChange={handleImageRotateChange} min={0} max={360} />
-        </>
+        <Collapse items={[
+            {
+                key: '1',
+                label: 'Image settings',
+                children: <>
+                    <Upload
+                        showUploadList={{ showPreviewIcon: false }}
+                        fileList={fileList}
+                        onChange={handleImageFileListChange}
+                        beforeUpload={() => false}
+                        accept="image/*"
+                        listType="picture-card"
+                        maxCount={1}>
+                        <div>
+                            <PlusOutlined />
+                            <div style={{ marginTop: 8 }}>Upload</div>
+                        </div>
+                    </Upload>
+                    <p>Scale: </p>
+                    <Slider defaultValue={30} onChange={handleImageWidthChange} min={0} max={500} />
+                    <p>Rotate: </p>
+                    <Slider defaultValue={30} onChange={handleImageRotateChange} min={0} max={360} />
+                </>
+            }]} style={{ maxWidth: '250px' }} />
+
     );
 }
 

@@ -47,34 +47,44 @@ export const CreateStoryPage = () => {
 
     return (
         <Flex style={{ height: '100%' }} gap="middle">
-            <Card style={{ overflow: 'scroll' }}>
-                <Card>
-                    <Flex justify="space-between" align="center">
-                        <p>Your story</p>
-                        <div className="settings-icon-div">
-                            <img src={settingsIcon} alt="Settings icon" />
-                        </div>
-                    </Flex>
-                    <Flex className="avatar-div">
-                        <img src={defaultAvatar} alt="User avatar image" />
-                        <p>{account.user?.firstName + ' ' + account.user?.lastName}</p>
-                    </Flex>
-                </Card>
+            <Card style={{ overflow: 'auto' }}>
+                <Flex style={{ height: '100%' }} vertical justify="space-between">
 
-                {storyType == "image" && (
-                    <ImageStorySettings setImage={setImage}
-                        handleImageWidthChange={handleImageWidthChange}
-                        handleImageRotateChange={handleImageRotateChange} />
-                )}
-                {storyType != null && (
-                    <>
-                        <BackgroundSelect setBackground={setBackground}/>
+
+                    <Flex vertical>
+                    <Card>
+                        <Flex justify="space-between" align="center">
+                            <p>Your story</p>
+                            <div className="settings-icon-div">
+                                <img src={settingsIcon} alt="Settings icon" />
+                            </div>
+                        </Flex>
+                        <Flex className="avatar-div">
+                            <img src={defaultAvatar} alt="User avatar image" />
+                            <p>{account.user?.firstName + ' ' + account.user?.lastName}</p>
+                        </Flex>
+                    </Card>
+
+                    {storyType != null && (
+                        <>
+                        {storyType == "image" && (
+                            <ImageStorySettings setImage={setImage}
+                            handleImageWidthChange={handleImageWidthChange}
+                            handleImageRotateChange={handleImageRotateChange} />
+                        )}
+                            <BackgroundSelect setBackground={setBackground} />
+                        </>
+                        )}
+                        </Flex>
+
+
+                    {storyType != null && (
                         <Flex gap="small">
                             <Button className="gray-button" onClick={() => setStoryType(null)}>Cancel</Button>
                             <Button onClick={postStory}>Share</Button>
                         </Flex>
-                    </>
-                )}
+                    )}
+                </Flex>
             </Card>
 
             {storyType == null && (
