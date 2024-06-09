@@ -5,8 +5,7 @@ import ButtonGroup from "antd/es/button/button-group";
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { logout } from '../../store/account/account.slice';
 import './css/HeaderDefault.css';
-
-import logo from '../../assets/logotype.png'
+import logo from '../../assets/logotype.png';
 
 const { Header } = Layout;
 
@@ -23,11 +22,17 @@ const HeaderDefault = () => {
          label: <Link to={`/`}>Quilt</Link>,
          key: 'mail',
       }
-   ]
+   ];
 
    return (
-      <Header style={{ display: 'flex', alignItems: 'center', backgroundColor: 'transparent' }}>
-         <img src={logo} alt='logo' style={{ width: 40 }} />
+      <Header className="custom-header">
+         <div className="header-gradient">
+            <img src={logo} alt="logo" className="header-logo" />
+            <div className="header-text">
+               <span className='header-text-regular'>This is</span>
+               <span className="header-text-bold">Quilt</span>
+            </div>
+         </div>
          <Menu
             theme="light"
             mode="horizontal"
@@ -67,13 +72,13 @@ const HeaderDefault = () => {
             </ButtonGroup>
          ) : (
             <div style={{ display: 'flex', gap: '20px' }}>
-               <Link to="/login" style={{ color: 'white', textDecoration: 'none' }}>
-                  <Button icon={<UserOutlined />} className="minimalist-button">
+               <Link to="/login" style={{ color: '#FFFAFA', textDecoration: 'none' }}>
+                  <Button icon={<UserOutlined />} className="minimalist-button login">
                      Login
                   </Button>
                </Link>
-               <Link to="/register" style={{ color: 'white', textDecoration: 'none' }}>
-                  <Button icon={<UserAddOutlined />} className="minimalist-button">
+               <Link to="/register" style={{ color: '#FFFAFA', textDecoration: 'none' }}>
+                  <Button icon={<UserAddOutlined />} className="minimalist-button register">
                      Register
                   </Button>
                </Link>
