@@ -9,12 +9,14 @@ import useCapture from "./hooks/useCapture";
 import SelectStoryType from "./components/SelectStoryType";
 import { useAppSelector } from "../../../../hooks/redux";
 import ImageStoryPreview from "./components/ImageStoryPreview";
+import BackgroundSelect from "./components/BackgroundSelect";
 
 export const CreateStoryPage = () => {
     const account = useAppSelector(state => state.account);
 
     const [storyType, setStoryType] = useState<"image" | "text" | null>(null);
     const [image, setImage] = useState<string>();
+    const [background, setBackground] = useState<string>('gray');
 
     const [width, setWidth] = useState<number>(30);
     const [rotate, setRotate] = useState<number>(0);
@@ -45,7 +47,7 @@ export const CreateStoryPage = () => {
 
     return (
         <Flex style={{ height: '100%' }} gap="middle">
-            <Card>
+            <Card style={{ overflow: 'scroll' }}>
                 <Card>
                     <Flex justify="space-between" align="center">
                         <p>Your story</p>
@@ -65,10 +67,13 @@ export const CreateStoryPage = () => {
                         handleImageRotateChange={handleImageRotateChange} />
                 )}
                 {storyType != null && (
-                    <Flex gap="small">
-                        <Button className="gray-button" onClick={() => setStoryType(null)}>Cancel</Button>
-                        <Button onClick={postStory}>Share</Button>
-                    </Flex>
+                    <>
+                        <BackgroundSelect setBackground={setBackground}/>
+                        <Flex gap="small">
+                            <Button className="gray-button" onClick={() => setStoryType(null)}>Cancel</Button>
+                            <Button onClick={postStory}>Share</Button>
+                        </Flex>
+                    </>
                 )}
             </Card>
 
@@ -77,7 +82,9 @@ export const CreateStoryPage = () => {
             )}
 
             {storyType == "image" && (
-                <ImageStoryPreview image={image}
+                <ImageStoryPreview
+                    image={image}
+                    background={background}
                     width={width}
                     rotate={rotate}
                     captureAreaRef={captureAreaRef} />
