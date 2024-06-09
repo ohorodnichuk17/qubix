@@ -2,13 +2,13 @@ import { Button, Card, Flex, message } from "antd";
 import settingsIcon from "../../../../assets/story/settings.png";
 import defaultAvatar from "../../../../assets/avatar.png";
 import { useState } from "react";
-import Draggable from 'react-draggable';
 import './CreateStoryPage.css'
 import { apiClient } from "../../../../utils/api/apiClient";
 import ImageStorySettings from "./components/ImageStorySettings";
 import useCapture from "./hooks/useCapture";
 import SelectStoryType from "./components/SelectStoryType";
 import { useAppSelector } from "../../../../hooks/redux";
+import ImageStoryPreview from "./components/ImageStoryPreview";
 
 export const CreateStoryPage = () => {
     const account = useAppSelector(state => state.account);
@@ -77,17 +77,10 @@ export const CreateStoryPage = () => {
             )}
 
             {storyType == "image" && (
-                <Card title="Preview" style={{ width: '100%' }}>
-                    <div className="preview-div">
-                        <div ref={captureAreaRef}>
-                            <div className="preview-div-bordered" >
-                                <Draggable>
-                                    <img alt="Your story image" style={{ width: `${width}%`, rotate: `${rotate}deg` }} src={image} />
-                                </Draggable>
-                            </div>
-                        </div>
-                    </div>
-                </Card>
+                <ImageStoryPreview image={image}
+                    width={width}
+                    rotate={rotate}
+                    captureAreaRef={captureAreaRef} />
             )}
 
             {storyType == "text" && (
