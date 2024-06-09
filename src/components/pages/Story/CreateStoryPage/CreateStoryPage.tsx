@@ -8,8 +8,11 @@ import { apiClient } from "../../../../utils/api/apiClient";
 import ImageStorySettings from "./components/ImageStorySettings";
 import useCapture from "./hooks/useCapture";
 import SelectStoryType from "./components/SelectStoryType";
+import { useAppSelector } from "../../../../hooks/redux";
 
 export const CreateStoryPage = () => {
+    const account = useAppSelector(state => state.account);
+
     const [storyType, setStoryType] = useState<"image" | "text" | null>(null);
     const [image, setImage] = useState<string>();
 
@@ -27,7 +30,7 @@ export const CreateStoryPage = () => {
         const formData = new FormData();
         formData.append("Content", "some content");
         formData.append("Image", story as Blob);
-        formData.append("UserId", "f3b6493d-7b03-444f-90f4-603334d0e8a8");
+        formData.append("UserId", account.token ?? '');
 
         apiClient.post('http://localhost:5181/api/Story/create', formData)
             .then((res) => {
@@ -52,7 +55,7 @@ export const CreateStoryPage = () => {
                     </Flex>
                     <Flex className="avatar-div">
                         <img src={defaultAvatar} alt="User avatar image" />
-                        <p>Username</p>
+                        <p>{account.user?.firstName + ' ' + account.user?.lastName}</p>
                     </Flex>
                 </Card>
 
