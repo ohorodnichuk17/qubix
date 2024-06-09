@@ -41,6 +41,11 @@ const HeaderDefault = () => {
                <Button className="minimalist-button">
                   {`${user?.firstName} ${user?.lastName}`}
                </Button>
+               <Button>
+                  <Link to="/story">
+                     Create story
+                  </Link>
+               </Button>
                <Button type='link' onClick={() => handleLogout()} className="minimalist-button">
                   Logout
                </Button>

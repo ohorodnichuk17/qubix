@@ -110,3 +110,8 @@
     height: 100%!important;
     width: 100%!important;
 }
+
+.gray-button{
+    background-color: gray;
+    border-color: gray;
+}

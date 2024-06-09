@@ -1,45 +1,45 @@
-import { Card, Flex, Slider, Upload } from "antd";
-import imageStoryIcon from "../../../../assets/story/image_story_icon.png";
-import textStoryIcon from "../../../../assets/story/text_story_icon.png";
+import { Button, Card, Flex, message } from "antd";
 import settingsIcon from "../../../../assets/story/settings.png";
 import defaultAvatar from "../../../../assets/avatar.png";
-import { useEffect, useState } from "react";
-import { PlusOutlined } from "@ant-design/icons";
-import { RcFile, UploadFile, UploadProps } from "antd/es/upload";
+import { useState } from "react";
 import Draggable from 'react-draggable';
 import './CreateStoryPage.css'
+import { apiClient } from "../../../../utils/api/apiClient";
+import ImageStorySettings from "./components/ImageStorySettings";
+import useCapture from "./hooks/useCapture";
+import SelectStoryType from "./components/SelectStoryType";
 
 export const CreateStoryPage = () => {
     const [storyType, setStoryType] = useState<"image" | "text" | null>(null);
-    const [fileList, setFileList] = useState<UploadFile[]>();
     const [image, setImage] = useState<string>();
+
     const [width, setWidth] = useState<number>(30);
+    const [rotate, setRotate] = useState<number>(0);
 
-    const onChange = (value: number) => {
-        console.log('onChange: ', value);
-        setWidth(value);
-    };
+    const { captureAreaRef, getCapture } = useCapture();
 
+    const handleImageWidthChange = (value: number) => setWidth(value);
+    const handleImageRotateChange = (value: number) => setRotate(value);
 
-    useEffect(() => {
-        console.log(storyType);
-    }, [storyType]);
+    const postStory = async () => {
+        const story = await getCapture();
 
-    const handleImageChange = (file: UploadFile | null) => {
-        if (!file) {
-            setImage(undefined);
-            return;
-        }
-        if (!file.url && !file.preview) {
-            file.preview = URL.createObjectURL(file.originFileObj as RcFile);
-        }
-        setImage(file.url || (file.preview as string));
-    };
+        const formData = new FormData();
+        formData.append("Content", "some content");
+        formData.append("Image", story as Blob);
+        formData.append("UserId", "f3b6493d-7b03-444f-90f4-603334d0e8a8");
 
-    const handleImageFileListChange: UploadProps['onChange'] = ({ fileList: newFileList }) => {
-        setFileList(newFileList);
-        handleImageChange(newFileList.length > 0 ? newFileList[0] : null);
-    };
+        apiClient.post('http://localhost:5181/api/Story/create', formData)
+            .then((res) => {
+                console.log(res)
+                message.success("Story successfully posted!");
+            })
+            .catch((error) => {
+                console.log(error);
+                message.error("Post story error!")
+            })
+    }
+
     return (
         <Flex style={{ height: '100%' }} gap="middle">
             <Card>
@@ -56,51 +56,32 @@ export const CreateStoryPage = () => {
                     </Flex>
                 </Card>
 
+                {storyType == "image" && (
+                    <ImageStorySettings setImage={setImage}
+                        handleImageWidthChange={handleImageWidthChange}
+                        handleImageRotateChange={handleImageRotateChange} />
+                )}
                 {storyType != null && (
-                    <>
-                        <Upload
-                            showUploadList={{ showPreviewIcon: false }}
-                            fileList={fileList}
-                            onChange={handleImageFileListChange}
-                            beforeUpload={() => false}
-                            accept="image/*"
-                            listType="picture-card"
-                            maxCount={1}>
-                            <div>
-                                <PlusOutlined />
-                                <div style={{ marginTop: 8 }}>Upload</div>
-                            </div>
-                        </Upload>
-                        <Slider defaultValue={30} onChange={onChange} min={0} max={500}/>
-                    </>
+                    <Flex gap="small">
+                        <Button className="gray-button" onClick={() => setStoryType(null)}>Cancel</Button>
+                        <Button onClick={postStory}>Share</Button>
+                    </Flex>
                 )}
             </Card>
 
             {storyType == null && (
-                <>
-                    <div className="create-story-div" onClick={() => setStoryType("image")}>
-                        <div className="create-story-image-div">
-                            <img src={imageStoryIcon} alt="Create story with image icon" />
-                        </div>
-                        <p className="create-story-label">Create story with photo</p>
-                    </div>
-                    <div className="create-story-div" onClick={() => setStoryType("text")}>
-                        <div className="create-story-image-div">
-                            <img src={textStoryIcon} alt="Create story with text icon" />
-                        </div>
-                        <p className="create-story-label">Create text story</p>
-                    </div>
-                </>
+                <SelectStoryType setStoryType={setStoryType} />
             )}
 
             {storyType == "image" && (
                 <Card title="Preview" style={{ width: '100%' }}>
                     <div className="preview-div">
-                        <div className="preview-div-bordered">
-                            <Draggable>
-                                <img alt="Category or product image" style={{ width: `${width}%` }} src={image} />
-                            </Draggable>
-                            123
+                        <div ref={captureAreaRef}>
+                            <div className="preview-div-bordered" >
+                                <Draggable>
+                                    <img alt="Your story image" style={{ width: `${width}%`, rotate: `${rotate}deg` }} src={image} />
+                                </Draggable>
+                            </div>
                         </div>
                     </div>
                 </Card>
