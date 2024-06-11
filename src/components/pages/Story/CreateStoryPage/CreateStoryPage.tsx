@@ -8,10 +8,9 @@ import ImageStorySettings from "./components/ImageStorySettings";
 import useCapture from "./hooks/useCapture";
 import SelectStoryType from "./components/SelectStoryType";
 import { useAppSelector } from "../../../../hooks/redux";
-import ImageStoryPreview from "./components/ImageStoryPreview";
 import BackgroundSelect from "./components/BackgroundSelect";
 import TextSettingsCollapce from "./components/TextSettingsCollapce";
-import TextStoryPreview from "./components/TextStoryPreview";
+import StoryPreview from "./components/StoryPreview";
 
 export const CreateStoryPage = () => {
     const account = useAppSelector(state => state.account);
@@ -108,23 +107,18 @@ export const CreateStoryPage = () => {
                 <SelectStoryType setStoryType={setStoryType} />
             )}
 
-            {storyType == "image" && (
-                <ImageStoryPreview
+            {storyType != null && (
+                <StoryPreview
+                    storyType={storyType}
                     image={image}
                     text={text}
+                    textFontSize={textFontSize}
                     textColorString={textColorString}
                     background={background}
                     width={width}
                     rotate={rotate}
-                    captureAreaRef={captureAreaRef} />
-            )}
-
-            {storyType == "text" && (
-                <TextStoryPreview text={text}
-                    textColorString={textColorString}
-                    textFontSize={textFontSize}
-                    background={background}
-                    captureAreaRef={captureAreaRef} />
+                    captureAreaRef={captureAreaRef}
+                />
             )}
         </Flex>
     );
