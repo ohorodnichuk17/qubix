@@ -11,11 +11,12 @@ import { useAppSelector } from "../../../../hooks/redux";
 import BackgroundSelect from "./components/BackgroundSelect";
 import TextSettingsCollapce from "./components/TextSettingsCollapce";
 import StoryPreview from "./components/StoryPreview";
+import { StoryType } from "./types";
 
 export const CreateStoryPage = () => {
     const account = useAppSelector(state => state.account);
 
-    const [storyType, setStoryType] = useState<"image" | "text" | null>(null);
+    const [storyType, setStoryType] = useState<StoryType | null>(null);
     const [image, setImage] = useState<string>();
     const [text, setText] = useState<string>();
     const [textFontSize, setTextFontSize] = useState<string>('16');

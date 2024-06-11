@@ -1,11 +1,12 @@
 import { message } from "antd";
 import { useRef } from "react";
 import domtoimage from 'dom-to-image';
+import { StoryType } from "../types";
 
 const useCapture = () => {
     const captureAreaRef = useRef(null);
 
-    const getCapture = async (storyType: "image" | "text") => {
+    const getCapture = async (storyType: StoryType) => {
         if (captureAreaRef.current == null) {
             message.error("Create story error!");
             return null;

@@ -1,8 +1,9 @@
 import { Card, Flex } from "antd";
 import Draggable from 'react-draggable';
+import { StoryType } from "../types";
 
 type StoryPreviewProps = {
-    storyType: "image" | "text"
+    storyType: StoryType
     width: number;
     rotate: number;
     image: string | undefined;

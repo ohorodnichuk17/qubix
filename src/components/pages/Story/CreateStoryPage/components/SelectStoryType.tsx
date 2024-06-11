@@ -1,9 +1,10 @@
 
 import imageStoryIcon from "../../../../../assets/story/image_story_icon.png";
 import textStoryIcon from "../../../../../assets/story/text_story_icon.png";
+import { StoryType } from "../types";
 
 type SelectStoryProps = {
-    setStoryType: (value: React.SetStateAction<"image" | "text" | null>) => void;
+    setStoryType: (value: React.SetStateAction<StoryType | null>) => void;
 }
 
 const SelectStoryType = ({ setStoryType }: SelectStoryProps) => {
