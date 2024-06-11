@@ -6,7 +6,7 @@ import { IUploadedFile } from './types.ts';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import './RegisterPage.css';
-import avatar from '../../../assets/avatar.png';
+import avatar from '../../../assets/authentication/avatar.png';
 
 const { Link } = Typography;
 

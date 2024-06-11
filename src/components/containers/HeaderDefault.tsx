@@ -1,11 +1,11 @@
-import { Button, Layout, Menu, MenuProps } from 'antd';
+import { Button, Input, Layout } from 'antd';
 import { Link } from 'react-router-dom';
-import { UserOutlined, UserAddOutlined } from '@ant-design/icons';
+import { UserOutlined, UserAddOutlined, SearchOutlined } from '@ant-design/icons';
 import ButtonGroup from "antd/es/button/button-group";
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { logout } from '../../store/account/account.slice';
-import './css/HeaderDefault.css';
-import logo from '../../assets/logotype.png';
+import './HeaderDefault.css'
+import logo from '../../assets/authentication/logotype.png';
 
 const { Header } = Layout;
 
@@ -17,29 +17,22 @@ const HeaderDefault = () => {
       dispatch(logout());
    };
 
-   const items: MenuProps["items"] = [
-      {
-         label: <Link to={`/`}>Quilt</Link>,
-         key: 'mail',
-      }
-   ];
-
    return (
       <Header className="custom-header">
-         <div className="header-gradient">
-            <img src={logo} alt="logo" className="header-logo" />
-            <div className="header-text">
-               <span className='header-text-regular'>This is</span>
-               <span className="header-text-bold">Quilt</span>
+         <div className="left-section">
+            <Input
+               className="search-box"
+               placeholder="Search"
+               prefix={<SearchOutlined style={{ color: '#000000' }} />}
+            />
+            <div className="header-gradient">
+               <img src={logo} alt="logo" className="header-logo" />
+               <div className="header-text">
+                  <span className='header-text-regular'>This is</span>
+                  <span className="header-text-bold">Quilt</span>
+               </div>
             </div>
          </div>
-         <Menu
-            theme="light"
-            mode="horizontal"
-            selectable={false}
-            items={items}
-            style={{ flex: 1, minWidth: 0, backgroundColor: 'transparent' }}
-         />
 
          {isLogin ? (
             <ButtonGroup size="large" style={{ gap: '20px' }}>
