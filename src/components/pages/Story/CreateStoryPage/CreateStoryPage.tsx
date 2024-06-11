@@ -13,8 +13,12 @@ import TextSettingsCollapce from "./components/TextSettingsCollapce";
 import StoryPreview from "./components/StoryPreview";
 import { StoryType } from "./types";
 import StoryPrivacyModal from "./components/StoryPrivacyModal";
+import { useNavigate } from "react-router-dom";
+import CancelStoryModal from "./components/CancelStoryModal";
 
 export const CreateStoryPage = () => {
+    const navigate = useNavigate();
+
     const account = useAppSelector(state => state.account);
 
     const [storyType, setStoryType] = useState<StoryType | null>(null);
@@ -36,9 +40,17 @@ export const CreateStoryPage = () => {
     const { captureAreaRef, getCapture } = useCapture();
 
     const [isPrivacyModalOpen, setIsPrivacyModalOpen] = useState(false);
+    const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
 
     const showPrivacyModal = () => setIsPrivacyModalOpen(true);
     const hidePrivacyModal = () => setIsPrivacyModalOpen(false);
+
+    const showCancelModal = () => setIsCancelModalOpen(true);
+    const onCancelCancelModal = () => setIsCancelModalOpen(false);
+    const onOkCancelModal = () => {
+        setIsPrivacyModalOpen(false);
+        navigate("/");
+    }
 
     const handleImageWidthChange = (value: number) => setWidth(value);
     const handleImageRotateChange = (value: number) => setRotate(value);
@@ -98,10 +110,9 @@ export const CreateStoryPage = () => {
                         )}
                     </Flex>
 
-
                     {storyType != null && (
                         <Flex gap="small">
-                            <Button className="gray-button" onClick={() => setStoryType(null)}>Cancel</Button>
+                            <Button className="gray-button" onClick={showCancelModal}>Cancel</Button>
                             <Button onClick={postStory}>Share</Button>
                         </Flex>
                     )}
@@ -126,6 +137,10 @@ export const CreateStoryPage = () => {
                 />
             )}
             <StoryPrivacyModal isModalOpen={isPrivacyModalOpen} hideModal={hidePrivacyModal} />
+            <CancelStoryModal
+                isCancelModalOpen={isCancelModalOpen}
+                onOkCancelModal={onOkCancelModal}
+                onCancelCancelModal={onCancelCancelModal} />
         </Flex>
     );
 };
