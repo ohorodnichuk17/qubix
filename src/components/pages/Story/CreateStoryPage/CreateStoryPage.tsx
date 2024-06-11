@@ -1,6 +1,6 @@
 import { Button, Card, ColorPickerProps, Flex, message } from "antd";
 import settingsIcon from "../../../../assets/story/settings.png";
-import defaultAvatar from "../../../../assets/avatar.png";
+import defaultAvatar from "../../../../assets/authentication/avatar.png";
 import { useEffect, useMemo, useState } from "react";
 import './CreateStoryPage.css'
 import { apiClient } from "../../../../utils/api/apiClient";

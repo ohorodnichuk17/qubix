@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { MailOutlined } from '@ant-design/icons';
 import axios from 'axios';
 
-import forgotPasswordImage from '../../../assets/forgot_password_image.png'
+import forgotPasswordImage from '../../../assets/authentication/forgot_password_image.png'
 
 const ForgotPasswordPage: React.FC = () => {
     const navigate = useNavigate();

@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { MailOutlined } from '@ant-design/icons';
 import axios from 'axios';
 
-import changeEmail from '../../../assets/change_email.png'
+import changeEmail from '../../../assets/authentication/change_email.png'
 import { useAppSelector } from '../../../hooks/redux';
 
 const ChangeEmailPage: React.FC = () => {

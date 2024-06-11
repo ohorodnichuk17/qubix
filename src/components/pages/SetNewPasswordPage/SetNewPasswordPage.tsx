@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { LockOutlined } from '@ant-design/icons';
 import axios from 'axios';
 
-import setNewPasswordImg from '../../../assets/set_new_password.png'
+import setNewPasswordImg from '../../../assets/authentication/set_new_password.png'
 import { useAppSelector } from '../../../hooks/redux';
 
 const SetNewPasswordPage: React.FC = () => {
