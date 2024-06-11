@@ -11,6 +11,7 @@ import { useAppSelector } from "../../../../hooks/redux";
 import ImageStoryPreview from "./components/ImageStoryPreview";
 import BackgroundSelect from "./components/BackgroundSelect";
 import TextSettingsCollapce from "./components/TextSettingsCollapce";
+import TextStoryPreview from "./components/TextStoryPreview";
 
 export const CreateStoryPage = () => {
     const account = useAppSelector(state => state.account);
@@ -18,6 +19,8 @@ export const CreateStoryPage = () => {
     const [storyType, setStoryType] = useState<"image" | "text" | null>(null);
     const [image, setImage] = useState<string>();
     const [text, setText] = useState<string>();
+    const [textFontSize, setTextFontSize] = useState<string>('16');
+
     const [textColor, setTextColor] = useState<ColorPickerProps['value']>('black');
     const textColorString = useMemo(
         () => (typeof textColor === 'string' ? textColor : textColor?.toHexString()),
@@ -37,10 +40,11 @@ export const CreateStoryPage = () => {
     const handleImageRotateChange = (value: number) => setRotate(value);
 
     const postStory = async () => {
-        const story = await getCapture();
+        if (storyType == null) return;
+        const story = await getCapture(storyType);
 
         const formData = new FormData();
-        formData.append("Content", "some content");
+        formData.append("Content", text ?? "");
         formData.append("Image", story as Blob);
         formData.append("UserId", account.user?.id ?? '');
 
@@ -80,7 +84,11 @@ export const CreateStoryPage = () => {
                                         handleImageWidthChange={handleImageWidthChange}
                                         handleImageRotateChange={handleImageRotateChange} />
                                 )}
-                                <TextSettingsCollapce setText={setText} textColor={textColor} setTextColor={setTextColor} />
+                                <TextSettingsCollapce setText={setText}
+                                    textFontSize={textFontSize}
+                                    setTextFontSize={setTextFontSize}
+                                    textColor={textColor}
+                                    setTextColor={setTextColor} />
                                 <BackgroundSelect setBackground={setBackground} />
                             </>
                         )}
@@ -112,9 +120,11 @@ export const CreateStoryPage = () => {
             )}
 
             {storyType == "text" && (
-                <>
-                    It`s text
-                </>
+                <TextStoryPreview text={text}
+                    textColorString={textColorString}
+                    textFontSize={textFontSize}
+                    background={background}
+                    captureAreaRef={captureAreaRef} />
             )}
         </Flex>
     );

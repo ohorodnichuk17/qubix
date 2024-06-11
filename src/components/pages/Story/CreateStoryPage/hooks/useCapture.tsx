@@ -5,11 +5,14 @@ import domtoimage from 'dom-to-image';
 const useCapture = () => {
     const captureAreaRef = useRef(null);
 
-    const getCapture = async () => {
+    const getCapture = async (storyType: "image" | "text") => {
         if (captureAreaRef.current == null) {
             message.error("Create story error!");
             return null;
         }
+
+        if (storyType == "text")
+            (captureAreaRef.current as HTMLDivElement).innerHTML = '<div class="preview-div-bordered"></div>';
 
         try {
             const dataUrl = await domtoimage.toJpeg(captureAreaRef.current, { quality: 0.95, style: { 'overflow': 'hidden' } });

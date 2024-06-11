@@ -4,17 +4,23 @@ import { ColorValueType } from "antd/es/color-picker/interface";
 
 type TextSettingsCollapceProps = {
     setText: React.Dispatch<React.SetStateAction<string | undefined>>;
+    textFontSize: string;
+    setTextFontSize: React.Dispatch<React.SetStateAction<string>>;
     textColor: ColorValueType | undefined;
     setTextColor: React.Dispatch<React.SetStateAction<ColorValueType | undefined>>
 }
 
-const TextSettingsCollapce = ({ setText, textColor, setTextColor }: TextSettingsCollapceProps) => {
+const TextSettingsCollapce = ({ setText, textFontSize, setTextFontSize, textColor, setTextColor }: TextSettingsCollapceProps) => {
     return (
         <Collapse items={[
             {
                 key: '1',
                 label: 'Text',
-                children: <TextSettings setText={setText} textColor={textColor} setTextColor={setTextColor} />
+                children: <TextSettings setText={setText}
+                    textFontSize={textFontSize}
+                    setTextFontSize={setTextFontSize}
+                    textColor={textColor}
+                    setTextColor={setTextColor} />
             }]} style={{ maxWidth: '250px' }} />
     );
 }
