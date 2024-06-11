@@ -8,6 +8,15 @@ const BackgroundOptions = ({ setBackground }: BackgroundOptionsProps) => {
 
     const options = [
         {
+            background: "white"
+        }, 
+        {
+            background: "gray"
+        },
+        {
+            background: "black"
+        },
+        {
             background: "linear-gradient(180deg, #FF5733 0%, #FFC300 100%)"
         },
         {
