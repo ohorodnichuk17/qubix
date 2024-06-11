@@ -1,7 +1,7 @@
 import { Button, Card, ColorPickerProps, Flex, message } from "antd";
 import settingsIcon from "../../../../assets/story/settings.png";
 import defaultAvatar from "../../../../assets/avatar.png";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import './CreateStoryPage.css'
 import { apiClient } from "../../../../utils/api/apiClient";
 import ImageStorySettings from "./components/ImageStorySettings";
@@ -12,6 +12,7 @@ import BackgroundSelect from "./components/BackgroundSelect";
 import TextSettingsCollapce from "./components/TextSettingsCollapce";
 import StoryPreview from "./components/StoryPreview";
 import { StoryType } from "./types";
+import StoryPrivacyModal from "./components/StoryPrivacyModal";
 
 export const CreateStoryPage = () => {
     const account = useAppSelector(state => state.account);
@@ -34,7 +35,10 @@ export const CreateStoryPage = () => {
 
     const { captureAreaRef, getCapture } = useCapture();
 
-    useEffect(() => console.log(text), [text]);
+    const [isPrivacyModalOpen, setIsPrivacyModalOpen] = useState(false);
+
+    const showPrivacyModal = () => setIsPrivacyModalOpen(true);
+    const hidePrivacyModal = () => setIsPrivacyModalOpen(false);
 
     const handleImageWidthChange = (value: number) => setWidth(value);
     const handleImageRotateChange = (value: number) => setRotate(value);
@@ -67,7 +71,7 @@ export const CreateStoryPage = () => {
                         <Card>
                             <Flex justify="space-between" align="center">
                                 <p>Your story</p>
-                                <div className="settings-icon-div">
+                                <div className="settings-icon-div" onClick={showPrivacyModal}>
                                     <img src={settingsIcon} alt="Settings icon" />
                                 </div>
                             </Flex>
@@ -121,6 +125,7 @@ export const CreateStoryPage = () => {
                     captureAreaRef={captureAreaRef}
                 />
             )}
+            <StoryPrivacyModal isModalOpen={isPrivacyModalOpen} hideModal={hidePrivacyModal} />
         </Flex>
     );
 };
