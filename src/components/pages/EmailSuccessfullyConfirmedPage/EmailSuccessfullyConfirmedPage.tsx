@@ -1,5 +1,5 @@
 import { Flex } from 'antd';
-import confirmedMail from '../../../assets/confirmemail.png'
+import confirmedMail from '../../../assets/authentication/confirmemail.png'
 import { Link } from 'react-router-dom';
 
 const EmailSuccessfullyConfirmedPage = () => {
