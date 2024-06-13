@@ -21,7 +21,7 @@ const TextSettingsCollapce = ({ setText, textFontSize, setTextFontSize, textColo
                     setTextFontSize={setTextFontSize}
                     textColor={textColor}
                     setTextColor={setTextColor} />
-            }]} style={{ maxWidth: '250px' }} />
+            }]} className="story-settings-collapce"/>
     );
 }
 

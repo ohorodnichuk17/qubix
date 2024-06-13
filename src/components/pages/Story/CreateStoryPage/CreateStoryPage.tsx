@@ -76,7 +76,7 @@ export const CreateStoryPage = () => {
    }
 
    return (
-      <Flex style={{ height: '100%' }} gap="middle">
+      <Flex gap="middle" className="create-story-page">
          <Card style={{ overflow: 'auto' }}>
             <Flex style={{ height: '100%' }} vertical justify="space-between">
                <Flex vertical>
@@ -111,7 +111,7 @@ export const CreateStoryPage = () => {
                </Flex>
 
                {storyType != null && (
-                  <Flex gap="small">
+                  <Flex gap="small" className="story-buttons-div">
                      <Button className="gray-button" onClick={showCancelModal}>Cancel</Button>
                      <Button onClick={postStory}>Share</Button>
                   </Flex>

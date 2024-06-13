@@ -1,3 +1,41 @@
+@media (max-width: 768px) {
+    .content{
+        padding: 0;
+    }
+
+    .main-content{
+        padding: 0 12px;
+    }
+}
+
+@media (max-width: 500px) {
+    .create-story-page{
+        flex-direction: column;
+    }
+
+    .create-story-div{
+        width: 100%!important;
+        height: 175px!important;
+    }
+
+    .story-settings-collapce{
+        max-width: 100%!important;
+        width: 100%!important;
+    }
+
+    .story-buttons-div{
+        margin-top: 8px;
+    }
+}
+
+.create-story-page{
+    height: 100%;
+}
+
+.story-settings-collapce{
+    max-width: 250px;
+}
+
 .create-story-div {
     background: linear-gradient(154.84deg, #FF0000 2.43%, #FF355A 14.82%, #FF4F87 49.71%, #FF69B4 84.15%);
     border-radius: 20px;
@@ -49,6 +87,7 @@
 .create-story-label {
     font-weight: 600;
     color: #fff;
+    text-align: center;
 }
 
 .settings-icon-div {
