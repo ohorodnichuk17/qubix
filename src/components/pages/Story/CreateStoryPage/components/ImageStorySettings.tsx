@@ -51,7 +51,7 @@ const ImageStorySettings = ({ setImage, handleImageWidthChange, handleImageRotat
                     <p>Rotate: </p>
                     <Slider defaultValue={30} onChange={handleImageRotateChange} min={0} max={360} />
                 </>
-            }]} style={{ maxWidth: '250px' }} />
+            }]} className="story-settings-collapce"/>
 
     );
 }

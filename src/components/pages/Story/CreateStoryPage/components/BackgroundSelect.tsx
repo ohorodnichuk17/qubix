@@ -14,7 +14,7 @@ const BackgroundSelect = ({ setBackground }:BackgroundSelectProps) => {
         }];
 
     return (
-        <Collapse items={items} style={{maxWidth:'250px'}}/>
+        <Collapse items={items} className="story-settings-collapce"/>
     );
 }
 
