@@ -6,7 +6,7 @@ import './ContainerDefault.css';
 
 const ContainerDefault = () => {
    return (
-      <Layout style={{ height: '100vh' }}>
+      <Layout className="container-default">
          <HeaderDefault />
          <Content className="content">
             <Layout className="inner-layout">
