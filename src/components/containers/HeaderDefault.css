@@ -60,23 +60,6 @@
    color: #FF7F50;
 }
 
-@media (max-width: 768px) {
-   .navbar-left, .navbar-center, .navbar-right, .search-bar, .minimalist-button:not(.login):not(.register) {
-      display: none;
-   }
-
-   .center-section {
-      justify-content: flex-start;
-      left: 10px;
-      transform: none;
-   }
-
-   .right-section {
-      display: flex;
-      gap: 10px;
-   }
-}
-
 .nav-icon-img {
    max-width: 100%;
    height: auto;
@@ -112,9 +95,9 @@
 
 .avatar-dropdown-container {
    position: relative;
- }
+}
  
- .avatar-dropdown-button {
+.avatar-dropdown-button {
    background: none;
    border: none;
    box-shadow: none;
@@ -123,19 +106,16 @@
    top: 50%; 
    padding: 0;
    outline: none; 
- }
+}
  
- .avatar-dropdown-button img {
-   /*background-color: white;
-   border-radius: 50%;*/
-
+.avatar-dropdown-button img {
    width: 15px; 
    height: 15px;
- }
+}
 
- .avatar-dropdown-button:hover img {
+.avatar-dropdown-button:hover img {
    filter: invert(100%); 
- }
+}
 
 .nav-icon {
    display: flex;
@@ -175,6 +155,55 @@
    height: 40px;
 }
 
-/*.nav-icon.active .nav-icon-img {
-   border-bottom: 3px solid #FF7F50;
-}*/
+.menu-button {
+   display: none;
+}
+
+@media (max-width: 768px) {
+   .navbar-center, .search-bar, .minimalist-button:not(.login):not(.register) {
+      display: none;
+   }
+
+   .center-section {
+      justify-content: flex-start;
+      left: 10px;
+      transform: none;
+   }
+
+   .right-section {
+      display: flex;
+      gap: 10px;
+   }
+
+   .menu-button {
+      display: inline-block;
+   }
+}
+
+.burger-menu-item a {
+   color: #FF7F50;
+   transition: color 0.3s ease;
+}
+
+.burger-menu-item a.active {
+   color: #000;
+}
+
+.burger-menu-item a:hover {
+   color: #FFA07A;
+}
+
+.ant-btn-primary {
+   background-color: #FF7F50;
+   border-color: #FF7F50;
+}
+
+.ant-btn-primary:hover, .ant-btn-primary:focus {
+   background-color: #FF6347;
+   border-color: #FF6347;
+}
+
+.drawer-menu-item:hover,
+.drawer-menu-item.ant-menu-item-selected {
+  background-color: #FF7F50 !important;
+}

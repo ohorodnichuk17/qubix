@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Button, Input, Layout, Avatar, Tooltip, Dropdown, Menu } from 'antd';
+import { Button, Input, Layout, Avatar, Tooltip, Dropdown, Menu, Drawer } from 'antd';
 import { Link, NavLink } from 'react-router-dom';
-import { SearchOutlined, UserOutlined, UserAddOutlined } from '@ant-design/icons';
+import { SearchOutlined, UserOutlined, UserAddOutlined, MenuOutlined } from '@ant-design/icons';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { logout } from '../../store/account/account.slice';
 import './HeaderDefault.css';
@@ -18,11 +18,10 @@ import glyph from '../../assets/profile/glyph.png';
 
 const { Header } = Layout;
 
-
-
 const HeaderDefault = () => {
    const dispatch = useAppDispatch();
    const { isLogin, user } = useAppSelector(state => state.account);
+   const [drawerVisible, setDrawerVisible] = useState(false);
 
    const handleLogout = () => {
       dispatch(logout());
@@ -40,6 +39,40 @@ const HeaderDefault = () => {
          </Menu.Item>
       </Menu>
    );
+
+   const showDrawer = () => {
+      setDrawerVisible(true);
+   };
+
+   const closeDrawer = () => {
+      setDrawerVisible(false);
+   };
+
+   const drawerMenu = (
+      <Menu mode="vertical">
+         <Menu.Item key="home" className="burger-menu-item drawer-menu-item">
+            <NavLink to="/" activeClassName="active">
+               Home
+            </NavLink>
+         </Menu.Item>
+         <Menu.Item key="friends" className="burger-menu-item drawer-menu-item">
+            <NavLink to="/friends" activeClassName="active">
+               Friends
+            </NavLink>
+         </Menu.Item>
+         <Menu.Item key="story" className="burger-menu-item drawer-menu-item">
+            <NavLink to="/story" activeClassName="active">
+               Story
+            </NavLink>
+         </Menu.Item>
+         <Menu.Item key="messenger" className="burger-menu-item drawer-menu-item">
+            <NavLink to="/messenger" activeClassName="active">
+               Messenger
+            </NavLink>
+         </Menu.Item>
+      </Menu>
+   );
+
 
    return (
       <Header className="custom-header">
@@ -75,8 +108,6 @@ const HeaderDefault = () => {
                         )}
                      </NavLink>
                   </Tooltip>
-               </div>
-               <div className="navbar-right">
                   <Tooltip title="Messenger">
                      <NavLink to="/messenger" className="nav-icon messanger-icon-link" activeClassName="active">
                         {({ isActive }) => (
@@ -84,6 +115,8 @@ const HeaderDefault = () => {
                         )}
                      </NavLink>
                   </Tooltip>
+               </div>
+               <div className="navbar-right">
                   <div className="avatar-dropdown-container">
                      <Avatar src={`http://localhost:5181${user?.avatar}`} size={50} />
                      <Dropdown overlay={menu} trigger={['click']}>
@@ -91,6 +124,15 @@ const HeaderDefault = () => {
                      </Dropdown>
                   </div>
                </div>
+               <Button className="menu-button" type="primary" icon={<MenuOutlined />} onClick={showDrawer} />
+               <Drawer
+                  title="Menu"
+                  placement="right"
+                  onClose={closeDrawer}
+                  visible={drawerVisible}
+               >
+                  {drawerMenu}
+               </Drawer>
             </>
          ) : (
             <>
