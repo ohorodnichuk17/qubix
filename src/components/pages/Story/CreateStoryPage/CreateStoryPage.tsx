@@ -76,7 +76,7 @@ export const CreateStoryPage = () => {
 
    return (
       <Flex gap="middle" className="create-story-page">
-         <Card style={{ overflow: 'auto', height: '100%' }}>
+         <Card style={{ height: '100%' }}>
             <Flex style={{ height: '100%' }} vertical justify="space-between">
                <Flex vertical>
                   <Card>
@@ -88,7 +88,7 @@ export const CreateStoryPage = () => {
                      </Flex>
                      <Flex className="avatar-div">
                         <img src={`http://localhost:5181${account.user?.avatar}`} />
-                        <p>{account.user?.firstName + ' ' + account.user?.lastName}</p>
+                        <p style={{ whiteSpace: 'nowrap' }}>{account.user?.firstName + ' ' + account.user?.lastName}</p>
                      </Flex>
                   </Card>
 
