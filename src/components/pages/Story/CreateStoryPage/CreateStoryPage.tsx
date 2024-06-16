@@ -1,4 +1,4 @@
-import { Avatar, Button, Card, ColorPickerProps, Flex, message } from "antd";
+import { Button, Card, ColorPickerProps, Flex, message } from "antd";
 import settingsIcon from "../../../../assets/story/settings.png";
 import { useMemo, useState } from "react";
 import './CreateStoryPage.css'
@@ -87,7 +87,7 @@ export const CreateStoryPage = () => {
                         </div>
                      </Flex>
                      <Flex className="avatar-div">
-                        <Avatar src={`http://localhost:5181${account.user?.avatar}`} size={92} />
+                        <img src={`http://localhost:5181${account.user?.avatar}`} />
                         <p>{account.user?.firstName + ' ' + account.user?.lastName}</p>
                      </Flex>
                   </Card>
