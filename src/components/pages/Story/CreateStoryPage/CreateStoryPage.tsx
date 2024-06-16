@@ -76,7 +76,7 @@ export const CreateStoryPage = () => {
 
    return (
       <Flex gap="middle" className="create-story-page">
-         <Card style={{ overflow: 'auto' }}>
+         <Card style={{ overflow: 'auto', height: '100%' }}>
             <Flex style={{ height: '100%' }} vertical justify="space-between">
                <Flex vertical>
                   <Card>
