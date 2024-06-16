@@ -93,7 +93,7 @@ export const CreateStoryPage = () => {
                   </Card>
 
                   {storyType != null && (
-                     <>
+                     <Flex vertical gap="small">
                         {storyType == "image" && (
                            <ImageStorySettings setImage={setImage}
                               handleImageWidthChange={handleImageWidthChange}
@@ -105,7 +105,7 @@ export const CreateStoryPage = () => {
                            textColor={textColor}
                            setTextColor={setTextColor} />
                         <BackgroundSelect setBackground={setBackground} />
-                     </>
+                     </Flex>
                   )}
                </Flex>
 
