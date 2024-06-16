@@ -32,7 +32,7 @@ const StoryPreview = ({ storyType, width, rotate, image, text, textFontSize, tex
                         )}
                         {storyType == "text" && (
                             <Flex justify="center" align="center" style={{ height: '100%', width: '90%', margin: '0 auto' }}>
-                                <p style={{ color: `${textColorString}`, fontSize: `${textFontSize}px`, maxWidth: '90%' }}>{text}</p>
+                                <p style={{ color: `${textColorString}`, fontSize: `${textFontSize}px`, maxWidth: '90%', wordBreak: 'break-all' }}>{text}</p>
                             </Flex>
                         )}
                     </div>
