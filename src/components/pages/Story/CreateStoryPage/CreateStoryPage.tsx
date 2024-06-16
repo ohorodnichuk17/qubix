@@ -1,6 +1,5 @@
-import { Button, Card, ColorPickerProps, Flex, message } from "antd";
+import { Avatar, Button, Card, ColorPickerProps, Flex, message } from "antd";
 import settingsIcon from "../../../../assets/story/settings.png";
-import defaultAvatar from "../../../../assets/authentication/avatar.png";
 import { useMemo, useState } from "react";
 import './CreateStoryPage.css'
 import { apiClient } from "../../../../utils/api/apiClient";
@@ -88,7 +87,7 @@ export const CreateStoryPage = () => {
                         </div>
                      </Flex>
                      <Flex className="avatar-div">
-                        <img src={defaultAvatar} alt="User avatar image" />
+                        <Avatar src={`http://localhost:5181${account.user?.avatar}`} size={92} />
                         <p>{account.user?.firstName + ' ' + account.user?.lastName}</p>
                      </Flex>
                   </Card>
