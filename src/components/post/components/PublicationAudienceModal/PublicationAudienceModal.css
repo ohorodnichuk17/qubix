@@ -1,0 +1,21 @@
+.publication-audience-modal {
+    p {
+        margin: 0;
+    }
+}
+
+.publication-audience-img-circle {
+    height: 75px;
+    width: 75px;
+    border-radius: 50%;
+    background-color: #D9D9D9;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.publication-audience-radio-title{
+    font-size: 20px;
+    font-weight: bold;
+}

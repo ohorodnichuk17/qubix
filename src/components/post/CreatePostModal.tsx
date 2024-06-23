@@ -4,12 +4,14 @@ import FormItem from "antd/es/form/FormItem";
 import { apiClient } from "../../utils/api/apiClient";
 import photoImg from '../../assets/post/photo_video.png';
 import locationImg from '../../assets/post/location.png';
+import planetImg from '../../assets/post/planet.png';
 import tagImg from '../../assets/post/tag.png';
 import { UploadChangeParam, UploadFile } from "antd/es/upload";
 import { IUploadedFile } from "../../types/IUploadedFile";
 import { useState } from "react";
 import { getBase64 } from "../../utils/helpers/getBase64";
 import { FileType } from "../../types/FileType";
+import PublicationAudienceModal from "./components/PublicationAudienceModal/PublicationAudienceModal";
 
 type CreatePostModalProps = {
     isModalOpen: boolean;
@@ -22,6 +24,11 @@ const CreatePostModal = ({ isModalOpen, handleOk, handleCancel }: CreatePostModa
 
     const [previewImage, setPreviewImage] = useState<string>('');
     const [showLocationInput, setShowLocationInput] = useState<boolean>(false);
+
+    const [audienceModalVisible, setAudienceModalVisible] = useState<boolean>(false);
+    const [audience, setAudience] = useState<string>('Public');
+
+    const handleAudienceChange = (e: any) => setAudience(e.target.value);
 
     const toggleLocationInput = () => {
         setShowLocationInput(prevState => !prevState);
@@ -71,7 +78,12 @@ const CreatePostModal = ({ isModalOpen, handleOk, handleCancel }: CreatePostModa
                 <img src={`http://localhost:5181${account.user?.avatar}`} style={{ height: 92, width: 92 }} />
                 <Flex vertical>
                     <p style={{ whiteSpace: 'nowrap', color: 'black', fontWeight: 700, margin: 0 }}>{account.user?.firstName + ' ' + account.user?.lastName}</p>
-                    <p style={{ margin: 0 }}>Available to everyone</p>
+                    <button style={{ border: 'none', borderRadius: 8, padding: '5px 10px', cursor: 'pointer' }} onClick={() => setAudienceModalVisible(true)}>
+                        <Flex align="center" gap="small">
+                            <img src={planetImg} style={{ height: 15, width: 15 }} />
+                            <p style={{ margin: 0 }}>Available to everyone</p>
+                        </Flex>
+                    </button>
                 </Flex>
             </Flex>
             <Divider />
@@ -122,17 +134,18 @@ const CreatePostModal = ({ isModalOpen, handleOk, handleCancel }: CreatePostModa
                         </Tooltip>
                         <Tooltip title="#">
                             <button style={{ border: 0, background: 'none', cursor: 'pointer', height: 'fit-content' }} type="button">
-                                <img src={tagImg} className="h-50px"/>
+                                <img src={tagImg} className="h-50px" />
                             </button>
                         </Tooltip>
                     </Flex>
-
-
-
                 </Card>
 
                 <Button htmlType="submit">Post</Button>
             </Form>
+            <PublicationAudienceModal audience={audience}
+                audienceModalVisible={audienceModalVisible}
+                setAudienceModalVisible={setAudienceModalVisible}
+                handleAudienceChange={handleAudienceChange} />
         </Modal>
     );
 }
