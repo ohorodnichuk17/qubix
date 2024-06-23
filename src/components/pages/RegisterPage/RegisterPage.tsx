@@ -1,34 +1,22 @@
-import { Form, Input, Button, Row, Col, Typography, Space, Radio, DatePicker, Card, Upload, message, Flex, Image, GetProp } from 'antd';
-import { LockOutlined, MailOutlined, PlusOutlined, UploadOutlined } from '@ant-design/icons';
+import { Form, Input, Button, Row, Col, Typography, Space, Radio, DatePicker, Card, Upload, message, Flex } from 'antd';
+import { LockOutlined, MailOutlined, UploadOutlined } from '@ant-design/icons';
 import { IRegisterModel } from '../../../interfaces/account/index.ts';
-import { UploadChangeParam, UploadFile, UploadProps } from 'antd/es/upload/interface';
-import { IUploadedFile } from './types.ts';
-import { useEffect, useState } from 'react';
-import axios from 'axios';
+import { UploadChangeParam, UploadFile } from 'antd/es/upload/interface';
+import { useState } from 'react';
 import './RegisterPage.css';
 import avatar from '../../../assets/authentication/avatar.png';
+import { getBase64 } from '../../../utils/helpers/getBase64.ts';
+import { FileType } from '../../../types/FileType.ts';
+import { apiClient } from '../../../utils/api/apiClient.ts';
+import { IUploadedFile } from '../../../types/IUploadedFile.ts';
 
 const { Link } = Typography;
 
 const validGenders = ['Male', 'Female', 'Other'];
-type FileType = Parameters<GetProp<UploadProps, 'beforeUpload'>>[0];
 
-const getBase64 = (file: FileType): Promise<string> =>
-   new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result as string);
-      reader.onerror = (error) => reject(error);
-   });
 const RegisterPage = () => {
-   const [isAvatarSelected, setIsAvatarSelected] = useState<boolean>(false);
    const [isFieldActive, setIsFieldActive] = useState(false);
-
    const [previewImage, setPreviewImage] = useState(avatar);
-
-   useEffect(() => {
-      console.log(previewImage);
-   }, [previewImage])
 
    const handlePreview = async (file: UploadFile) => {
       if (!file.url && !file.preview) {
@@ -39,24 +27,17 @@ const RegisterPage = () => {
    };
 
    const onFinish = (values: IRegisterModel) => {
-      const formData = new FormData();
-
-      Object.keys(values).forEach(key => {
-         if (values[key] !== undefined) {
-            formData.append(key, values[key]);
-         }
-      });
-
-      axios.post('http://localhost:5181/api/Authentication/register', formData, {
+      apiClient.post('/api/Authentication/register', values, {
          headers: {
             'Content-Type': 'multipart/form-data'
          }
-      }).then(res => {
-         console.log(res);
+      }).then(() => {
+         message.success("Successfully registered!");
+         window.location.href = '/email-confirmation-required';
       }).catch(error => {
+         message.error("Registration error!")
          console.log(error);
       });
-      window.location.href = '/email-confirmation-required';
    };
 
    const onFinishFailed = (errorInfo: any) => {
@@ -71,17 +52,12 @@ const RegisterPage = () => {
       }
 
       setPreviewImage(file.url || (file.preview as string));
-
-      setIsAvatarSelected(info.fileList.length > 0)
    };
 
    return (
       <Row justify="center" align="middle" className="register-page">
-         {/*<Col xs={24} sm={20} md={16} lg={12} xl={8}>*/}
          <Col xs={24} sm={20} md={16} lg={14} xl={12}>
-
             <Space direction="vertical" size="large" style={{ width: '100%' }}>
-
                <Card>
                   <Flex justify='center'>
                      {previewImage && (
@@ -134,7 +110,7 @@ const RegisterPage = () => {
                                  { pattern: /^[A-Za-z\s]+$/, message: 'First name must contain only letters and spaces' },
                                  { pattern: /^[^£#“”]*$/, message: 'First name must not contain the following characters: £ # “”' },
                               ]}
-                           >
+                           >  
                               <Input
                                  placeholder='Enter your first name'
                                  style={{
@@ -194,8 +170,6 @@ const RegisterPage = () => {
                         />
                      </Form.Item>
 
-
-
                      <Row gutter={[16, 16]}>
                         <Col xs={24} sm={12}>
                            <Form.Item
@@ -254,7 +228,6 @@ const RegisterPage = () => {
                         </Col>
                      </Row>
 
-
                      <Form.Item
                         label="Birth Date"
                         name="birthday"
@@ -283,7 +256,6 @@ const RegisterPage = () => {
                         />
                      </Form.Item>
 
-
                      <Form.Item
                         label="Gender"
                         name="gender"
@@ -300,7 +272,6 @@ const RegisterPage = () => {
                         </Radio.Group>
                      </Form.Item>
 
-
                      <Form.Item>
                         <Button htmlType="submit" style={{ width: '100%' }}>
                            Register
@@ -309,8 +280,6 @@ const RegisterPage = () => {
                   </Form>
                   <Link href="/authentication/login" style={{ color: '#FF7F50', textDecoration: 'none' }}>Already have an account? <span style={{ color: '#FF6347' }}>Sign in</span></Link>
                </Card>
-
-
             </Space>
          </Col>
       </Row>

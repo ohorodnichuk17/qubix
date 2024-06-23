@@ -8,7 +8,8 @@ import tagImg from '../../assets/post/tag.png';
 import { UploadChangeParam, UploadFile } from "antd/es/upload";
 import { IUploadedFile } from "../../types/IUploadedFile";
 import { useState } from "react";
-import { FileType, getBase64 } from "../../utils/helpers/getBase64";
+import { getBase64 } from "../../utils/helpers/getBase64";
+import { FileType } from "../../types/FileType";
 
 type CreatePostModalProps = {
     isModalOpen: boolean;
