@@ -1,5 +1,4 @@
 import { Button, Card, ColorPickerProps, Flex, message } from "antd";
-import settingsIcon from "../../../../assets/story/settings.png";
 import { useMemo, useState } from "react";
 import './CreateStoryPage.css'
 import { apiClient } from "../../../../utils/api/apiClient";
@@ -14,6 +13,7 @@ import { StoryType } from "./types";
 import StoryPrivacyModal from "./components/StoryPrivacyModal";
 import { useNavigate } from "react-router-dom";
 import CancelStoryModal from "./components/CancelStoryModal";
+import { settingsIcon } from "../../../../utils/images";
 
 export const CreateStoryPage = () => {
    const navigate = useNavigate();

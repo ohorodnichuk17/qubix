@@ -2,16 +2,13 @@ import { Modal, Flex, Form, Input, Button, message, Card, Tooltip, Upload, Divid
 import { useAppSelector } from "../../hooks/redux";
 import FormItem from "antd/es/form/FormItem";
 import { apiClient } from "../../utils/api/apiClient";
-import photoImg from '../../assets/post/photo_video.png';
-import locationImg from '../../assets/post/location.png';
-import planetImg from '../../assets/post/planet.png';
-import tagImg from '../../assets/post/tag.png';
 import { UploadChangeParam, UploadFile } from "antd/es/upload";
 import { IUploadedFile } from "../../types/IUploadedFile";
 import { useState } from "react";
 import { getBase64 } from "../../utils/helpers/getBase64";
 import { FileType } from "../../types/FileType";
 import PublicationAudienceModal from "./components/PublicationAudienceModal/PublicationAudienceModal";
+import { planetImg, photoImg, locationImg, tagImg } from "../../utils/images";
 
 type CreatePostModalProps = {
     isModalOpen: boolean;

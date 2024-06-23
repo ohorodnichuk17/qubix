@@ -1,6 +1,5 @@
 
-import imageStoryIcon from "../../../../../assets/story/image_story_icon.png";
-import textStoryIcon from "../../../../../assets/story/text_story_icon.png";
+import { imageStoryIcon, textStoryIcon } from "../../../../../utils/images";
 import { StoryType } from "../types";
 
 type SelectStoryProps = {

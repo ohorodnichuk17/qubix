@@ -3,9 +3,8 @@ import { Form, Input, Button, Flex, Card, message } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 import { MailOutlined } from '@ant-design/icons';
 import axios from 'axios';
-
-import changeEmail from '../../../assets/authentication/change_email.png'
 import { useAppSelector } from '../../../hooks/redux';
+import { changeEmail } from '../../../utils/images';
 
 const ChangeEmailPage: React.FC = () => {
    const account = useAppSelector(state => state.account);

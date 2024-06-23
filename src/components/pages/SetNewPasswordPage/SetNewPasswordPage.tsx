@@ -3,9 +3,8 @@ import { Form, Input, Button, Flex, Card, message } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 import { LockOutlined } from '@ant-design/icons';
 import axios from 'axios';
-
-import setNewPasswordImg from '../../../assets/authentication/set_new_password.png'
 import { useAppSelector } from '../../../hooks/redux';
+import { setNewPasswordImg } from '../../../utils/images';
 
 const SetNewPasswordPage: React.FC = () => {
    const account = useAppSelector(state => state.account);

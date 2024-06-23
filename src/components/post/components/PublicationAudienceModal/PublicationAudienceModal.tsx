@@ -1,9 +1,6 @@
 import { Modal, Divider, Radio, Flex } from "antd";
-import planetImg from '../../../../assets/post/planet.png';
-import friendsImg from '../../../../assets/post/friends.png';
-import friendsExceptImg from '../../../../assets/post/friends_except.png';
-import userImg from '../../../../assets/post/user.png';
 import './PublicationAudienceModal.css'
+import { planetImg, friendsImg, friendsExceptImg, userImg } from "../../../../utils/images";
 
 type PublicationAudienceModalProps = {
     audienceModalVisible: boolean;

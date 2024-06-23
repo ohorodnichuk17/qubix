@@ -1,20 +1,11 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Button, Input, Layout, Avatar, Tooltip, Dropdown, Menu, Drawer } from 'antd';
-import { Link, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { SearchOutlined, UserOutlined, UserAddOutlined, MenuOutlined } from '@ant-design/icons';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { logout } from '../../store/account/account.slice';
 import './HeaderDefault.css';
-import logo from '../../assets/authentication/logotype.png';
-import home from '../../assets/profile/home.png';
-import activeHome from '../../assets/profile/active_home.png';
-import friends from '../../assets/profile/friends.png';
-import activeFriends from '../../assets/profile/active_friends.png';
-import story from '../../assets/profile/story.png';
-import activeStory from '../../assets/profile/active_story.png';
-import messanger from '../../assets/profile/messanger.png';
-import activeMessanger from '../../assets/profile/messanger_active.png';
-import glyph from '../../assets/profile/glyph.png';
+import { logo, activeHome, home, activeFriends, friends, activeStory, story, activeMessanger, messanger, glyph } from '../../utils/images';
 
 const { Header } = Layout;
 

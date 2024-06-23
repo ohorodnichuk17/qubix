@@ -4,11 +4,11 @@ import { IRegisterModel } from '../../../interfaces/account/index.ts';
 import { UploadChangeParam, UploadFile } from 'antd/es/upload/interface';
 import { useState } from 'react';
 import './RegisterPage.css';
-import avatar from '../../../assets/authentication/avatar.png';
 import { getBase64 } from '../../../utils/helpers/getBase64.ts';
 import { FileType } from '../../../types/FileType.ts';
 import { apiClient } from '../../../utils/api/apiClient.ts';
 import { IUploadedFile } from '../../../types/IUploadedFile.ts';
+import { avatar } from '../../../utils/images/index.tsx';
 
 const { Link } = Typography;
 
