@@ -1,4 +1,4 @@
-import { Modal, Flex, Form, Input, Button, message, Card, Tooltip, Upload, Divider } from "antd";
+import { Modal, Flex, Form, Input, Button, message, Card, Tooltip, Upload, Divider, Tag } from "antd";
 import { useAppSelector } from "../../hooks/redux";
 import FormItem from "antd/es/form/FormItem";
 import { apiClient } from "../../utils/api/apiClient";
@@ -16,11 +16,27 @@ type CreatePostModalProps = {
     handleCancel: () => void;
 }
 
+const tagColors = ['success', 'processing', 'error', 'default'];
+const getRandomTagColor = () => tagColors[Math.floor(Math.random() * tagColors.length)];
+
 const CreatePostModal = ({ isModalOpen, handleOk, handleCancel }: CreatePostModalProps) => {
     const account = useAppSelector(state => state.account);
 
     const [previewImage, setPreviewImage] = useState<string>('');
     const [showLocationInput, setShowLocationInput] = useState<boolean>(false);
+
+    const [showTagsInput, setShowTagsInput] = useState<boolean>(false);
+    const [tags, setTags] = useState<string[]>([]);
+    const [newTag, setNewTag] = useState<string>('');
+
+    const addTag = () => {
+        if (newTag && !tags.includes(newTag)) {
+            setTags([...tags, newTag]);
+            setNewTag('');
+        }
+    };
+
+    const removeTag = (tag: string) => setTags(tags.filter(t => t !== tag));
 
     const [audienceModalVisible, setAudienceModalVisible] = useState<boolean>(false);
     const [audience, setAudience] = useState<string>('Public');
@@ -53,6 +69,7 @@ const CreatePostModal = ({ isModalOpen, handleOk, handleCancel }: CreatePostModa
         console.log(values);
 
         values.isArchive = false;
+        values.tags = tags;
 
         apiClient.post('/api/Post/create', values, {
             headers: {
@@ -95,7 +112,38 @@ const CreatePostModal = ({ isModalOpen, handleOk, handleCancel }: CreatePostModa
                         <Input placeholder="Enter your location" />
                     </Form.Item>
                 )}
+
+                <Flex vertical gap='middle'>
+
+                    {showTagsInput && (
+                        <Flex gap='small'>
+                            <Input
+                                value={newTag}
+                                onChange={e => setNewTag(e.target.value)}
+                                placeholder="Enter tag"
+                            />
+                            <Button type="primary" onClick={addTag}>Add</Button>
+                        </Flex>
+                    )}
+                    {tags.length != 0 && (
+                        <Flex wrap="wrap" gap='small'>
+                            {tags.map(tag => (
+                                <Tag key={tag}
+                                    closable
+                                    onClose={() => removeTag(tag)}
+                                    color={getRandomTagColor()}
+                                    style={{ margin: 0 }}>
+                                    {tag}
+                                </Tag>
+                            ))}
+                        </Flex>
+                    )}
+                </Flex>
+
+                <Divider />
                 <img src={previewImage} style={{ width: '100%' }} />
+                <Divider />
+
                 <Card title="Add to the publication">
                     <Flex>
 
@@ -130,7 +178,7 @@ const CreatePostModal = ({ isModalOpen, handleOk, handleCancel }: CreatePostModa
                             </button>
                         </Tooltip>
                         <Tooltip title="#">
-                            <button style={{ border: 0, background: 'none', cursor: 'pointer', height: 'fit-content' }} type="button">
+                            <button style={{ border: 0, background: 'none', cursor: 'pointer', height: 'fit-content' }} type="button" onClick={() => setShowTagsInput(!showTagsInput)}>
                                 <img src={tagImg} className="h-50px" />
                             </button>
                         </Tooltip>
