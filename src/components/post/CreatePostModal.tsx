@@ -29,7 +29,6 @@ import {
 	postTypeImg,
 } from "../../utils/images";
 import type { ICreatePost } from "./types";
-import BackgroundSelect from "../pages/Story/CreateStoryPage/components/BackgroundSelect";
 import BackgroundOptions from "../pages/Story/CreateStoryPage/components/BackgroundOptions";
 import useCapture from "../pages/Story/CreateStoryPage/hooks/useCapture";
 
