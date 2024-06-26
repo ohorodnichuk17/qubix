@@ -4,5 +4,5 @@ export interface ICreatePost {
 		location: string;
 		isArchive: boolean;
 		tags: string[];
-		images: File;
+		images: Blob;
 	}

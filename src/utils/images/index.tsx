@@ -4,6 +4,7 @@ import planetImg from '../../assets/post/planet.png';
 import tagImg from '../../assets/post/tag.png';
 import friendsImg from '../../assets/post/friends.png';
 import friendsExceptImg from '../../assets/post/friends_except.png';
+import postTypeImg from '../../assets/post/post_type.png';
 import userImg from '../../assets/post/user.png';
 import imageStoryIcon from "../../assets/story/image_story_icon.png";
 import textStoryIcon from "../../assets/story/text_story_icon.png";
@@ -32,6 +33,7 @@ export {
     tagImg,
     friendsImg,
     friendsExceptImg,
+    postTypeImg,
     userImg,
     imageStoryIcon,
     textStoryIcon,

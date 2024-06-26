@@ -21,14 +21,25 @@ import { useState } from "react";
 import { getBase64 } from "../../utils/helpers/getBase64";
 import type { FileType } from "../../types/FileType";
 import PublicationAudienceModal from "./components/PublicationAudienceModal/PublicationAudienceModal";
-import { planetImg, photoImg, locationImg, tagImg } from "../../utils/images";
+import {
+	planetImg,
+	photoImg,
+	locationImg,
+	tagImg,
+	postTypeImg,
+} from "../../utils/images";
 import type { ICreatePost } from "./types";
+import BackgroundSelect from "../pages/Story/CreateStoryPage/components/BackgroundSelect";
+import BackgroundOptions from "../pages/Story/CreateStoryPage/components/BackgroundOptions";
+import useCapture from "../pages/Story/CreateStoryPage/hooks/useCapture";
 
 type CreatePostModalProps = {
 	isModalOpen: boolean;
 	handleOk: () => void;
 	handleCancel: () => void;
 };
+
+type PostType = "text" | "image";
 
 const tagColors = ["success", "processing", "error", "default"];
 const getRandomTagColor = () =>
@@ -40,6 +51,11 @@ const CreatePostModal = ({
 	handleCancel,
 }: CreatePostModalProps) => {
 	const account = useAppSelector((state) => state.account);
+
+	const [postType, setPostType] = useState<PostType>("image");
+
+	const [background, setBackground] = useState<string>("gray");
+   const { captureAreaRef, getCapture } = useCapture();
 
 	const [previewImage, setPreviewImage] = useState<string>("");
 	const [showLocationInput, setShowLocationInput] = useState<boolean>(false);
@@ -81,12 +97,17 @@ const CreatePostModal = ({
 		setPreviewImage(file.url || (file.preview as string));
 	};
 
-	const onFinish = (values: ICreatePost) => {
+	const onFinish =async (values: ICreatePost) => {
 		console.log(account.user?.id);
 		console.log(values);
-
+		
 		values.isArchive = false;
 		values.tags = tags;
+
+		if(postType==="text"){
+			const postImage = await getCapture(postType,false);
+			values.images=postImage as Blob;
+		}
 
 		apiClient
 			.post("/api/Post/create", values, {
@@ -152,12 +173,23 @@ const CreatePostModal = ({
 			<Divider />
 			<Form onFinish={onFinish} layout="vertical" requiredMark={false}>
 				<FormItem name="userId" hidden initialValue={account.user?.id} />
-				<FormItem name="content">
-					<Input.TextArea
-						placeholder={`What's up, ${`${account.user?.firstName} ${account.user?.lastName}`}?`}
-						style={{ minHeight: 150 }}
-					/>
-				</FormItem>
+				<div ref={captureAreaRef}>
+					<FormItem name="content">
+						<Input.TextArea
+							placeholder={`What's up, ${`${account.user?.firstName} ${account.user?.lastName}`}?`}
+							style={{
+								minHeight: 150,
+								background: postType === "text" ? background : "white",
+								color: postType === "text" ? "white" : "black",
+								textAlign: postType === "text" ? "center" : "start",
+							}}
+						/>
+					</FormItem>
+				</div>
+
+				{postType === "text" && (
+					<BackgroundOptions setBackground={setBackground} />
+				)}
 
 				{showLocationInput && (
 					<Form.Item name="location" label="Location">
@@ -194,44 +226,79 @@ const CreatePostModal = ({
 						</Flex>
 					)}
 				</Flex>
+				{postType === "image" && previewImage && (
+					<>
+						<Divider />
+						<img
+							src={previewImage}
+							style={{ width: "100%" }}
+							alt="Post images"
+						/>
+						<Divider />
+					</>
+				)}
 
-				<Divider />
-				<img src={previewImage} style={{ width: "100%" }} alt="Post images" />
-				<Divider />
+				<Tooltip title="Change post type">
+					<button
+						style={{
+							border: 0,
+							background: "none",
+							cursor: "pointer",
+							height: "fit-content",
+						}}
+						type="button"
+						onClick={() => setPostType(postType === "image" ? "text" : "image")}
+					>
+						<img
+							src={postTypeImg}
+							className="h-50px"
+							style={{
+								boxShadow: "0px 4px 4px 0px #00000040",
+							}}
+							alt="Change post type icon"
+						/>
+					</button>
+				</Tooltip>
 
 				<Card title="Add to the publication">
 					<Flex>
-						<Form.Item
-							name="images"
-							valuePropName="image"
-							getValueFromEvent={(e: UploadChangeParam) => {
-								const image = e?.fileList[0] as IUploadedFile;
-								return image?.originFileObj;
-							}}
-						>
-							<Upload
-								showUploadList={false}
-								beforeUpload={() => false}
-								defaultFileList={[]}
-								accept="image/*"
-								onChange={handleAvatarChange}
-								onPreview={handlePreview}
-								maxCount={1}
+						{postType === "image" && (
+							<Form.Item
+								name="images"
+								valuePropName="image"
+								getValueFromEvent={(e: UploadChangeParam) => {
+									const image = e?.fileList[0] as IUploadedFile;
+									return image?.originFileObj;
+								}}
 							>
-								<Tooltip title="Image">
-									<button
-										style={{ border: 0, background: "none", cursor: "pointer" }}
-										type="button"
-									>
-										<img
-											src={photoImg}
-											className="h-50px"
-											alt="Add images icon (camera)"
-										/>
-									</button>
-								</Tooltip>
-							</Upload>
-						</Form.Item>
+								<Upload
+									showUploadList={false}
+									beforeUpload={() => false}
+									defaultFileList={[]}
+									accept="image/*"
+									onChange={handleAvatarChange}
+									onPreview={handlePreview}
+									maxCount={1}
+								>
+									<Tooltip title="Image">
+										<button
+											style={{
+												border: 0,
+												background: "none",
+												cursor: "pointer",
+											}}
+											type="button"
+										>
+											<img
+												src={photoImg}
+												className="h-50px"
+												alt="Add images icon (camera)"
+											/>
+										</button>
+									</Tooltip>
+								</Upload>
+							</Form.Item>
+						)}
 
 						<Tooltip title="Location">
 							<button

@@ -6,17 +6,17 @@ import { StoryType } from "../types";
 const useCapture = () => {
     const captureAreaRef = useRef(null);
 
-    const getCapture = async (storyType: StoryType) => {
+    const getCapture = async (storyType: StoryType,isStory=true) => {
         if (captureAreaRef.current == null) {
             message.error("Create story error!");
             return null;
         }
 
-        if (storyType == "text")
+        if (storyType == "text" && isStory)
             (captureAreaRef.current as HTMLDivElement).innerHTML = '<div class="preview-div-bordered"></div>';
 
         try {
-            const dataUrl = await domtoimage.toJpeg(captureAreaRef.current, { quality: 0.95, style: { 'overflow': 'hidden' } });
+            const dataUrl = await domtoimage.toJpeg(captureAreaRef.current, { quality: 1, style: { 'overflow': 'hidden' } });
             const blob = dataURLToBlob(dataUrl);
             return blob;
         } catch (error) {
