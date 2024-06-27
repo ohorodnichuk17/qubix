@@ -1,20 +1,31 @@
-import { Modal, Divider, Radio, Flex } from "antd";
-import './PublicationAudienceModal.css'
-import { planetImg, friendsImg, friendsExceptImg, userImg } from "../../../../utils/images";
+import { Modal, Divider, Radio, Flex, type RadioChangeEvent } from "antd";
+import "./PublicationAudienceModal.css";
+import {
+	planetImg,
+	friendsImg,
+	friendsExceptImg,
+	userImg,
+} from "../../../../utils/images";
 import { useState } from "react";
 import FriendsExceptModal from "../FriendsExceptModal/FriendsExceptModal";
+import AudienceOption from "./components/AudienceOption";
 
 type PublicationAudienceModalProps = {
-    audienceModalVisible: boolean;
-    setAudienceModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
-    audience: string;
-    handleAudienceChange: (e: any) => void;
-}
+	audienceModalVisible: boolean;
+	setAudienceModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
+	audience: string;
+	handleAudienceChange: (e: RadioChangeEvent) => void;
+};
 
-const PublicationAudienceModal = ({ audienceModalVisible, setAudienceModalVisible, audience, handleAudienceChange }: PublicationAudienceModalProps) => {
-    const [friendsExceptModalVisible, setFriendsExceptModalVisible] =
+const PublicationAudienceModal = ({
+	audienceModalVisible,
+	setAudienceModalVisible,
+	audience,
+	handleAudienceChange,
+}: PublicationAudienceModalProps) => {
+	const [friendsExceptModalVisible, setFriendsExceptModalVisible] =
 		useState<boolean>(false);
-	
+
 	return (
 		<>
 			<Modal
@@ -34,54 +45,34 @@ const PublicationAudienceModal = ({ audienceModalVisible, setAudienceModalVisibl
 				<Divider />
 				<Radio.Group onChange={handleAudienceChange} value={audience}>
 					<Flex vertical gap="middle">
-						<Radio value={"Public"}>
-							<Flex align="center" gap="middle">
-								<div className="publication-audience-img-circle">
-									<img src={planetImg} className="h-50px" />
-								</div>
-								<Flex vertical>
-									<p className="publication-audience-radio-title">Public</p>
-									<p>Everyone on and off the Quilt network</p>
-								</Flex>
-							</Flex>
-						</Radio>
-						<Radio value={"Friends"}>
-							<Flex align="center" gap="middle">
-								<div className="publication-audience-img-circle">
-									<img src={friendsImg} className="h-50px" />
-								</div>
-								<Flex vertical>
-									<p className="publication-audience-radio-title">Friends</p>
-									<p>Your friends on Quilt</p>
-								</Flex>
-							</Flex>
-						</Radio>
-						<Radio
-							value={"Friends, except..."}
+						<AudienceOption
+							value="Public"
+							imgSrc={planetImg}
+							imgAlt="Public post icon (planet)"
+							title="Public"
+							description="Everyone on and off the Quilt network"
+						/>
+						<AudienceOption
+							value="Friends"
+							imgSrc={friendsImg}
+							imgAlt="Post for friends icon (friends)"
+							title="Friends"
+							description="Your friends on Quilt"
+						/>
+						<AudienceOption
+							value="Friends, except..."
+							imgSrc={friendsExceptImg}
+							imgAlt="Post for friends, except... icon (friends)"
+							title="Friends, except..."
+							description="Don't show this post to some friends"
 							onClick={() => setFriendsExceptModalVisible(true)}
-						>
-							<Flex align="center" gap="middle">
-								<div className="publication-audience-img-circle">
-									<img src={friendsExceptImg} className="h-50px" />
-								</div>
-								<Flex vertical>
-									<p className="publication-audience-radio-title">
-										Friends, except...
-									</p>
-									<p>Don't show this post to some friends</p>
-								</Flex>
-							</Flex>
-						</Radio>
-						<Radio value={"Just me"}>
-							<Flex align="center" gap="middle">
-								<div className="publication-audience-img-circle">
-									<img src={userImg} className="h-50px" />
-								</div>
-								<Flex vertical>
-									<p className="publication-audience-radio-title">Just me</p>
-								</Flex>
-							</Flex>
-						</Radio>
+						/>
+						<AudienceOption
+							value="Just me"
+							imgSrc={userImg}
+							imgAlt="Private post icon (user)"
+							title="Just me"
+						/>
 					</Flex>
 				</Radio.Group>
 			</Modal>
@@ -91,6 +82,6 @@ const PublicationAudienceModal = ({ audienceModalVisible, setAudienceModalVisibl
 			/>
 		</>
 	);
-}
+};
 
 export default PublicationAudienceModal;
