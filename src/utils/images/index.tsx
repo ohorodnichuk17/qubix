@@ -25,6 +25,9 @@ import activeStory from '../../assets/profile/active_story.png';
 import messanger from '../../assets/profile/messanger.png';
 import activeMessanger from '../../assets/profile/messanger_active.png';
 import glyph from '../../assets/profile/glyph.png';
+import minusImg from '../../assets/post/minus.png';
+import hoverMinusImg from '../../assets/post/hover_minus.png';
+import ActiveMinusImg from '../../assets/post/active_minus.png';
 
 export {
     photoImg,
@@ -54,4 +57,7 @@ export {
     messanger,
     activeMessanger,
     glyph,
+	minusImg,
+	hoverMinusImg,
+	ActiveMinusImg,
 };

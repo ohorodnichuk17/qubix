@@ -27,6 +27,7 @@ export interface IUser {
    id: string,
    email: string,
    role: string,
+   userName: string;
    firstName: string,
    lastName: string,
    // phoneNumber: string | null,
