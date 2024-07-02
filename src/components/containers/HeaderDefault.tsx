@@ -21,11 +21,16 @@ const HeaderDefault = () => {
    const menu = (
       <Menu>
          <Menu.Item key="1">
+            <NavLink to="/profile">
+               Profile
+            </NavLink>
+         </Menu.Item>
+         <Menu.Item key="2">
             <NavLink to="/settings">
                Settings and privacy
             </NavLink>
          </Menu.Item>
-         <Menu.Item key="2" onClick={handleLogout}>
+         <Menu.Item key="3" onClick={handleLogout}>
             Logout
          </Menu.Item>
       </Menu>
