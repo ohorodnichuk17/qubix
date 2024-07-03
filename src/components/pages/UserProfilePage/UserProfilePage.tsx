@@ -12,6 +12,7 @@ import { UploadChangeParam } from 'antd/es/upload';
 import { FileType } from '../../../types/FileType';
 import { CoverButton, AvatarButton, EditButton } from './styled';
 import { getBase64 } from '../../../utils/helpers/getBase64';
+import AvatarMenu from './components/AvatarMenu';
 
 const { TextArea } = Input;
 
@@ -122,35 +123,7 @@ const UserProfilePage: React.FC = () => {
     </Menu>
   );
 
-  const avatarMenu = (
-    <Menu>
-      <Upload
-        showUploadList={false}
-        beforeUpload={() => false}
-        accept="image/*"
-        onChange={handleAvatarChange}
-        maxCount={1}
-        defaultFileList={[]}
-      >
-        <Menu.Item key="1" icon={<CameraOutlined />}>
-          <span>Add new avatar</span>
-        </Menu.Item>
-      </Upload>
-      <Menu.Item key="2" icon={<DeleteOutlined />} onClick={() => {
-        if (user?.avatar == "/images/avatars/") {
-          setAvatar(avatarPng);
-        }
-        else {
-          setAvatar(APP_ENV.BASE_URL + user?.avatar)
-        }
-      }}
-      >
-        Delete avatar
-      </Menu.Item>
-    </Menu>
-  );
-
-  const onFinish = (values: IUserProfileEditModel) => {
+    const onFinish = (values: IUserProfileEditModel) => {
     const formData = new FormData();
 
     Object.keys(values).forEach(key => {
@@ -259,7 +232,7 @@ const UserProfilePage: React.FC = () => {
                     }}
                   >
                     <Avatar size={160} src={avatar} />
-                    <Dropdown overlay={avatarMenu} trigger={['click']}>
+                    <Dropdown overlay={<AvatarMenu handleAvatarChange={handleAvatarChange} setAvatar={setAvatar}/>} trigger={['click']}>
                       <AvatarButton style={{ border: "none", color: "black", borderRadius: "100px" }} icon={<CameraOutlined />} />
                     </Dropdown>
                   </Form.Item>
