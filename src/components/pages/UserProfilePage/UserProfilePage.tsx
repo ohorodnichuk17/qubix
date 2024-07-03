@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Avatar, Button, Card, Divider, Menu, Row, Col, Typography, Upload, Dropdown, Input, Switch, Modal, Form, Select } from 'antd';
-import { CameraOutlined, DeleteOutlined } from '@ant-design/icons';
+import { CameraOutlined } from '@ant-design/icons';
 import './UserProfilePage.css';
 import { useAppSelector } from '../../../hooks/redux';
-import { IUploadedFile, IUserProfile, IUserProfileEditModel } from './types';
+import { IUploadedFile, IUserProfile, IUserProfileEditModel, PronounsOptions } from './types';
 import axios from 'axios';
 import { APP_ENV } from '../../../env';
 import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
@@ -14,29 +14,6 @@ import { CoverButton, AvatarButton, EditButton } from './styled';
 import { getBase64 } from '../../../utils/helpers/getBase64';
 import AvatarMenu from './components/AvatarMenu';
 import CoverPhotoMenu from './components/CoverPhotoMenu';
-
-const { TextArea } = Input;
-
-const formConfig = {
-  aboutMe: {
-    label: "About Me",
-    type: "textarea",
-    placeholder: "Tell about yourself...",
-  },
-  fields: [
-    {
-      label: "Pronouns",
-      type: "select",
-      defaultValue: "do not specify",
-      options: [
-        "do not specify",
-        "he/him",
-        "she/her",
-        "they/them",
-      ],
-    },
-  ],
-};
 
 const UserProfilePage: React.FC = () => {
   const [coverPhoto, setCoverPhoto] = useState(editImg);
@@ -234,8 +211,8 @@ const UserProfilePage: React.FC = () => {
                     </Button>
                   ]}>
                   <Form layout="vertical" id="editProfileForm" onFinish={onFinish} onFinishFailed={onFinishFailed}>
-                    <Form.Item name="biography" label={formConfig.aboutMe.label}>
-                      <TextArea rows={4} placeholder={formConfig.aboutMe.placeholder} />
+                    <Form.Item name="biography" label="About Me">
+                      <Input.TextArea rows={4} placeholder="Tell about yourself..." />
                     </Form.Item>
                     <Form.Item name="country" label="Country">
                       <CountryDropdown
@@ -252,19 +229,9 @@ const UserProfilePage: React.FC = () => {
                         classes="ant-select custom-select"
                       />
                     </Form.Item>
-                    {formConfig.fields.map((field, index) => (
-                      <Form.Item name={field.label.toLowerCase()} key={index} label={field.label}>
-                        {field.type === "select" && (
-                          <Select defaultValue={field.defaultValue}>
-                            {field.options.map((option, idx) => (
-                              <Select.Option key={idx} value={option}>
-                                {option}
-                              </Select.Option>
-                            ))}
-                          </Select>
-                        )}
-                      </Form.Item>
-                    ))}
+                    <Form.Item name="pronouns" label="Pronouns">
+                      <Select defaultValue="do not specify" options={PronounsOptions} />
+                    </Form.Item>
                     <Form.Item name="isBlocked" valuePropName="checked" label="Is Blocked">
                       <Switch />
                     </Form.Item>
