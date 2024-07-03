@@ -11,6 +11,7 @@ import { avatar as avatarPng, cameraImg, editImg } from '../../../utils/images';
 import { UploadChangeParam } from 'antd/es/upload';
 import { FileType } from '../../../types/FileType';
 import { CoverButton, AvatarButton, EditButton } from './styled';
+import { getBase64 } from '../../../utils/helpers/getBase64';
 
 const { TextArea } = Input;
 
@@ -185,14 +186,6 @@ const UserProfilePage: React.FC = () => {
   const onFinishFailed = (errorInfo: any) => {
     console.log('Failed:', errorInfo);
   };
-
-  const getBase64 = (file: FileType): Promise<string> =>
-    new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result as string);
-      reader.onerror = (error) => reject(error);
-    });
 
   return (
     <>
