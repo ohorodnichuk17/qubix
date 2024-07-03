@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Avatar, Button, Card, Divider, Menu, Row, Col, Typography, Upload, Dropdown, Input, Switch, Modal, Form, Select, GetProp, UploadProps } from 'antd';
+import { Avatar, Button, Card, Divider, Menu, Row, Col, Typography, Upload, Dropdown, Input, Switch, Modal, Form, Select } from 'antd';
 import { CameraOutlined, DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
 import './UserProfilePage.css';
@@ -14,10 +14,9 @@ import avatarPng from '../../../assets/authentication/avatar.png';
 import editPng from '../../../assets/profile/edit.png';
 import imagePng from '../../../assets/profile/edit.png';
 import { UploadChangeParam } from 'antd/es/upload';
+import { FileType } from '../../../types/FileType';
 
 const { TextArea } = Input;
-
-type FileType = Parameters<GetProp<UploadProps, 'beforeUpload'>>[0];
 
 const formConfig = {
   aboutMe: {
