@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Avatar, Button, Card, Divider, Menu, Row, Col, Typography, Upload, Dropdown, Input, Switch, Modal, Form, Select } from 'antd';
-import { CameraOutlined, DeleteOutlined, EditOutlined } from '@ant-design/icons';
-import styled from 'styled-components';
+import { CameraOutlined, DeleteOutlined } from '@ant-design/icons';
 import './UserProfilePage.css';
 import { useAppSelector } from '../../../hooks/redux';
 import { IUploadedFile, IUserProfile, IUserProfileEditModel } from './types';
@@ -15,6 +14,7 @@ import editPng from '../../../assets/profile/edit.png';
 import imagePng from '../../../assets/profile/edit.png';
 import { UploadChangeParam } from 'antd/es/upload';
 import { FileType } from '../../../types/FileType';
+import { CoverButton, AvatarButton, EditButton } from './styled';
 
 const { TextArea } = Input;
 
@@ -38,50 +38,6 @@ const formConfig = {
     },
   ],
 };
-
-const CoverButton = styled(Button)`
-  background-color: white;
-  border-radius: 10px;
-  padding: 2px;
-  text-transform: none;
-  color: #000000;
-  &:hover {
-    background-color: #ff7f50;
-    box-shadow: none;
-  }
-  margin: 20px;
-`;
-
-const EditButton = styled(Button)`
-  background-color: #ff7f50;
-  border-radius: 10px;
-  padding: 2px;
-  width: 15%;
-  text-transform: none;
-  margin: 7%;
-  font-weight: bold;
-  color: #000000;
-  &:hover {
-    background-color: #d9d9d9;
-    box-shadow: none;
-  }
-  @media (max-width: 768px) {
-    width: 40%;
-    font-size: 12px;
-  }
-`;
-
-const AvatarButton = styled(Button)`
-  background-color: #d9d9d9;
-  padding: 0px;
-  text-transform: none;
-  margin-left: -3vh;
-  margin-top: 10vh;
-  &:hover {
-    background-color: #ff7f50;
-    box-shadow: none;
-  }
-`;
 
 const UserProfilePage: React.FC = () => {
   const [coverPhoto, setCoverPhoto] = useState(imagePng);
