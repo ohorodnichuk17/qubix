@@ -28,6 +28,8 @@ import glyph from '../../assets/profile/glyph.png';
 import minusImg from '../../assets/post/minus.png';
 import hoverMinusImg from '../../assets/post/hover_minus.png';
 import ActiveMinusImg from '../../assets/post/active_minus.png';
+import cameraImg from '../../assets/profile/camera.png'
+import editImg from '../../assets/profile/edit.png'
 
 export {
     photoImg,
@@ -60,4 +62,6 @@ export {
 	minusImg,
 	hoverMinusImg,
 	ActiveMinusImg,
+    cameraImg,
+    editImg,
 };

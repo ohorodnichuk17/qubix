@@ -7,11 +7,7 @@ import { IUploadedFile, IUserProfile, IUserProfileEditModel } from './types';
 import axios from 'axios';
 import { APP_ENV } from '../../../env';
 import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
-
-import cameraPng from '../../../assets/profile/camera.png';
-import avatarPng from '../../../assets/authentication/avatar.png';
-import editPng from '../../../assets/profile/edit.png';
-import imagePng from '../../../assets/profile/edit.png';
+import { avatar as avatarPng, cameraImg, editImg } from '../../../utils/images';
 import { UploadChangeParam } from 'antd/es/upload';
 import { FileType } from '../../../types/FileType';
 import { CoverButton, AvatarButton, EditButton } from './styled';
@@ -40,7 +36,7 @@ const formConfig = {
 };
 
 const UserProfilePage: React.FC = () => {
-  const [coverPhoto, setCoverPhoto] = useState(imagePng);
+  const [coverPhoto, setCoverPhoto] = useState(editImg);
   const [avatar, setAvatar] = useState(avatarPng);
   const [avatarAsFile, setAvatarAsFile] = useState<IUploadedFile>();
   const [coverPhotoAsFile, setCoverPhotoAsFile] = useState<IUploadedFile>();
@@ -83,7 +79,7 @@ const UserProfilePage: React.FC = () => {
       setCoverPhoto(APP_ENV.BASE_URL + "/images/coverPhotos/" + userProfile?.coverPhoto);
     }
     else {
-      setCoverPhoto(imagePng);
+      setCoverPhoto(editImg);
     }
   }, [userProfile?.coverPhoto])
 
@@ -230,7 +226,7 @@ const UserProfilePage: React.FC = () => {
                       position: 'relative'
                     }}
                   >
-                    {coverPhoto === imagePng ? (
+                    {coverPhoto === editImg ? (
                       <Upload
                         showUploadList={false}
                         beforeUpload={() => false}
@@ -240,14 +236,14 @@ const UserProfilePage: React.FC = () => {
                         defaultFileList={[]}
                       >
                         <CoverButton style={{ display: "flex", alignItems: "center", border: "none", right: "0px", bottom: "0px", position: "absolute" }}>
-                          <img src={cameraPng} alt="coverPhoto" style={{ width: 26, height: 22, margin: 5 }} />
+                          <img src={cameraImg} alt="coverPhoto" style={{ width: 26, height: 22, margin: 5 }} />
                           Add cover photo
                         </CoverButton>
                       </Upload>
                     ) : (
                       <Dropdown overlay={coverPhotoMenu} trigger={['click']}>
                         <CoverButton style={{ display: "flex", alignItems: "center", border: "none", right: "0px", bottom: "0px", position: "absolute" }}>
-                          <img src={editPng} alt="editCoverPhoto" style={{ width: 26, height: 22, margin: 5 }} />
+                            <img src={editImg} alt="editCoverPhoto" style={{ width: 26, height: 22, margin: 5 }} />
                           Edit cover photo
                         </CoverButton>
                       </Dropdown>
