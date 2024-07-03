@@ -13,6 +13,7 @@ import { FileType } from '../../../types/FileType';
 import { CoverButton, AvatarButton, EditButton } from './styled';
 import { getBase64 } from '../../../utils/helpers/getBase64';
 import AvatarMenu from './components/AvatarMenu';
+import CoverPhotoMenu from './components/CoverPhotoMenu';
 
 const { TextArea } = Input;
 
@@ -103,26 +104,6 @@ const UserProfilePage: React.FC = () => {
     setAvatarAsFile(info.fileList[0] as IUploadedFile);
   };
 
-  const coverPhotoMenu = (
-    <Menu>
-      <Upload
-        showUploadList={false}
-        beforeUpload={() => false}
-        accept="image/*"
-        onChange={handleCoverPhotoChange}
-        maxCount={1}
-        defaultFileList={[]}
-      >
-        <Menu.Item key="1" icon={<CameraOutlined />}>
-          <span>Add new cover photo</span>
-        </Menu.Item>
-      </Upload>
-      <Menu.Item key="2" icon={<DeleteOutlined />} onClick={() => setCoverPhoto(APP_ENV.BASE_URL + "/images/coverPhotos/" + userProfile?.coverPhoto)}>
-        Delete cover photo
-      </Menu.Item>
-    </Menu>
-  );
-
     const onFinish = (values: IUserProfileEditModel) => {
     const formData = new FormData();
 
@@ -211,7 +192,7 @@ const UserProfilePage: React.FC = () => {
                     </CoverButton>
                   </Upload>
                 ) : (
-                  <Dropdown overlay={coverPhotoMenu} trigger={['click']}>
+                  <Dropdown overlay={<CoverPhotoMenu handleCoverPhotoChange={handleCoverPhotoChange} setCoverPhoto={setCoverPhoto} userCoverPhoto={userProfile?.coverPhoto}/>} trigger={['click']}>
                     <CoverButton style={{ display: "flex", alignItems: "center", border: "none", right: "0px", bottom: "0px", position: "absolute" }}>
                       <img src={editImg} alt="editCoverPhoto" style={{ width: 26, height: 22, margin: 5 }} />
                       Edit cover photo
