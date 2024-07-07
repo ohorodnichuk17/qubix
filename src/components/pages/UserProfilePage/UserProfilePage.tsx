@@ -34,7 +34,6 @@ import AvatarMenu from "./components/AvatarMenu";
 import CoverPhotoMenu from "./components/CoverPhotoMenu";
 import { AvatarButton, CoverButton, EditButton } from "./styled";
 import {
-	type IUploadedFile,
 	type IUserProfile,
 	type IUserProfileEditModel,
 	PronounsOptions,
@@ -93,68 +92,49 @@ const UserProfilePage: React.FC = () => {
 		}
 	}, [userProfile?.coverPhoto]);
 
-	const handleCoverPhotoChange = async (info: UploadChangeParam) => {
+	const handleUploadChange = async (
+		info: UploadChangeParam,
+		type: "avatar" | "coverPhoto",
+	) => {
 		const file = info.fileList[0];
 		if (!file.url && !file.preview) {
 			file.preview = await getBase64(file.originFileObj as FileType);
 		}
-		setCoverPhoto(file.url || (file.preview as string));
+		const preview = file.url || (file.preview as string);
+
+		if (type === "avatar") {
+			setAvatar(preview);
+		} else {
+			setCoverPhoto(preview);
+		}
 
 		const formData = new FormData();
-
 		if (user?.id) {
 			formData.append("userId", user.id);
 		}
-		formData.append(
-			"coverPhoto",
-			(info.fileList[0] as IUploadedFile).originFileObj,
-		);
+		formData.append(type, file.originFileObj as FileType);
+
 		apiClient
 			.put("/api/user-profile/edit-profile", formData, {
-				headers: {
-					"Content-Type": "multipart/form-data",
-				},
+				headers: { "Content-Type": "multipart/form-data" },
 			})
 			.then((res) => {
-				console.log(res);
+				if (type === "avatar") {
+					const newAvatar = `/images/avatars/${res.data.userEntity.avatar}`;
+					dispatch(updateAvatar(newAvatar));
+				}
 			})
 			.catch((error) => {
 				console.error(error);
-				message.error("Failed to change cover photo");
+				message.error(`Failed to change ${type}`);
 			});
 	};
 
-	const handleAvatarChange = async (info: UploadChangeParam) => {
-		const file = info.fileList[0];
-		if (!file.url && !file.preview) {
-			file.preview = await getBase64(file.originFileObj as FileType);
-		}
-		setAvatar(file.url || (file.preview as string));
+	const handleCoverPhotoChange = async (info: UploadChangeParam) =>
+		handleUploadChange(info, "coverPhoto");
 
-		const formData = new FormData();
-
-		if (user?.id) {
-			formData.append("userId", user.id);
-		}
-		formData.append(
-			"avatar",
-			(info.fileList[0] as IUploadedFile).originFileObj,
-		);
-		apiClient
-			.put("/api/user-profile/edit-profile", formData, {
-				headers: {
-					"Content-Type": "multipart/form-data",
-				},
-			})
-			.then((res) => {
-				const newAvatar = `/images/avatars/${res.data.userEntity.avatar}`;
-				dispatch(updateAvatar(newAvatar));
-			})
-			.catch((error) => {
-				console.error(error);
-				message.error("Failed to change avatar");
-			});
-	};
+	const handleAvatarChange = async (info: UploadChangeParam) =>
+		handleUploadChange(info, "avatar");
 
 	const onFinish = (values: IUserProfileEditModel) => {
 		apiClient
