@@ -1,9 +1,13 @@
 import { Card, Flex, Input, Modal, Tag } from "antd";
 import { useEffect, useState } from "react";
-import { apiClient } from "../../../../utils/api/apiClient";
 import { useAppSelector } from "../../../../hooks/redux";
 import type { IUser } from "../../../../interfaces/account";
-import { ActiveMinusImg, hoverMinusImg, minusImg } from "../../../../utils/images";
+import { apiClient } from "../../../../utils/api/apiClient";
+import {
+	ActiveMinusImg,
+	hoverMinusImg,
+	minusImg,
+} from "../../../../utils/images";
 
 type FriendsExceptModalProps = {
 	friendsExceptModalVisible: boolean;
@@ -54,29 +58,33 @@ const FriendsExceptModal = ({
 			onCancel={() => setFriendsExceptModalVisible(false)}
 		>
 			<Input.Search />
-			{friendsList.map((friend) => (
-				<Flex key={friend.id} align="center" justify="space-between">
-					<img
-						src={`http://localhost:5181/images/avatars/${friend?.avatar}`}
-						alt="User avatar"
-						className="h-50px"
-					/>
-					<p>{friend.userName}</p>
-					<img
-						src={minus}
-						style={{ height: 25, width: 25, cursor: "pointer" }}
-						alt="Friend except icon (minus)"
-						onMouseEnter={() => setMinus(hoverMinusImg)}
-						onMouseLeave={() => setMinus(minusImg)}
-						onMouseDown={() => setMinus(ActiveMinusImg)}
-						onKeyUp={() => setMinus(minusImg)}
-						onClick={() => {
-							removeFriend(friend);
-							setMinus(minusImg);
-						}}
-					/>
-				</Flex>
-			))}
+			{friendsList ? (
+				friendsList.map((friend) => (
+					<Flex key={friend.id} align="center" justify="space-between">
+						<img
+							src={`http://localhost:5181/images/avatars/${friend?.avatar}`}
+							alt="User avatar"
+							className="h-50px"
+						/>
+						<p>{friend.userName}</p>
+						<img
+							src={minus}
+							style={{ height: 25, width: 25, cursor: "pointer" }}
+							alt="Friend except icon (minus)"
+							onMouseEnter={() => setMinus(hoverMinusImg)}
+							onMouseLeave={() => setMinus(minusImg)}
+							onMouseDown={() => setMinus(ActiveMinusImg)}
+							onKeyUp={() => setMinus(minusImg)}
+							onClick={() => {
+								removeFriend(friend);
+								setMinus(minusImg);
+							}}
+						/>
+					</Flex>
+				))
+			) : (
+				<></>
+			)}
 
 			{removedFriendsList.length !== 0 && (
 				<Card title="Friends who won't see your post">
