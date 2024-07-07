@@ -40,7 +40,7 @@ export const confirmEmail = createAsyncThunk(
 );
 
 export const login = createAsyncThunk(
-    'Authentication/login',
+    'authentication/login',
     async (payload: ILogin, { rejectWithValue }) => {
         try {
             const response = await apiClient.post('/api/Authentication/login', payload);

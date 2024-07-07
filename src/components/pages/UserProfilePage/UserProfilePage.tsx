@@ -14,6 +14,9 @@ import { CoverButton, AvatarButton, EditButton } from './styled';
 import { getBase64 } from '../../../utils/helpers/getBase64';
 import AvatarMenu from './components/AvatarMenu';
 import CoverPhotoMenu from './components/CoverPhotoMenu';
+import { apiClient } from '../../../utils/api/apiClient';
+import { useDispatch } from 'react-redux';
+import { updateAvatar } from '../../../store/account/account.slice';
 
 const UserProfilePage: React.FC = () => {
   const [coverPhoto, setCoverPhoto] = useState(editImg);
@@ -21,6 +24,7 @@ const UserProfilePage: React.FC = () => {
   const [avatarAsFile, setAvatarAsFile] = useState<IUploadedFile>();
   const [coverPhotoAsFile, setCoverPhotoAsFile] = useState<IUploadedFile>();
   const [userProfile, setUserProfile] = useState<IUserProfile | null>(null);
+  const dispatch = useDispatch();
   const { isLogin, user } = useAppSelector(state => state.account);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [country, setCountry] = useState('');
@@ -41,7 +45,7 @@ const UserProfilePage: React.FC = () => {
   useEffect(() => {
     setAvatar(APP_ENV.BASE_URL + user?.avatar);
     if (user?.id) {
-      axios.get(`http://localhost:5181/api/UserProfile/get-profile-by-id/${user.id}`)
+      apiClient.get(`/api/user-profile/get-profile-by-id?UserId=${user.id}`)
         .then(response => {
           setUserProfile(response.data);
         })
@@ -79,7 +83,34 @@ const UserProfilePage: React.FC = () => {
     }
     setAvatar(file.url || (file.preview as string));
     setAvatarAsFile(info.fileList[0] as IUploadedFile);
+
+    const formData = new FormData();
+
+    if (user?.id) {
+      formData.append('userId', user.id);
+    }
+    formData.append("avatar", (info.fileList[0] as IUploadedFile).originFileObj);
+    apiClient.put("/api/user-profile/edit-profile", formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    }).then(res => {
+      const newAvatar = `/images/avatars/${res.data.userEntity.avatar}`;
+      dispatch(updateAvatar(newAvatar));
+    }).catch(error => {
+      console.log(error);
+    });
   };
+
+  useEffect(() => {
+    if (user) {
+      console.log("AVATAR AFTER: ", user.avatar);
+    }
+  }, [user?.avatar]);
+
+  useEffect(()=>{
+    console.log("USER WAS CHANGED: ",user);
+  },[user])
 
     const onFinish = (values: IUserProfileEditModel) => {
     const formData = new FormData();
@@ -101,7 +132,7 @@ const UserProfilePage: React.FC = () => {
     formData.append("avatar", avatarAsFile?.originFileObj);
     formData.append("coverPhoto", coverPhotoAsFile?.originFileObj);
 
-    axios.put(`http://localhost:5181/api/UserProfile/edit-profile`, formData, {
+    axios.put(`http://localhost:5181/api/user-profile/edit-profile`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data'
       }

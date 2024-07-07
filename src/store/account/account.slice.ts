@@ -62,6 +62,11 @@ export const accountsSlice = createSlice({
          state.token = null;
          state.isLogin = false;
       },
+      updateAvatar: (state, action: PayloadAction<string>) => {
+         if (state.user) {
+            state.user.avatar = action.payload;
+         }
+      },
    },
    extraReducers: (builder) => {
       builder
@@ -110,5 +115,5 @@ export const accountsSlice = createSlice({
    }
 });
 
-export const { autoLogin, logout } = accountsSlice.actions;
+export const { autoLogin, logout, updateAvatar } = accountsSlice.actions;
 export default accountsSlice.reducer;
