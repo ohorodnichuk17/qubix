@@ -74,6 +74,22 @@ const UserProfilePage: React.FC = () => {
     }
     setCoverPhoto(file.url || (file.preview as string));
     setCoverPhotoAsFile(info.fileList[0] as IUploadedFile);
+
+    const formData = new FormData();
+
+    if (user?.id) {
+      formData.append('userId', user.id);
+    }
+    formData.append("coverPhoto", (info.fileList[0] as IUploadedFile).originFileObj);
+    apiClient.put("/api/user-profile/edit-profile", formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    }).then(res => {
+      console.log(res);
+    }).catch(error => {
+      console.log(error);
+    });
   };
 
   const handleAvatarChange = async (info: any) => {
