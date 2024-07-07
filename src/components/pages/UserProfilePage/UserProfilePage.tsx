@@ -19,7 +19,7 @@ import {
 } from "antd";
 import type React from "react";
 import { useEffect, useState } from "react";
-import "./UserProfilePage.css";
+import "./UserProfilePage.module.css";
 import type { UploadChangeParam } from "antd/es/upload";
 import { CountryDropdown, RegionDropdown } from "react-country-region-selector";
 import { useDispatch } from "react-redux";

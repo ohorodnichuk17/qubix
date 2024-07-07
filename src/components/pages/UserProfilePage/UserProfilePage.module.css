@@ -27,7 +27,7 @@ line-height: 24px;
 }
 
 /* General styles */
-/* .ant-modal {
+.ant-modal {
 top: 20px;
 }
 
@@ -96,9 +96,9 @@ border-color: #d96b42;
 
 .ant-col.ant-col-xs-24.ant-col-sm-24.ant-col-md-16.ant-col-lg-16.ant-col-xl-16.css-dev-only-do-not-override-2lebfw {
     text-align: right;
-} */
+} 
 
-/* @media (max-width: 768px) {
+@media (max-width: 768px) {
     :where(.css-dev-only-do-not-override-2lebfw).ant-row [class^="ant-row"], :where(.css-dev-only-do-not-override-2lebfw).ant-row [class*=" ant-row"] > ul > li {
         font-size: 14px;
     }
@@ -110,4 +110,4 @@ border-color: #d96b42;
     .ant-col.ant-col-xs-24.ant-col-sm-24.ant-col-md-16.ant-col-lg-16.ant-col-xl-16.css-dev-only-do-not-override-2lebfw {
         text-align: center;
     }
-} */
+}
