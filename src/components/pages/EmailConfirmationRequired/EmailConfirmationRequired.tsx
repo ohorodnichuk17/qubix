@@ -1,21 +1,33 @@
-import React from 'react';
-import { createRoot } from 'react-dom/client';
-import styles from './EmailConfirmationRequired.module.css';
+import { Flex } from "antd";
+import type React from "react";
+import { useState } from "react";
+import EmailConfirmationRequiredCard from "./components/EmailConfirmationRequiredCard";
+import ResendEmailConfirmationCard from "./components/ResendEmailConfirmationCard";
 
 const EmailConfirmationRequired: React.FC = () => {
-   return (
-      <div className={styles.wrapper}>
-         <div className={styles.container}>
-            <div className={styles.icon}>📧</div>
-            <h1 className={styles.h1}>Email Confirmation Required</h1>
-            <p className={styles.p}>Thank you for registering! Please check your email to confirm your email address before you can log in.</p>
-         </div>
-      </div>
-   );
-};
+	const [
+		isVisibleResendEmailConfirmationForm,
+		setIsVisibleResendEmailConfirmationForm,
+	] = useState<boolean>(false);
 
-const container = document.getElementById('root');
-const root = createRoot(container!);
-root.render(<EmailConfirmationRequired />);
+	return (
+		<Flex
+			vertical
+			gap="small"
+			align="center"
+			justify="center"
+			style={{ height: "100%" }}
+		>
+			{!isVisibleResendEmailConfirmationForm && (
+				<EmailConfirmationRequiredCard
+					setIsVisibleResendEmailConfirmationForm={
+						setIsVisibleResendEmailConfirmationForm
+					}
+				/>
+			)}
+			{isVisibleResendEmailConfirmationForm && <ResendEmailConfirmationCard />}
+		</Flex>
+	);
+};
 
 export default EmailConfirmationRequired;
