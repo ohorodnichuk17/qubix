@@ -1,5 +1,15 @@
 import { Flex } from "antd";
 import { useState } from "react";
+import {
+	bg1,
+	bg2,
+	bg3,
+	bg4,
+	bg5,
+	bg6,
+	bg7,
+	bg8,
+} from "../../../../../utils/images";
 
 type BackgroundOptionsProps = {
 	setBackground: React.Dispatch<React.SetStateAction<string>>;
@@ -89,6 +99,30 @@ const BackgroundOptions = ({ setBackground }: BackgroundOptionsProps) => {
 		},
 		{
 			background: "linear-gradient(180deg, #BAFFC9 0%, #C9FFBA 100%)",
+		},
+		{
+			background: `url(${bg1}) no-repeat center/cover`,
+		},
+		{
+			background: `url(${bg2}) no-repeat center/cover`,
+		},
+		{
+			background: `url(${bg3}) no-repeat center/cover`,
+		},
+		{
+			background: `url(${bg4}) no-repeat center/cover`,
+		},
+		{
+			background: `url(${bg5}) no-repeat center/cover`,
+		},
+		{
+			background: `url(${bg6}) no-repeat center/cover`,
+		},
+		{
+			background: `url(${bg7}) no-repeat center/cover`,
+		},
+		{
+			background: `url(${bg8}) no-repeat center/cover`,
 		},
 	];
 

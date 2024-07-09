@@ -31,6 +31,16 @@ import ActiveMinusImg from '../../assets/post/active_minus.png';
 import cameraImg from '../../assets/profile/camera.png'
 import editImg from '../../assets/profile/edit.png'
 
+//Backgrounds
+import bg1 from '../../assets/backgrounds/1.jpg';
+import bg2 from '../../assets/backgrounds/2.jpg';
+import bg3 from '../../assets/backgrounds/3.jpg';
+import bg4 from '../../assets/backgrounds/4.jpg';
+import bg5 from '../../assets/backgrounds/5.jpg';
+import bg6 from '../../assets/backgrounds/6.jpg';
+import bg7 from '../../assets/backgrounds/7.jpg';
+import bg8 from '../../assets/backgrounds/8.jpg';
+
 export {
     photoImg,
     locationImg,
@@ -64,4 +74,12 @@ export {
 	ActiveMinusImg,
     cameraImg,
     editImg,
+    bg1,
+    bg2,
+    bg3,
+    bg4,
+    bg5,
+    bg6,
+    bg7,
+    bg8
 };
