@@ -8,7 +8,6 @@ import {
 	Modal,
 	type RadioChangeEvent,
 	Tag,
-	Tooltip,
 	Upload,
 	message,
 } from "antd";
@@ -32,6 +31,7 @@ import FeelingModal from "../feelings/FeelingModal";
 import type { IFeeling } from "../feelings/types";
 import BackgroundOptions from "../pages/Story/CreateStoryPage/components/BackgroundOptions";
 import useCapture from "../pages/Story/CreateStoryPage/hooks/useCapture";
+import AddToThePublicationButton from "./components/AddToThePublicationButton/AddToThePublicationButton";
 import PublicationAudienceModal from "./components/PublicationAudienceModal/PublicationAudienceModal";
 import type { ICreatePost } from "./types";
 
@@ -262,28 +262,15 @@ const CreatePostModal = ({
 						<Divider />
 					</>
 				)}
-
-				<Tooltip title="Change post type">
-					<button
-						style={{
-							border: 0,
-							background: "none",
-							cursor: "pointer",
-							height: "fit-content",
-						}}
-						type="button"
-						onClick={() => setPostType(postType === "image" ? "text" : "image")}
-					>
-						<img
-							src={postTypeImg}
-							className="h-50px"
-							style={{
-								boxShadow: "0px 4px 4px 0px #00000040",
-							}}
-							alt="Change post type icon"
-						/>
-					</button>
-				</Tooltip>
+				<AddToThePublicationButton
+					tooltioTitle="Change post type"
+					onClick={() => setPostType(postType === "image" ? "text" : "image")}
+					imgSrc={postTypeImg}
+					imgAlt="Change post type icon"
+					imgStyle={{
+						boxShadow: "0px 4px 4px 0px #00000040",
+					}}
+				/>
 
 				<Card title="Add to the publication">
 					<Flex>
@@ -305,76 +292,32 @@ const CreatePostModal = ({
 									onPreview={handlePreview}
 									maxCount={1}
 								>
-									<Tooltip title="Image">
-										<button
-											style={{
-												border: 0,
-												background: "none",
-												cursor: "pointer",
-											}}
-											type="button"
-										>
-											<img
-												src={photoImg}
-												className="h-50px"
-												alt="Add images icon (camera)"
-											/>
-										</button>
-									</Tooltip>
+									<AddToThePublicationButton
+										tooltioTitle="Image"
+										imgSrc={photoImg}
+										imgAlt="Add images icon (camera)"
+									/>
 								</Upload>
 							</Form.Item>
 						)}
-
-						<Tooltip title="Location">
-							<button
-								style={{
-									border: 0,
-									background: "none",
-									cursor: "pointer",
-									height: "fit-content",
-								}}
-								type="button"
-								onClick={() => setShowLocationInput(!showLocationInput)}
-							>
-								<img
-									src={locationImg}
-									className="h-50px"
-									alt="Add location icon"
-								/>
-							</button>
-						</Tooltip>
-						<Tooltip title="#">
-							<button
-								style={{
-									border: 0,
-									background: "none",
-									cursor: "pointer",
-									height: "fit-content",
-								}}
-								type="button"
-								onClick={() => setShowTagsInput(!showTagsInput)}
-							>
-								<img src={tagImg} className="h-50px" alt="Add tags icon" />
-							</button>
-						</Tooltip>
-						<Tooltip title="Change feeling">
-							<button
-								style={{
-									border: 0,
-									background: "none",
-									cursor: "pointer",
-									height: "fit-content",
-								}}
-								type="button"
-								onClick={() => setFeelingModalVisible(!feelingModalVisible)}
-							>
-								<img
-									src={feeling ? feeling.emoji : happyFeelingImg}
-									className="h-50px"
-									alt="Change feeling icon (happy smile)"
-								/>
-							</button>
-						</Tooltip>
+						<AddToThePublicationButton
+							tooltioTitle="Location"
+							onClick={() => setShowLocationInput(!showLocationInput)}
+							imgSrc={locationImg}
+							imgAlt="location icon"
+						/>
+						<AddToThePublicationButton
+							tooltioTitle="#"
+							onClick={() => setShowTagsInput(!showTagsInput)}
+							imgSrc={tagImg}
+							imgAlt="Add tags icon"
+						/>
+						<AddToThePublicationButton
+							tooltioTitle="Feeling"
+							onClick={() => setFeelingModalVisible(!feelingModalVisible)}
+							imgSrc={feeling ? feeling.emoji : happyFeelingImg}
+							imgAlt="Change feeling icon (happy smile)"
+						/>
 					</Flex>
 				</Card>
 
