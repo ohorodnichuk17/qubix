@@ -69,7 +69,6 @@ const HeaderDefault = () => {
       </Menu>
    );
 
-
    return (
       <Header className="custom-header">
          {isLogin ? (
@@ -148,12 +147,12 @@ const HeaderDefault = () => {
                </div>
                <div className="right-section">
                   <NavLink to="/login" style={{ color: '#FFFAFA', textDecoration: 'none' }}>
-                     <Button icon={<UserOutlined />} className="minimalist-button login">
+                     <Button icon={<UserOutlined />} className="gradient-button login">
                         Login
                      </Button>
                   </NavLink>
                   <NavLink to="/register" style={{ color: '#FFFAFA', textDecoration: 'none' }}>
-                     <Button icon={<UserAddOutlined />} className="minimalist-button register">
+                     <Button icon={<UserAddOutlined />} className="gradient-button register">
                         Register
                      </Button>
                   </NavLink>

@@ -43,6 +43,19 @@ import bg6 from '../../assets/backgrounds/6.jpg';
 import bg7 from '../../assets/backgrounds/7.jpg';
 import bg8 from '../../assets/backgrounds/8.jpg';
 
+//Feelings
+import angryFeelingImg from '../../assets/feelings/angry.png'
+import happyFeelingImg from '../../assets/feelings/happy.png'
+import inLoveFeelingImg from '../../assets/feelings/in_love.png'
+import laughingFeelingImg from '../../assets/feelings/laughing.png'
+import sadFeelingImg from '../../assets/feelings/sad.png'
+import shockedFeelingImg from '../../assets/feelings/shocked.png'
+import sickFeelingImg from '../../assets/feelings/sick.png'
+import smilingFeelingImg from '../../assets/feelings/smiling.png'
+import starstruckFeelingImg from '../../assets/feelings/starstruck.png'
+import surprisedFeelingImg from '../../assets/feelings/surprised.png'
+import winkFeelingImg from '../../assets/feelings/wink.png'
+
 export {
    photoImg,
    locationImg,
@@ -76,8 +89,6 @@ export {
    ActiveMinusImg,
    cameraImg,
    editImg,
-   lateAtNight,
-   reactAmico,
    bg1,
    bg2,
    bg3,
@@ -85,5 +96,18 @@ export {
    bg5,
    bg6,
    bg7,
-   bg8
+   bg8,
+   angryFeelingImg,
+   happyFeelingImg,
+   inLoveFeelingImg,
+   laughingFeelingImg,
+   sadFeelingImg,
+   shockedFeelingImg,
+   sickFeelingImg,
+   smilingFeelingImg,
+   starstruckFeelingImg,
+   surprisedFeelingImg,
+   winkFeelingImg,
+   lateAtNight,
+   reactAmico,
 };

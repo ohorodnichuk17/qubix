@@ -6,6 +6,7 @@
    padding: 0 20px;
    position: relative;
    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+   /*z-index: 100;*/
 }
 
 .center-section {
@@ -58,6 +59,18 @@
 
 .minimalist-button:hover {
    color: #FF7F50;
+}
+
+.gradient-button {
+   color: #FFF;
+   background: linear-gradient(45deg, #FF7F50, #FF6347);
+   border: none;
+   transition: background 0.3s ease;
+   margin-right: 10px;
+}
+
+.gradient-button:hover {
+   background: linear-gradient(45deg, #FF6347, #FF4500);
 }
 
 .nav-icon-img {
@@ -148,7 +161,7 @@
 }
 
 .login, .register {
-   color: #000;
+   color: #FFF;
 }
 
 .logo {

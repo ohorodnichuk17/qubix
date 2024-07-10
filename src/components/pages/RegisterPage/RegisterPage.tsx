@@ -1,14 +1,14 @@
+import React, { useState, useEffect } from 'react';
 import { Form, Input, Button, Row, Col, Typography, Space, Radio, DatePicker, Card, Upload, message, Flex } from 'antd';
 import { LockOutlined, MailOutlined, UploadOutlined } from '@ant-design/icons';
 import { IRegisterModel } from '../../../interfaces/account/index.ts';
 import { UploadChangeParam, UploadFile } from 'antd/es/upload/interface';
-import { useState } from 'react';
-import './RegisterPage.css';
 import { getBase64 } from '../../../utils/helpers/getBase64.ts';
 import { FileType } from '../../../types/FileType.ts';
 import { apiClient } from '../../../utils/api/apiClient.ts';
 import { IUploadedFile } from '../../../types/IUploadedFile.ts';
-import { avatar } from '../../../utils/images/index.tsx';
+import { avatar, reactAmico, lateAtNight } from '../../../utils/images/index.tsx';
+import './RegisterPage.css'
 
 const { Link } = Typography;
 
@@ -17,6 +17,18 @@ const validGenders = ['Male', 'Female', 'Other'];
 const RegisterPage = () => {
    const [isFieldActive, setIsFieldActive] = useState(false);
    const [previewImage, setPreviewImage] = useState(avatar);
+   const [isMobile, setIsMobile] = useState(false);
+
+   useEffect(() => {
+      const handleResize = () => {
+         setIsMobile(window.innerWidth <= 768);
+      };
+
+      handleResize();
+
+      window.addEventListener('resize', handleResize);
+      return () => window.removeEventListener('resize', handleResize);
+   }, []);
 
    const handlePreview = async (file: UploadFile) => {
       if (!file.url && !file.preview) {
@@ -56,6 +68,32 @@ const RegisterPage = () => {
 
    return (
       <Row justify="center" align="middle" className="register-page">
+         {!isMobile && (
+            <>
+               <img
+                  src={reactAmico}
+                  alt="React Amico"
+                  style={{
+                     position: 'absolute',
+                     bottom: 0,
+                     left: 0,
+                     width: '25%',
+                     zIndex: 1
+                  }}
+               />
+               <img
+                  src={lateAtNight}
+                  alt="Late at Night"
+                  style={{
+                     position: 'absolute',
+                     top: '10%',
+                     right: 0,
+                     width: '25%',
+                     zIndex: 1
+                  }}
+               />
+            </>
+         )}
          <Col xs={24} sm={20} md={16} lg={14} xl={12}>
             <Space direction="vertical" size="large" style={{ width: '100%' }}>
                <Card>
@@ -110,7 +148,7 @@ const RegisterPage = () => {
                                  { pattern: /^[A-Za-z\s]+$/, message: 'First name must contain only letters and spaces' },
                                  { pattern: /^[^£#“”]*$/, message: 'First name must not contain the following characters: £ # “”' },
                               ]}
-                           >  
+                           >
                               <Input
                                  placeholder='Enter your first name'
                                  style={{
