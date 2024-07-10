@@ -1,36 +1,39 @@
 import {
-	Modal,
+	Button,
+	Card,
+	Divider,
 	Flex,
 	Form,
 	Input,
-	Button,
-	message,
-	Card,
+	Modal,
+	type RadioChangeEvent,
+	Tag,
 	Tooltip,
 	Upload,
-	Divider,
-	Tag,
-	type RadioChangeEvent,
+	message,
 } from "antd";
-import { useAppSelector } from "../../hooks/redux";
 import FormItem from "antd/es/form/FormItem";
-import { apiClient } from "../../utils/api/apiClient";
 import type { UploadChangeParam, UploadFile } from "antd/es/upload";
-import type { IUploadedFile } from "../../types/IUploadedFile";
 import { useState } from "react";
-import { getBase64 } from "../../utils/helpers/getBase64";
+import { useAppSelector } from "../../hooks/redux";
 import type { FileType } from "../../types/FileType";
-import PublicationAudienceModal from "./components/PublicationAudienceModal/PublicationAudienceModal";
+import type { IUploadedFile } from "../../types/IUploadedFile";
+import { apiClient } from "../../utils/api/apiClient";
+import { getBase64 } from "../../utils/helpers/getBase64";
 import {
-	planetImg,
-	photoImg,
+	happyFeelingImg,
 	locationImg,
-	tagImg,
+	photoImg,
+	planetImg,
 	postTypeImg,
+	tagImg,
 } from "../../utils/images";
-import type { ICreatePost } from "./types";
+import FeelingModal from "../feelings/FeelingModal";
+import type { IFeeling } from "../feelings/types";
 import BackgroundOptions from "../pages/Story/CreateStoryPage/components/BackgroundOptions";
 import useCapture from "../pages/Story/CreateStoryPage/hooks/useCapture";
+import PublicationAudienceModal from "./components/PublicationAudienceModal/PublicationAudienceModal";
+import type { ICreatePost } from "./types";
 
 type CreatePostModalProps = {
 	isModalOpen: boolean;
@@ -54,7 +57,7 @@ const CreatePostModal = ({
 	const [postType, setPostType] = useState<PostType>("image");
 
 	const [background, setBackground] = useState<string>("gray");
-   const { captureAreaRef, getCapture } = useCapture();
+	const { captureAreaRef, getCapture } = useCapture();
 
 	const [previewImage, setPreviewImage] = useState<string>("");
 	const [showLocationInput, setShowLocationInput] = useState<boolean>(false);
@@ -76,6 +79,15 @@ const CreatePostModal = ({
 		useState<boolean>(false);
 	const [audience, setAudience] = useState<string>("Public");
 
+	const [feeling, setFeeling] = useState<IFeeling>();
+	const [feelingModalVisible, setFeelingModalVisible] =
+		useState<boolean>(false);
+
+	const handleFeelingModalOk = (newFeeling: IFeeling | undefined) => {
+		setFeeling(newFeeling);
+		setFeelingModalVisible(false);
+	};
+
 	const handleAudienceChange = (e: RadioChangeEvent) =>
 		setAudience(e.target.value);
 
@@ -96,16 +108,20 @@ const CreatePostModal = ({
 		setPreviewImage(file.url || (file.preview as string));
 	};
 
-	const onFinish =async (values: ICreatePost) => {
+	const onFinish = async (values: ICreatePost) => {
 		console.log(account.user?.id);
 		console.log(values);
-		
+
 		values.isArchive = false;
 		values.tags = tags;
 
-		if(postType==="text"){
-			const postImage = await getCapture(postType,false);
-			values.images=postImage as Blob;
+		if (postType === "text") {
+			const postImage = await getCapture(postType, false);
+			values.images = postImage as Blob;
+		}
+
+		if (feeling && feeling.id !== undefined) {
+			values.feelingId = feeling.id;
 		}
 
 		apiClient
@@ -131,13 +147,13 @@ const CreatePostModal = ({
 			onOk={handleOk}
 			onCancel={handleCancel}
 		>
-			<Flex align="center">
+			<Flex align="center" gap="middle">
 				<img
 					src={`http://localhost:5181${account.user?.avatar}`}
 					style={{ height: 92, width: 92 }}
 					alt="User avatar"
 				/>
-				<Flex vertical>
+				<Flex vertical gap="small">
 					<p
 						style={{
 							whiteSpace: "nowrap",
@@ -148,6 +164,16 @@ const CreatePostModal = ({
 					>
 						{`${account.user?.firstName} ${account.user?.lastName}`}
 					</p>
+					{feeling && (
+						<Flex gap="small" align="center">
+							<img
+								src={feeling.emoji}
+								alt="Feeling emoji"
+								style={{ height: 30, width: 30 }}
+							/>
+							<span>{feeling.name}</span>
+						</Flex>
+					)}
 					<button
 						type="button"
 						style={{
@@ -331,6 +357,24 @@ const CreatePostModal = ({
 								<img src={tagImg} className="h-50px" alt="Add tags icon" />
 							</button>
 						</Tooltip>
+						<Tooltip title="Change feeling">
+							<button
+								style={{
+									border: 0,
+									background: "none",
+									cursor: "pointer",
+									height: "fit-content",
+								}}
+								type="button"
+								onClick={() => setFeelingModalVisible(!feelingModalVisible)}
+							>
+								<img
+									src={feeling ? feeling.emoji : happyFeelingImg}
+									className="h-50px"
+									alt="Change feeling icon (happy smile)"
+								/>
+							</button>
+						</Tooltip>
 					</Flex>
 				</Card>
 
@@ -341,6 +385,13 @@ const CreatePostModal = ({
 				audienceModalVisible={audienceModalVisible}
 				setAudienceModalVisible={setAudienceModalVisible}
 				handleAudienceChange={handleAudienceChange}
+			/>
+			<FeelingModal
+				isModalOpen={feelingModalVisible}
+				handleOk={handleFeelingModalOk}
+				handleCancel={() => {
+					setFeelingModalVisible(false);
+				}}
 			/>
 		</Modal>
 	);
