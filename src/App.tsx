@@ -12,6 +12,7 @@ import EmailConfirmationRequired from './components/pages/EmailConfirmationRequi
 import { CreateStoryPage } from './components/pages/Story/CreateStoryPage/CreateStoryPage';
 import UserProfilePage from './components/pages/UserProfilePage/UserProfilePage';
 import CreatePostButton from './components/post/CreatePostButton';
+import HomePage from './components/pages/Home/HomePage';
 
 const App = () => {
    return (
@@ -56,8 +57,9 @@ const App = () => {
 
          <Routes>
             <Route path='/' element={<ContainerDefault />}>
-               <Route index element={<CreatePostButton />} />
+               <Route index element={<HomePage />} />
                <Route path='login' element={<LoginPage />} />
+               <Route path='home' element={<HomePage />} />
                <Route path='register' element={<RegisterPage />} />
                <Route path='profile' element={<UserProfilePage />} />
                <Route path='forgot-password' element={<ForgotPasswordPage />} />

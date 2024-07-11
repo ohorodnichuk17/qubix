@@ -212,11 +212,11 @@
 }
 
 .ant-btn-primary:hover, .ant-btn-primary:focus {
-   background-color: #FF6347;
-   border-color: #FF6347;
+   background-color: rgb(240, 242, 245);
+   border-color: rgb(240, 242, 245);
 }
 
 .drawer-menu-item:hover,
 .drawer-menu-item.ant-menu-item-selected {
-  background-color: #FF7F50 !important;
+  background-color: rgb(240, 242, 245) !important;
 }

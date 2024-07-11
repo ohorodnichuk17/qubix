@@ -32,6 +32,12 @@ import cameraImg from '../../assets/profile/camera.png';
 import editImg from '../../assets/profile/edit.png';
 import lateAtNight from '../../assets/authentication/late_at_night.png';
 import reactAmico from '../../assets/authentication/react_amico.png';
+import action from '../../assets/home/action.png';
+import feeling from '../../assets/home/feeling.png';
+import friendsForSidePanel from '../../assets/home/friends_for_side_panel.png';
+import messengerForSidePanel from '../../assets/home/messenger_for_side_panel.png';
+import memories from '../../assets/home/memories.png';
+import plus from '../../assets/home/plus.png';
 
 //Backgrounds
 import bg1 from '../../assets/backgrounds/1.jpg';
@@ -110,4 +116,10 @@ export {
    winkFeelingImg,
    lateAtNight,
    reactAmico,
+   action,
+   feeling,
+   friendsForSidePanel,
+   messengerForSidePanel,
+   memories,
+   plus
 };
