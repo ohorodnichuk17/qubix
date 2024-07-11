@@ -7,3 +7,5 @@ export interface ICreatePost {
 	images: Blob;
 	feelingId: string;
 }
+
+export type PostType = "text" | "image";

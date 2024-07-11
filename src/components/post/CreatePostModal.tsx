@@ -33,15 +33,13 @@ import BackgroundOptions from "../pages/Story/CreateStoryPage/components/Backgro
 import useCapture from "../pages/Story/CreateStoryPage/hooks/useCapture";
 import AddToThePublicationButton from "./components/AddToThePublicationButton/AddToThePublicationButton";
 import PublicationAudienceModal from "./components/PublicationAudienceModal/PublicationAudienceModal";
-import type { ICreatePost } from "./types";
+import type { ICreatePost, PostType } from "./types";
 
 type CreatePostModalProps = {
 	isModalOpen: boolean;
 	handleOk: () => void;
 	handleCancel: () => void;
 };
-
-type PostType = "text" | "image";
 
 const tagColors = ["success", "processing", "error", "default"];
 const getRandomTagColor = () =>
