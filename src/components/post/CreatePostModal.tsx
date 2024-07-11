@@ -50,7 +50,7 @@ const CreatePostModal = ({
 	handleOk,
 	handleCancel,
 }: CreatePostModalProps) => {
-	const account = useAppSelector((state) => state.account);
+	const { user } = useAppSelector((state) => state.account);
 
 	const [postType, setPostType] = useState<PostType>("image");
 
@@ -107,7 +107,7 @@ const CreatePostModal = ({
 	};
 
 	const onFinish = async (values: ICreatePost) => {
-		console.log(account.user?.id);
+		console.log(user?.id);
 		console.log(values);
 
 		values.isArchive = false;
@@ -147,7 +147,7 @@ const CreatePostModal = ({
 		>
 			<Flex align="center" gap="middle">
 				<img
-					src={`http://localhost:5181${account.user?.avatar}`}
+					src={`http://localhost:5181${user?.avatar}`}
 					style={{ height: 92, width: 92 }}
 					alt="User avatar"
 				/>
@@ -160,7 +160,7 @@ const CreatePostModal = ({
 							margin: 0,
 						}}
 					>
-						{`${account.user?.firstName} ${account.user?.lastName}`}
+						{`${user?.firstName} ${user?.lastName}`}
 					</p>
 					{feeling && (
 						<Flex gap="small" align="center">
@@ -195,11 +195,11 @@ const CreatePostModal = ({
 			</Flex>
 			<Divider />
 			<Form onFinish={onFinish} layout="vertical" requiredMark={false}>
-				<FormItem name="userId" hidden initialValue={account.user?.id} />
+				<FormItem name="userId" hidden initialValue={user?.id} />
 				<div ref={captureAreaRef}>
 					<FormItem name="content">
 						<Input.TextArea
-							placeholder={`What's up, ${`${account.user?.firstName} ${account.user?.lastName}`}?`}
+							placeholder={`What's up, ${`${user?.firstName} ${user?.lastName}`}?`}
 							style={{
 								minHeight: 150,
 								background: postType === "text" ? background : "white",
