@@ -1,5 +1,5 @@
 import { Tooltip } from "antd";
-import "./AddToThePublicationButton.module.css";
+import "./AddToThePublicationButton.css";
 
 type AddToThePublicationButtonProps = {
 	tooltioTitle: string;
