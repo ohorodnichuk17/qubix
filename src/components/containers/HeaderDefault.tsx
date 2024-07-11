@@ -142,7 +142,7 @@ const HeaderDefault = () => {
                   <img src={logo} alt="logo" className="header-logo" />
                   <div className="header-text">
                      <span className='header-text-regular'>This is</span>
-                     <span className="header-text-bold">Quilt</span>
+                     <span className="header-text-bold">Qubix</span>
                   </div>
                </div>
                <div className="right-section">
