@@ -34,6 +34,7 @@ import useCapture from "../pages/Story/CreateStoryPage/hooks/useCapture";
 import AddToThePublicationButton from "./components/AddToThePublicationButton/AddToThePublicationButton";
 import PublicationAudienceModal from "./components/PublicationAudienceModal/PublicationAudienceModal";
 import type { ICreatePost, PostType } from "./types";
+import { TAG_COLORS } from "./constants";
 
 type CreatePostModalProps = {
 	isModalOpen: boolean;
@@ -41,9 +42,8 @@ type CreatePostModalProps = {
 	handleCancel: () => void;
 };
 
-const tagColors = ["success", "processing", "error", "default"];
 const getRandomTagColor = () =>
-	tagColors[Math.floor(Math.random() * tagColors.length)];
+	TAG_COLORS[Math.floor(Math.random() * TAG_COLORS.length)];
 
 const CreatePostModal = ({
 	isModalOpen,
