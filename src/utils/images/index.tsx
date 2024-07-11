@@ -16,14 +16,14 @@ import forgotPasswordImage from '../../assets/authentication/forgot_password_ima
 import confirmedMail from '../../assets/authentication/confirmemail.png'
 import changeEmail from '../../assets/authentication/change_email.png'
 import logo from '../../assets/logotype.png';
-import home from '../../assets/profile/home.png';
-import activeHome from '../../assets/profile/active_home.png';
-import friends from '../../assets/profile/friends.png';
-import activeFriends from '../../assets/profile/active_friends.png';
-import story from '../../assets/profile/story.png';
-import activeStory from '../../assets/profile/active_story.png';
-import messanger from '../../assets/profile/messanger.png';
-import activeMessanger from '../../assets/profile/messanger_active.png';
+import home from '../../assets/navbar/home.png';
+import activeHome from '../../assets/navbar/active_home.png';
+import friends from '../../assets/navbar/friends.png';
+import activeFriends from '../../assets/navbar/active_friends.png';
+import plus from '../../assets/navbar/plus.png';
+import activePlus from '../../assets/navbar/active_plus.png';
+import messanger from '../../assets/navbar/messanger.png';
+import activeMessanger from '../../assets/navbar/messanger_active.png';
 import glyph from '../../assets/profile/glyph.png';
 import minusImg from '../../assets/post/minus.png';
 import hoverMinusImg from '../../assets/post/hover_minus.png';
@@ -37,7 +37,6 @@ import feeling from '../../assets/home/feeling.png';
 import friendsForSidePanel from '../../assets/home/friends_for_side_panel.png';
 import messengerForSidePanel from '../../assets/home/messenger_for_side_panel.png';
 import memories from '../../assets/home/memories.png';
-import plus from '../../assets/home/plus.png';
 
 //Backgrounds
 import bg1 from '../../assets/backgrounds/1.jpg';
@@ -85,8 +84,6 @@ export {
    activeHome,
    friends,
    activeFriends,
-   story,
-   activeStory,
    messanger,
    activeMessanger,
    glyph,
@@ -121,5 +118,6 @@ export {
    friendsForSidePanel,
    messengerForSidePanel,
    memories,
-   plus
+   plus,
+   activePlus
 };

@@ -13,7 +13,14 @@ export const SideBar = () => {
       <Layout style={{ minHeight: '100vh' }}>
          <Sider
             width={250}
-            style={{ background: '#fff', height: 'calc(100vh - 64px)', position: 'fixed', left: 0, top: 64 }}
+            style={{
+               background: '#fff',
+               height: 'calc(100vh - 64px)',
+               position: 'fixed',
+               left: 0,
+               top: 64,
+               boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)' // Adding shadow here
+            }}
          >
             <div className="avatar-container">
                <Link to="/profile">

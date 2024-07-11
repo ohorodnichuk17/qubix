@@ -5,7 +5,7 @@ import { SearchOutlined, UserOutlined, UserAddOutlined, MenuOutlined } from '@an
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { logout } from '../../store/account/account.slice';
 import './HeaderDefault.css';
-import { logo, activeHome, home, activeFriends, friends, activeStory, story, activeMessanger, messanger, glyph } from '../../utils/images';
+import { logo, activeHome, home, activeFriends, friends, activeStory, story, activeMessanger, messanger, glyph, plus, activePlus } from '../../utils/images';
 
 const { Header } = Layout;
 
@@ -97,9 +97,9 @@ const HeaderDefault = () => {
                      </NavLink>
                   </Tooltip>
                   <Tooltip title="Create New Story">
-                     <NavLink to="/story" className="nav-icon group-icon-link" activeClassName="active">
+                     <NavLink to="/story" className="nav-icon story-icon-link" activeClassName="active">
                         {({ isActive }) => (
-                           <img src={isActive ? activeStory : story} alt="Story" className="nav-icon-img group-icon" />
+                           <img src={isActive ? activePlus : plus} alt="Story" className="nav-icon-img story-icon" />
                         )}
                      </NavLink>
                   </Tooltip>
