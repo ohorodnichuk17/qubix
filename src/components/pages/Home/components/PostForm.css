@@ -1,36 +1,10 @@
-.homepage-container {
+.whats-up {
    display: flex;
-   flex-direction: column;
-   gap: 20px;
-   align-items: center; 
-   justify-content: center;
-}
-
-.create-story, .whats-up {
+   align-items: center;
    background: #fff;
    padding: 15px;
    border-radius: 8px;
    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-   display: flex;
-   align-items: center;
-   max-width: 600px; 
-   width: 100%; 
-}
-
-.create-story .icon, .whats-up .icon {
-   width: 40px;
-   height: 40px;
-   margin-right: 15px;
-}
-
-.create-story .text {
-   display: flex;
-   flex-direction: column;
-}
-
-.create-story .text p {
-   margin: 0;
-   color: #888;
 }
 
 .whats-up .user-info {
@@ -59,4 +33,9 @@
 .whats-up .actions {
    display: flex;
    gap: 10px;
+}
+
+.whats-up .icon {
+   width: 30px;
+   height: 30px;
 }

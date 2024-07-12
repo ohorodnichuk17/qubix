@@ -59,7 +59,6 @@ const App = () => {
             <Route path='/' element={<ContainerDefault />}>
                <Route index element={<HomePage />} />
                <Route path='login' element={<LoginPage />} />
-               <Route path='home' element={<HomePage />} />
                <Route path='register' element={<RegisterPage />} />
                <Route path='profile' element={<UserProfilePage />} />
                <Route path='forgot-password' element={<ForgotPasswordPage />} />

@@ -1,16 +1,24 @@
 import { Avatar, Layout, Menu } from 'antd';
+import { Link } from 'react-router-dom';
 import { action, feeling, friendsForSidePanel, memories, messengerForSidePanel, avatar } from '../../utils/images/index';
 import './SideBar.css';
 import { useAppSelector } from '../../hooks/redux';
-import { Link } from 'react-router-dom';
+import { APP_ENV } from '../../env';
 
 const { Sider } = Layout;
 
 export const SideBar = () => {
-   const account = useAppSelector(state => state.account);
+   const { user } = useAppSelector(state => state.account);
+   const isLogin = !!user;
+
+   if (!isLogin) {
+      return null;
+   }
+
+   const avatarSrc = user && user.avatar && user.avatar !== '/images/avatars/' ? `${APP_ENV.BASE_URL}${user.avatar}` : avatar;
 
    return (
-      <Layout style={{ minHeight: '100vh' }}>
+      <Layout >
          <Sider
             width={250}
             style={{
@@ -19,17 +27,17 @@ export const SideBar = () => {
                position: 'fixed',
                left: 0,
                top: 64,
-               boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)' // Adding shadow here
+               boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)'
             }}
          >
             <div className="avatar-container">
                <Link to="/profile">
                   <Avatar
-                     src={account.user?.avatar ? `http://localhost:5181${account.user.avatar}` : avatar}
+                     src={avatarSrc}
                      size={50}
                   />
                   <span className="username">
-                     {account.user?.firstName} {account.user?.lastName}
+                     {user?.firstName} {user?.lastName}
                   </span>
                </Link>
             </div>

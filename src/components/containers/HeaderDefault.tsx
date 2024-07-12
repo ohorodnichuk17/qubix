@@ -5,7 +5,9 @@ import { SearchOutlined, UserOutlined, UserAddOutlined, MenuOutlined } from '@an
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { logout } from '../../store/account/account.slice';
 import './HeaderDefault.css';
-import { logo, activeHome, home, activeFriends, friends, activeStory, story, activeMessanger, messanger, glyph, plus, activePlus } from '../../utils/images';
+import { logo, activeHome, home, activeFriends, friends, activeMessanger, messanger, glyph, plus, activePlus, avatar } from '../../utils/images';
+import { APP_ENV } from '../../env';
+
 
 const { Header } = Layout;
 
@@ -17,6 +19,8 @@ const HeaderDefault = () => {
    const handleLogout = () => {
       dispatch(logout());
    };
+
+   const avatarSrc = user && user.avatar && user.avatar !== '/images/avatars/' ? `${APP_ENV.BASE_URL}${user.avatar}` : avatar;
 
    const menu = (
       <Menu>
@@ -113,7 +117,7 @@ const HeaderDefault = () => {
                </div>
                <div className="navbar-right">
                   <div className="avatar-dropdown-container">
-                     <Avatar src={`http://localhost:5181${user?.avatar}`} size={50} />
+                     <Avatar src={avatarSrc} size={50} />
                      <Dropdown overlay={menu} trigger={['click']}>
                         <Button className="avatar-dropdown-button" icon={<img src={glyph} alt="dropdown" />} />
                      </Dropdown>

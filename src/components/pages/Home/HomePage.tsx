@@ -1,7 +1,8 @@
 import { Layout } from 'antd';
-import { plus, photoImg } from '../../../utils/images/index';
-import './HomePage.css';
 import SideBar from '../../containers/SideBar';
+import StoryForm from './components/StoryForm';
+import PostForm from './components/PostForm';
+import './HomePage.css';
 
 const { Content } = Layout;
 
@@ -11,8 +12,9 @@ export const HomePage = () => {
          <SideBar />
          <Layout style={{ marginLeft: 250 }}>
             <Content style={{ padding: '0 50px', marginTop: 64 }}>
-               <div>
-
+               <div className="homepage-container">
+                  <StoryForm />
+                  <PostForm />
                </div>
             </Content>
          </Layout>
