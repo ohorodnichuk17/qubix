@@ -18,7 +18,7 @@ import type { StoryType } from "./types";
 export const CreateStoryPage = () => {
 	const navigate = useNavigate();
 
-	const account = useAppSelector((state) => state.account);
+	const { user } = useAppSelector((state) => state.account);
 
 	const [storyType, setStoryType] = useState<StoryType | null>(null);
 	const [image, setImage] = useState<string>();
@@ -63,7 +63,7 @@ export const CreateStoryPage = () => {
 		const formData = new FormData();
 		formData.append("Content", text ?? "");
 		formData.append("Image", story as Blob);
-		formData.append("UserId", account.user?.id ?? "");
+		formData.append("UserId", user?.id ?? "");
 
 		apiClient
 			.post("/api/story/create", formData)
@@ -92,11 +92,11 @@ export const CreateStoryPage = () => {
 							</Flex>
 							<Flex className="avatar-div">
 								<img
-									src={`http://localhost:5181${account.user?.avatar}`}
+									src={`http://localhost:5181${user?.avatar}`}
 									alt="User avatar"
 								/>
 								<p style={{ whiteSpace: "nowrap" }}>
-									{`${account.user?.firstName} ${account.user?.lastName}`}
+									{`${user?.firstName} ${user?.lastName}`}
 								</p>
 							</Flex>
 						</Card>
