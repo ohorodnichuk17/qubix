@@ -1,45 +1,31 @@
-import { LeftOutlined, RightOutlined } from "@ant-design/icons";
 import {
 	Button,
-	Card,
-	Carousel,
 	Divider,
 	Flex,
 	Form,
 	Input,
 	Modal,
 	type RadioChangeEvent,
-	Tag,
-	Upload,
 	message,
 } from "antd";
 import FormItem from "antd/es/form/FormItem";
-import type {
-	UploadChangeParam,
-	UploadFile,
-	UploadProps,
-} from "antd/es/upload";
+import type { UploadFile, UploadProps } from "antd/es/upload";
 import { useState } from "react";
 import { useAppSelector } from "../../hooks/redux";
 import type { FileType } from "../../types/FileType";
-import type { IUploadedFile } from "../../types/IUploadedFile";
 import { apiClient } from "../../utils/api/apiClient";
 import { getBase64 } from "../../utils/helpers/getBase64";
-import {
-	happyFeelingImg,
-	locationImg,
-	photoImg,
-	planetImg,
-	postTypeImg,
-	tagImg,
-} from "../../utils/images";
+import { happyFeelingImg, planetImg, postTypeImg } from "../../utils/images";
 import FeelingModal from "../feelings/FeelingModal";
 import type { IFeeling } from "../feelings/types";
 import BackgroundOptions from "../pages/Story/CreateStoryPage/components/BackgroundOptions";
 import useCapture from "../pages/Story/CreateStoryPage/hooks/useCapture";
 import AddToThePublicationButton from "./components/AddToThePublicationButton/AddToThePublicationButton";
+import AddToThePublicationCard from "./components/AddToThePublicationCard/AddToThePublicationCard";
+import ImagesCarousel from "./components/ImagesCarousel/ImagesCarousel";
 import PublicationAudienceModal from "./components/PublicationAudienceModal/PublicationAudienceModal";
-import { TAG_COLORS } from "./constants";
+import TagInput from "./components/Tags/TagInput";
+import TagsList from "./components/Tags/TagsList";
 import type { ICreatePost, PostType } from "./types";
 
 type CreatePostModalProps = {
@@ -47,9 +33,6 @@ type CreatePostModalProps = {
 	handleOk: () => void;
 	handleCancel: () => void;
 };
-
-const getRandomTagColor = () =>
-	TAG_COLORS[Math.floor(Math.random() * TAG_COLORS.length)];
 
 const CreatePostModal = ({
 	isModalOpen,
@@ -64,39 +47,37 @@ const CreatePostModal = ({
 	const { captureAreaRef, getCapture } = useCapture();
 
 	const [images, setImages] = useState<UploadFile[]>([]);
-
-	const [showLocationInput, setShowLocationInput] = useState<boolean>(false);
-
-	const [showTagsInput, setShowTagsInput] = useState<boolean>(false);
 	const [tags, setTags] = useState<string[]>([]);
-	const [newTag, setNewTag] = useState<string>("");
-
-	const addTag = () => {
-		if (newTag && !tags.includes(newTag)) {
-			setTags([...tags, newTag]);
-			setNewTag("");
-		}
-	};
-
-	const removeTag = (tag: string) => setTags(tags.filter((t) => t !== tag));
-
-	const [audienceModalVisible, setAudienceModalVisible] =
-		useState<boolean>(false);
+	const [feeling, setFeeling] = useState<IFeeling>();
 	const [audience, setAudience] = useState<string>("Public");
 
-	const [feeling, setFeeling] = useState<IFeeling>();
+	const [locationInputVisibility, setLocationInputVisibility] =
+		useState<boolean>(false);
+	const [tagsInputVisibility, setTagsInputVisibility] =
+		useState<boolean>(false);
 	const [feelingModalVisible, setFeelingModalVisible] =
 		useState<boolean>(false);
+	const [audienceModalVisible, setAudienceModalVisible] =
+		useState<boolean>(false);
+
+	const handleLocationVisibilityChange = () =>
+		setLocationInputVisibility(!locationInputVisibility);
+
+	const handleTagsVisibilityChange = () =>
+		setTagsInputVisibility(!tagsInputVisibility);
+
+	const handleFeelingVisibilityChange = () =>
+		setFeelingModalVisible(!feelingModalVisible);
+
+	const handleAudienceChange = (e: RadioChangeEvent) =>
+		setAudience(e.target.value);
 
 	const handleFeelingModalOk = (newFeeling: IFeeling | undefined) => {
 		setFeeling(newFeeling);
 		setFeelingModalVisible(false);
 	};
 
-	const handleAudienceChange = (e: RadioChangeEvent) =>
-		setAudience(e.target.value);
-
-	const handleChange: UploadProps["onChange"] = async ({ fileList }) => {
+	const handleImagesChange: UploadProps["onChange"] = async ({ fileList }) => {
 		for (const file of fileList) {
 			file.preview = await getBase64(file.originFileObj as FileType);
 		}
@@ -236,66 +217,25 @@ const CreatePostModal = ({
 					<BackgroundOptions setBackground={setBackground} />
 				)}
 
-				{showLocationInput && (
+				{locationInputVisibility && (
 					<Form.Item name="location" label="Location">
 						<Input placeholder="Enter your location" />
 					</Form.Item>
 				)}
 
 				<Flex vertical gap="middle">
-					{showTagsInput && (
-						<Flex gap="small">
-							<Input
-								value={newTag}
-								onChange={(e) => setNewTag(e.target.value)}
-								placeholder="Enter tag"
-							/>
-							<Button type="primary" onClick={addTag}>
-								Add
-							</Button>
-						</Flex>
-					)}
-					{tags.length !== 0 && (
-						<Flex wrap="wrap" gap="small">
-							{tags.map((tag) => (
-								<Tag
-									key={tag}
-									closable
-									onClose={() => removeTag(tag)}
-									color={getRandomTagColor()}
-									style={{ margin: 0 }}
-								>
-									{tag}
-								</Tag>
-							))}
-						</Flex>
-					)}
+					{tagsInputVisibility && <TagInput tags={tags} setTags={setTags} />}
+					{tags.length !== 0 && <TagsList tags={tags} setTags={setTags} />}
 				</Flex>
 
-				{postType === "image" && (
+				{postType === "image" && images.length !== 0 && (
 					<>
 						<Divider />
-						<Carousel
-							arrows
-							draggable
-							infinite
-							prevArrow={<LeftOutlined />}
-							nextArrow={<RightOutlined />}
-						>
-							{images.map((file) => (
-								<img
-									key={file.uid}
-									src={file.preview}
-									height={200}
-									className="post-preview-img"
-									style={{ objectFit: "contain", width: "100%" }}
-									alt="Post images"
-								/>
-							))}
-						</Carousel>
+						<ImagesCarousel images={images} />
 						<Divider />
 					</>
 				)}
+
 				<AddToThePublicationButton
 					tooltioTitle="Change post type"
 					onClick={() => setPostType(postType === "image" ? "text" : "image")}
@@ -306,51 +246,14 @@ const CreatePostModal = ({
 					}}
 				/>
 
-				<Card title="Add to the publication">
-					<Flex>
-						{postType === "image" && (
-							<Form.Item
-								name="images"
-								valuePropName="image"
-								getValueFromEvent={(e: UploadChangeParam) => {
-									const image = e?.fileList[0] as IUploadedFile;
-									return image?.originFileObj;
-								}}
-							>
-								<Upload
-									beforeUpload={() => false}
-									multiple
-									showUploadList={false}
-									onChange={handleChange}
-								>
-									<AddToThePublicationButton
-										tooltioTitle="Image"
-										imgSrc={photoImg}
-										imgAlt="Add images icon (camera)"
-									/>
-								</Upload>
-							</Form.Item>
-						)}
-						<AddToThePublicationButton
-							tooltioTitle="Location"
-							onClick={() => setShowLocationInput(!showLocationInput)}
-							imgSrc={locationImg}
-							imgAlt="location icon"
-						/>
-						<AddToThePublicationButton
-							tooltioTitle="#"
-							onClick={() => setShowTagsInput(!showTagsInput)}
-							imgSrc={tagImg}
-							imgAlt="Add tags icon"
-						/>
-						<AddToThePublicationButton
-							tooltioTitle="Feeling"
-							onClick={() => setFeelingModalVisible(!feelingModalVisible)}
-							imgSrc={feeling ? feeling.emoji : happyFeelingImg}
-							imgAlt="Change feeling icon (happy smile)"
-						/>
-					</Flex>
-				</Card>
+				<AddToThePublicationCard
+					postType={postType}
+					handleFeelingModalVisibilityChange={handleFeelingVisibilityChange}
+					handleImagesChange={handleImagesChange}
+					handleLocationInputVisibilityChange={handleLocationVisibilityChange}
+					handleTagsInputVisibilityChange={handleTagsVisibilityChange}
+					feelingEmoji={feeling ? feeling.emoji : happyFeelingImg}
+				/>
 
 				<Button htmlType="submit">Post</Button>
 			</Form>
