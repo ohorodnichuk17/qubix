@@ -1,6 +1,8 @@
+import { LeftOutlined, RightOutlined } from "@ant-design/icons";
 import {
 	Button,
 	Card,
+	Carousel,
 	Divider,
 	Flex,
 	Form,
@@ -12,7 +14,11 @@ import {
 	message,
 } from "antd";
 import FormItem from "antd/es/form/FormItem";
-import type { UploadChangeParam, UploadFile } from "antd/es/upload";
+import type {
+	UploadChangeParam,
+	UploadFile,
+	UploadProps,
+} from "antd/es/upload";
 import { useState } from "react";
 import { useAppSelector } from "../../hooks/redux";
 import type { FileType } from "../../types/FileType";
@@ -33,8 +39,8 @@ import BackgroundOptions from "../pages/Story/CreateStoryPage/components/Backgro
 import useCapture from "../pages/Story/CreateStoryPage/hooks/useCapture";
 import AddToThePublicationButton from "./components/AddToThePublicationButton/AddToThePublicationButton";
 import PublicationAudienceModal from "./components/PublicationAudienceModal/PublicationAudienceModal";
-import type { ICreatePost, PostType } from "./types";
 import { TAG_COLORS } from "./constants";
+import type { ICreatePost, PostType } from "./types";
 
 type CreatePostModalProps = {
 	isModalOpen: boolean;
@@ -57,7 +63,8 @@ const CreatePostModal = ({
 	const [background, setBackground] = useState<string>("gray");
 	const { captureAreaRef, getCapture } = useCapture();
 
-	const [previewImage, setPreviewImage] = useState<string>("");
+	const [images, setImages] = useState<UploadFile[]>([]);
+
 	const [showLocationInput, setShowLocationInput] = useState<boolean>(false);
 
 	const [showTagsInput, setShowTagsInput] = useState<boolean>(false);
@@ -89,41 +96,56 @@ const CreatePostModal = ({
 	const handleAudienceChange = (e: RadioChangeEvent) =>
 		setAudience(e.target.value);
 
-	const handlePreview = async (file: UploadFile) => {
-		if (!file.url && !file.preview) {
+	const handleChange: UploadProps["onChange"] = async ({ fileList }) => {
+		for (const file of fileList) {
 			file.preview = await getBase64(file.originFileObj as FileType);
 		}
 
-		setPreviewImage(file.url || (file.preview as string));
-	};
-
-	const handleAvatarChange = async (info: UploadChangeParam<UploadFile>) => {
-		const file = info.fileList[0];
-		if (!file.url && !file.preview) {
-			file.preview = await getBase64(file.originFileObj as FileType);
-		}
-
-		setPreviewImage(file.url || (file.preview as string));
+		setImages(fileList);
 	};
 
 	const onFinish = async (values: ICreatePost) => {
-		console.log(user?.id);
-		console.log(values);
-
-		values.isArchive = false;
-		values.tags = tags;
-
 		if (postType === "text") {
 			const postImage = await getCapture(postType, false);
-			values.images = postImage as Blob;
+			values.images = [];
+			values.images[0] = postImage as Blob;
 		}
 
 		if (feeling && feeling.id !== undefined) {
 			values.feelingId = feeling.id;
 		}
 
+		const formData = new FormData();
+
+		if (user?.id !== undefined) {
+			formData.append("userId", user?.id);
+		}
+
+		formData.append("content", values.content);
+		formData.append("isArchive", "false");
+		formData.append("location", values.location);
+
+		if (values.feelingId) {
+			formData.append("feelingId", values.feelingId);
+		}
+
+		for (const tag of tags) {
+			formData.append("tags", tag);
+		}
+
+		if (values.images && values.images.length > 0) {
+			for (const image of values.images) {
+				formData.append("images", image);
+			}
+		}
+		if (postType === "image") {
+			for (const file of images) {
+				formData.append("images", file.originFileObj as Blob);
+			}
+		}
+
 		apiClient
-			.post("/api/Post/create", values, {
+			.post("/api/post/create", formData, {
 				headers: {
 					"content-type": "multipart/form-data",
 				},
@@ -249,14 +271,28 @@ const CreatePostModal = ({
 						</Flex>
 					)}
 				</Flex>
-				{postType === "image" && previewImage && (
+
+				{postType === "image" && (
 					<>
 						<Divider />
-						<img
-							src={previewImage}
-							style={{ width: "100%" }}
-							alt="Post images"
-						/>
+						<Carousel
+							arrows
+							draggable
+							infinite
+							prevArrow={<LeftOutlined />}
+							nextArrow={<RightOutlined />}
+						>
+							{images.map((file) => (
+								<img
+									key={file.uid}
+									src={file.preview}
+									height={200}
+									className="post-preview-img"
+									style={{ objectFit: "contain", width: "100%" }}
+									alt="Post images"
+								/>
+							))}
+						</Carousel>
 						<Divider />
 					</>
 				)}
@@ -282,13 +318,10 @@ const CreatePostModal = ({
 								}}
 							>
 								<Upload
-									showUploadList={false}
 									beforeUpload={() => false}
-									defaultFileList={[]}
-									accept="image/*"
-									onChange={handleAvatarChange}
-									onPreview={handlePreview}
-									maxCount={1}
+									multiple
+									showUploadList={false}
+									onChange={handleChange}
 								>
 									<AddToThePublicationButton
 										tooltioTitle="Image"

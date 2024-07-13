@@ -4,7 +4,7 @@ export interface ICreatePost {
 	location: string;
 	isArchive: boolean;
 	tags: string[];
-	images: Blob;
+	images: Blob[];
 	feelingId: string;
 }
 
