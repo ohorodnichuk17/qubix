@@ -8,7 +8,7 @@ import type { IResetPassword } from '../../../interfaces/account';
 
 const SetNewPasswordPage: React.FC = () => {
    const navigate = useNavigate();
-   
+
    const [searchParams] = useSearchParams();
    const email = searchParams.get("email");
    const token = searchParams.get("token");
@@ -27,7 +27,7 @@ const SetNewPasswordPage: React.FC = () => {
             console.log(res);
             if (res.status === 200) {
                message.success("Success")
-                  .then(() => navigate('/'));
+                  .then(() => navigate('/login'));
             }
          })
          .catch(error => {

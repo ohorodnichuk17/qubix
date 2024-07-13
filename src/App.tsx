@@ -58,6 +58,7 @@ const App = () => {
          <Routes>
             <Route path='/' element={<ContainerDefault />}>
                <Route index element={<HomePage />} />
+               {/*<Route index element={<CreatePostButton />} />*/}
                <Route path='login' element={<LoginPage />} />
                <Route path='register' element={<RegisterPage />} />
                <Route path='profile' element={<UserProfilePage />} />

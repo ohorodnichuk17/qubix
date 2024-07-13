@@ -13,23 +13,33 @@ export const PostForm = () => {
 
    return (
       <div className="whats-up">
-         <Avatar
-            src={avatarSrc}
-            size={50}
-         />
-         <div className="user-info">
-            <span className="username">
-               {user?.firstName} {user?.lastName}
-            </span>
-            <input
-               type="text"
-               placeholder={`What's up, ${user?.firstName} ${user?.lastName}?`}
-               className="input-box"
+         <div className="top-section">
+            <Avatar
+               src={avatarSrc}
+               size={50}
             />
+            <div className="user-info">
+               <span className="username">
+                  {user?.firstName} {user?.lastName}
+               </span>
+               <input
+                  type="text"
+                  placeholder={`What's up, ${user?.firstName} ${user?.lastName}?`}
+                  className="input-box"
+               />
+            </div>
          </div>
+         <div className="divider"></div>
+
          <div className="actions">
-            <img src={photoImg} alt="Photo" className="icon" />
-            <img src={feeling} alt="Feelings" className="icon" />
+            <div className="action-item">
+               <img src={photoImg} alt="Photo" className="icon" />
+               <span className="action-label">Photo</span>
+            </div>
+            <div className="action-item">
+               <img src={feeling} alt="Feelings" className="icon" />
+               <span className="action-label">Feelings</span>
+            </div>
          </div>
       </div>
    );

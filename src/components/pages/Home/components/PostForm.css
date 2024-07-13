@@ -1,27 +1,33 @@
 .whats-up {
    display: flex;
-   align-items: center;
+   flex-direction: column;
+   align-items: flex-start;
    background: #fff;
    padding: 15px;
    border-radius: 8px;
    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+   width: 100%;
 }
 
-.whats-up .user-info {
+.top-section {
    display: flex;
    align-items: center;
+   width: 100%;
+}
+
+.user-info {
+   display: flex;
+   flex-direction: column;
    flex-grow: 1;
+   margin-left: 10px;
 }
 
-.whats-up .user-icon {
-   width: 40px;
-   height: 40px;
-   border-radius: 50%;
-   background: #ddd;
-   margin-right: 15px;
+.username {
+   font-weight: bold;
+   margin-bottom: 5px;
 }
 
-.whats-up .input-box {
+.input-box {
    width: 100%;
    border: none;
    outline: none;
@@ -30,12 +36,33 @@
    background: #f0f2f5;
 }
 
-.whats-up .actions {
+.actions {
    display: flex;
+   justify-content: flex-end;
+   width: 100%;
    gap: 10px;
+   margin-top: 10px;
+   margin-right: 676px;
 }
 
-.whats-up .icon {
-   width: 30px;
-   height: 30px;
+.icon {
+   width: 35px;
+   height: 35px;
+}
+
+.action-item {
+   display: flex;
+   align-items: center;
+}
+
+.action-label {
+   margin-left: 5px; 
+}
+
+.divider {
+   width: 100%;
+   height: 1px;
+   background-color: #e0e0e0;
+   margin-top: 10px;
+   margin-bottom: 10px;
 }
