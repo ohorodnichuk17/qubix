@@ -2,9 +2,10 @@ import { Button, Card, type ColorPickerProps, Flex, message } from "antd";
 import { useMemo, useState } from "react";
 import "./CreateStoryPage.css";
 import { useNavigate } from "react-router-dom";
+import { APP_ENV } from "../../../../env";
 import { useAppSelector } from "../../../../hooks/redux";
 import { apiClient } from "../../../../utils/api/apiClient";
-import { settingsIcon } from "../../../../utils/images";
+import { avatar, settingsIcon } from "../../../../utils/images";
 import BackgroundSelect from "./components/BackgroundSelect";
 import CancelStoryModal from "./components/CancelStoryModal";
 import ImageStorySettings from "./components/ImageStorySettings";
@@ -19,6 +20,10 @@ export const CreateStoryPage = () => {
 	const navigate = useNavigate();
 
 	const { user } = useAppSelector((state) => state.account);
+	const avatarImg =
+		user?.avatar && user.avatar !== "/images/avatars/"
+			? `${APP_ENV.BASE_URL}${user.avatar}`
+			: avatar;
 
 	const [storyType, setStoryType] = useState<StoryType | null>(null);
 	const [image, setImage] = useState<string>();
@@ -91,10 +96,7 @@ export const CreateStoryPage = () => {
 								</div>
 							</Flex>
 							<Flex className="avatar-div">
-								<img
-									src={`http://localhost:5181${user?.avatar}`}
-									alt="User avatar"
-								/>
+								<img src={avatarImg} alt="User avatar" />
 								<p style={{ whiteSpace: "nowrap" }}>
 									{`${user?.firstName} ${user?.lastName}`}
 								</p>
