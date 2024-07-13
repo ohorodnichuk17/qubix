@@ -76,7 +76,7 @@ const LoginPage: React.FC = () => {
 
                <Form.Item>
                   <Flex justify='center'>
-                     <Link to='/' style={{ color: '#FF6347' }}>
+                     <Link to='/forgot-password' style={{ color: '#FF6347' }}>
                         Forgot password?
                      </Link>
                   </Flex>

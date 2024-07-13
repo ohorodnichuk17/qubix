@@ -1,21 +1,27 @@
-import React, { useEffect } from 'react';
+import type React from 'react';
 import { Form, Input, Button, Flex, Card, message } from 'antd';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { LockOutlined } from '@ant-design/icons';
-import { useAppSelector } from '../../../hooks/redux';
 import { setNewPasswordImg } from '../../../utils/images';
 import { apiClient } from '../../../utils/api/apiClient';
+import type { IResetPassword } from '../../../interfaces/account';
 
 const SetNewPasswordPage: React.FC = () => {
-   const account = useAppSelector(state => state.account);
-   useEffect(() => { console.log(account) }, [account]);
-
    const navigate = useNavigate();
+   
+   const [searchParams] = useSearchParams();
+   const email = searchParams.get("email");
+   const token = searchParams.get("token");
 
-   const onFinish = (values: any) => {
-      console.log(values);
-      values.token = account.token;
-      values.email = account.user?.email;
+   const onFinish = (values: IResetPassword) => {
+
+      if (token === null || token === "" || email === null || email === "") {
+         navigate("/");
+      } else {
+         values.token = token;
+         values.email = email;
+      }
+
       apiClient.post('/api/authentication/reset-password', values)
          .then(res => {
             console.log(res);

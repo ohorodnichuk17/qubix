@@ -62,10 +62,10 @@ export interface IForgotPassword {
 }
 
 export interface IResetPassword {
-   email: string | undefined,
-   token: string | undefined,
-   password: string | undefined,
-   confirmPassword: string | undefined,
+   email: string,
+   token: string,
+   password: string,
+   confirmPassword: string,
 }
 
 export interface IChangeEmail {

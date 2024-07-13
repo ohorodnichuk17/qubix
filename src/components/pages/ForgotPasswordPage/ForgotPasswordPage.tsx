@@ -1,26 +1,33 @@
-import React from 'react';
 import { Form, Input, Button, Flex, Card, message } from 'antd';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { MailOutlined } from '@ant-design/icons';
 import { forgotPasswordImage } from '../../../utils/images';
 import { apiClient } from '../../../utils/api/apiClient';
+import type { IForgotPassword } from '../../../interfaces/account';
+import { useState } from 'react';
+import ForgotPasswordSuccess from './ForgotPasswordSuccess';
 
-const ForgotPasswordPage: React.FC = () => {
-   const navigate = useNavigate();
-   const onFinish = (values: any) => {
-      console.log(values);
+const ForgotPasswordPage = () => {
 
+   const [forgotPasswordSuccess, setForgotPasswordSuccess] = useState<boolean>(false);
+
+   const onFinish = (values: IForgotPassword) => {
       apiClient.get(`/api/authentication/forgot-password?email=${values.email}`)
          .then(res => {
             console.log(res);
             if (res.status === 200) {
-               message.success("Success")
-                  .then(() => navigate('/'));
+               message.success("Success");
+               setForgotPasswordSuccess(true);
             }
          })
          .catch(error => {
             console.error(error);
+            message.error("Forgot password email sending error. Try later")
          })
+   }
+
+   if (forgotPasswordSuccess) {
+      return <ForgotPasswordSuccess/>
    }
 
    return (
