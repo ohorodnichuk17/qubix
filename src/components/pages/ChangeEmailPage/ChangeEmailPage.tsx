@@ -2,9 +2,9 @@ import React, { useEffect } from 'react';
 import { Form, Input, Button, Flex, Card, message } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 import { MailOutlined } from '@ant-design/icons';
-import axios from 'axios';
 import { useAppSelector } from '../../../hooks/redux';
 import { changeEmail } from '../../../utils/images';
+import { apiClient } from '../../../utils/api/apiClient';
 
 const ChangeEmailPage: React.FC = () => {
    const account = useAppSelector(state => state.account);
@@ -16,7 +16,7 @@ const ChangeEmailPage: React.FC = () => {
       values.token = account?.token;
       values.userId = account?.user?.id
       console.log(values);
-      axios.get('http://localhost:5181/api/Authentication/change-email', values)
+      apiClient.post('/api/authentication/change-email', values)
          .then(res => {
             console.log(res);
             if (res.status === 200) {
