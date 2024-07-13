@@ -2,15 +2,15 @@ import React from 'react';
 import { Form, Input, Button, Flex, Card, message } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 import { MailOutlined } from '@ant-design/icons';
-import axios from 'axios';
 import { forgotPasswordImage } from '../../../utils/images';
+import { apiClient } from '../../../utils/api/apiClient';
 
 const ForgotPasswordPage: React.FC = () => {
    const navigate = useNavigate();
    const onFinish = (values: any) => {
       console.log(values);
 
-      axios.get(`http://localhost:5181/api/Authentication/forgot-password?email=${values.email}`)
+      apiClient.get(`/api/authentication/forgot-password?email=${values.email}`)
          .then(res => {
             console.log(res);
             if (res.status === 200) {

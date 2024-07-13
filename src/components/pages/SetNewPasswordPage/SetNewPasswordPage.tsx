@@ -2,9 +2,9 @@ import React, { useEffect } from 'react';
 import { Form, Input, Button, Flex, Card, message } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 import { LockOutlined } from '@ant-design/icons';
-import axios from 'axios';
 import { useAppSelector } from '../../../hooks/redux';
 import { setNewPasswordImg } from '../../../utils/images';
+import { apiClient } from '../../../utils/api/apiClient';
 
 const SetNewPasswordPage: React.FC = () => {
    const account = useAppSelector(state => state.account);
@@ -16,7 +16,7 @@ const SetNewPasswordPage: React.FC = () => {
       console.log(values);
       values.token = account.token;
       values.email = account.user?.email;
-      axios.post('http://localhost:5181/api/Authentication/reset-password', values)
+      apiClient.post('/api/authentication/reset-password', values)
          .then(res => {
             console.log(res);
             if (res.status === 200) {

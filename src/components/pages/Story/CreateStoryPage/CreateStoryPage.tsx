@@ -63,7 +63,7 @@ export const CreateStoryPage = () => {
       formData.append("Image", story as Blob);
       formData.append("UserId", account.user?.id ?? '');
 
-      apiClient.post('http://localhost:5181/api/Story/create', formData)
+      apiClient.post('/api/story/create', formData)
          .then((res) => {
             console.log(res)
             message.success("Story successfully posted!");

@@ -39,7 +39,7 @@ const RegisterPage = () => {
    };
 
    const onFinish = (values: IRegisterModel) => {
-      apiClient.post('/api/Authentication/register', values, {
+      apiClient.post('/api/authentication/register', values, {
          headers: {
             'Content-Type': 'multipart/form-data'
          }

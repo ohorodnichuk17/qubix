@@ -26,7 +26,7 @@ const FriendsExceptModal = ({
 
 	useEffect(() => {
 		apiClient
-			.get(`/api/Friends/get-all-friends?userId=${account.user?.id}`)
+			.get(`/api/friends/get-all-friends?userId=${account.user?.id}`)
 			.then((res) => {
 				console.log(res);
 				setFriendsList(res.data);
