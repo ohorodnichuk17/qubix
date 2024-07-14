@@ -1,4 +1,4 @@
-import { Button, Card, Flex } from "antd";
+import { Avatar, Button, Card, Flex } from "antd";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { APP_ENV } from "../../../../../env";
@@ -68,7 +68,11 @@ const StorySettingsCard = ({
 							</div>
 						</Flex>
 						<Flex className="avatar-div" gap="middle">
-							<img src={avatarImg} alt="User avatar" />
+							<Avatar
+								size={92}
+								src={avatarImg}
+								style={{ minHeight: 92, minWidth: 92, aspectRatio: "1/1" }}
+							/>
 							<p style={{ whiteSpace: "nowrap" }}>
 								{`${user?.firstName} ${user?.lastName}`}
 							</p>

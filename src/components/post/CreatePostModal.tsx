@@ -1,4 +1,5 @@
 import {
+	Avatar,
 	Button,
 	Divider,
 	Flex,
@@ -15,7 +16,7 @@ import { useAppSelector } from "../../hooks/redux";
 import type { FileType } from "../../types/FileType";
 import { apiClient } from "../../utils/api/apiClient";
 import { getBase64 } from "../../utils/helpers/getBase64";
-import { happyFeelingImg, planetImg, postTypeImg } from "../../utils/images";
+import { avatar, happyFeelingImg, planetImg, postTypeImg } from "../../utils/images";
 import FeelingModal from "../feelings/FeelingModal";
 import type { IFeeling } from "../feelings/types";
 import BackgroundOptions from "../pages/Story/CreateStoryPage/components/BackgroundOptions";
@@ -27,6 +28,7 @@ import PublicationAudienceModal from "./components/PublicationAudienceModal/Publ
 import TagInput from "./components/Tags/TagInput";
 import TagsList from "./components/Tags/TagsList";
 import type { ICreatePost, PostType } from "./types";
+import { APP_ENV } from "../../env";
 
 type CreatePostModalProps = {
 	isModalOpen: boolean;
@@ -141,6 +143,11 @@ const CreatePostModal = ({
 			});
 	};
 
+	const avatarImg =
+		user?.avatar && user.avatar !== "/images/avatars/"
+			? `${APP_ENV.BASE_URL}${user.avatar}`
+			: avatar;
+
 	return (
 		<Modal
 			title="Create publication"
@@ -149,9 +156,10 @@ const CreatePostModal = ({
 			onCancel={handleCancel}
 		>
 			<Flex align="center" gap="middle">
-				<img
-					src={`http://localhost:5181${user?.avatar}`}
-					style={{ height: 92, width: 92 }}
+				<Avatar
+					size={92}
+					src={avatarImg}
+					style={{ minHeight: 92, minWidth: 92 }}
 					alt="User avatar"
 				/>
 				<Flex vertical gap="small">
