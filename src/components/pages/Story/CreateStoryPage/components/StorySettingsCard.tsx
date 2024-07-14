@@ -1,15 +1,15 @@
 import { Avatar, Button, Card, Flex } from "antd";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { APP_ENV } from "../../../../../env";
 import { useAppSelector } from "../../../../../hooks/redux";
-import { avatar, settingsIcon } from "../../../../../utils/images";
+import { settingsIcon } from "../../../../../utils/images";
 import { useCreateStory } from "../context";
 import BackgroundSelect from "./BackgroundSelect";
 import CancelStoryModal from "./CancelStoryModal";
 import ImageStorySettings from "./ImageStorySettings";
 import StoryPrivacyModal from "./StoryPrivacyModal";
 import TextSettingsCollapce from "./TextSettingsCollapce";
+import useAvatar from "../../../../../hooks/useAvatar";
 
 type StorySettingsCardProps = {
 	isSmallerThatMdScreen?: boolean;
@@ -50,10 +50,7 @@ const StorySettingsCard = ({
 		navigate("/");
 	};
 
-	const avatarImg =
-		user?.avatar && user.avatar !== "/images/avatars/"
-			? `${APP_ENV.BASE_URL}${user.avatar}`
-			: avatar;
+	const avatarImg = useAvatar();
 
 	return (
 		<Card style={{ height: isSmallerThatMdScreen ? "fit-content" : "100%" }}>

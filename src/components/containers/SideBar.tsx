@@ -1,9 +1,9 @@
 import { Avatar, Layout, Menu } from 'antd';
 import { Link } from 'react-router-dom';
-import { action, feeling, friendsForSidePanel, memories, messengerForSidePanel, avatar } from '../../utils/images/index';
+import { action, feeling, friendsForSidePanel, memories, messengerForSidePanel } from '../../utils/images/index';
 import './SideBar.css';
 import { useAppSelector } from '../../hooks/redux';
-import { APP_ENV } from '../../env';
+import useAvatar from '../../hooks/useAvatar';
 
 const { Sider } = Layout;
 
@@ -15,7 +15,7 @@ export const SideBar = () => {
       return null;
    }
 
-   const avatarSrc = user && user.avatar && user.avatar !== '/images/avatars/' ? `${APP_ENV.BASE_URL}${user.avatar}` : avatar;
+   const avatarImg = useAvatar();
 
    return (
       <Layout >
@@ -33,7 +33,7 @@ export const SideBar = () => {
             <div className="avatar-container">
                <Link to="/profile">
                   <Avatar
-                     src={avatarSrc}
+                     src={avatarImg}
                      size={50}
                   />
                   <span className="username">

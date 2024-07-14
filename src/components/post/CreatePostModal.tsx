@@ -16,7 +16,7 @@ import { useAppSelector } from "../../hooks/redux";
 import type { FileType } from "../../types/FileType";
 import { apiClient } from "../../utils/api/apiClient";
 import { getBase64 } from "../../utils/helpers/getBase64";
-import { avatar, happyFeelingImg, planetImg, postTypeImg } from "../../utils/images";
+import { happyFeelingImg, planetImg, postTypeImg } from "../../utils/images";
 import FeelingModal from "../feelings/FeelingModal";
 import type { IFeeling } from "../feelings/types";
 import BackgroundOptions from "../pages/Story/CreateStoryPage/components/BackgroundOptions";
@@ -28,7 +28,7 @@ import PublicationAudienceModal from "./components/PublicationAudienceModal/Publ
 import TagInput from "./components/Tags/TagInput";
 import TagsList from "./components/Tags/TagsList";
 import type { ICreatePost, PostType } from "./types";
-import { APP_ENV } from "../../env";
+import useAvatar from "../../hooks/useAvatar";
 
 type CreatePostModalProps = {
 	isModalOpen: boolean;
@@ -143,10 +143,7 @@ const CreatePostModal = ({
 			});
 	};
 
-	const avatarImg =
-		user?.avatar && user.avatar !== "/images/avatars/"
-			? `${APP_ENV.BASE_URL}${user.avatar}`
-			: avatar;
+	const avatarImg = useAvatar();
 
 	return (
 		<Modal

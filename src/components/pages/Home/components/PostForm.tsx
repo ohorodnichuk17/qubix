@@ -1,21 +1,20 @@
 import { Avatar } from 'antd';
-import { Link } from 'react-router-dom';
-import { photoImg, feeling, avatar as defaultAvatar } from '../../../../utils/images/index';
+import { photoImg, feeling } from '../../../../utils/images/index';
 import './PostForm.css';
 import { useAppSelector } from '../../../../hooks/redux';
-import { APP_ENV } from '../../../../env';
+import useAvatar from '../../../../hooks/useAvatar';
 
 export const PostForm = () => {
    const { user } = useAppSelector(state => state.account);
    const isLogin = !!user;
 
-   const avatarSrc = user && user.avatar && user.avatar !== '/images/avatars/' ? `${APP_ENV.BASE_URL}${user.avatar}` : defaultAvatar;
+   const avatarImg = useAvatar();
 
    return (
       <div className="whats-up">
          <div className="top-section">
             <Avatar
-               src={avatarSrc}
+               src={avatarImg}
                size={50}
             />
             <div className="user-info">

@@ -5,22 +5,22 @@ import { SearchOutlined, UserOutlined, UserAddOutlined, MenuOutlined } from '@an
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { logout } from '../../store/account/account.slice';
 import './HeaderDefault.css';
-import { logo, activeHome, home, activeFriends, friends, activeMessanger, messanger, glyph, plus, activePlus, avatar } from '../../utils/images';
-import { APP_ENV } from '../../env';
+import { logo, activeHome, home, activeFriends, friends, activeMessanger, messanger, glyph, plus, activePlus } from '../../utils/images';
+import useAvatar from '../../hooks/useAvatar';
 
 
 const { Header } = Layout;
 
 const HeaderDefault = () => {
    const dispatch = useAppDispatch();
-   const { isLogin, user } = useAppSelector(state => state.account);
+   const { isLogin } = useAppSelector(state => state.account);
    const [drawerVisible, setDrawerVisible] = useState(false);
 
    const handleLogout = () => {
       dispatch(logout());
    };
 
-   const avatarSrc = user && user.avatar && user.avatar !== '/images/avatars/' ? `${APP_ENV.BASE_URL}${user.avatar}` : avatar;
+   const avatarImg = useAvatar();
 
    const menu = (
       <Menu>
@@ -117,7 +117,7 @@ const HeaderDefault = () => {
                </div>
                <div className="navbar-right">
                   <div className="avatar-dropdown-container">
-                     <Avatar src={avatarSrc} size={50} />
+                     <Avatar src={avatarImg} size={50} />
                      <Dropdown overlay={menu} trigger={['click']}>
                         <Button className="avatar-dropdown-button" icon={<img src={glyph} alt="dropdown" />} />
                      </Dropdown>
