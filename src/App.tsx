@@ -9,10 +9,9 @@ import ContainerDefault from './components/containers/ContainerDefault';
 import SetNewPasswordPage from './components/pages/SetNewPasswordPage/SetNewPasswordPage';
 import EmailSuccessfullyConfirmedPage from './components/pages/EmailSuccessfullyConfirmedPage/EmailSuccessfullyConfirmedPage';
 import EmailConfirmationRequired from './components/pages/EmailConfirmationRequired/EmailConfirmationRequired';
-import { CreateStoryPage } from './components/pages/Story/CreateStoryPage/CreateStoryPage';
 import UserProfilePage from './components/pages/UserProfilePage/UserProfilePage';
-import CreatePostButton from './components/post/CreatePostButton';
 import HomePage from './components/pages/Home/HomePage';
+import CreateStoryPage from './components/pages/Story/CreateStoryPage/CreateStoryPage';
 
 const App = () => {
    return (

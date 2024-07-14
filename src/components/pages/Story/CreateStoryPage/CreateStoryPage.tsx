@@ -1,59 +1,21 @@
-import { type ColorPickerProps, Flex, Grid, Layout, message } from "antd";
-import { useMemo, useState } from "react";
+import { Flex, Grid, Layout, message } from "antd";
 import "./CreateStoryPage.css";
 import { Content } from "antd/es/layout/layout";
-import { useNavigate } from "react-router-dom";
 import { useAppSelector } from "../../../../hooks/redux";
 import { apiClient } from "../../../../utils/api/apiClient";
-import CancelStoryModal from "./components/CancelStoryModal";
 import CreateStorySideBar from "./components/CreateStorySideBar";
 import SelectStoryType from "./components/SelectStoryType";
 import StoryPreview from "./components/StoryPreview";
-import StoryPrivacyModal from "./components/StoryPrivacyModal";
 import StorySettingsCard from "./components/StorySettingsCard";
+import { CreateStoryProvider, useCreateStory } from "./context";
 import useCapture from "./hooks/useCapture";
-import type { StoryType } from "./types";
 
-export const CreateStoryPage = () => {
-	const navigate = useNavigate();
-
+const CreateStoryContent = () => {
 	const { user } = useAppSelector((state) => state.account);
 
-	const [storyType, setStoryType] = useState<StoryType | null>(null);
-	const [image, setImage] = useState<string>();
-	const [text, setText] = useState<string>();
-	const [textFontSize, setTextFontSize] = useState<string>("16");
-
-	const [textColor, setTextColor] =
-		useState<ColorPickerProps["value"]>("black");
-	const textColorString = useMemo(
-		() =>
-			typeof textColor === "string" ? textColor : textColor?.toHexString(),
-		[textColor],
-	);
-
-	const [background, setBackground] = useState<string>("gray");
-
-	const [width, setWidth] = useState<number>(30);
-	const [rotate, setRotate] = useState<number>(0);
+	const { storyType, setStoryType, text } = useCreateStory();
 
 	const { captureAreaRef, getCapture } = useCapture();
-
-	const [isPrivacyModalOpen, setIsPrivacyModalOpen] = useState(false);
-	const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
-
-	const showPrivacyModal = () => setIsPrivacyModalOpen(true);
-	const hidePrivacyModal = () => setIsPrivacyModalOpen(false);
-
-	const showCancelModal = () => setIsCancelModalOpen(true);
-	const onCancelCancelModal = () => setIsCancelModalOpen(false);
-	const onOkCancelModal = () => {
-		setIsPrivacyModalOpen(false);
-		navigate("/");
-	};
-
-	const handleImageWidthChange = (value: number) => setWidth(value);
-	const handleImageRotateChange = (value: number) => setRotate(value);
 
 	const postStory = async () => {
 		if (storyType == null) return;
@@ -87,23 +49,7 @@ export const CreateStoryPage = () => {
 
 	return (
 		<Layout className="create-page-story-layout" style={{ height: "100%" }}>
-			{!isScreenSmallerThatMd && (
-				<CreateStorySideBar
-					setImage={setImage}
-					setBackground={setBackground}
-					setText={setText}
-					setTextFontSize={setTextFontSize}
-					setTextColor={setTextColor}
-					showPrivacyModal={showPrivacyModal}
-					showCancelModal={showCancelModal}
-					handleImageRotateChange={handleImageRotateChange}
-					handleImageWidthChange={handleImageWidthChange}
-					postStory={postStory}
-					storyType={storyType}
-					textFontSize={textFontSize}
-					textColor={textColor}
-				/>
-			)}
+			{!isScreenSmallerThatMd && <CreateStorySideBar postStory={postStory} />}
 			<Content
 				style={{
 					marginLeft: !isScreenSmallerThatMd ? "35%" : 0,
@@ -113,19 +59,7 @@ export const CreateStoryPage = () => {
 				{isScreenSmallerThatMd && (
 					<StorySettingsCard
 						isSmallerThatMdScreen={isScreenSmallerThatMd}
-						setImage={setImage}
-						setBackground={setBackground}
-						setText={setText}
-						setTextFontSize={setTextFontSize}
-						setTextColor={setTextColor}
-						showPrivacyModal={showPrivacyModal}
-						showCancelModal={showCancelModal}
-						handleImageRotateChange={handleImageRotateChange}
-						handleImageWidthChange={handleImageWidthChange}
 						postStory={postStory}
-						storyType={storyType}
-						textFontSize={textFontSize}
-						textColor={textColor}
 					/>
 				)}
 				<Flex
@@ -139,29 +73,18 @@ export const CreateStoryPage = () => {
 					{storyType == null && <SelectStoryType setStoryType={setStoryType} />}
 
 					{storyType != null && (
-						<StoryPreview
-							storyType={storyType}
-							image={image}
-							text={text}
-							textFontSize={textFontSize}
-							textColorString={textColorString}
-							background={background}
-							width={width}
-							rotate={rotate}
-							captureAreaRef={captureAreaRef}
-						/>
+						<StoryPreview captureAreaRef={captureAreaRef} />
 					)}
-					<StoryPrivacyModal
-						isModalOpen={isPrivacyModalOpen}
-						hideModal={hidePrivacyModal}
-					/>
-					<CancelStoryModal
-						isCancelModalOpen={isCancelModalOpen}
-						onOkCancelModal={onOkCancelModal}
-						onCancelCancelModal={onCancelCancelModal}
-					/>
 				</Flex>
 			</Content>
 		</Layout>
 	);
 };
+
+const CreateStoryPage = () => (
+	<CreateStoryProvider>
+		<CreateStoryContent />
+	</CreateStoryProvider>
+);
+
+export default CreateStoryPage;

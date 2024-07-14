@@ -1,49 +1,54 @@
 import { Button, Card, Flex } from "antd";
-import type { ColorValueType } from "antd/es/color-picker/interface";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { APP_ENV } from "../../../../../env";
 import { useAppSelector } from "../../../../../hooks/redux";
 import { avatar, settingsIcon } from "../../../../../utils/images";
-import type { StoryType } from "../types";
+import { useCreateStory } from "../context";
 import BackgroundSelect from "./BackgroundSelect";
+import CancelStoryModal from "./CancelStoryModal";
 import ImageStorySettings from "./ImageStorySettings";
+import StoryPrivacyModal from "./StoryPrivacyModal";
 import TextSettingsCollapce from "./TextSettingsCollapce";
 
 type StorySettingsCardProps = {
 	isSmallerThatMdScreen?: boolean;
-	storyType: StoryType | null;
-	setImage: React.Dispatch<React.SetStateAction<string | undefined>>;
-	setText: React.Dispatch<React.SetStateAction<string | undefined>>;
-	textFontSize: string;
-	setTextFontSize: React.Dispatch<React.SetStateAction<string>>;
-	setTextColor: React.Dispatch<
-		React.SetStateAction<ColorValueType | undefined>
-	>;
-	setBackground: React.Dispatch<React.SetStateAction<string>>;
-	showPrivacyModal: () => void;
-	showCancelModal: () => void;
-	handleImageWidthChange: (value: number) => void;
-	handleImageRotateChange: (value: number) => void;
 	postStory: () => Promise<void>;
-	textColor: ColorValueType | undefined;
 };
 
 const StorySettingsCard = ({
 	isSmallerThatMdScreen = false,
-	storyType,
-	setImage,
-	setText,
-	textFontSize,
-	setTextFontSize,
-	setTextColor,
-	setBackground,
-	showPrivacyModal,
-	showCancelModal,
-	handleImageWidthChange,
-	handleImageRotateChange,
 	postStory,
-	textColor,
 }: StorySettingsCardProps) => {
 	const { user } = useAppSelector((state) => state.account);
+
+	const {
+		storyType,
+		setImage,
+		setText,
+		textFontSize,
+		setTextFontSize,
+		textColor,
+		setTextColor,
+		setBackground,
+		handleImageWidthChange,
+		handleImageRotateChange,
+	} = useCreateStory();
+
+	const navigate = useNavigate();
+
+	const [isPrivacyModalOpen, setIsPrivacyModalOpen] = useState(false);
+	const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
+
+	const showPrivacyModal = () => setIsPrivacyModalOpen(true);
+	const hidePrivacyModal = () => setIsPrivacyModalOpen(false);
+
+	const showCancelModal = () => setIsCancelModalOpen(true);
+	const onCancelCancelModal = () => setIsCancelModalOpen(false);
+	const onOkCancelModal = () => {
+		setIsPrivacyModalOpen(false);
+		navigate("/");
+	};
 
 	const avatarImg =
 		user?.avatar && user.avatar !== "/images/avatars/"
@@ -100,6 +105,15 @@ const StorySettingsCard = ({
 					</Flex>
 				)}
 			</Flex>
+			<StoryPrivacyModal
+				isModalOpen={isPrivacyModalOpen}
+				hideModal={hidePrivacyModal}
+			/>
+			<CancelStoryModal
+				isCancelModalOpen={isCancelModalOpen}
+				onOkCancelModal={onOkCancelModal}
+				onCancelCancelModal={onCancelCancelModal}
+			/>
 		</Card>
 	);
 };
