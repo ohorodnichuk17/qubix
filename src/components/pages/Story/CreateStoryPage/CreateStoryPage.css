@@ -34,10 +34,6 @@
     align-items: center;
 }
 
-/* .story-settings-collapce{
-    max-width: 250px;
-} */
-
 .create-story-div {
     background: linear-gradient(154.84deg, #FF0000 2.43%, #FF355A 14.82%, #FF4F87 49.71%, #FF69B4 84.15%);
     border-radius: 20px;
@@ -121,7 +117,6 @@
 }
 
 .avatar-div {
-    justify-content: space-between;
     align-items: center;
 
     img {

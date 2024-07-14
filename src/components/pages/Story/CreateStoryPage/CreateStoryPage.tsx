@@ -1,18 +1,16 @@
-import { Button, Card, type ColorPickerProps, Flex, message } from "antd";
+import { type ColorPickerProps, Flex, Grid, Layout, message } from "antd";
 import { useMemo, useState } from "react";
 import "./CreateStoryPage.css";
+import { Content } from "antd/es/layout/layout";
 import { useNavigate } from "react-router-dom";
-import { APP_ENV } from "../../../../env";
 import { useAppSelector } from "../../../../hooks/redux";
 import { apiClient } from "../../../../utils/api/apiClient";
-import { avatar, settingsIcon } from "../../../../utils/images";
-import BackgroundSelect from "./components/BackgroundSelect";
 import CancelStoryModal from "./components/CancelStoryModal";
-import ImageStorySettings from "./components/ImageStorySettings";
+import CreateStorySideBar from "./components/CreateStorySideBar";
 import SelectStoryType from "./components/SelectStoryType";
 import StoryPreview from "./components/StoryPreview";
 import StoryPrivacyModal from "./components/StoryPrivacyModal";
-import TextSettingsCollapce from "./components/TextSettingsCollapce";
+import StorySettingsCard from "./components/StorySettingsCard";
 import useCapture from "./hooks/useCapture";
 import type { StoryType } from "./types";
 
@@ -20,10 +18,6 @@ export const CreateStoryPage = () => {
 	const navigate = useNavigate();
 
 	const { user } = useAppSelector((state) => state.account);
-	const avatarImg =
-		user?.avatar && user.avatar !== "/images/avatars/"
-			? `${APP_ENV.BASE_URL}${user.avatar}`
-			: avatar;
 
 	const [storyType, setStoryType] = useState<StoryType | null>(null);
 	const [image, setImage] = useState<string>();
@@ -82,83 +76,92 @@ export const CreateStoryPage = () => {
 			});
 	};
 
+	const screens = Grid.useBreakpoint();
+
+	const isScreenSmallerThatMd =
+		(screens.xs || screens.sm) &&
+		!screens.md &&
+		!screens.lg &&
+		!screens.xl &&
+		!screens.xxl;
+
 	return (
-		<Flex gap="middle" className="create-story-page">
-			<Card style={{ height: "100%" }}>
-				<Flex style={{ height: "100%" }} vertical justify="space-between">
-					<Flex vertical>
-						<Card>
-							<Flex justify="space-between" align="center">
-								<p>Your story</p>
-								{/* biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
-								<div className="settings-icon-div" onClick={showPrivacyModal}>
-									<img src={settingsIcon} alt="Settings icon" />
-								</div>
-							</Flex>
-							<Flex className="avatar-div">
-								<img src={avatarImg} alt="User avatar" />
-								<p style={{ whiteSpace: "nowrap" }}>
-									{`${user?.firstName} ${user?.lastName}`}
-								</p>
-							</Flex>
-						</Card>
-
-						{storyType != null && (
-							<Flex vertical gap="small">
-								{storyType === "image" && (
-									<ImageStorySettings
-										setImage={setImage}
-										handleImageWidthChange={handleImageWidthChange}
-										handleImageRotateChange={handleImageRotateChange}
-									/>
-								)}
-								<TextSettingsCollapce
-									setText={setText}
-									textFontSize={textFontSize}
-									setTextFontSize={setTextFontSize}
-									textColor={textColor}
-									setTextColor={setTextColor}
-								/>
-								<BackgroundSelect setBackground={setBackground} />
-							</Flex>
-						)}
-					</Flex>
-
-					{storyType != null && (
-						<Flex gap="small" className="story-buttons-div">
-							<Button className="gray-button" onClick={showCancelModal}>
-								Cancel
-							</Button>
-							<Button onClick={postStory}>Share</Button>
-						</Flex>
-					)}
-				</Flex>
-			</Card>
-
-			{storyType == null && <SelectStoryType setStoryType={setStoryType} />}
-
-			{storyType != null && (
-				<StoryPreview
+		<Layout className="create-page-story-layout" style={{ height: "100%" }}>
+			{!isScreenSmallerThatMd && (
+				<CreateStorySideBar
+					setImage={setImage}
+					setBackground={setBackground}
+					setText={setText}
+					setTextFontSize={setTextFontSize}
+					setTextColor={setTextColor}
+					showPrivacyModal={showPrivacyModal}
+					showCancelModal={showCancelModal}
+					handleImageRotateChange={handleImageRotateChange}
+					handleImageWidthChange={handleImageWidthChange}
+					postStory={postStory}
 					storyType={storyType}
-					image={image}
-					text={text}
 					textFontSize={textFontSize}
-					textColorString={textColorString}
-					background={background}
-					width={width}
-					rotate={rotate}
-					captureAreaRef={captureAreaRef}
+					textColor={textColor}
 				/>
 			)}
-			<StoryPrivacyModal
-				isModalOpen={isPrivacyModalOpen}
-				hideModal={hidePrivacyModal}
-			/>
-			<CancelStoryModal
-				isCancelModalOpen={isCancelModalOpen}
-				onOkCancelModal={onOkCancelModal}
-				onCancelCancelModal={onCancelCancelModal}
-			/>
-		</Flex>
+			<Content
+				style={{
+					marginLeft: !isScreenSmallerThatMd ? "35%" : 0,
+				}}
+				className="content"
+			>
+				{isScreenSmallerThatMd && (
+					<StorySettingsCard
+						isSmallerThatMdScreen={isScreenSmallerThatMd}
+						setImage={setImage}
+						setBackground={setBackground}
+						setText={setText}
+						setTextFontSize={setTextFontSize}
+						setTextColor={setTextColor}
+						showPrivacyModal={showPrivacyModal}
+						showCancelModal={showCancelModal}
+						handleImageRotateChange={handleImageRotateChange}
+						handleImageWidthChange={handleImageWidthChange}
+						postStory={postStory}
+						storyType={storyType}
+						textFontSize={textFontSize}
+						textColor={textColor}
+					/>
+				)}
+				<Flex
+					gap="middle"
+					className="create-story-page"
+					style={{
+						height: isScreenSmallerThatMd ? "fit-content" : "100%",
+						marginTop: isScreenSmallerThatMd ? 20 : 0,
+					}}
+				>
+					{storyType == null && <SelectStoryType setStoryType={setStoryType} />}
+
+					{storyType != null && (
+						<StoryPreview
+							storyType={storyType}
+							image={image}
+							text={text}
+							textFontSize={textFontSize}
+							textColorString={textColorString}
+							background={background}
+							width={width}
+							rotate={rotate}
+							captureAreaRef={captureAreaRef}
+						/>
+					)}
+					<StoryPrivacyModal
+						isModalOpen={isPrivacyModalOpen}
+						hideModal={hidePrivacyModal}
+					/>
+					<CancelStoryModal
+						isCancelModalOpen={isCancelModalOpen}
+						onOkCancelModal={onOkCancelModal}
+						onCancelCancelModal={onCancelCancelModal}
+					/>
+				</Flex>
+			</Content>
+		</Layout>
 	);
 };
