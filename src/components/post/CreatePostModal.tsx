@@ -163,16 +163,7 @@ const CreatePostModal = ({
 					alt="User avatar"
 				/>
 				<Flex vertical gap="small">
-					<p
-						style={{
-							whiteSpace: "nowrap",
-							color: "black",
-							fontWeight: 700,
-							margin: 0,
-						}}
-					>
-						{`${user?.firstName} ${user?.lastName}`}
-					</p>
+					<p className="user-name">{`${user?.firstName} ${user?.lastName}`}</p>
 					{feeling && (
 						<Flex gap="small" align="center">
 							<img
@@ -185,12 +176,7 @@ const CreatePostModal = ({
 					)}
 					<button
 						type="button"
-						style={{
-							border: "none",
-							borderRadius: 8,
-							padding: "5px 10px",
-							cursor: "pointer",
-						}}
+						className="audience-button"
 						onClick={() => setAudienceModalVisible(true)}
 					>
 						<Flex align="center" gap="small">

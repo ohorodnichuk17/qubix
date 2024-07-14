@@ -21,7 +21,6 @@ const ImagesCarousel = ({ images }: ImagesCarousel) => {
 					src={file.preview}
 					height={200}
 					className="post-preview-img"
-					style={{ objectFit: "contain", width: "100%" }}
 					alt="Post images"
 				/>
 			))}

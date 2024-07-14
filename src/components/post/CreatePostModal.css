@@ -1,3 +1,17 @@
+.user-name {
+    white-space: nowrap;
+    color: black;
+    font-weight: 700;
+    margin: 0;
+}
+
+.audience-button {
+    border: none;
+    border-radius: 8px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
 .post-preview-img {
     width: 100%;
     object-fit: contain;
