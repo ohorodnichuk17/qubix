@@ -69,7 +69,7 @@ export interface IResetPassword {
 }
 
 export interface IChangeEmail {
-   email: string | undefined,
-   token: string | undefined,
-   userId: string | undefined,
+   email: string,
+   token: string,
+   userId: string,
 }

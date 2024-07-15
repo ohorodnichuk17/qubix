@@ -76,7 +76,14 @@ const App = () => {
 							</PrivateRoute>
 						}
 					/>
-					<Route path="change-email" element={<ChangeEmailPage />} />
+					<Route
+						path="change-email"
+						element={
+							<PrivateRoute>
+								<ChangeEmailPage />
+							</PrivateRoute>
+						}
+					/>
 					<Route path="set-new-password" element={<SetNewPasswordPage />} />
 					<Route
 						path="email-confirmed"
