@@ -218,7 +218,6 @@ const UserProfilePage: React.FC = () => {
                            <CoverPhotoMenu
                               handleCoverPhotoChange={handleCoverPhotoChange}
                               setCoverPhoto={setCoverPhoto}
-                              userCoverPhoto={userProfile?.coverPhoto}
                            />
                         }
                         trigger={["click"]}
