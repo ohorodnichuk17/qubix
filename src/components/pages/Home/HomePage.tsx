@@ -3,7 +3,6 @@ import SideBar from '../../containers/SideBar';
 import StoryForm from './components/StoryForm';
 import PostForm from './components/PostForm';
 import './HomePage.css';
-import CreatePostButton from '../../post/CreatePostButton';
 import { useAppSelector } from '../../../hooks/redux';
 
 const { Content } = Layout;
@@ -19,7 +18,6 @@ export const HomePage = () => {
                <div className="homepage-container">
                   {isLogin ? (
                      <>
-                        <CreatePostButton />
                         <StoryForm />
                         <PostForm />
                      </>

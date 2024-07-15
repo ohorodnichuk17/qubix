@@ -37,6 +37,7 @@ import feeling from '../../assets/home/feeling.png';
 import friendsForSidePanel from '../../assets/home/friends_for_side_panel.png';
 import messengerForSidePanel from '../../assets/home/messenger_for_side_panel.png';
 import memories from '../../assets/home/memories.png';
+import createPost from '../../assets/post/create_post.png';
 
 //Backgrounds
 import bg1 from '../../assets/backgrounds/1.jpg';
@@ -119,5 +120,6 @@ export {
    messengerForSidePanel,
    memories,
    plus,
-   activePlus
+   activePlus,
+   createPost
 };

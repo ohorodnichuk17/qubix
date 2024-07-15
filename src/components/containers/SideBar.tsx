@@ -1,9 +1,11 @@
 import { Avatar, Layout, Menu } from 'antd';
 import { Link } from 'react-router-dom';
-import { action, feeling, friendsForSidePanel, memories, messengerForSidePanel } from '../../utils/images/index';
+import { action, feeling, friendsForSidePanel, memories, messengerForSidePanel, createPost } from '../../utils/images/index';
 import './SideBar.css';
 import { useAppSelector } from '../../hooks/redux';
 import useAvatar from '../../hooks/useAvatar';
+import { useState } from 'react';
+import CreatePostModal from '../post/CreatePostModal';
 
 const { Sider } = Layout;
 
@@ -17,8 +19,16 @@ export const SideBar = () => {
 
    const avatarImg = useAvatar();
 
+   const [isModalOpen, setIsModalOpen] = useState(false);
+
+   const showModal = () => setIsModalOpen(true);
+
+   const handleOk = () => setIsModalOpen(false);
+
+   const handleCancel = () => setIsModalOpen(false);
+
    return (
-      <Layout >
+      <Layout>
          <Sider
             width={250}
             style={{
@@ -57,7 +67,11 @@ export const SideBar = () => {
                <Menu.Item key="5" icon={<img src={action} alt="Actions" className="menu-icon" />}>
                   Actions
                </Menu.Item>
+               <Menu.Item key="6" icon={<img src={createPost} alt="Create Post" className="menu-icon" />} onClick={showModal}>
+                  Create post
+               </Menu.Item>
             </Menu>
+            <CreatePostModal isModalOpen={isModalOpen} handleOk={handleOk} handleCancel={handleCancel} />
          </Sider>
       </Layout>
    );
