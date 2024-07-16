@@ -11,9 +11,9 @@ export const isTokenActive = (token : string | null) => {
         if(decodedToken.exp) {
             const expirationTime = decodedToken.exp * 1000;
             return expirationTime > Date.now();
-        } else {
-            return true;
         }
+
+        return true;
     } catch (error) {
         console.error('Error decoding token: ', error);
         return false;

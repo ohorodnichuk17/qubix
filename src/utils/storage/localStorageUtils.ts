@@ -11,7 +11,7 @@ export const getLocalStorage = (keyStorage: string) : string | null => {
 
     if(storedValue !== null) {
         return JSON.parse(storedValue);
-    } else {
-        return null;
     }
+
+    return null;
 };
