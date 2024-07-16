@@ -1,6 +1,6 @@
 import React from 'react';
 import { Form, Input, Button, Flex, Card, Divider } from 'antd';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { LockOutlined, MailOutlined } from '@ant-design/icons';
 import './LoginPage.css';
 import { useAppDispatch } from '../../../hooks/redux';
@@ -10,12 +10,20 @@ import { unwrapResult } from '@reduxjs/toolkit';
 const LoginPage: React.FC = () => {
    const navigate = useNavigate();
    const dispatch = useAppDispatch();
+   
+   const [searchParams] = useSearchParams();
+	const redirectAddress = searchParams.get("redirect-to");
 
    const onFinish = async (values: any) => {
       try {
          const response = await dispatch(login(values));
          console.log(response)
          unwrapResult(response);
+
+         if(redirectAddress){
+            navigate(redirectAddress);
+            return;
+         }
          navigate('/');
       } catch (error) {
          console.log(error);
