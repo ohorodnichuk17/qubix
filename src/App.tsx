@@ -13,6 +13,8 @@ import ResetPasswordPage from "./components/pages/ResetPasswordPage/ResetPasswor
 import SetNewPasswordPage from "./components/pages/SetNewPasswordPage/SetNewPasswordPage";
 import CreateStoryPage from "./components/pages/Story/CreateStoryPage/CreateStoryPage";
 import UserProfilePage from "./components/pages/UserProfilePage/UserProfilePage";
+import AddFriend from "./components/pages/Friends/AddFriend/AddFriend";
+import FriendRequest from "./components/pages/Friends/FriendRequest/FriendRequest";
 
 const App = () => {
 	return (
@@ -100,6 +102,25 @@ const App = () => {
 							element={
 								<PrivateRoute>
 									<CreateStoryPage />
+								</PrivateRoute>
+							}
+						/>
+					</Route>
+
+					<Route path="friends">
+						<Route
+							path="add"
+							element={
+								<PrivateRoute>
+									<AddFriend />
+								</PrivateRoute>
+							}
+						/>
+						<Route
+							path="request"
+							element={
+								<PrivateRoute>
+									<FriendRequest />
 								</PrivateRoute>
 							}
 						/>
