@@ -1,17 +1,23 @@
 import { CameraOutlined, DeleteOutlined } from "@ant-design/icons";
 import { Menu, Upload, message } from "antd";
+import type { UploadChangeParam } from "antd/es/upload";
 import { useDispatch } from "react-redux";
 import { useAppSelector } from "../../../../hooks/redux";
 import { updateAvatar } from "../../../../store/account/account.slice";
 import { apiClient } from "../../../../utils/api/apiClient";
-import { avatar } from "../../../../utils/images";
+import { avatar as defaultAvatar } from "../../../../utils/images";
 
 type AvatarMenuProps = {
-	handleAvatarChange: (info: any) => Promise<void>;
+	avatar: string;
+	handleAvatarChange: (info: UploadChangeParam) => Promise<void>;
 	setAvatar: React.Dispatch<React.SetStateAction<string>>;
 };
 
-const AvatarMenu = ({ handleAvatarChange, setAvatar }: AvatarMenuProps) => {
+const AvatarMenu = ({
+	avatar,
+	handleAvatarChange,
+	setAvatar,
+}: AvatarMenuProps) => {
 	const { user } = useAppSelector((state) => state.account);
 	const dispatch = useDispatch();
 
@@ -24,7 +30,7 @@ const AvatarMenu = ({ handleAvatarChange, setAvatar }: AvatarMenuProps) => {
 		apiClient
 			.delete(`/api/user-profile/delete-avatar?userId=${user.id}`)
 			.then(() => {
-				setAvatar(avatar);
+				setAvatar(defaultAvatar);
 				dispatch(updateAvatar(""));
 			})
 			.catch(() => {
@@ -46,9 +52,11 @@ const AvatarMenu = ({ handleAvatarChange, setAvatar }: AvatarMenuProps) => {
 					<span>Add new avatar</span>
 				</Menu.Item>
 			</Upload>
-			<Menu.Item key="2" icon={<DeleteOutlined />} onClick={deleteAvatar}>
-				Delete avatar
-			</Menu.Item>
+			{avatar !== defaultAvatar && (
+				<Menu.Item key="2" icon={<DeleteOutlined />} onClick={deleteAvatar}>
+					Delete avatar
+				</Menu.Item>
+			)}
 		</Menu>
 	);
 };
