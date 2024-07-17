@@ -1,7 +1,7 @@
 import { Layout } from "antd";
 import { Content } from "antd/es/layout/layout";
 import { Outlet } from "react-router-dom";
-import HeaderDefault from "./HeaderDefault";
+import HeaderDefault from "../Header/HeaderDefault";
 import './ContainerDefault.css';
 
 const ContainerDefault = () => {

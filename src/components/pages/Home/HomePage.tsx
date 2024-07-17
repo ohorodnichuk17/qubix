@@ -1,5 +1,5 @@
 import { Layout } from 'antd';
-import SideBar from '../../containers/SideBar';
+import SideBar from '../../containers/SideBar/SideBar';
 import StoryForm from './components/StoryForm';
 import PostForm from './components/PostForm';
 import './HomePage.css';
