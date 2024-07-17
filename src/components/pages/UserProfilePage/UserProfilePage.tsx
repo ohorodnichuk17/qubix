@@ -75,11 +75,11 @@ const UserProfilePage: React.FC = () => {
    }, [user?.id]);
 
    useEffect(() => {
-      if (user?.avatar !== "/images/avatars/") {
-         setAvatar(APP_ENV.BASE_URL + user?.avatar);
-         return;
+      if (user?.avatar && user?.avatar !== "/images/avatars/") {
+         setAvatar(APP_ENV.BASE_URL + user.avatar);
+      } else {
+         setAvatar(avatarPng);
       }
-      setAvatar(avatarPng);
    }, [user?.avatar]);
 
    useEffect(() => {
@@ -133,8 +133,13 @@ const UserProfilePage: React.FC = () => {
    const handleCoverPhotoChange = async (info: UploadChangeParam) =>
       handleUploadChange(info, "coverPhoto");
 
-   const handleAvatarChange = async (info: UploadChangeParam) =>
-      handleUploadChange(info, "avatar");
+   const handleAvatarChange = async (info: UploadChangeParam) => {
+      if (info.file.status === "removed") {
+         setAvatar(avatarPng);
+      } else {
+         handleUploadChange(info, "avatar");
+      }
+   };
 
    const onFinish = (values: IUserProfileEditModel) => {
       apiClient
