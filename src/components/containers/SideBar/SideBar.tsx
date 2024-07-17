@@ -94,11 +94,10 @@ export const SideBar = () => {
             }}
          >
             <div className="avatar-container">
-               <Link to="/profile">
+               <Link to="/profile" style={{ color: "black" }}>
                   <Avatar src={avatarImg} size={50} />
-                  <span className="username">
-                     {user?.firstName} {user?.lastName}
-                  </span>
+                  <span style={{ color: "black", marginLeft: "8px" }}>{user?.firstName}</span>{" "}
+                  <span style={{ color: "black" }}>{user?.lastName}</span>
                </Link>
             </div>
             <Menu
