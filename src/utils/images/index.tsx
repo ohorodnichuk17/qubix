@@ -64,6 +64,18 @@ import starstruckFeelingImg from '../../assets/feelings/starstruck.png'
 import surprisedFeelingImg from '../../assets/feelings/surprised.png'
 import winkFeelingImg from '../../assets/feelings/wink.png'
 
+//Actions
+import celebratingImg from "../../assets/actions/celebrating/celebrating.png"
+import drinkingImg from "../../assets/actions/drinking/beer.png";
+import eatingImg from "../../assets/actions/eating/fork.png";
+import flyingImg from "../../assets/actions/flying/airplane.png";
+import hearingImg from "../../assets/actions/hearing/headphones.png";
+import particicapingImg from "../../assets/actions/particicaping/calendar.png";
+import playingImg from "../../assets/actions/playing/gaming.png";
+import readingImg from "../../assets/actions/reading/book.png";
+import searchingImg from "../../assets/actions/searching/seacrher.png";
+import viewingImg from "../../assets/actions/viewing/glasses.png";
+
 export {
 	photoImg,
 	locationImg,
@@ -125,5 +137,16 @@ export {
 	activePlus,
 	createPost,
 	house,
-   pronouns
+	pronouns,
+	//Actions
+	celebratingImg,
+	drinkingImg,
+	eatingImg,
+	flyingImg,
+	hearingImg,
+	particicapingImg,
+	playingImg,
+	readingImg,
+	searchingImg,
+	viewingImg,
 };

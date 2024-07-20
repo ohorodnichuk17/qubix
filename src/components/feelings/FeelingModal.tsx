@@ -1,7 +1,7 @@
-import { Flex, Modal, message } from "antd";
+import { Flex, Modal, Tabs, type TabsProps, message } from "antd";
 import { useEffect, useState } from "react";
 import { apiClient } from "../../utils/api/apiClient";
-import { FEELING_OPTIONS } from "./constants";
+import { ACTION_OPTIONS, FEELING_OPTIONS } from "./constants";
 import type { IFeeling } from "./types";
 
 type FeelingModalProps = {
@@ -44,6 +44,70 @@ const FeelingModal = ({
 		}
 	};
 
+	const items: TabsProps["items"] = [
+		{
+			key: "1",
+			label: "Feelings",
+			children: (
+				<Flex wrap="wrap" gap="middle">
+					{FEELING_OPTIONS.map((feeling) => (
+						<Flex
+							key={feeling.name}
+							gap="small"
+							align="center"
+							style={{
+								width: "45%",
+								padding: "5px",
+								borderRadius: "8px",
+								background:
+									feeling.name === selectedFeeling.name ? "gray" : "none",
+								color:
+									feeling.name === selectedFeeling.name ? "white" : "black",
+								transition: ".7s",
+							}}
+							onClick={() => setSelectedFeeling(feeling)}
+						>
+							<img
+								src={feeling.emoji}
+								alt="Feeling icon (emoji)"
+								className="h-50px"
+							/>
+							<span>{feeling.name}</span>
+						</Flex>
+					))}
+				</Flex>
+			),
+		},
+		{
+			key: "2",
+			label: "Actions",
+			children: (
+				<Flex wrap="wrap" gap="middle">
+					{ACTION_OPTIONS.map((action) => (
+						<Flex
+							key={action.name}
+							gap="small"
+							align="center"
+							style={{
+								width: "45%",
+								padding: "5px",
+								borderRadius: "8px",
+								transition: ".7s",
+							}}
+						>
+							<img
+								src={action.emoji}
+								alt="Feeling icon (emoji)"
+								className="h-50px"
+							/>
+							<span>{action.name}</span>
+						</Flex>
+					))}
+				</Flex>
+			),
+		},
+	];
+
 	return (
 		<Modal
 			title="How are you feeling ?"
@@ -51,32 +115,7 @@ const FeelingModal = ({
 			onOk={() => handleOk(getSelectedFeelingId())}
 			onCancel={handleCancel}
 		>
-			<Flex wrap="wrap" gap="middle">
-				{FEELING_OPTIONS.map((feeling) => (
-					<Flex
-						key={feeling.name}
-						gap="small"
-						align="center"
-						style={{
-							width: "45%",
-							padding: "5px",
-							borderRadius: "8px",
-							background:
-								feeling.name === selectedFeeling.name ? "gray" : "none",
-							color: feeling.name === selectedFeeling.name ? "white" : "black",
-							transition: ".7s",
-						}}
-						onClick={() => setSelectedFeeling(feeling)}
-					>
-						<img
-							src={feeling.emoji}
-							alt="Feeling icon (emoji)"
-							className="h-50px"
-						/>
-						<span>{feeling.name}</span>
-					</Flex>
-				))}
-			</Flex>
+			<Tabs defaultActiveKey="1" items={items} />
 		</Modal>
 	);
 };

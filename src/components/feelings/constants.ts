@@ -1,14 +1,24 @@
 import {
 	angryFeelingImg,
+	celebratingImg,
+	drinkingImg,
+	eatingImg,
+	flyingImg,
 	happyFeelingImg,
+	hearingImg,
 	inLoveFeelingImg,
 	laughingFeelingImg,
+	particicapingImg,
+	playingImg,
+	readingImg,
 	sadFeelingImg,
+	searchingImg,
 	shockedFeelingImg,
 	sickFeelingImg,
 	smilingFeelingImg,
 	starstruckFeelingImg,
 	surprisedFeelingImg,
+	viewingImg,
 	winkFeelingImg,
 } from "../../utils/images";
 
@@ -58,3 +68,46 @@ export const FEELING_OPTIONS = [
 		name: "Wink",
 	},
 ];
+
+export const ACTION_OPTIONS=[
+	{
+		emoji: celebratingImg,
+		name: "Celebrating"
+	},
+	{
+		emoji: playingImg,
+		name: "Playing"
+	},
+	{
+		emoji: drinkingImg,
+		name: "Drinking"
+	},
+	{
+		emoji: readingImg,
+		name: "Reading"
+	},
+	{
+		emoji: eatingImg,
+		name: "Eating"
+	},
+	{
+		emoji: searchingImg,
+		name: "Searching"
+	},
+	{
+		emoji: flyingImg,
+		name: "Flying to"
+	},
+	{
+		emoji: viewingImg,
+		name: "Viewing"
+	},
+	{
+		emoji: hearingImg,
+		name: "Hearing"
+	},
+	{
+		emoji: particicapingImg,
+		name: "Participating in"
+	},
+]
