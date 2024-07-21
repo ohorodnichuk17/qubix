@@ -2,27 +2,42 @@ import { Flex, Modal, Tabs, type TabsProps, message } from "antd";
 import { useEffect, useState } from "react";
 import { apiClient } from "../../utils/api/apiClient";
 import { ACTION_OPTIONS, FEELING_OPTIONS } from "./constants";
-import type { IAction, IFeeling } from "./types";
+import type { ISubAction, IAction, IFeeling } from "./types";
 import SubActions from "./components/SubActions";
 
 type FeelingModalProps = {
 	isModalOpen: boolean;
 	handleOk: (newFeeling: IFeeling | undefined) => void;
+	handleChangeAction: (newAction: IAction | undefined) => void;
+	handleChangeSubAction: (newAction: ISubAction | undefined) => void;
 	handleCancel: () => void;
 };
 
 const FeelingModal = ({
 	isModalOpen,
 	handleOk,
+	handleChangeAction,
+	handleChangeSubAction,
 	handleCancel,
 }: FeelingModalProps) => {
 	const [selectedFeeling, setSelectedFeeling] = useState<IFeeling>(
 		FEELING_OPTIONS[0],
 	);
 
-	const [selectedAction, setSelectedAction] = useState<IAction>();
+	const [selectedAction, setSelectedAction] = useState<IAction>(
+		ACTION_OPTIONS[0],
+	);
+
+	const [selectedSubAction, setSelectedSubAction] = useState<
+		ISubAction | undefined
+	>();
+
+	const [isSubActionsTabOpen, setIsSubActionsTabOpen] =
+		useState<boolean>(false);
 
 	const [feelingsFromApi, setFeelingsFromApi] = useState<IFeeling[]>([]);
+	const [actionsFromApi, setActionsFromApi] = useState<IAction[]>([]);
+	const [subActionsFromApi, setSubActionsFromApi] = useState<ISubAction[]>([]);
 
 	useEffect(() => {
 		apiClient
@@ -33,6 +48,24 @@ const FeelingModal = ({
 			.catch((error) => {
 				console.error(error);
 				message.error("Feelings loading error!");
+			});
+		apiClient
+			.get("/api/action/getAll")
+			.then((res) => {
+				setActionsFromApi(res.data);
+			})
+			.catch((error) => {
+				console.error(error);
+				message.error("Actions loading error!");
+			});
+		apiClient
+			.get("/api/subAction/getAll")
+			.then((res) => {
+				setSubActionsFromApi(res.data);
+			})
+			.catch((error) => {
+				console.error(error);
+				message.error("Actions loading error!");
 			});
 	}, []);
 
@@ -45,6 +78,42 @@ const FeelingModal = ({
 			feeling.emoji = selectedFeeling.emoji;
 			return feeling;
 		}
+	};
+
+	const getSelectedAction = () => {
+		if (selectedAction === undefined) {
+			return;
+		}
+		console.log("selected action getSelectedAction: ", selectedAction);
+		const action = actionsFromApi.find(
+			(action) => action.name === selectedAction.name,
+		);
+		console.log("selected actionFROMapi getSelectedAction: ", action);
+		if (action !== null && action !== undefined) {
+			action.emoji = selectedFeeling.emoji;
+			return action;
+		}
+	};
+
+	const getSelectedSubAction = () => {
+		if (selectedSubAction === undefined) {
+			return;
+		}
+		console.log("selected sub-action getSelectedAction: ", selectedSubAction);
+		const subAction = subActionsFromApi.find(
+			(subAction) => subAction.name === selectedSubAction.name,
+		);
+		console.log("selected actionFROMapi getSelectedAction: ", subAction);
+		if (subAction !== null && subAction !== undefined) {
+			subAction.emoji = selectedFeeling.emoji;
+			return subAction;
+		}
+	};
+
+	const onOk = () => {
+		handleOk(getSelectedFeelingId());
+		handleChangeAction(getSelectedAction());
+		handleChangeSubAction(getSelectedSubAction());
 	};
 
 	const items: TabsProps["items"] = [
@@ -86,13 +155,15 @@ const FeelingModal = ({
 			label: "Actions",
 			children: (
 				<Flex wrap="wrap" gap="middle">
-					{selectedAction !== undefined && (
+					{isSubActionsTabOpen && (
 						<SubActions
-							actions={selectedAction}
-							setSelectedAction={setSelectedAction}
+							action={selectedAction}
+							setIsSubActionsTabOpen={setIsSubActionsTabOpen}
+							selectedSubAction={selectedSubAction}
+							setSelectedSubAction={setSelectedSubAction}
 						/>
 					)}
-					{selectedAction === undefined && (
+					{!isSubActionsTabOpen && (
 						<>
 							{ACTION_OPTIONS.map((action) => (
 								<Flex
@@ -104,12 +175,15 @@ const FeelingModal = ({
 										padding: "5px",
 										borderRadius: "8px",
 										background:
-											action.name === selectedFeeling.name ? "gray" : "none",
+											action.name === selectedAction.name ? "gray" : "none",
 										color:
-											action.name === selectedFeeling.name ? "white" : "black",
+											action.name === selectedAction.name ? "white" : "black",
 										transition: ".7s",
 									}}
-									onClick={() => setSelectedAction(action)}
+									onClick={() => {
+										setSelectedAction(action);
+										setIsSubActionsTabOpen(true);
+									}}
 								>
 									<img
 										src={action.emoji}
@@ -130,7 +204,7 @@ const FeelingModal = ({
 		<Modal
 			title="How are you feeling ?"
 			open={isModalOpen}
-			onOk={() => handleOk(getSelectedFeelingId())}
+			onOk={onOk}
 			onCancel={handleCancel}
 		>
 			<Tabs defaultActiveKey="1" items={items} />

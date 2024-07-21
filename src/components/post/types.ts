@@ -6,6 +6,8 @@ export interface ICreatePost {
 	tags: string[];
 	images: Blob[];
 	feelingId: string;
+	actionId:string;
+	subActionId:string;
 }
 
 export type PostType = "text" | "image";
