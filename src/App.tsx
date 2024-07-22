@@ -15,6 +15,7 @@ import CreateStoryPage from "./components/pages/Story/CreateStoryPage/CreateStor
 import UserProfilePage from "./components/pages/UserProfilePage/UserProfilePage";
 import AddFriend from "./components/pages/Friends/AddFriend/AddFriend";
 import FriendRequest from "./components/pages/Friends/FriendRequest/FriendRequest";
+import FriendPage from "./components/pages/Friends/FriendPage/FriendPage";
 
 const App = () => {
    return (
@@ -121,6 +122,14 @@ const App = () => {
                      element={
                         <PrivateRoute>
                            <FriendRequest />
+                        </PrivateRoute>
+                     }
+                  />
+                  <Route
+                     path=""
+                     element={
+                        <PrivateRoute>
+                           <FriendPage />
                         </PrivateRoute>
                      }
                   />
