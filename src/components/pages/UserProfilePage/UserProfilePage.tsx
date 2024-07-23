@@ -23,8 +23,6 @@ import { getBase64 } from "../../../utils/helpers/getBase64";
 import {
 	avatar as avatarImg,
 	bg6,
-	house,
-	pronouns,
 } from "../../../utils/images";
 import AvatarMenu from "./components/AvatarMenu";
 import CoverPhotoBlock from "./components/CoverPhotoBlock";
@@ -33,6 +31,7 @@ import { AvatarButton } from "./styled";
 import type { IUserProfile } from "./types";
 import { useSearchParams } from "react-router-dom";
 import * as styles from "./styles";
+import ShortInformationCard from "./components/ShortInformationCard";
 
 const UserProfilePage: React.FC = () => {
 	const [coverPhoto, setCoverPhoto] = useState(bg6);
@@ -188,39 +187,7 @@ const UserProfilePage: React.FC = () => {
 							<Menu.Item key="3">Friends</Menu.Item>
 						</Menu>
 					</Flex>
-					<Card
-						title="Short information"
-						style={styles.menuItemCard}
-					>
-						<Flex vertical gap="middle">
-							{userProfile?.biography && (
-								<p style={{ margin: 0 }}>{userProfile?.biography}</p>
-							)}
-
-							{(userProfile?.country || userProfile?.region) && (
-								<Flex align="center" gap="small">
-									<img
-										src={house}
-										alt="House icon"
-										style={{ height: 30, width: 30 }}
-									/>
-									<p
-										style={{ margin: 0 }}
-									>{`${userProfile?.country} ${userProfile?.region}`}</p>
-								</Flex>
-							)}
-							{userProfile?.pronouns && (
-								<Flex align="center" gap="small">
-									<img
-										src={pronouns}
-										alt="Pronouns icon (circles)"
-										style={{ height: 30, width: 30 }}
-									/>
-									<p style={{ margin: 0 }}>{userProfile.pronouns}</p>
-								</Flex>
-							)}
-						</Flex>
-					</Card>
+					<ShortInformationCard userProfile={userProfile}/>
 				</Card>
 			</Row>
 		</div>

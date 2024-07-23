@@ -18,3 +18,8 @@ export const menuItemCard: React.CSSProperties = {
     padding: "15px",
     textAlign: "center",
 }
+
+export const shortInformationImg: React.CSSProperties = {
+    height: 30,
+    width: 30
+}
