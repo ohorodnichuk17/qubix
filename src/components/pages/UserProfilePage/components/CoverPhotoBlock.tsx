@@ -66,7 +66,6 @@ const CoverPhotoBlock = ({
 									setCoverPhoto,
 								}),
 							}}
-							trigger={["click"]}
 						>
 							<CoverButton>
 								<img

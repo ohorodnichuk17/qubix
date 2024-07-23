@@ -144,7 +144,6 @@ const UserProfilePage: React.FC = () => {
 											setAvatar,
 										}),
 									}}
-									trigger={["click"]}
 								>
 									<AvatarButton icon={<CameraOutlined />} />
 								</Dropdown>
