@@ -192,6 +192,7 @@ const UserProfilePage: React.FC = () => {
 								backgroundColor: "transparent",
 								border: "none",
 								fontSize: "26px",
+								width: "100%",
 							}}
 							mode="horizontal"
 							defaultSelectedKeys={["1"]}
