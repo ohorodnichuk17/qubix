@@ -1,5 +1,5 @@
 import { CameraOutlined, DeleteOutlined } from "@ant-design/icons";
-import { Menu, Upload, message } from "antd";
+import { Upload, message } from "antd";
 import type { UploadChangeParam } from "antd/es/upload";
 import { useDispatch } from "react-redux";
 import { useAppSelector } from "../../../../hooks/redux";
@@ -38,27 +38,36 @@ const AvatarMenu = ({
 			});
 	};
 
-	return (
-		<Menu>
-			<Upload
-				showUploadList={false}
-				beforeUpload={() => false}
-				accept="image/*"
-				onChange={handleAvatarChange}
-				maxCount={1}
-				defaultFileList={[]}
-			>
-				<Menu.Item key="1" icon={<CameraOutlined />}>
-					<span>Add new avatar</span>
-				</Menu.Item>
-			</Upload>
-			{avatar !== defaultAvatar && (
-				<Menu.Item key="2" icon={<DeleteOutlined />} onClick={deleteAvatar}>
-					Delete avatar
-				</Menu.Item>
-			)}
-		</Menu>
-	);
+	const menuItems = [
+		{
+			label: (
+				<Upload
+					showUploadList={false}
+					beforeUpload={() => false}
+					accept="image/*"
+					onChange={handleAvatarChange}
+					maxCount={1}
+					defaultFileList={[]}
+				>
+					<span>Add new avatar </span>
+				</Upload>
+			),
+			key: "1",
+			icon: <CameraOutlined />,
+		},
+		...(avatar !== defaultAvatar
+			? [
+					{
+						label: "Delete avatar",
+						key: "2",
+						icon: <DeleteOutlined />,
+						onClick: deleteAvatar,
+					},
+				]
+			: []),
+	];
+
+	return menuItems;
 };
 
 export default AvatarMenu;

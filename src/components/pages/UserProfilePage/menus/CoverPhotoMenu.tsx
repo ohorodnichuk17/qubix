@@ -1,5 +1,5 @@
 import { CameraOutlined, DeleteOutlined } from "@ant-design/icons";
-import { Menu, Upload, message } from "antd";
+import { Upload, message } from "antd";
 import type { UploadChangeParam } from "antd/es/upload";
 import { useAppSelector } from "../../../../hooks/redux";
 import { apiClient } from "../../../../utils/api/apiClient";
@@ -33,27 +33,36 @@ const CoverPhotoMenu = ({
 			});
 	};
 
-	return (
-		<Menu>
-			<Upload
-				showUploadList={false}
-				beforeUpload={() => false}
-				accept="image/*"
-				onChange={handleCoverPhotoChange}
-				maxCount={1}
-				defaultFileList={[]}
-			>
-				<Menu.Item key="1" icon={<CameraOutlined />}>
+	const menuItems = [
+		{
+			label: (
+				<Upload
+					showUploadList={false}
+					beforeUpload={() => false}
+					accept="image/*"
+					onChange={handleCoverPhotoChange}
+					maxCount={1}
+					defaultFileList={[]}
+				>
 					<span>Add new cover photo</span>
-				</Menu.Item>
-			</Upload>
-			{coverPhoto !== bg6 && (
-				<Menu.Item key="2" icon={<DeleteOutlined />} onClick={deleteCoverPhoto}>
-					Delete cover photo
-				</Menu.Item>
-			)}
-		</Menu>
-	);
+				</Upload>
+			),
+			key: "1",
+			icon: <CameraOutlined />,
+		},
+		...(coverPhoto !== bg6
+			? [
+					{
+						label: "Delete cover photo",
+						key: "2",
+						icon: <DeleteOutlined />,
+						onClick: deleteCoverPhoto,
+					},
+				]
+			: []),
+	];
+	
+	return menuItems;
 };
 
 export default CoverPhotoMenu;

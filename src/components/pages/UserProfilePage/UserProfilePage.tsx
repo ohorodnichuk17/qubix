@@ -21,7 +21,7 @@ import type { FileType } from "../../../types/FileType";
 import { apiClient } from "../../../utils/api/apiClient";
 import { getBase64 } from "../../../utils/helpers/getBase64";
 import { avatar as avatarImg, bg6 } from "../../../utils/images";
-import AvatarMenu from "./components/AvatarMenu";
+// import AvatarMenu from "./components/AvatarMenu";
 import CoverPhotoBlock from "./components/CoverPhotoBlock";
 import EditProfileModal from "./components/EditProfileModal";
 import { AvatarButton } from "./styled";
@@ -29,6 +29,7 @@ import type { IUserProfile } from "./types";
 import { useSearchParams } from "react-router-dom";
 import * as styles from "./styles";
 import ShortInformationCard from "./components/ShortInformationCard";
+import AvatarMenu from "./menus/AvatarMenu";
 
 const UserProfilePage: React.FC = () => {
 	const [coverPhoto, setCoverPhoto] = useState(bg6);
@@ -136,13 +137,13 @@ const UserProfilePage: React.FC = () => {
 							<Avatar size={160} src={avatar} />
 							{isCurrentUserProfile && (
 								<Dropdown
-									overlay={
-										<AvatarMenu
-											avatar={avatar}
-											handleAvatarChange={handleAvatarChange}
-											setAvatar={setAvatar}
-										/>
-									}
+									menu={{
+										items: AvatarMenu({
+											avatar,
+											handleAvatarChange,
+											setAvatar,
+										}),
+									}}
 									trigger={["click"]}
 								>
 									<AvatarButton icon={<CameraOutlined />} />
@@ -171,7 +172,7 @@ const UserProfilePage: React.FC = () => {
 					</Flex>
 
 					<Divider />
-					
+
 					<Flex justify="center">
 						<Menu
 							style={styles.profileMenu}

@@ -2,7 +2,7 @@ import { Dropdown, Grid, Upload } from "antd";
 import type { UploadChangeParam } from "antd/es/upload";
 import { cameraImg, editImg } from "../../../../utils/images";
 import { CoverButton } from "../styled";
-import CoverPhotoMenu from "./CoverPhotoMenu";
+import CoverPhotoMenu from "../menus/CoverPhotoMenu";
 
 type CoverPhotoBlockProps = {
 	coverPhoto: string;
@@ -68,13 +68,13 @@ const CoverPhotoBlock = ({
 						</Upload>
 					) : (
 						<Dropdown
-							overlay={
-								<CoverPhotoMenu
-									coverPhoto={coverPhoto}
-									handleCoverPhotoChange={handleCoverPhotoChange}
-									setCoverPhoto={setCoverPhoto}
-								/>
-							}
+							menu={{
+								items: CoverPhotoMenu({
+									coverPhoto,
+									handleCoverPhotoChange,
+									setCoverPhoto,
+								}),
+							}}
 							trigger={["click"]}
 						>
 							<CoverButton
