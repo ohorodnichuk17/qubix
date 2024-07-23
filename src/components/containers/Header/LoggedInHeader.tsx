@@ -1,8 +1,8 @@
 import { MenuOutlined, SearchOutlined } from "@ant-design/icons";
-import { Avatar, Button, Drawer, Dropdown, Input, Menu, Tooltip } from "antd";
-import { useState } from "react";
+import { Avatar, Badge, Button, Drawer, Dropdown, Input, Menu, Tooltip } from "antd";
+import { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { useAppDispatch } from "../../../hooks/redux";
+import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
 import useAvatar from "../../../hooks/useAvatar";
 import { logout } from "../../../store/account/account.slice";
 import {
@@ -17,8 +17,11 @@ import {
 	messanger,
 	plus,
 } from "../../../utils/images";
+import { apiClient } from "../../../utils/api/apiClient";
 
 const LoggedInHeader = () => {
+	const { user } = useAppSelector((state) => state.account);
+	const [countOfFriendRequests,setCountOfFriendRequests]=useState<number>(0);
 	const avatarImg = useAvatar();
 
 	const dispatch = useAppDispatch();
@@ -73,6 +76,15 @@ const LoggedInHeader = () => {
 		},
 	];
 
+	useEffect(() => {
+		if (user === null) {
+			return;
+		}
+		apiClient.get(`/api/friends/requests?UserId=${user.id}`).then((res) => {
+			setCountOfFriendRequests(res.data.length);
+		});
+	}, [user]);
+
 	return (
 		<>
 			<div className="navbar-left">
@@ -96,15 +108,17 @@ const LoggedInHeader = () => {
 					</NavLink>
 				</Tooltip>
 				<Tooltip title="Friends">
-					<NavLink to="/friends" className="nav-icon friends-icon-link">
-						{({ isActive }) => (
-							<img
-								src={isActive ? activeFriends : friends}
-								alt="Friends"
-								className="nav-icon-img friends-icon"
-							/>
-						)}
-					</NavLink>
+					<Badge count={countOfFriendRequests} color="orange">
+						<NavLink to="/friends" className="nav-icon friends-icon-link">
+							{({ isActive }) => (
+								<img
+									src={isActive ? activeFriends : friends}
+									alt="Friends"
+									className="nav-icon-img friends-icon"
+								/>
+							)}
+						</NavLink>
+					</Badge>
 				</Tooltip>
 				<Tooltip title="Create New Story">
 					<NavLink to="/story" className="nav-icon story-icon-link">
