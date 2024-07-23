@@ -6,10 +6,14 @@ import { apiClient } from "../../../../../utils/api/apiClient";
 
 type FriendRecommendationCardProps = {
 	friend: IFriendRecommendation;
+	removeSenderRequestFriend: (
+		senderRequestFriend: IFriendRecommendation,
+	) => void;
 };
 
 const FriendRecommendationCard = ({
 	friend,
+	removeSenderRequestFriend,
 }: FriendRecommendationCardProps) => {
 	const { user } = useAppSelector((state) => state.account);
 
@@ -28,6 +32,7 @@ const FriendRecommendationCard = ({
 			.post("/api/friends/send-friend-request", sendFriendRequestBody)
 			.then(() => {
 				message.success("Request successfully sended!");
+				removeSenderRequestFriend(friend);
 			})
 			.catch(() => {
 				message.error("Request sending error");
