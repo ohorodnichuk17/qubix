@@ -48,16 +48,7 @@ const CoverPhotoBlock = ({
 							maxCount={1}
 							defaultFileList={[]}
 						>
-							<CoverButton
-								style={{
-									display: "flex",
-									alignItems: "center",
-									border: "none",
-									right: "0px",
-									bottom: "0px",
-									position: "absolute",
-								}}
-							>
+							<CoverButton>
 								<img
 									src={cameraImg}
 									alt="coverPhoto"
@@ -77,16 +68,7 @@ const CoverPhotoBlock = ({
 							}}
 							trigger={["click"]}
 						>
-							<CoverButton
-								style={{
-									display: "flex",
-									alignItems: "center",
-									border: "none",
-									right: "0px",
-									bottom: "0px",
-									position: "absolute",
-								}}
-							>
+							<CoverButton>
 								<img
 									src={editImg}
 									alt="editCoverPhoto"

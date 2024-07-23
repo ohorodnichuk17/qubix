@@ -2,6 +2,12 @@ import { Button } from "antd";
 import styled from "styled-components";
 
 export const CoverButton = styled(Button)`
+  display: flex;
+	align-items: center;
+	border: none;
+	position: absolute;
+	right: 0px;
+	bottom: 0px;
   background-color: white;
   border-radius: 10px;
   padding: 2px;
