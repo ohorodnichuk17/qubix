@@ -34,6 +34,9 @@ export const EditButton = styled(Button)`
 `;
 
 export const AvatarButton = styled(Button)`
+  border: none;
+  color: black;
+  border-radius: 100px;
   background-color: #d9d9d9;
   padding: 0px;
   text-transform: none;

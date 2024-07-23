@@ -20,16 +20,22 @@ import { updateAvatar } from "../../../store/account/account.slice";
 import type { FileType } from "../../../types/FileType";
 import { apiClient } from "../../../utils/api/apiClient";
 import { getBase64 } from "../../../utils/helpers/getBase64";
-import { avatar as avatarImg, bg6, house, pronouns } from "../../../utils/images";
+import {
+	avatar as avatarImg,
+	bg6,
+	house,
+	pronouns,
+} from "../../../utils/images";
 import AvatarMenu from "./components/AvatarMenu";
 import CoverPhotoBlock from "./components/CoverPhotoBlock";
 import EditProfileModal from "./components/EditProfileModal";
 import { AvatarButton } from "./styled";
 import type { IUserProfile } from "./types";
 import { useSearchParams } from "react-router-dom";
+import * as styles from "./styles";
 
 const UserProfilePage: React.FC = () => {
-	const [coverPhoto, setCoverPhoto] = useState(bg6); 
+	const [coverPhoto, setCoverPhoto] = useState(bg6);
 	const [avatar, setAvatar] = useState(avatarImg);
 	const [userProfile, setUserProfile] = useState<IUserProfile | null>(null);
 	const dispatch = useDispatch();
@@ -119,15 +125,7 @@ const UserProfilePage: React.FC = () => {
 	return (
 		<div style={{ backgroundColor: "#FFEBE0", padding: 0, height: "100%" }}>
 			<Row justify="center" align="middle">
-				<Card
-					style={{
-						width: "100%",
-						maxWidth: "1200px",
-						background: "transparent",
-						border: "none",
-						boxShadow: "none",
-					}}
-				>
+				<Card style={styles.profileCard}>
 					<CoverPhotoBlock
 						coverPhoto={coverPhoto}
 						setCoverPhoto={setCoverPhoto}
@@ -153,14 +151,7 @@ const UserProfilePage: React.FC = () => {
 									}
 									trigger={["click"]}
 								>
-									<AvatarButton
-										style={{
-											border: "none",
-											color: "black",
-											borderRadius: "100px",
-										}}
-										icon={<CameraOutlined />}
-									/>
+									<AvatarButton icon={<CameraOutlined />} />
 								</Dropdown>
 							)}
 							<p style={{ fontSize: 24 }}>
@@ -188,12 +179,7 @@ const UserProfilePage: React.FC = () => {
 					<Divider />
 					<Flex justify="center">
 						<Menu
-							style={{
-								backgroundColor: "transparent",
-								border: "none",
-								fontSize: "26px",
-								width: "100%",
-							}}
+							style={styles.profileMenu}
 							mode="horizontal"
 							defaultSelectedKeys={["1"]}
 						>
@@ -204,11 +190,7 @@ const UserProfilePage: React.FC = () => {
 					</Flex>
 					<Card
 						title="Short information"
-						style={{
-							marginTop: "10px",
-							padding: "15px",
-							textAlign: "center",
-						}}
+						style={styles.menuItemCard}
 					>
 						<Flex vertical gap="middle">
 							{userProfile?.biography && (
