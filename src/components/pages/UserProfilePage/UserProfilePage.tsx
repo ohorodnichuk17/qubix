@@ -20,10 +20,7 @@ import { updateAvatar } from "../../../store/account/account.slice";
 import type { FileType } from "../../../types/FileType";
 import { apiClient } from "../../../utils/api/apiClient";
 import { getBase64 } from "../../../utils/helpers/getBase64";
-import {
-	avatar as avatarImg,
-	bg6,
-} from "../../../utils/images";
+import { avatar as avatarImg, bg6 } from "../../../utils/images";
 import AvatarMenu from "./components/AvatarMenu";
 import CoverPhotoBlock from "./components/CoverPhotoBlock";
 import EditProfileModal from "./components/EditProfileModal";
@@ -46,35 +43,33 @@ const UserProfilePage: React.FC = () => {
 	const isCurrentUserProfile = userId === null || userId === user?.id;
 
 	useEffect(() => {
-		if (user?.id) {
-			apiClient
-				.get(
-					`/api/user-profile/get-profile-by-id?UserId=${isCurrentUserProfile ? user.id : userId}`,
-				)
-				.then((response) => {
-					setUserProfile(response.data);
-
-					if (
-						response.data.coverPhoto !== "" &&
-						response.data.coverPhoto !== null
-					) {
-						setCoverPhoto(
-							`${APP_ENV.BASE_URL}/images/coverPhotos/${response.data.coverPhoto}`,
-						);
-					} else {
-						setCoverPhoto(bg6);
-					}
-
-					if (response.data.userEntity.avatar) {
-						setAvatar(
-							`${APP_ENV.BASE_URL}/images/avatars/${response.data.userEntity.avatar}`,
-						);
-					}
-				})
-				.catch((error) => {
-					console.error("There was an error fetching the user data!", error);
-				});
+		if (!user?.id && !userId) {
+			return;
 		}
+
+		apiClient
+			.get(
+				`/api/user-profile/get-profile-by-id?UserId=${isCurrentUserProfile ? user?.id : userId}`,
+			)
+			.then((response) => {
+				setUserProfile(response.data);
+
+				if (response.data.coverPhoto) {
+					setCoverPhoto(
+						`${APP_ENV.BASE_URL}/images/coverPhotos/${response.data.coverPhoto}`,
+					);
+				} 
+
+				if (response.data.userEntity.avatar) {
+					setAvatar(
+						`${APP_ENV.BASE_URL}/images/avatars/${response.data.userEntity.avatar}`,
+					);
+				}
+			})
+			.catch((error) => {
+				message.error("There was an error fetching the user data!");
+				console.error("There was an error fetching the user data!", error);
+			});
 	}, [isCurrentUserProfile, user?.id, userId]);
 
 	const handleUploadChange = async (
@@ -176,6 +171,7 @@ const UserProfilePage: React.FC = () => {
 					</Flex>
 
 					<Divider />
+					
 					<Flex justify="center">
 						<Menu
 							style={styles.profileMenu}
@@ -187,7 +183,7 @@ const UserProfilePage: React.FC = () => {
 							<Menu.Item key="3">Friends</Menu.Item>
 						</Menu>
 					</Flex>
-					<ShortInformationCard userProfile={userProfile}/>
+					<ShortInformationCard userProfile={userProfile} />
 				</Card>
 			</Row>
 		</div>
