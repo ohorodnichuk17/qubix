@@ -16,12 +16,11 @@ import type { UploadChangeParam } from "antd/es/upload";
 import { useDispatch } from "react-redux";
 import { APP_ENV } from "../../../env";
 import { useAppSelector } from "../../../hooks/redux";
-import useAvatar from "../../../hooks/useAvatar";
 import { updateAvatar } from "../../../store/account/account.slice";
 import type { FileType } from "../../../types/FileType";
 import { apiClient } from "../../../utils/api/apiClient";
 import { getBase64 } from "../../../utils/helpers/getBase64";
-import { bg6, house, pronouns } from "../../../utils/images";
+import { avatar as avatarImg, bg6, house, pronouns } from "../../../utils/images";
 import AvatarMenu from "./components/AvatarMenu";
 import CoverPhotoBlock from "./components/CoverPhotoBlock";
 import EditProfileModal from "./components/EditProfileModal";
@@ -30,9 +29,8 @@ import type { IUserProfile } from "./types";
 import { useSearchParams } from "react-router-dom";
 
 const UserProfilePage: React.FC = () => {
-	const [coverPhoto, setCoverPhoto] = useState(bg6);
-	const avatarFromHook = useAvatar();
-	const [avatar, setAvatar] = useState(avatarFromHook);
+	const [coverPhoto, setCoverPhoto] = useState(bg6); 
+	const [avatar, setAvatar] = useState(avatarImg);
 	const [userProfile, setUserProfile] = useState<IUserProfile | null>(null);
 	const dispatch = useDispatch();
 	const { user } = useAppSelector((state) => state.account);
@@ -62,7 +60,7 @@ const UserProfilePage: React.FC = () => {
 						setCoverPhoto(bg6);
 					}
 
-					if (!isCurrentUserProfile) {
+					if (response.data.userEntity.avatar) {
 						setAvatar(
 							`${APP_ENV.BASE_URL}/images/avatars/${response.data.userEntity.avatar}`,
 						);
