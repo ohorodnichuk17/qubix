@@ -1,3 +1,5 @@
+import type { IUser } from "../../../interfaces/account";
+
 export interface IUserProfileEditModel {
 	userId: string;
 	biography: string | null;
@@ -21,6 +23,7 @@ export interface IUserProfile {
 	region: string;
 	isBlocked: boolean;
 	isProfilePublic: boolean;
+	userEntity: IUser;
 }
 
 export interface IUploadedFile {

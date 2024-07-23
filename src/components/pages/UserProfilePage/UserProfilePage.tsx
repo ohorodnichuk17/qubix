@@ -27,6 +27,7 @@ import CoverPhotoBlock from "./components/CoverPhotoBlock";
 import EditProfileModal from "./components/EditProfileModal";
 import { AvatarButton } from "./styled";
 import type { IUserProfile } from "./types";
+import { useSearchParams } from "react-router-dom";
 
 const UserProfilePage: React.FC = () => {
 	const [coverPhoto, setCoverPhoto] = useState(bg6);
@@ -37,10 +38,16 @@ const UserProfilePage: React.FC = () => {
 	const { user } = useAppSelector((state) => state.account);
 	const [isModalVisible, setIsModalVisible] = useState(false);
 
+	const [searchParams] = useSearchParams();
+	const userId = searchParams.get("userId");
+	const isCurrentUserProfile = userId === null || userId === user?.id;
+
 	useEffect(() => {
 		if (user?.id) {
 			apiClient
-				.get(`/api/user-profile/get-profile-by-id?UserId=${user.id}`)
+				.get(
+					`/api/user-profile/get-profile-by-id?UserId=${isCurrentUserProfile ? user.id : userId}`,
+				)
 				.then((response) => {
 					setUserProfile(response.data);
 
@@ -54,12 +61,18 @@ const UserProfilePage: React.FC = () => {
 					} else {
 						setCoverPhoto(bg6);
 					}
+
+					if (!isCurrentUserProfile) {
+						setAvatar(
+							`${APP_ENV.BASE_URL}/images/avatars/${response.data.userEntity.avatar}`,
+						);
+					}
 				})
 				.catch((error) => {
 					console.error("There was an error fetching the user data!", error);
 				});
 		}
-	}, [user?.id]);
+	}, [isCurrentUserProfile, user?.id, userId]);
 
 	const handleUploadChange = async (
 		info: UploadChangeParam,
@@ -121,6 +134,7 @@ const UserProfilePage: React.FC = () => {
 						coverPhoto={coverPhoto}
 						setCoverPhoto={setCoverPhoto}
 						handleCoverPhotoChange={handleCoverPhotoChange}
+						isCurrentUserProfile={isCurrentUserProfile}
 					/>
 					<Flex
 						align="center"
@@ -128,46 +142,53 @@ const UserProfilePage: React.FC = () => {
 						wrap="wrap"
 						style={{ marginTop: "-5%" }}
 					>
-						<Flex align="center" wrap="wrap">
+						<Flex align="center" wrap="wrap" gap="middle">
 							<Avatar size={160} src={avatar} />
-							<Dropdown
-								overlay={
-									<AvatarMenu
-										avatar={avatar}
-										handleAvatarChange={handleAvatarChange}
-										setAvatar={setAvatar}
+							{isCurrentUserProfile && (
+								<Dropdown
+									overlay={
+										<AvatarMenu
+											avatar={avatar}
+											handleAvatarChange={handleAvatarChange}
+											setAvatar={setAvatar}
+										/>
+									}
+									trigger={["click"]}
+								>
+									<AvatarButton
+										style={{
+											border: "none",
+											color: "black",
+											borderRadius: "100px",
+										}}
+										icon={<CameraOutlined />}
 									/>
-								}
-								trigger={["click"]}
-							>
-								<AvatarButton
-									style={{
-										border: "none",
-										color: "black",
-										borderRadius: "100px",
-									}}
-									icon={<CameraOutlined />}
-								/>
-							</Dropdown>
-							<p style={{ fontSize: 24 }}>{user?.email}</p>
+								</Dropdown>
+							)}
+							<p style={{ fontSize: 24 }}>
+								{`${userProfile?.userEntity.firstName} ${userProfile?.userEntity.lastName}`}
+							</p>
 						</Flex>
-
-						<Button
-							icon={<EditOutlined />}
-							type="primary"
-							onClick={() => setIsModalVisible(true)}
-						>
-							Edit Profile
-						</Button>
-						<EditProfileModal
-							isModalVisible={isModalVisible}
-							setIsModalVisible={setIsModalVisible}
-							userProfile={userProfile}
-						/>
+						{isCurrentUserProfile && (
+							<>
+								<Button
+									icon={<EditOutlined />}
+									type="primary"
+									onClick={() => setIsModalVisible(true)}
+								>
+									Edit Profile
+								</Button>
+								<EditProfileModal
+									isModalVisible={isModalVisible}
+									setIsModalVisible={setIsModalVisible}
+									userProfile={userProfile}
+								/>
+							</>
+						)}
 					</Flex>
 
 					<Divider />
-					<Row justify="center">
+					<Flex justify="center">
 						<Menu
 							style={{
 								backgroundColor: "transparent",
@@ -181,7 +202,7 @@ const UserProfilePage: React.FC = () => {
 							<Menu.Item key="2">Information</Menu.Item>
 							<Menu.Item key="3">Friends</Menu.Item>
 						</Menu>
-					</Row>
+					</Flex>
 					<Card
 						title="Short information"
 						style={{

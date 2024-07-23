@@ -8,12 +8,14 @@ type CoverPhotoBlockProps = {
 	coverPhoto: string;
 	handleCoverPhotoChange: (info: UploadChangeParam) => Promise<void>;
 	setCoverPhoto: React.Dispatch<React.SetStateAction<string>>;
+	isCurrentUserProfile: boolean;
 };
 
 const CoverPhotoBlock = ({
 	coverPhoto,
 	handleCoverPhotoChange,
 	setCoverPhoto,
+	isCurrentUserProfile,
 }: CoverPhotoBlockProps) => {
 	const screens = Grid.useBreakpoint();
 
@@ -35,62 +37,66 @@ const CoverPhotoBlock = ({
 				position: "relative",
 			}}
 		>
-			{coverPhoto === editImg ? (
-				<Upload
-					showUploadList={false}
-					beforeUpload={() => false}
-					accept="image/*"
-					onChange={handleCoverPhotoChange}
-					maxCount={1}
-					defaultFileList={[]}
-				>
-					<CoverButton
-						style={{
-							display: "flex",
-							alignItems: "center",
-							border: "none",
-							right: "0px",
-							bottom: "0px",
-							position: "absolute",
-						}}
-					>
-						<img
-							src={cameraImg}
-							alt="coverPhoto"
-							style={{ width: 26, height: 22, margin: 5 }}
-						/>
-						Add cover photo
-					</CoverButton>
-				</Upload>
-			) : (
-				<Dropdown
-					overlay={
-						<CoverPhotoMenu
-							coverPhoto={coverPhoto}
-							handleCoverPhotoChange={handleCoverPhotoChange}
-							setCoverPhoto={setCoverPhoto}
-						/>
-					}
-					trigger={["click"]}
-				>
-					<CoverButton
-						style={{
-							display: "flex",
-							alignItems: "center",
-							border: "none",
-							right: "0px",
-							bottom: "0px",
-							position: "absolute",
-						}}
-					>
-						<img
-							src={editImg}
-							alt="editCoverPhoto"
-							style={{ width: 26, height: 22, margin: 5 }}
-						/>
-						Edit cover photo
-					</CoverButton>
-				</Dropdown>
+			{isCurrentUserProfile && (
+				<>
+					{coverPhoto === editImg ? (
+						<Upload
+							showUploadList={false}
+							beforeUpload={() => false}
+							accept="image/*"
+							onChange={handleCoverPhotoChange}
+							maxCount={1}
+							defaultFileList={[]}
+						>
+							<CoverButton
+								style={{
+									display: "flex",
+									alignItems: "center",
+									border: "none",
+									right: "0px",
+									bottom: "0px",
+									position: "absolute",
+								}}
+							>
+								<img
+									src={cameraImg}
+									alt="coverPhoto"
+									style={{ width: 26, height: 22, margin: 5 }}
+								/>
+								Add cover photo
+							</CoverButton>
+						</Upload>
+					) : (
+						<Dropdown
+							overlay={
+								<CoverPhotoMenu
+									coverPhoto={coverPhoto}
+									handleCoverPhotoChange={handleCoverPhotoChange}
+									setCoverPhoto={setCoverPhoto}
+								/>
+							}
+							trigger={["click"]}
+						>
+							<CoverButton
+								style={{
+									display: "flex",
+									alignItems: "center",
+									border: "none",
+									right: "0px",
+									bottom: "0px",
+									position: "absolute",
+								}}
+							>
+								<img
+									src={editImg}
+									alt="editCoverPhoto"
+									style={{ width: 26, height: 22, margin: 5 }}
+								/>
+								Edit cover photo
+							</CoverButton>
+						</Dropdown>
+					)}
+				</>
 			)}
 		</div>
 	);

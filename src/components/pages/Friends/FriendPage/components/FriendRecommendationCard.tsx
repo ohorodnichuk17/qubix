@@ -4,6 +4,7 @@ import type { IFriendRecommendation, ISendFriendRequest } from "../types";
 import { useAppSelector } from "../../../../../hooks/redux";
 import { apiClient } from "../../../../../utils/api/apiClient";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 type FriendRecommendationCardProps = {
 	friend: IFriendRecommendation;
@@ -17,6 +18,7 @@ const FriendRecommendationCard = ({
 	removeSenderRequestFriend,
 }: FriendRecommendationCardProps) => {
 	const { user } = useAppSelector((state) => state.account);
+	const navigate = useNavigate();
 
 	const [loading, setloading] = useState<boolean>(false);
 
@@ -50,6 +52,7 @@ const FriendRecommendationCard = ({
 	return (
 		<Col span={6} key={friend.id}>
 			<Card
+				onClick={() => navigate(`/profile?userId=${friend.id}`)}
 				cover={<img alt="Friend recommendation avatar" src={friend.avatar} />}
 				actions={[
 					<Button
