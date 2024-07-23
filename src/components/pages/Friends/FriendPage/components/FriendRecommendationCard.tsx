@@ -3,6 +3,7 @@ import { Col, Card, Button, message } from "antd";
 import type { IFriendRecommendation, ISendFriendRequest } from "../types";
 import { useAppSelector } from "../../../../../hooks/redux";
 import { apiClient } from "../../../../../utils/api/apiClient";
+import { useState } from "react";
 
 type FriendRecommendationCardProps = {
 	friend: IFriendRecommendation;
@@ -17,11 +18,15 @@ const FriendRecommendationCard = ({
 }: FriendRecommendationCardProps) => {
 	const { user } = useAppSelector((state) => state.account);
 
+	const [loading, setloading] = useState<boolean>(false);
+
 	const sendFriendRequest = (friendId: string) => {
 		if (user?.id === undefined) {
 			message.error("Send friend request error");
 			return;
 		}
+
+		setloading(true);
 
 		const sendFriendRequestBody: ISendFriendRequest = {
 			friendId,
@@ -36,6 +41,9 @@ const FriendRecommendationCard = ({
 			})
 			.catch(() => {
 				message.error("Request sending error");
+			})
+			.finally(() => {
+				setloading(false);
 			});
 	};
 
@@ -47,6 +55,7 @@ const FriendRecommendationCard = ({
 					<Button
 						type="primary"
 						key="add"
+						loading={loading}
 						onClick={() => sendFriendRequest(friend.id)}
 					>
 						Add friend
