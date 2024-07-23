@@ -1,6 +1,6 @@
 import { Card, Flex, Upload, type UploadFile } from "antd";
 import type { UploadChangeParam } from "antd/es/upload";
-import { locationImg, photoImg, tagImg } from "../../../../utils/images";
+import { locationImg, photoImg, tagImg } from "../../../../../utils/images";
 import type { PostType } from "../../types";
 import AddToThePublicationButton from "../AddToThePublicationButton/AddToThePublicationButton";
 

@@ -1,13 +1,13 @@
 import { Card, Flex, Input, Modal, Tag } from "antd";
 import { useEffect, useState } from "react";
-import { useAppSelector } from "../../../../hooks/redux";
-import type { IUser } from "../../../../interfaces/account";
-import { apiClient } from "../../../../utils/api/apiClient";
+import { useAppSelector } from "../../../../../hooks/redux";
+import type { IUser } from "../../../../../interfaces/account";
+import { apiClient } from "../../../../../utils/api/apiClient";
 import {
 	ActiveMinusImg,
 	hoverMinusImg,
 	minusImg,
-} from "../../../../utils/images";
+} from "../../../../../utils/images";
 
 type FriendsExceptModalProps = {
 	friendsExceptModalVisible: boolean;

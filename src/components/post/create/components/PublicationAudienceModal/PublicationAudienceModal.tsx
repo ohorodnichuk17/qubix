@@ -5,7 +5,7 @@ import {
 	friendsImg,
 	friendsExceptImg,
 	userImg,
-} from "../../../../utils/images";
+} from "../../../../../utils/images";
 import { useState } from "react";
 import FriendsExceptModal from "../FriendsExceptModal/FriendsExceptModal";
 import AudienceOption from "./components/AudienceOption";
