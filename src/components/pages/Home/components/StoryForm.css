@@ -1,7 +1,15 @@
 .create-story {
    display: flex;
    align-items: center;
-   cursor: pointer; /* Зміна курсору при наведенні */
+   cursor: pointer;
+   background: #fff;
+   padding: 15px;
+   border-radius: 8px;
+   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+   width: 100%;
+   box-sizing: border-box;
+   max-width: 600px;
+   margin: 10px 0;
 }
 
 .create-story .icon-wrapper {
@@ -23,7 +31,7 @@
    left: 50%;
    width: 40px;
    height: 40px;
-   background-color: rgba(255, 127, 80, 0.17); /* Колір з прозорістю */
+   background-color: rgba(255, 127, 80, 0.17);
    border-radius: 50%;
    transform: translate(-50%, -50%);
 }
@@ -36,4 +44,21 @@
 .create-story .text p {
    margin: 0;
    color: #888;
+   font-size: 14px;
+}
+
+@media (max-width: 600px) {
+   .create-story {
+      flex-direction: column;
+      align-items: flex-start;
+      text-align: left;
+   }
+
+   .create-story .icon-wrapper {
+      margin-bottom: 10px;
+   }
+
+   .create-story .text {
+      text-align: center;
+   }
 }

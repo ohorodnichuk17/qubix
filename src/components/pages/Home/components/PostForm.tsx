@@ -6,7 +6,6 @@ import useAvatar from '../../../../hooks/useAvatar';
 
 export const PostForm = () => {
    const { user } = useAppSelector(state => state.account);
-   const isLogin = !!user;
 
    const avatarImg = useAvatar();
 
@@ -37,7 +36,7 @@ export const PostForm = () => {
             </div>
             <div className="action-item">
                <img src={feeling} alt="Feelings" className="icon" />
-               <span className="action-label">Feelings</span>
+               <span className="action-label">Feelings/actions</span>
             </div>
          </div>
       </div>
