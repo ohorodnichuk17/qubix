@@ -53,7 +53,7 @@ const AddToThePublicationCard = ({
 					imgAlt="Add tags icon"
 				/>
 				<AddToThePublicationButton
-					tooltioTitle="Feeling"
+					tooltioTitle="Feeling/Action"
 					onClick={handleFeelingModalVisibilityChange}
 					imgSrc={feelingEmoji}
 					imgAlt="Change feeling icon (happy smile)"
