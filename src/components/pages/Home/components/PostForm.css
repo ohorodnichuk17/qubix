@@ -1,26 +1,26 @@
 .whats-up {
    display: flex;
    flex-direction: column;
+   align-items: flex-start;
    background: #fff;
    padding: 15px;
    border-radius: 8px;
    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
    width: 100%;
-   box-sizing: border-box;
 }
 
 .top-section {
    display: flex;
    align-items: center;
-   flex-wrap: nowrap; /* Уникаємо переносу рядків */
    width: 100%;
+   flex-wrap: wrap; 
 }
 
 .user-info {
    display: flex;
    flex-direction: column;
    flex-grow: 1;
-   margin-left: 10px;
+   margin-left: 5px;
 }
 
 .username {
@@ -35,17 +35,16 @@
    padding: 10px;
    border-radius: 20px;
    background: #f0f2f5;
-   margin-top: 5px;
-   font-size: 14px;
+   margin-top: 5px; 
 }
 
 .actions {
    display: flex;
    justify-content: flex-start;
-   gap: 10px;
+   width: 100%;
+   gap: 10px; 
    margin-top: 10px;
-   flex-wrap: nowrap;
-   overflow-x: auto; /* Додаємо горизонтальну прокрутку, якщо потрібно */
+   flex-wrap: wrap; 
 }
 
 .icon {
@@ -56,12 +55,11 @@
 .action-item {
    display: flex;
    align-items: center;
-   text-align: center;
+   margin-right: 20px;
 }
 
 .action-label {
    margin-left: 5px;
-   font-size: 14px;
 }
 
 .divider {
@@ -74,16 +72,11 @@
 
 @media (max-width: 600px) {
    .top-section {
-      flex-direction: column;
-      align-items: flex-start;
+      flex-direction: column; 
+      align-items: flex-start; 
    }
 
    .actions {
-      justify-content: flex-start;
-      overflow-x: auto;
-   }
-
-   .action-item {
-      flex: 1 0 25%; /* Зменшуємо розмір елементів */
+      justify-content: flex-start; 
    }
 }
