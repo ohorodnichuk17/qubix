@@ -85,3 +85,10 @@
    overflow: auto;
    margin-top: 64px;
 }
+
+@media (max-width: 768px) {
+   .sider-hidden {
+     display: none;
+   }
+ }
+ 
