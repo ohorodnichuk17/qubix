@@ -1,4 +1,4 @@
-import { Avatar } from 'antd';
+import { Avatar, Divider, Grid } from 'antd';
 import { photoImg, feeling } from '../../../../utils/images/index';
 import './PostForm.css';
 import { useAppSelector } from '../../../../hooks/redux';
@@ -8,7 +8,7 @@ export const PostForm = () => {
    const { user } = useAppSelector(state => state.account);
 
    const avatarImg = useAvatar();
-
+            
    return (
       <div className="whats-up">
          <div className="top-section">
@@ -17,9 +17,6 @@ export const PostForm = () => {
                size={50}
             />
             <div className="user-info">
-               <span className="username">
-                  {user?.firstName} {user?.lastName}
-               </span>
                <input
                   type="text"
                   placeholder={`What's up, ${user?.firstName} ${user?.lastName}?`}
@@ -27,7 +24,7 @@ export const PostForm = () => {
                />
             </div>
          </div>
-         <div className="divider"></div>
+         <Divider style={{margin:'10px 0'}}/>
 
          <div className="actions">
             <div className="action-item">
