@@ -2,7 +2,7 @@ import { Tooltip } from "antd";
 import "./AddToThePublicationButton.css";
 
 type AddToThePublicationButtonProps = {
-	tooltioTitle: string;
+	tooltipTitle: string;
 	onClick?: () => void;
 	imgSrc: string;
 	imgAlt: string;
@@ -10,7 +10,7 @@ type AddToThePublicationButtonProps = {
 };
 
 const AddToThePublicationButton = ({
-	tooltioTitle,
+	tooltipTitle: tooltioTitle,
 	onClick = () => {},
 	imgSrc,
 	imgAlt,

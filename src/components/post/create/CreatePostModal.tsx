@@ -262,7 +262,7 @@ const CreatePostModal = ({
             )}
 
             <AddToThePublicationButton
-               tooltioTitle="Change post type"
+               tooltipTitle="Change post type"
                onClick={() => setPostType(postType === "image" ? "text" : "image")}
                imgSrc={postTypeImg}
                imgAlt="Change post type icon"

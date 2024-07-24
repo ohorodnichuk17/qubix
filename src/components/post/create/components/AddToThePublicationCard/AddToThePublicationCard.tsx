@@ -34,26 +34,26 @@ const AddToThePublicationCard = ({
 						onChange={handleImagesChange}
 					>
 						<AddToThePublicationButton
-							tooltioTitle="Image"
+							tooltipTitle="Image"
 							imgSrc={photoImg}
 							imgAlt="Add images icon (camera)"
 						/>
 					</Upload>
 				)}
 				<AddToThePublicationButton
-					tooltioTitle="Location"
+					tooltipTitle="Location"
 					onClick={handleLocationInputVisibilityChange}
 					imgSrc={locationImg}
 					imgAlt="location icon"
 				/>
 				<AddToThePublicationButton
-					tooltioTitle="#"
+					tooltipTitle="#"
 					onClick={handleTagsInputVisibilityChange}
 					imgSrc={tagImg}
 					imgAlt="Add tags icon"
 				/>
 				<AddToThePublicationButton
-					tooltioTitle="Feeling/Action"
+					tooltipTitle="Feeling/Action"
 					onClick={handleFeelingModalVisibilityChange}
 					imgSrc={feelingEmoji}
 					imgAlt="Change feeling icon (happy smile)"
