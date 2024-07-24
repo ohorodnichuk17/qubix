@@ -1,5 +1,5 @@
 import { ConfigProvider } from "antd";
-import { Route, Routes } from "react-router-dom";
+import { Route, Router, Routes } from "react-router-dom";
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 import ContainerDefault from "./components/containers/ContainerDefault/ContainerDefault";
 import ChangeEmailPage from "./components/pages/ChangeEmailPage/ChangeEmailPage";
@@ -15,6 +15,8 @@ import CreateStoryPage from "./components/pages/Story/CreateStoryPage/CreateStor
 import UserProfilePage from "./components/pages/UserProfilePage/UserProfilePage";
 import FriendRequest from "./components/pages/Friends/FriendRequest/FriendRequest";
 import FriendPage from "./components/pages/Friends/FriendPage/FriendPage";
+import FriendMain from "./components/pages/Friends/FriendPage/FriendMain";
+import FriendSidebar from "./components/pages/Friends/FriendPage/FriendSidebar";
 
 const App = () => {
    return (
@@ -107,20 +109,20 @@ const App = () => {
                   />
                </Route>
 
-               <Route path="friends">
+               <Route path="friends" element={<FriendSidebar></FriendSidebar>}>
+                  <Route
+                     index
+                     element={
+                        <PrivateRoute>
+                           <FriendPage />
+                        </PrivateRoute>
+                     }
+                  />
                   <Route
                      path="request"
                      element={
                         <PrivateRoute>
                            <FriendRequest />
-                        </PrivateRoute>
-                     }
-                  />
-                  <Route
-                     path=""
-                     element={
-                        <PrivateRoute>
-                           <FriendPage />
                         </PrivateRoute>
                      }
                   />
