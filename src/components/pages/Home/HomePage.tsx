@@ -4,6 +4,7 @@ import StoryForm from "./components/StoryForm";
 import PostForm from "./components/PostForm";
 import "./HomePage.css";
 import { useAppSelector } from "../../../hooks/redux";
+import PostList from "../../post/list/PostList";
 
 const { Content } = Layout;
 
@@ -34,6 +35,7 @@ export const HomePage = () => {
 							<>
 								<StoryForm />
 								<PostForm />
+								<PostList />
 							</>
 						) : null}
 					</div>

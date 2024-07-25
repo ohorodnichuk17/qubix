@@ -6,7 +6,7 @@ type TagsListProps = {
 	setTags: React.Dispatch<React.SetStateAction<string[]>>;
 };
 
-const getRandomTagColor = () =>
+export const getRandomTagColor = () =>
 	TAG_COLORS[Math.floor(Math.random() * TAG_COLORS.length)];
 
 const TagsList = ({ tags, setTags }: TagsListProps) => {
