@@ -6,6 +6,7 @@ import { getRandomTagColor } from "../../create/components/Tags/TagsList";
 import type { IPost } from "../types";
 import { ACTION_OPTIONS, FEELING_OPTIONS } from "../../../feelings/constants";
 import type { IAction, ISubAction, IFeeling } from "../../../feelings/types";
+import { NavLink } from "react-router-dom";
 
 type PostItemCardProps = {
 	post: IPost;
@@ -28,18 +29,25 @@ const PostItemCard = ({ post }: PostItemCardProps) => {
 		<Card key={post.id} style={{ width: "100%" }}>
 			<Flex vertical gap="small">
 				<Flex align="center" gap="small">
-					<Avatar
-						size={60}
-						src={
-							post.user.avatar === null
-								? avatar
-								: `${APP_ENV.BASE_URL}/images/avatars/${post.user.avatar}`
-						}
-					/>
+					<NavLink to={`profile?userId=${post.user.id}`}>
+						<Avatar
+							size={60}
+							src={
+								post.user.avatar === null
+									? avatar
+									: `${APP_ENV.BASE_URL}/images/avatars/${post.user.avatar}`
+							}
+						/>
+					</NavLink>
 					<Flex vertical>
-						<span
-							style={{ fontWeight: 600, fontSize: 20 }}
-						>{`${post.user.firstName} ${post.user.lastName}`}</span>
+						<NavLink
+							to={`profile?userId=${post.user.id}`}
+							style={{ color: "black" }}
+						>
+							<span style={{ fontWeight: 600, fontSize: 20 }}>
+								{`${post.user.firstName} ${post.user.lastName}`}
+							</span>
+						</NavLink>
 						<span>{getPublicationDate(post.createdAt)}</span>
 					</Flex>
 				</Flex>
