@@ -1,4 +1,4 @@
-import { Avatar, Layout, Menu, type MenuProps } from "antd";
+import { Avatar, Grid, Layout, Menu, type MenuProps } from "antd";
 import { Link } from "react-router-dom";
 import {
    action,
@@ -13,6 +13,7 @@ import { useState } from "react";
 import { useAppSelector } from "../../../hooks/redux";
 import useAvatar from "../../../hooks/useAvatar";
 import CreatePostModal from "../../post/create/CreatePostModal";
+const { useBreakpoint } = Grid;
 
 const { Sider } = Layout;
 
@@ -80,10 +81,13 @@ export const SideBar = () => {
       },
    ];
 
+   const screens = useBreakpoint();
+
+
    return (
       <Layout>
          <Sider
-            className="sider-hidden"
+            //className="sider-hidden"
             width={250}
             style={{
                background: "#fff",
@@ -93,6 +97,9 @@ export const SideBar = () => {
                top: 64,
                boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
             }}
+            breakpoint="lg"
+            collapsedWidth="80"
+            collapsed={screens.xs}
          >
             <div className="avatar-container">
                <Link to="/profile" style={{ color: "black" }}>

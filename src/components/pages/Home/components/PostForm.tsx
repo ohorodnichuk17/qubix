@@ -8,7 +8,7 @@ export const PostForm = () => {
    const { user } = useAppSelector(state => state.account);
 
    const avatarImg = useAvatar();
-            
+
    return (
       <div className="whats-up">
          <div className="top-section">
@@ -24,7 +24,7 @@ export const PostForm = () => {
                />
             </div>
          </div>
-         <Divider style={{margin:'10px 0'}}/>
+         <Divider style={{ margin: '10px 0' }} />
 
          <div className="actions">
             <div className="action-item">

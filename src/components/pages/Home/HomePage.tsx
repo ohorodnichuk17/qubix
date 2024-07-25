@@ -9,40 +9,40 @@ import PostList from "../../post/list/PostList";
 const { Content } = Layout;
 
 export const HomePage = () => {
-	const { isLogin } = useAppSelector((state) => state.account);
+   const { isLogin } = useAppSelector((state) => state.account);
 
-	const screens = Grid.useBreakpoint();
+   const screens = Grid.useBreakpoint();
 
-	const isScreenSmallerThatMd =
-		(screens.xs || screens.sm) &&
-		!screens.md &&
-		!screens.lg &&
-		!screens.xl &&
-		!screens.xxl;
+   const isScreenSmallerThatMd =
+      (screens.xs || screens.sm) &&
+      !screens.md &&
+      !screens.lg &&
+      !screens.xl &&
+      !screens.xxl;
 
-	return (
-		<Layout>
-			<SideBar />
-			<Layout style={{ marginLeft: isScreenSmallerThatMd ? 0 : 250 }}>
-				<Content
-					style={{
-						padding: isScreenSmallerThatMd ? "0 5px" : "0 50px",
-						marginTop: 64,
-					}}
-				>
-					<div className="homepage-container">
-						{isLogin ? (
-							<>
-								<StoryForm />
-								<PostForm />
-								<PostList />
-							</>
-						) : null}
-					</div>
-				</Content>
-			</Layout>
-		</Layout>
-	);
+   return (
+      <Layout>
+         <SideBar />
+         <Layout style={{ marginLeft: isScreenSmallerThatMd ? 70 : 250 }}>
+            <Content
+               style={{
+                  padding: isScreenSmallerThatMd ? "0 5px" : "0 50px",
+                  marginTop: 64,
+               }}
+            >
+               <div className="homepage-container">
+                  {isLogin ? (
+                     <>
+                        <StoryForm />
+                        <PostForm />
+                        <PostList />
+                     </>
+                  ) : null}
+               </div>
+            </Content>
+         </Layout>
+      </Layout>
+   );
 };
 
 export default HomePage;

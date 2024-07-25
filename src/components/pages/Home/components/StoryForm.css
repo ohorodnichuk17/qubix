@@ -1,7 +1,7 @@
 .create-story {
    display: flex;
    align-items: center;
-   cursor: pointer; /* Зміна курсору при наведенні */
+   cursor: pointer;
 }
 
 .create-story .icon-wrapper {
@@ -23,8 +23,7 @@
    left: 50%;
    width: 40px;
    height: 40px;
-   background-color: rgba(255, 127, 80, 0.17); /* Колір з прозорістю */
-   border-radius: 50%;
+   background-color: rgba(255, 127, 80, 0.17); 
    transform: translate(-50%, -50%);
 }
 
