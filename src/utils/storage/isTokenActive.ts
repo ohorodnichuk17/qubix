@@ -7,7 +7,7 @@ export const isTokenActive = (token : string | null) => {
 
     try {
         const decodedToken = jwtDecode(token) as any;
-        console.log("test token ", decodedToken)
+
         if(decodedToken.exp) {
             const expirationTime = decodedToken.exp * 1000;
             return expirationTime > Date.now();

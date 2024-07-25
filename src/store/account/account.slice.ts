@@ -12,7 +12,6 @@ function isRejectedAction(action: AnyAction): action is RejectedAction {
 
 const updateLoginUserState = (state: IAccountState, token: string): void => {
    const decodedToken: { [key: string]: string } = jwtDecode(token);
-   console.log("decodedToken ", decodedToken);
 
    const id = decodedToken["sub"];
    const email = decodedToken["email"]
