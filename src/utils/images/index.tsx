@@ -52,17 +52,17 @@ import bg7 from '../../assets/backgrounds/7.jpg';
 import bg8 from '../../assets/backgrounds/8.jpg';
 
 //Feelings
-import angryFeelingImg from '../../assets/feelings/angry.png'
-import happyFeelingImg from '../../assets/feelings/happy.png'
-import inLoveFeelingImg from '../../assets/feelings/in_love.png'
-import laughingFeelingImg from '../../assets/feelings/laughing.png'
-import sadFeelingImg from '../../assets/feelings/sad.png'
-import shockedFeelingImg from '../../assets/feelings/shocked.png'
-import sickFeelingImg from '../../assets/feelings/sick.png'
-import smilingFeelingImg from '../../assets/feelings/smiling.png'
-import starstruckFeelingImg from '../../assets/feelings/starstruck.png'
-import surprisedFeelingImg from '../../assets/feelings/surprised.png'
-import winkFeelingImg from '../../assets/feelings/wink.png'
+import angryFeelingImg from '../../assets/feelings/angry.png';
+import happyFeelingImg from '../../assets/feelings/happy.png';
+import inLoveFeelingImg from '../../assets/feelings/in_love.png';
+import laughingFeelingImg from '../../assets/feelings/laughing.png';
+import sadFeelingImg from '../../assets/feelings/sad.png';
+import shockedFeelingImg from '../../assets/feelings/shocked.png';
+import sickFeelingImg from '../../assets/feelings/sick.png';
+import smilingFeelingImg from '../../assets/feelings/smiling.png';
+import starstruckFeelingImg from '../../assets/feelings/starstruck.png';
+import surprisedFeelingImg from '../../assets/feelings/surprised.png';
+import winkFeelingImg from '../../assets/feelings/wink.png';
 
 //Actions
 import celebratingImg from "../../assets/actions/celebrating/celebrating.png"
@@ -77,25 +77,29 @@ import searchingImg from "../../assets/actions/searching/seacrher.png";
 import viewingImg from "../../assets/actions/viewing/glasses.png";
 
 //SubActions
-import birthdayImg from "../../assets/actions/celebrating/subactions/birthday.png"
-import loveImg from "../../assets/actions/celebrating/subactions/love.png"
-import xmasImg from "../../assets/actions/celebrating/subactions/Xmas.png"
-import juiceImg from "../../assets/actions/drinking/subactions/juice.png"
-import waterImg from "../../assets/actions/drinking/subactions/water.png"
-import wineImg from "../../assets/actions/drinking/subactions/wine.png"
-import breakfastImg from "../../assets/actions/eating/subactions/breakfast.png"
-import franceImg from "../../assets/actions/flying/subactions/france.png"
-import portugalImg from "../../assets/actions/flying/subactions/portugal.png"
-import spainImg from "../../assets/actions/flying/subactions/spain.png"
-import usaImg from "../../assets/actions/flying/subactions/usa.png"
-import musicImg from "../../assets/actions/hearing/subactions/music.png"
-import weddingImg from "../../assets/actions/particicaping/subactions/wedding.png"
-import basketballImg from "../../assets/actions/playing/subactions/basketball.png"
-import footballImg from "../../assets/actions/playing/subactions/football.png"
-import tvImg from "../../assets/actions/viewing/subactions/tv.png"
+import birthdayImg from "../../assets/actions/celebrating/subactions/birthday.png";
+import loveImg from "../../assets/actions/celebrating/subactions/love.png";
+import xmasImg from "../../assets/actions/celebrating/subactions/Xmas.png";
+import juiceImg from "../../assets/actions/drinking/subactions/juice.png";
+import waterImg from "../../assets/actions/drinking/subactions/water.png";
+import wineImg from "../../assets/actions/drinking/subactions/wine.png";
+import breakfastImg from "../../assets/actions/eating/subactions/breakfast.png";
+import franceImg from "../../assets/actions/flying/subactions/france.png";
+import portugalImg from "../../assets/actions/flying/subactions/portugal.png";
+import spainImg from "../../assets/actions/flying/subactions/spain.png";
+import usaImg from "../../assets/actions/flying/subactions/usa.png";
+import musicImg from "../../assets/actions/hearing/subactions/music.png";
+import weddingImg from "../../assets/actions/particicaping/subactions/wedding.png";
+import basketballImg from "../../assets/actions/playing/subactions/basketball.png";
+import footballImg from "../../assets/actions/playing/subactions/football.png";
+import tvImg from "../../assets/actions/viewing/subactions/tv.png";
 
 //Profile
 import lockImg from "../../assets/profile/lock.svg";
+
+import blocked from "../../assets/settings/blocked.png";
+import questionmark from "../../assets/settings/questionmark.png";
+import shield from "../../assets/settings/shield.png";
 
 export {
    photoImg,
@@ -187,6 +191,9 @@ export {
    basketballImg,
    footballImg,
    tvImg,
-	//Profile
-	lockImg,
+   //Profile
+   lockImg,
+   blocked,
+   questionmark,
+   shield
 };

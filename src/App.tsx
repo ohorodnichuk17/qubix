@@ -17,6 +17,9 @@ import FriendRequest from "./components/pages/Friends/FriendRequest/FriendReques
 import FriendPage from "./components/pages/Friends/FriendPage/FriendPage";
 import FriendMain from "./components/pages/Friends/FriendPage/FriendMain";
 import FriendSidebar from "./components/pages/Friends/FriendPage/FriendSidebar";
+import SettingsSideBar from "./components/pages/Settings/components/SettingsSideBar";
+import PrivacyPage from "./components/pages/Settings/components/PrivacyPage";
+import HelpPage from "./components/pages/Settings/components/HelpPage";
 
 const App = () => {
    return (
@@ -73,14 +76,6 @@ const App = () => {
                />
                <Route path="forgot-password" element={<ForgotPasswordPage />} />
                <Route
-                  path="reset-password"
-                  element={
-                     <PrivateRoute>
-                        <ResetPasswordPage />
-                     </PrivateRoute>
-                  }
-               />
-               <Route
                   path="change-email"
                   element={
                      <PrivateRoute>
@@ -123,6 +118,41 @@ const App = () => {
                      element={
                         <PrivateRoute>
                            <FriendRequest />
+                        </PrivateRoute>
+                     }
+                  />
+               </Route>
+
+               <Route path="settings">
+                  <Route
+                     index
+                     element={
+                        <PrivateRoute>
+                           <SettingsSideBar />
+                        </PrivateRoute>
+                     }
+                  />
+                  <Route
+                     path="privacy"
+                     element={
+                        <PrivateRoute>
+                           <PrivacyPage />
+                        </PrivateRoute>
+                     }
+                  />
+                  <Route
+                     path="reset-password"
+                     element={
+                        <PrivateRoute>
+                           <ResetPasswordPage />
+                        </PrivateRoute>
+                     }
+                  />
+                  <Route
+                     path="help"
+                     element={
+                        <PrivateRoute>
+                           <HelpPage />
                         </PrivateRoute>
                      }
                   />
