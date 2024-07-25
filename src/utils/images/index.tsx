@@ -94,6 +94,9 @@ import basketballImg from "../../assets/actions/playing/subactions/basketball.pn
 import footballImg from "../../assets/actions/playing/subactions/football.png"
 import tvImg from "../../assets/actions/viewing/subactions/tv.png"
 
+//Profile
+import lockImg from "../../assets/profile/lock.svg";
+
 export {
    photoImg,
    locationImg,
@@ -184,4 +187,6 @@ export {
    basketballImg,
    footballImg,
    tvImg,
+	//Profile
+	lockImg,
 };

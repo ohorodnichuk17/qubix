@@ -20,8 +20,7 @@ import { updateAvatar } from "../../../store/account/account.slice";
 import type { FileType } from "../../../types/FileType";
 import { apiClient } from "../../../utils/api/apiClient";
 import { getBase64 } from "../../../utils/helpers/getBase64";
-import { avatar as avatarImg, bg6 } from "../../../utils/images";
-// import AvatarMenu from "./components/AvatarMenu";
+import { avatar as avatarImg, bg6, lockImg } from "../../../utils/images";
 import CoverPhotoBlock from "./components/CoverPhotoBlock";
 import EditProfileModal from "./components/EditProfileModal";
 import { AvatarButton } from "./styled";
@@ -59,7 +58,7 @@ const UserProfilePage: React.FC = () => {
 					setCoverPhoto(
 						`${APP_ENV.BASE_URL}/images/coverPhotos/${response.data.coverPhoto}`,
 					);
-				} 
+				}
 
 				if (response.data.userEntity.avatar) {
 					setAvatar(
@@ -170,20 +169,33 @@ const UserProfilePage: React.FC = () => {
 						)}
 					</Flex>
 
-					<Divider />
-
-					<Flex justify="center">
-						<Menu
-							style={styles.profileMenu}
-							mode="horizontal"
-							defaultSelectedKeys={["1"]}
+					{!userProfile?.isProfilePublic && !isCurrentUserProfile ? (
+						<Flex
+							style={{ width: "100%", height: "100%" }}
+							justify="center"
+							align="center"
 						>
-							<Menu.Item key="1">Posts</Menu.Item>
-							<Menu.Item key="2">Information</Menu.Item>
-							<Menu.Item key="3">Friends</Menu.Item>
-						</Menu>
-					</Flex>
-					<ShortInformationCard userProfile={userProfile} />
+							<img src={lockImg} alt="Lock icon " height={60} />
+							<h1 style={{ fontSize: 40 }}>Private account</h1>
+						</Flex>
+					) : (
+						<>
+							<Divider />
+
+							<Flex justify="center">
+								<Menu
+									style={styles.profileMenu}
+									mode="horizontal"
+									defaultSelectedKeys={["1"]}
+								>
+									<Menu.Item key="1">Posts</Menu.Item>
+									<Menu.Item key="2">Information</Menu.Item>
+									<Menu.Item key="3">Friends</Menu.Item>
+								</Menu>
+							</Flex>
+							<ShortInformationCard userProfile={userProfile} />
+						</>
+					)}
 				</Card>
 			</Row>
 		</div>
