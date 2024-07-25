@@ -87,7 +87,6 @@ export const SideBar = () => {
    return (
       <Layout>
          <Sider
-            //className="sider-hidden"
             width={250}
             style={{
                background: "#fff",
@@ -104,10 +103,12 @@ export const SideBar = () => {
             <div className="avatar-container">
                <Link to="/profile" style={{ color: "black" }}>
                   <Avatar src={avatarImg} size={50} />
-                  <span style={{ color: "black", marginLeft: "8px" }}>
+                  <span className="user-name" style={{ color: "black", marginLeft: "8px" }}>
                      {user?.firstName}
                   </span>{" "}
-                  <span style={{ color: "black" }}>{user?.lastName}</span>
+                  <span className="user-name" style={{ color: "black" }}>
+                     {user?.lastName}
+                  </span>
                </Link>
             </div>
             <Menu

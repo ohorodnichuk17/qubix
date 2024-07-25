@@ -69,15 +69,6 @@
    height: 100vh;
 }
 
-.sider-fixed {
-   position: fixed;
-   left: 0;
-   top: 64px; 
-   height: calc(100% - 64px);
-   background-color: #fff;
-   z-index: 1000;
-}
-
 .content-wrapper {
    flex: 1;
    margin-left: 250px;
@@ -85,10 +76,13 @@
    overflow: auto;
    margin-top: 64px;
 }
-
-@media (max-width: 768px) {
-   .sider-hidden {
-     display: none;
-   }
- }
  
+ .user-name {
+   display: inline;
+}
+
+@media (max-width: 600px) {
+   .user-name {
+      display: none;
+   }
+}
