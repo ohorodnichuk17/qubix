@@ -5,6 +5,7 @@ import PostForm from "./components/PostForm";
 import "./HomePage.css";
 import { useAppSelector } from "../../../hooks/redux";
 import PostList from "../../post/list/PostList";
+import StoryList from "../Story/list/StoryList";
 
 const { Content } = Layout;
 
@@ -27,12 +28,12 @@ export const HomePage = () => {
             <Content
                style={{
                   padding: isScreenSmallerThatMd ? "0 5px" : "0 50px",
-                  marginTop: 64,
                }}
             >
                <div className="homepage-container">
                   {isLogin ? (
                      <>
+                        <StoryList />
                         <StoryForm />
                         <PostForm />
                         <PostList />
