@@ -100,6 +100,7 @@ import lockImg from "../../assets/profile/lock.svg";
 import blocked from "../../assets/settings/blocked.png";
 import questionmark from "../../assets/settings/questionmark.png";
 import shield from "../../assets/settings/shield.png";
+import mail from "../../assets/settings/mail.png";
 
 export {
    photoImg,
@@ -195,5 +196,6 @@ export {
    lockImg,
    blocked,
    questionmark,
-   shield
+   shield,
+   mail
 };

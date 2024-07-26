@@ -73,14 +73,6 @@ const App = () => {
                   }
                />
                <Route path="forgot-password" element={<ForgotPasswordPage />} />
-               <Route
-                  path="change-email"
-                  element={
-                     <PrivateRoute>
-                        <ChangeEmailPage />
-                     </PrivateRoute>
-                  }
-               />
                <Route path="set-new-password" element={<SetNewPasswordPage />} />
                <Route
                   path="email-confirmed"
@@ -151,6 +143,14 @@ const App = () => {
                      element={
                         <PrivateRoute>
                            <HelpPage />
+                        </PrivateRoute>
+                     }
+                  />
+                  <Route
+                     path="change-email"
+                     element={
+                        <PrivateRoute>
+                           <ChangeEmailPage />
                         </PrivateRoute>
                      }
                   />
