@@ -1,5 +1,5 @@
 import { ConfigProvider } from "antd";
-import { Route, Router, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 import ContainerDefault from "./components/containers/ContainerDefault/ContainerDefault";
 import ChangeEmailPage from "./components/pages/ChangeEmailPage/ChangeEmailPage";
@@ -15,11 +15,12 @@ import CreateStoryPage from "./components/pages/Story/CreateStoryPage/CreateStor
 import UserProfilePage from "./components/pages/UserProfilePage/UserProfilePage";
 import FriendRequest from "./components/pages/Friends/FriendRequest/FriendRequest";
 import FriendPage from "./components/pages/Friends/FriendPage/FriendPage";
-import FriendMain from "./components/pages/Friends/FriendPage/FriendMain";
 import FriendSidebar from "./components/pages/Friends/FriendPage/FriendSidebar";
 import SettingsSideBar from "./components/pages/Settings/components/SettingsSideBar";
 import PrivacyPage from "./components/pages/Settings/components/PrivacyPage";
 import HelpPage from "./components/pages/Settings/components/HelpPage";
+import SettingsPage from "./components/pages/Settings/SettingsPage";
+import { Outlet } from "react-router-dom";
 
 const App = () => {
    return (
@@ -40,17 +41,14 @@ const App = () => {
                   colorPrimaryActive: "white",
                   defaultBorderColor: "#FF7F50",
                   defaultHoverBorderColor: "#FFA07A",
-
                   colorPrimaryBg: "#FF7F50",
                   colorPrimaryText: "white",
-
                   primaryColor: "white",
                   colorBgMask: "white",
                   colorPrimaryBorder: "#FF7F50",
                   colorPrimaryBorderHover: "#FFA07A",
                   colorPrimaryHover: "#FFA07A",
                   colorPrimaryBgHover: "#FFA07A",
-
                   fontFamily: "Montserrat",
                },
                Input: {
@@ -123,12 +121,12 @@ const App = () => {
                   />
                </Route>
 
-               <Route path="settings">
+               <Route path="settings" element={<SettingsPage />}>
                   <Route
                      index
                      element={
                         <PrivateRoute>
-                           <SettingsSideBar />
+                           <PrivacyPage />
                         </PrivateRoute>
                      }
                   />
