@@ -19,7 +19,7 @@ const CreateStoryContent = () => {
 
 	const postStory = async () => {
 		if (storyType == null) return;
-		const story = await getCapture(storyType);
+		const story = await getCapture();
 
 		const formData = new FormData();
 		formData.append("Content", text ?? "");

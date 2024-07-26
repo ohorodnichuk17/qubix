@@ -107,7 +107,7 @@ const CreatePostModal = ({
 
    const onFinish = async (values: ICreatePost) => {
       if (postType === "text") {
-         const postImage = await getCapture(postType, false);
+         const postImage = await getCapture();
          values.images = [];
          values.images[0] = postImage as Blob;
       }

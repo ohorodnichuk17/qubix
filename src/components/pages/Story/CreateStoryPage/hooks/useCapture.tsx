@@ -1,20 +1,15 @@
 import { message } from "antd";
 import { useRef } from "react";
 import domtoimage from "dom-to-image";
-import type { StoryType } from "../types";
 
 const useCapture = () => {
 	const captureAreaRef = useRef(null);
 
-	const getCapture = async (storyType: StoryType, isStory = true) => {
+	const getCapture = async () => {
 		if (captureAreaRef.current == null) {
 			message.error("Create story error!");
 			return null;
 		}
-
-		if (storyType === "text" && isStory)
-			(captureAreaRef.current as HTMLDivElement).innerHTML =
-				'<div class="preview-div-bordered"></div>';
 
 		try {
 			const dataUrl = await domtoimage.toJpeg(captureAreaRef.current, {
