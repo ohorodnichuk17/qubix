@@ -133,7 +133,11 @@ const UserProfilePage: React.FC = () => {
 						style={{ marginTop: "-5%" }}
 					>
 						<Flex align="center" wrap="wrap" gap="middle">
-							<Avatar size={160} src={avatar} />
+							<Avatar
+								size={160}
+								src={avatar}
+								style={{ border: "5px solid #ffebe0" }}
+							/>
 							{isCurrentUserProfile && (
 								<Dropdown
 									menu={{
