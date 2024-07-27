@@ -13,16 +13,13 @@ import ResetPasswordPage from "./components/pages/ResetPasswordPage/ResetPasswor
 import SetNewPasswordPage from "./components/pages/SetNewPasswordPage/SetNewPasswordPage";
 import CreateStoryPage from "./components/pages/Story/CreateStoryPage/CreateStoryPage";
 import UserProfilePage from "./components/pages/UserProfilePage/UserProfilePage";
-import FriendRequest from "./components/pages/Friends/FriendRequest/FriendRequest";
-import FriendPage from "./components/pages/Friends/FriendPage/FriendPage";
-import FriendSidebar from "./components/pages/Friends/FriendPage/FriendSidebar";
-import SettingsSideBar from "./components/pages/Settings/components/SettingsSideBar";
 import PrivacyPage from "./components/pages/Settings/components/PrivacyPage";
 import HelpPage from "./components/pages/Settings/components/HelpPage";
 import SettingsPage from "./components/pages/Settings/SettingsPage";
-import { Outlet } from "react-router-dom";
-import AllFriends from "./components/pages/Friends/AllFriends";
-import FriendsBirthday from "./components/pages/Friends/FriendsBirthday";
+import FriendPage from "./components/pages/Friends/FriendPage/FriendPage";
+import FriendRequest from "./components/pages/Friends/FriendRequest/FriendRequest";
+import AllFriends from "./components/pages/Friends/FriendPage/AllFriendsPage";
+import BirthdaysPage from "./components/pages/Friends/FriendPage/BirthdaysPage";
 
 const App = () => {
    return (
@@ -96,7 +93,7 @@ const App = () => {
                   />
                </Route>
 
-               <Route path="friends" element={<FriendSidebar></FriendSidebar>}>
+               <Route path="friends">
                   <Route
                      index
                      element={
@@ -121,11 +118,11 @@ const App = () => {
                         </PrivateRoute>
                      }
                   />
-                   <Route
+                  <Route
                      path="birthday"
                      element={
                         <PrivateRoute>
-                           <FriendsBirthday />
+                           <BirthdaysPage />
                         </PrivateRoute>
                      }
                   />

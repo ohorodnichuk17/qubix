@@ -5,8 +5,10 @@ import type { IFriendRecommendation } from "./types";
 import { avatar } from "../../../../utils/images";
 import { APP_ENV } from "../../../../env";
 import FriendRecommendationCard from "./components/FriendRecommendationCard";
+import { Outlet } from "react-router-dom";
+import FriendSidebar from "./FriendSidebar";
 
-const FriendMain = () => {
+const MainPage = () => {
 	const [friends, setFriends] = useState<IFriendRecommendation[]>([]);
 
 	useEffect(() => {
@@ -37,19 +39,22 @@ const FriendMain = () => {
 		);
 
 	return (
-		<div style={{ padding: "20px" }}>
-			<h2>People you may know</h2>
-			<Row gutter={[16, 16]}>
-				{friends.map((friend) => (
-					<FriendRecommendationCard
+		<div>
+			<FriendSidebar select="1"></FriendSidebar>
+			<div style={{ padding: "20px" }}>
+				<h2>People you may know</h2>
+				<Row gutter={[16, 16]}>
+					{friends.map((friend) => (
+						<FriendRecommendationCard
 						key={friend.id}
 						friend={friend}
 						removeSenderRequestFriend={removeSenderRequestFriend}
-					/>
-				))}
-			</Row>
+						/>
+					))}
+				</Row>
+			</div>
 		</div>
 	);
 };
 
-export default FriendMain;
+export default MainPage;

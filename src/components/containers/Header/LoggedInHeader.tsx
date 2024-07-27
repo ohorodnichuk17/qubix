@@ -1,7 +1,7 @@
 import { MenuOutlined, SearchOutlined } from "@ant-design/icons";
 import { Avatar, Badge, Button, Drawer, Dropdown, Input, Menu, Tooltip } from "antd";
 import { useEffect, useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
 import useAvatar from "../../../hooks/useAvatar";
 import { logout } from "../../../store/account/account.slice";
