@@ -7,7 +7,6 @@ import {
   GiftOutlined
 } from '@ant-design/icons';
 import { NavLink } from 'react-router-dom';
-import FriendMain from './FriendMain';
 const { useBreakpoint } = Grid;
 import Sider from 'antd/es/layout/Sider';
 
@@ -36,28 +35,6 @@ const FriendSidebar = () => {
        icon: <GiftOutlined />,
     },
  ];
-// const menuItems: MenuProps["items"] = [
-//   {
-//      key: "1",
-//      label: "Main",
-//      icon: <UsergroupAddOutlined />,
-//   },
-//   {
-//      key: "2",
-//      label: "Friend request",
-//      icon: <UserAddOutlined />,
-//   },
-//   {
-//      key: "3",
-//      label: "All friends",
-//      icon: <UserOutlined />,
-//   },
-//   {
-//      key: "4",
-//      label: "Birthday",
-//      icon: <GiftOutlined />,
-//   },
-// ];
 
   return (
     <Sider 

@@ -1,13 +1,17 @@
-import { Button, message } from "antd";
+import { Button, Grid, Layout, message } from "antd";
 import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useAppSelector } from "../../../../hooks/redux";
 import { apiClient } from "../../../../utils/api/apiClient";
 
+const { Content } = Layout;
+const { useBreakpoint } = Grid;
+
 const FriendRequest = () => {
    const navigate = useNavigate();
    const [searchParams] = useSearchParams();
    const friendId = searchParams.get("friendId");
+   const screens = useBreakpoint();
 
    const { user } = useAppSelector((state) => state.account);
    const [friend, setFriend] = useState(null);
@@ -40,13 +44,15 @@ const FriendRequest = () => {
    };
 
    return (
-      <>
-         <p>{friendId}</p>
-         <p>{friend?.Email}</p>
-         <p>{friend?.UserName}</p>
+      <Layout style={{ marginLeft: screens.xs ? 80 : 256, transition: 'margin-left 0.2s' }}>
+         <Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>
+            <p>{friendId}</p>
+            <p>{friend?.Email}</p>
+            <p>{friend?.UserName}</p>
 
-         <Button onClick={acceptFriendRequest}>Accept request</Button>
-      </>
+            <Button onClick={acceptFriendRequest}>Accept request</Button>
+         </Content>
+      </Layout>
    );
 };
 

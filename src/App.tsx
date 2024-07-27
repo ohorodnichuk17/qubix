@@ -21,6 +21,8 @@ import PrivacyPage from "./components/pages/Settings/components/PrivacyPage";
 import HelpPage from "./components/pages/Settings/components/HelpPage";
 import SettingsPage from "./components/pages/Settings/SettingsPage";
 import { Outlet } from "react-router-dom";
+import AllFriends from "./components/pages/Friends/AllFriends";
+import FriendsBirthday from "./components/pages/Friends/FriendsBirthday";
 
 const App = () => {
    return (
@@ -108,6 +110,22 @@ const App = () => {
                      element={
                         <PrivateRoute>
                            <FriendRequest />
+                        </PrivateRoute>
+                     }
+                  />
+                  <Route
+                     path="all"
+                     element={
+                        <PrivateRoute>
+                           <AllFriends />
+                        </PrivateRoute>
+                     }
+                  />
+                   <Route
+                     path="birthday"
+                     element={
+                        <PrivateRoute>
+                           <FriendsBirthday />
                         </PrivateRoute>
                      }
                   />
