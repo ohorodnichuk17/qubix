@@ -1,12 +1,9 @@
-import React from 'react';
-import { Grid, Layout, Menu, MenuProps } from 'antd';
+import { Grid, Layout, Menu, type MenuProps } from 'antd';
 import {
   UsergroupAddOutlined,
   UserAddOutlined,
-  UserOutlined,
-  GiftOutlined
-} from '@ant-design/icons';
-import { NavLink, Outlet } from 'react-router-dom';
+  UserOutlined} from '@ant-design/icons';
+import { NavLink } from 'react-router-dom';
 const { useBreakpoint } = Grid;
 import Sider from 'antd/es/layout/Sider';
 
@@ -32,12 +29,7 @@ const FriendSidebar = ({select} : FriendSideBarProps) => {
        key: "3",
        label: <NavLink to="/friends/all">All friends</NavLink>,
        icon: <UserOutlined />,
-    },
-    {
-       key: "4",
-       label: <NavLink to="/friends/birthday">Birthdays</NavLink>,
-       icon: <GiftOutlined />,
-    },
+    }
  ];
 
   return (

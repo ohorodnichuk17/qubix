@@ -19,7 +19,6 @@ import SettingsPage from "./components/pages/Settings/SettingsPage";
 import FriendPage from "./components/pages/Friends/FriendPage/FriendPage";
 import FriendRequest from "./components/pages/Friends/FriendRequest/FriendRequest";
 import AllFriends from "./components/pages/Friends/FriendPage/AllFriendsPage";
-import BirthdaysPage from "./components/pages/Friends/FriendPage/BirthdaysPage";
 
 const App = () => {
    return (
@@ -115,14 +114,6 @@ const App = () => {
                      element={
                         <PrivateRoute>
                            <AllFriends />
-                        </PrivateRoute>
-                     }
-                  />
-                  <Route
-                     path="birthday"
-                     element={
-                        <PrivateRoute>
-                           <BirthdaysPage />
                         </PrivateRoute>
                      }
                   />
