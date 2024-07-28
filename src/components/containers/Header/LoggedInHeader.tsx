@@ -145,7 +145,7 @@ const LoggedInHeader = () => {
          <div className="navbar-right">
             <div className="avatar-dropdown-container">
                <Avatar src={avatarImg} size={50} />
-               <Dropdown overlay={<Menu items={menuItems} />}>
+               <Dropdown menu={{items:menuItems}}>
                   <Button
                      className="avatar-dropdown-button"
                      icon={<img src={glyph} alt="dropdown" />}
