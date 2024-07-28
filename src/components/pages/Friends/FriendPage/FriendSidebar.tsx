@@ -20,7 +20,7 @@ const FriendSidebar = ({select} : FriendSideBarProps) => {
   const menuItems: MenuProps["items"] = [
     {
        key: "1",
-       label: <NavLink to="/friends">Main</NavLink>,
+       label: <NavLink to="/friends">Recommendations</NavLink>,
        icon: <UsergroupAddOutlined />,
     },
     {
