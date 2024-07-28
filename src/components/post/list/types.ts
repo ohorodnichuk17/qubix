@@ -23,3 +23,11 @@ export interface IPost {
     feelingId: string;
     feeling: IFeeling;
 }
+
+export interface IComment {
+    id: string;
+    message: string;
+    createdAt: string;
+    userId: string;
+    userEntity: IUser;
+} 

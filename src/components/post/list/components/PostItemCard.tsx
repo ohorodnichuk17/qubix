@@ -1,4 +1,8 @@
-import { LeftOutlined, RightOutlined } from "@ant-design/icons";
+import {
+	CommentOutlined,
+	LeftOutlined,
+	RightOutlined,
+} from "@ant-design/icons";
 import { Card, Flex, Avatar, Divider, Carousel, Tag } from "antd";
 import { APP_ENV } from "../../../../env";
 import { avatar, locationImg } from "../../../../utils/images";
@@ -7,12 +11,16 @@ import type { IPost } from "../types";
 import { ACTION_OPTIONS, FEELING_OPTIONS } from "../../../feelings/constants";
 import type { IAction, ISubAction, IFeeling } from "../../../feelings/types";
 import { NavLink } from "react-router-dom";
+import { useState } from "react";
+import CommentsList from "./CommentsList";
 
 type PostItemCardProps = {
 	post: IPost;
 };
 
 const PostItemCard = ({ post }: PostItemCardProps) => {
+	const [commentsVisibility, setCommentsVisibility] = useState<boolean>(false);
+
 	const getPublicationDate = (date: string) => new Date(date).toDateString();
 
 	const getActionImage = (action: IAction, subAction: ISubAction) =>
@@ -119,6 +127,15 @@ const PostItemCard = ({ post }: PostItemCardProps) => {
 						))}
 					</Flex>
 				)}
+
+				<CommentOutlined
+					style={{ cursor: "pointer" }}
+					onClick={() => {
+						setCommentsVisibility(!commentsVisibility);
+					}}
+				/>
+
+				{commentsVisibility && <CommentsList postId={post.id} />}
 			</Flex>
 		</Card>
 	);
