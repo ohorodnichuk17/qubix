@@ -1,5 +1,5 @@
 import { MenuOutlined, SearchOutlined } from "@ant-design/icons";
-import { Avatar, Badge, Button, Drawer, Dropdown, Input, Menu, Tooltip } from "antd";
+import { Avatar, Badge, Button, Drawer, Dropdown, Input, Menu, message, Tooltip } from "antd";
 import { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
@@ -18,18 +18,19 @@ const LoggedInHeader = () => {
    const [drawerVisible, setDrawerVisible] = useState(false);
 
    const handleLogout = async () => {
-      if (user && user.id) {
-         try {
-            // Dispatch the logout thunk
-            const result = await dispatch(userLogout(user.id)).unwrap();
-            if (result) {
-               navigate("/");
-            }
-         } catch (error) {
-            console.error("Failed to logout:", error);
-         }
-      }
-   };
+				if (!user?.id) {
+					message.error("Logout error!");
+					return;
+				}
+				try {
+					const result = await dispatch(userLogout()).unwrap();
+					if (result) {
+						navigate("/");
+					}
+				} catch (error) {
+					console.error("Failed to logout:", error);
+				}
+			};
 
    const showDrawer = () => {
       setDrawerVisible(true);

@@ -100,9 +100,9 @@ export const resetPassword = createAsyncThunk(
 
 export const userLogout = createAsyncThunk(
    'authentication/logout',
-   async (userId: string, { rejectWithValue }) => {
+   async (_, { rejectWithValue }) => {
       try {
-         const response = await apiClient.post('/api/authentication/logout', { userId });
+         const response = await apiClient.post('/api/authentication/logout');
          return response.data;
       } catch (error) {
          return rejectWithValue(handleAxiosError(error, 'Logout failed'));
