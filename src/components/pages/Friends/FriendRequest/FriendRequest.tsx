@@ -32,10 +32,12 @@ const FriendRequest = () => {
 		});
 	}, [user?.id]);
 
-const removeAcceptedRequestFriend = (
-	acceptedRequestFriend: IFriendRecommendation,
-) =>
-	setFriends(friends.filter((friend) => friend.id !== acceptedRequestFriend.id));
+	const removeAcceptedRequestFriend = (
+		acceptedRequestFriend: IFriendRecommendation,
+	) =>
+		setFriends(
+			friends.filter((friend) => friend.id !== acceptedRequestFriend.id),
+		);
 
 	return (
 		<div>
@@ -62,7 +64,11 @@ const removeAcceptedRequestFriend = (
 					{friends.length > 0 && (
 						<Row gutter={[16, 16]} wrap={true}>
 							{friends.map((friend) => (
-								<FriendRequestCard key={friend.id} friend={friend} removeAcceptedRequestFriend={removeAcceptedRequestFriend}/>
+								<FriendRequestCard
+									key={friend.id}
+									friend={friend}
+									removeAcceptedRequestFriend={removeAcceptedRequestFriend}
+								/>
 							))}
 						</Row>
 					)}
