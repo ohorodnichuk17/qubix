@@ -4,7 +4,7 @@ import { addLocalStorage, deleteLocalStorage } from "../../utils/storage/localSt
 import { RejectedAction } from "../../utils/types";
 import { Status } from "../../utils/enum";
 import { IAccountState } from "../../interfaces/account";
-import { changeEmail, confirmEmail, forgotPassword, login, resetPassword, userRegister } from "./account.actions.ts";
+import { changeEmail, confirmEmail, forgotPassword, login, resetPassword, userRegister, userLogout } from "./account.actions.ts";
 
 function isRejectedAction(action: AnyAction): action is RejectedAction {
    return action.type.endsWith('/rejected');
@@ -14,13 +14,12 @@ const updateLoginUserState = (state: IAccountState, token: string): void => {
    const decodedToken: { [key: string]: string } = jwtDecode(token);
 
    const id = decodedToken["sub"];
-   const email = decodedToken["email"]
-   const role = decodedToken["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"]
-   const firstName = decodedToken["given_name"]
-   const lastName = decodedToken["family_name"]
-   // const phoneNumber = decodedToken["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/mobilephone"]
-   const birthday = new Date(decodedToken["birthday"] || '1970-01-01')
-   const gender = decodedToken["gender"] || ''
+   const email = decodedToken["email"];
+   const role = decodedToken["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
+   const firstName = decodedToken["given_name"];
+   const lastName = decodedToken["family_name"];
+   const birthday = new Date(decodedToken["birthday"] || '1970-01-01');
+   const gender = decodedToken["gender"] || '';
    const avatar = decodedToken["Avatar"];
 
    state.user = {
@@ -29,7 +28,6 @@ const updateLoginUserState = (state: IAccountState, token: string): void => {
       role: role,
       firstName: firstName,
       lastName: lastName,
-      // phoneNumber: phoneNumber,
       birthday: birthday,
       gender: gender,
       avatar: "/images/avatars/" + avatar,
@@ -83,7 +81,6 @@ export const accountsSlice = createSlice({
             state.status = Status.LOADING;
          })
          .addCase(confirmEmail.fulfilled, (state, action) => {
-            console.log("action.payload", action.payload)
             updateLoginUserState(state, action.payload);
             state.status = Status.SUCCESS;
          })
@@ -107,6 +104,13 @@ export const accountsSlice = createSlice({
          })
          .addCase(changeEmail.pending, (state) => {
             state.status = Status.LOADING;
+         })
+         .addCase(userLogout.fulfilled, (state) => {
+            state.status = Status.SUCCESS;
+            deleteLocalStorage('authToken');
+            state.user = null;
+            state.token = null;
+            state.isLogin = false;
          })
          .addMatcher(isRejectedAction, (state) => {
             state.status = Status.ERROR;
