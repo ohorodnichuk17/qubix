@@ -16,21 +16,22 @@ const LoggedInHeader = () => {
    const dispatch = useAppDispatch();
    const navigate = useNavigate();
    const [drawerVisible, setDrawerVisible] = useState(false);
+   const [searchTerm, setSearchTerm] = useState("");
 
    const handleLogout = async () => {
-				if (!user?.id) {
-					message.error("Logout error!");
-					return;
-				}
-				try {
-					const result = await dispatch(userLogout()).unwrap();
-					if (result) {
-						navigate("/");
-					}
-				} catch (error) {
-					console.error("Failed to logout:", error);
-				}
-			};
+      if (!user?.id) {
+         message.error("Logout error!");
+         return;
+      }
+      try {
+         const result = await dispatch(userLogout()).unwrap();
+         if (result) {
+            navigate("/");
+         }
+      } catch (error) {
+         console.error("Failed to logout:", error);
+      }
+   };
 
    const showDrawer = () => {
       setDrawerVisible(true);
@@ -84,14 +85,27 @@ const LoggedInHeader = () => {
       });
    }, [user]);
 
+   const handleSearch = async () => {
+      if (searchTerm.startsWith("#")) {
+         const tag = searchTerm.slice(1);
+         navigate(`/search/posts?tag=${tag}`);
+      } else {
+         const [firstName, lastName] = searchTerm.split(" ");
+         navigate(`/search/friends?firstName=${firstName}&lastName=${lastName}`);
+      }
+   };
+
    return (
       <>
          <div className="navbar-left">
             <img src={logo} alt="logo" className="logo" />
             <Input
                className="search-bar"
-               placeholder="Search"
+               placeholder="Search by tags or name"
                prefix={<SearchOutlined style={{ color: "#000000" }} />}
+               value={searchTerm}
+               onChange={(e) => setSearchTerm(e.target.value)}
+               onPressEnter={handleSearch}
             />
          </div>
          <div className="navbar-center">
@@ -145,7 +159,7 @@ const LoggedInHeader = () => {
          <div className="navbar-right">
             <div className="avatar-dropdown-container">
                <Avatar src={avatarImg} size={50} />
-               <Dropdown menu={{items:menuItems}}>
+               <Dropdown menu={{ items: menuItems }}>
                   <Button
                      className="avatar-dropdown-button"
                      icon={<img src={glyph} alt="dropdown" />}
