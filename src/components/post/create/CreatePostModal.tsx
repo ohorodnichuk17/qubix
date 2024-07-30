@@ -30,6 +30,7 @@ import TagsList from "./components/Tags/TagsList";
 import type { PostVisibility, ICreatePost, PostType } from "./types";
 import useAvatar from "../../../hooks/useAvatar";
 import VisibilityButton from "./components/VisibilityButton/VisibilityButton";
+import type { IUser } from "../../../interfaces/account";
 
 type CreatePostModalProps = {
 	isModalOpen: boolean;
@@ -56,6 +57,7 @@ const CreatePostModal = ({
 	const [subAction, setSubAction] = useState<ISubAction>();
 	const [postVisibility, setPostVisibility] =
 		useState<PostVisibility>("public");
+	const [friendsExceptList, setFriendsExceptList] = useState<IUser[]>([]);
 
 	const [locationInputVisibility, setLocationInputVisibility] =
 		useState<boolean>(false);
@@ -132,6 +134,12 @@ const CreatePostModal = ({
 		formData.append("isArchive", "false");
 		formData.append("location", values.location);
 		formData.append("visibility", postVisibility);
+
+		if (postVisibility === "friends except") {
+			for (const friend of friendsExceptList) {
+				formData.append("ExcludedFriends", friend.id);
+			}
+		}
 
 		if (values.feelingId) {
 			formData.append("feelingId", values.feelingId);
@@ -276,6 +284,7 @@ const CreatePostModal = ({
 				visibilityModalVisible={visibilityModalVisible}
 				setVisibilityModalVisible={setVisibilityModalVisible}
 				handleVisibilityChange={handleVisibilityChange}
+				setFriendsExceptList={setFriendsExceptList}
 			/>
 			<FeelingModal
 				isModalOpen={feelingModalVisible}

@@ -9,12 +9,14 @@ import {
 import { useState } from "react";
 import FriendsExceptModal from "../FriendsExceptModal/FriendsExceptModal";
 import VisibilityOption from "./components/VisibilityOption";
+import type { IUser } from "../../../../../interfaces/account";
 
 type PostVisibilityModalProps = {
 	visibilityModalVisible: boolean;
 	setVisibilityModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
 	visibility: string;
 	handleVisibilityChange: (e: RadioChangeEvent) => void;
+	setFriendsExceptList: React.Dispatch<React.SetStateAction<IUser[]>>;
 };
 
 const PostVisibilityModal = ({
@@ -22,6 +24,7 @@ const PostVisibilityModal = ({
 	setVisibilityModalVisible,
 	visibility,
 	handleVisibilityChange,
+	setFriendsExceptList,
 }: PostVisibilityModalProps) => {
 	const [friendsExceptModalVisible, setFriendsExceptModalVisible] =
 		useState<boolean>(false);
@@ -79,6 +82,7 @@ const PostVisibilityModal = ({
 			<FriendsExceptModal
 				friendsExceptModalVisible={friendsExceptModalVisible}
 				setFriendsExceptModalVisible={setFriendsExceptModalVisible}
+				setFriendsExceptList={setFriendsExceptList}
 			/>
 		</>
 	);
