@@ -50,9 +50,9 @@ const FriendsExceptModal = ({
 
 	return (
 		<Modal
-			className="publication-audience-modal"
+			className="publication-visibility-modal"
 			okText="Save"
-			title="Publication audience"
+			title="Publication visibility"
 			open={friendsExceptModalVisible}
 			onOk={() => setFriendsExceptModalVisible(false)}
 			onCancel={() => setFriendsExceptModalVisible(false)}

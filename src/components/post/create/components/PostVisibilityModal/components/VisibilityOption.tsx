@@ -1,6 +1,6 @@
 import { Radio, Flex } from "antd";
 
-type AudienceOptionProps = {
+type VisibilityOptionProps = {
 	value: string;
 	imgSrc: string;
 	imgAlt: string;
@@ -9,25 +9,25 @@ type AudienceOptionProps = {
 	onClick?: () => void;
 };
 
-const AudienceOption = ({
+const VisibilityOption = ({
 	value,
 	imgSrc,
 	imgAlt,
 	title,
 	description,
 	onClick,
-}: AudienceOptionProps) => (
+}: VisibilityOptionProps) => (
 	<Radio value={value} onClick={onClick}>
 		<Flex align="center" gap="middle">
-			<div className="publication-audience-img-circle">
+			<div className="publication-visibility-img-circle">
 				<img src={imgSrc} className="h-50px" alt={imgAlt} />
 			</div>
 			<Flex vertical>
-				<p className="publication-audience-radio-title">{title}</p>
+				<p className="publication-visibility-radio-title">{title}</p>
 				{description && <p>{description}</p>}
 			</Flex>
 		</Flex>
 	</Radio>
 );
 
-export default AudienceOption;
+export default VisibilityOption;

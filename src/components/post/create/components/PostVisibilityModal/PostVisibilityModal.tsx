@@ -1,5 +1,5 @@
 import { Modal, Divider, Radio, Flex, type RadioChangeEvent } from "antd";
-import "./PublicationAudienceModal.css";
+import "./PostVisibilityModal.css";
 import {
 	planetImg,
 	friendsImg,
@@ -8,67 +8,67 @@ import {
 } from "../../../../../utils/images";
 import { useState } from "react";
 import FriendsExceptModal from "../FriendsExceptModal/FriendsExceptModal";
-import AudienceOption from "./components/AudienceOption";
+import VisibilityOption from "./components/VisibilityOption";
 
-type PublicationAudienceModalProps = {
-	audienceModalVisible: boolean;
-	setAudienceModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
-	audience: string;
-	handleAudienceChange: (e: RadioChangeEvent) => void;
+type PostVisibilityModalProps = {
+	visibilityModalVisible: boolean;
+	setVisibilityModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
+	visibility: string;
+	handleVisibilityChange: (e: RadioChangeEvent) => void;
 };
 
-const PublicationAudienceModal = ({
-	audienceModalVisible,
-	setAudienceModalVisible,
-	audience,
-	handleAudienceChange,
-}: PublicationAudienceModalProps) => {
+const PostVisibilityModal = ({
+	visibilityModalVisible,
+	setVisibilityModalVisible,
+	visibility,
+	handleVisibilityChange,
+}: PostVisibilityModalProps) => {
 	const [friendsExceptModalVisible, setFriendsExceptModalVisible] =
 		useState<boolean>(false);
 
 	return (
 		<>
 			<Modal
-				className="publication-audience-modal"
+				className="publication-visibility-modal"
 				okText="Save"
-				title="Publication audience"
-				open={audienceModalVisible}
-				onOk={() => setAudienceModalVisible(false)}
-				onCancel={() => setAudienceModalVisible(false)}
+				title="Publication visibility"
+				open={visibilityModalVisible}
+				onOk={() => setVisibilityModalVisible(false)}
+				onCancel={() => setVisibilityModalVisible(false)}
 			>
 				<p style={{ fontWeight: "bold" }}>Who can see your post?</p>
 				<p>
 					Your post will appear in your Feed, your profile, and search results.
 				</p>
-				<p>Your default audience is: Public. </p>
-				<p>You can choose an audience specifically for this post.</p>
+				<p>Your default visibility is: Public. </p>
+				<p>You can choose an visibility specifically for this post.</p>
 				<Divider />
-				<Radio.Group onChange={handleAudienceChange} value={audience}>
+				<Radio.Group onChange={handleVisibilityChange} value={visibility}>
 					<Flex vertical gap="middle">
-						<AudienceOption
-							value="Public"
+						<VisibilityOption
+							value="public"
 							imgSrc={planetImg}
 							imgAlt="Public post icon (planet)"
 							title="Public"
 							description="Everyone on and off the Quilt network"
 						/>
-						<AudienceOption
-							value="Friends"
+						<VisibilityOption
+							value="friends only"
 							imgSrc={friendsImg}
 							imgAlt="Post for friends icon (friends)"
 							title="Friends"
 							description="Your friends on Quilt"
 						/>
-						<AudienceOption
-							value="Friends, except..."
+						<VisibilityOption
+							value="friends except"
 							imgSrc={friendsExceptImg}
 							imgAlt="Post for friends, except... icon (friends)"
 							title="Friends, except..."
 							description="Don't show this post to some friends"
 							onClick={() => setFriendsExceptModalVisible(true)}
 						/>
-						<AudienceOption
-							value="Just me"
+						<VisibilityOption
+							value="private"
 							imgSrc={userImg}
 							imgAlt="Private post icon (user)"
 							title="Just me"
@@ -84,4 +84,4 @@ const PublicationAudienceModal = ({
 	);
 };
 
-export default PublicationAudienceModal;
+export default PostVisibilityModal;
