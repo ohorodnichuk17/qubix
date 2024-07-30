@@ -1,12 +1,9 @@
 import { MailOutlined } from "@ant-design/icons";
 import { Button, Card, Form, Input, message } from "antd";
-import { useNavigate } from "react-router-dom";
 import { apiClient } from "../../../../utils/api/apiClient";
 import type { ResendEmailConfirmationModel } from "../types";
 
 const ResendEmailConfirmationCard = () => {
-   const navigate = useNavigate();
-
    const onFinish = (values: ResendEmailConfirmationModel) => {
       apiClient
          .get(

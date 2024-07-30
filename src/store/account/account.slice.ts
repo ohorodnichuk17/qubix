@@ -21,9 +21,11 @@ const updateLoginUserState = (state: IAccountState, token: string): void => {
    const birthday = new Date(decodedToken["birthday"] || '1970-01-01');
    const gender = decodedToken["gender"] || '';
    const avatar = decodedToken["Avatar"];
+   const userName = decodedToken["userName"] || '';
 
    state.user = {
       id: id,
+      userName: userName,
       email: email,
       role: role,
       firstName: firstName,
