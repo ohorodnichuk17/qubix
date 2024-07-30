@@ -1,4 +1,4 @@
-import { Avatar, Divider, Grid } from 'antd';
+import { Avatar, Divider } from 'antd';
 import { photoImg, feeling } from '../../../../utils/images/index';
 import './PostForm.css';
 import { useAppSelector } from '../../../../hooks/redux';

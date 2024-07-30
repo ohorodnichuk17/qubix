@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Form, Input, Button, Row, Col, Typography, Space, Radio, DatePicker, Card, Upload, message, Flex } from 'antd';
 import { LockOutlined, MailOutlined, UploadOutlined } from '@ant-design/icons';
 import { IRegisterModel } from '../../../interfaces/account/index.ts';
