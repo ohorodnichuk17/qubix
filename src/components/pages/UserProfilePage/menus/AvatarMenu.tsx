@@ -3,7 +3,7 @@ import { Upload, message } from "antd";
 import type { UploadChangeParam } from "antd/es/upload";
 import { useDispatch } from "react-redux";
 import { useAppSelector } from "../../../../hooks/redux";
-import { updateAvatar } from "../../../../store/account/account.slice";
+import { autoLogin } from "../../../../store/account/account.slice";
 import { apiClient } from "../../../../utils/api/apiClient";
 import { avatar as defaultAvatar } from "../../../../utils/images";
 
@@ -29,9 +29,9 @@ const AvatarMenu = ({
 
 		apiClient
 			.delete(`/api/user-profile/delete-avatar?userId=${user.id}`)
-			.then(() => {
+			.then((res) => {
 				setAvatar(defaultAvatar);
-				dispatch(updateAvatar(""));
+				dispatch(autoLogin(res.data.token));
 			})
 			.catch(() => {
 				message.error("Avatar deleting error");

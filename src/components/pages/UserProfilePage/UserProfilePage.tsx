@@ -16,7 +16,7 @@ import type { UploadChangeParam } from "antd/es/upload";
 import { useDispatch } from "react-redux";
 import { APP_ENV } from "../../../env";
 import { useAppSelector } from "../../../hooks/redux";
-import { updateAvatar } from "../../../store/account/account.slice";
+import { autoLogin } from "../../../store/account/account.slice";
 import type { FileType } from "../../../types/FileType";
 import { apiClient } from "../../../utils/api/apiClient";
 import { getBase64 } from "../../../utils/helpers/getBase64";
@@ -100,8 +100,7 @@ const UserProfilePage: React.FC = () => {
 			})
 			.then((res) => {
 				if (type === "avatar") {
-					const newAvatar = `/images/avatars/${res.data.userEntity.avatar}`;
-					dispatch(updateAvatar(newAvatar));
+					dispatch(autoLogin(res.data.token));
 				}
 			})
 			.catch((error) => {
