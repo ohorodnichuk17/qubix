@@ -24,6 +24,11 @@ export interface IPost {
     feeling: IFeeling;
 }
 
+export interface ICreateComment{
+    message:string;
+    postId:string;
+}
+
 export interface IComment {
     id: string;
     message: string;
