@@ -34,10 +34,10 @@ const PostItemCard = ({ post }: PostItemCardProps) => {
       FEELING_OPTIONS.find((f) => f.name === feeling.name)?.emoji;
 
    return (
-      <Card key={post.id} style={{ width: "100%" }}>
+      <Card key={post.id} style={{ maxWidth: "600px", margin: "auto" }}>
          <Flex vertical gap="small">
             <Flex align="center" gap="small">
-               <NavLink to={`profile?userId=${post.user.id}`}>
+               <NavLink to={`/profile?userId=${post.user.id}`}>
                   <Avatar
                      size={60}
                      src={
@@ -49,7 +49,7 @@ const PostItemCard = ({ post }: PostItemCardProps) => {
                </NavLink>
                <Flex vertical>
                   <NavLink
-                     to={`profile?userId=${post.user.id}`}
+                     to={`/profile?userId=${post.user.id}`}
                      style={{ color: "black" }}
                   >
                      <span style={{ fontWeight: 600, fontSize: 20 }}>
@@ -99,6 +99,7 @@ const PostItemCard = ({ post }: PostItemCardProps) => {
                      src={`${APP_ENV.BASE_URL}/images/posts/${image.imagePath}`}
                      className="post-preview-img"
                      alt="Post images"
+                     style={{ maxWidth: "100%", height: "auto" }}
                   />
                ))}
             </Carousel>
@@ -120,7 +121,7 @@ const PostItemCard = ({ post }: PostItemCardProps) => {
                      <Tag
                         key={tag}
                         color={getRandomTagColor()}
-                        style={{ margin: 0, width: "fit-content" }}
+                        style={{ margin: 0, width: "fit-content", fontSize: "14px" }}
                      >
                         {`#${tag}`}
                      </Tag>

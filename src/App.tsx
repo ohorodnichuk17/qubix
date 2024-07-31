@@ -162,8 +162,9 @@ const App = () => {
                      }
                   />
                </Route>
+               <Route path="/search/posts" element={<PostsByTagPage />} />
+
             </Route>
-            <Route path="/search/posts" element={<PostsByTagPage />} />
          </Routes>
       </ConfigProvider>
    );
