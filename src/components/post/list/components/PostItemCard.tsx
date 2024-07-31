@@ -1,16 +1,5 @@
 import { useState } from "react";
-import {
-	Card,
-	Flex,
-	Avatar,
-	Divider,
-	Carousel,
-	Tag,
-	Badge,
-	Form,
-	Input,
-	Button,
-} from "antd";
+import { Card, Flex, Avatar, Divider, Carousel, Tag, Badge } from "antd";
 import {
 	CommentOutlined,
 	LeftOutlined,
@@ -19,14 +8,12 @@ import {
 import { APP_ENV } from "../../../../env";
 import { avatar, locationImg } from "../../../../utils/images";
 import { getRandomTagColor } from "../../create/components/Tags/TagsList";
-import type { ICreateComment, IPost } from "../types";
+import type { IPost } from "../types";
 import { ACTION_OPTIONS, FEELING_OPTIONS } from "../../../feelings/constants";
 import type { IAction, ISubAction, IFeeling } from "../../../feelings/types";
 import { NavLink } from "react-router-dom";
 import CommentsList from "./CommentsList";
-import useAvatar from "../../../../hooks/useAvatar";
-import FormItem from "antd/es/form/FormItem";
-import { apiClient } from "../../../../utils/api/apiClient";
+import AddCommentForm from "./AddCommentForm";
 
 type PostItemCardProps = {
 	post: IPost;
@@ -34,7 +21,6 @@ type PostItemCardProps = {
 
 const PostItemCard = ({ post }: PostItemCardProps) => {
 	const [commentsVisibility, setCommentsVisibility] = useState<boolean>(false);
-	const avatarImg = useAvatar();
 
 	if (!post || !post.user) {
 		return null;
@@ -51,19 +37,6 @@ const PostItemCard = ({ post }: PostItemCardProps) => {
 
 	const getFeelingImage = (feeling: IFeeling) =>
 		FEELING_OPTIONS.find((f) => f.name === feeling.name)?.emoji;
-
-	const postComment = (values: ICreateComment) => {
-		apiClient
-			.post("api/comment/add", values, {
-				headers: { "Content-Type": "multipart/form-data" },
-			})
-			.then((res) => {
-				console.log(res);
-			})
-			.catch((error) => {
-				console.error(error);
-			});
-	};
 
 	return (
 		<Card
@@ -182,27 +155,7 @@ const PostItemCard = ({ post }: PostItemCardProps) => {
 					}}
 				/>
 
-				<Flex style={{ width: "100%" }} gap={5}>
-					<Avatar
-						size={45}
-						src={avatarImg}
-						style={{ minHeight: 45, minWidth: 45 }}
-					/>
-					<Form style={{ width: "100%" }} onFinish={postComment}>
-						<FormItem hidden name="postId" initialValue={post.id} />
-						<FormItem name="message" rules={[{ required: true }]}>
-							<Flex vertical align="end" gap={3}>
-								<Input.TextArea
-									style={{ width: "100%" }}
-									placeholder={`Comment as ${post.user.firstName} ${post.user.lastName}`}
-								/>
-								<Button htmlType="submit" style={{ width: "fit-content" }}>
-									Comment
-								</Button>
-							</Flex>
-						</FormItem>
-					</Form>
-				</Flex>
+				<AddCommentForm post={post} />
 
 				{commentsVisibility && <CommentsList postId={post.id} />}
 			</Flex>
