@@ -3,7 +3,6 @@ import { Col, Card, Button, message } from "antd";
 import { useNavigate } from "react-router-dom";
 import { apiClient } from "../../../../../utils/api/apiClient";
 import { useState } from "react";
-import { useAppSelector } from "../../../../../hooks/redux";
 import type { IFriendRecommendation } from "../types";
 
 type FriendRequestCardProps = {
@@ -19,15 +18,12 @@ const FriendRequestCard = ({
 }: FriendRequestCardProps) => {
 	const navigate = useNavigate();
 
-	const { user } = useAppSelector((state) => state.account);
-
 	const [loading, setLoading] = useState<boolean>(false);
 
 	const acceptFriendRequest = (e: React.MouseEvent) => {
 		e.stopPropagation();
 
 		const values = {
-			userId: user?.id,
 			friendId: friend.id,
 		};
 
