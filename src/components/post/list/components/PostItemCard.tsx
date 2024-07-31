@@ -34,7 +34,7 @@ const PostItemCard = ({ post }: PostItemCardProps) => {
       FEELING_OPTIONS.find((f) => f.name === feeling.name)?.emoji;
 
    return (
-      <Card key={post.id} style={{ maxWidth: "600px", margin: "auto" }}>
+      <Card key={post.id} style={{ maxWidth: "600px", width: '100%', margin: "auto" }}>
          <Flex vertical gap="small">
             <Flex align="center" gap="small">
                <NavLink to={`/profile?userId=${post.user.id}`}>
