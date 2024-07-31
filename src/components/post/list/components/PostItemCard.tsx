@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Card, Flex, Avatar, Divider, Carousel, Tag } from "antd";
+import { Card, Flex, Avatar, Divider, Carousel, Tag, Badge } from "antd";
 import { CommentOutlined, LeftOutlined, RightOutlined } from "@ant-design/icons";
 import { APP_ENV } from "../../../../env";
 import { avatar, locationImg } from "../../../../utils/images";
@@ -48,14 +48,22 @@ const PostItemCard = ({ post }: PostItemCardProps) => {
                   />
                </NavLink>
                <Flex vertical>
-                  <NavLink
-                     to={`/profile?userId=${post.user.id}`}
-                     style={{ color: "black" }}
-                  >
-                     <span style={{ fontWeight: 600, fontSize: 20 }}>
-                        {`${post.user.firstName} ${post.user.lastName}`}
-                     </span>
-                  </NavLink>
+                  <Flex align="center" gap="small">
+
+                     <NavLink
+                        to={`/profile?userId=${post.user.id}`}
+                        style={{ color: "black" }}
+                     >
+                        <span style={{ fontWeight: 600, fontSize: 20 }}>
+                           {`${post.user.firstName} ${post.user.lastName}`}
+                        </span>
+                     </NavLink>
+                     {post.user.isOnline ? (
+                        <Badge color="green" count={'online'} />
+                     ) : (
+                        <Badge color="gray" count={'offline'} />
+                     )}
+                  </Flex>
                   <span>{getPublicationDate(post.createdAt)}</span>
                </Flex>
             </Flex>

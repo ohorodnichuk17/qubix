@@ -34,6 +34,7 @@ export interface IUser {
    birthday: Date,
    gender: string,
    avatar: string | null,
+   isOnline: boolean;
 }
 
 export interface IErrorResponse {
