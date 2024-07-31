@@ -90,8 +90,13 @@ const LoggedInHeader = () => {
          const tag = searchTerm.slice(1);
          navigate(`/search/posts?tag=${tag}`);
       } else {
-         const [firstName, lastName] = searchTerm.split(" ");
-         navigate(`/search/friends?firstName=${firstName}&lastName=${lastName}`);
+         const [firstName, lastName] = searchTerm.trim().split(" ");
+
+         if (firstName && lastName) {
+            navigate(`/search/friends?firstName=${firstName}&lastName=${lastName}`);
+         } else {
+            message.error("Both first name and last name are required.");
+         }
       }
    };
 
@@ -101,7 +106,7 @@ const LoggedInHeader = () => {
             <img src={logo} alt="logo" className="logo" />
             <Input
                className="search-bar"
-               placeholder="Search by tags or name"
+               placeholder="Search friends or posts by tag"
                prefix={<SearchOutlined style={{ color: "#000000" }} />}
                value={searchTerm}
                onChange={(e) => setSearchTerm(e.target.value)}

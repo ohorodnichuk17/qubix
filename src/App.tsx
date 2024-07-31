@@ -19,7 +19,8 @@ import SettingsPage from "./components/pages/Settings/SettingsPage";
 import FriendPage from "./components/pages/Friends/FriendPage/FriendPage";
 import FriendRequest from "./components/pages/Friends/FriendRequest/FriendRequest";
 import AllFriends from "./components/pages/Friends/FriendPage/AllFriendsPage";
-import PostsByTagPage from "./components/pages/PostsByTagPage/PostsByTagPage";
+import PostsByTagPage from "./components/pages/SearchBox/PostsByTagPage";
+import FriendsSearchPage from "./components/pages/SearchBox/FriendsSearchPage";
 
 const App = () => {
    return (
@@ -163,6 +164,7 @@ const App = () => {
                   />
                </Route>
                <Route path="/search/posts" element={<PostsByTagPage />} />
+               <Route path="/search/friends" element={<FriendsSearchPage />} />
 
             </Route>
          </Routes>
