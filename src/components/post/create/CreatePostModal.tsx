@@ -126,10 +126,6 @@ const CreatePostModal = ({
 
 		const formData = new FormData();
 
-		if (user?.id !== undefined) {
-			formData.append("userId", user?.id);
-		}
-
 		formData.append("content", values.content);
 		formData.append("isArchive", "false");
 		formData.append("location", values.location);
@@ -220,7 +216,6 @@ const CreatePostModal = ({
 			</Flex>
 			<Divider />
 			<Form onFinish={onFinish} layout="vertical" requiredMark={false}>
-				<FormItem name="userId" hidden initialValue={user?.id} />
 				<div ref={captureAreaRef}>
 					<FormItem name="content">
 						<Input.TextArea
