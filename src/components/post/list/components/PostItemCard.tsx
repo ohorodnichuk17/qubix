@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Card, Flex, Avatar, Divider, Carousel, Tag, Badge } from "antd";
 import {
 	CommentOutlined,
@@ -8,12 +8,13 @@ import {
 import { APP_ENV } from "../../../../env";
 import { avatar, locationImg } from "../../../../utils/images";
 import { getRandomTagColor } from "../../create/components/Tags/TagsList";
-import type { IPost } from "../types";
+import type { IComment, IPost } from "../types";
 import { ACTION_OPTIONS, FEELING_OPTIONS } from "../../../feelings/constants";
 import type { IAction, ISubAction, IFeeling } from "../../../feelings/types";
 import { NavLink } from "react-router-dom";
 import CommentsList from "./CommentsList";
 import AddCommentForm from "./AddCommentForm";
+import { apiClient } from "../../../../utils/api/apiClient";
 
 type PostItemCardProps = {
 	post: IPost;
@@ -22,6 +23,14 @@ type PostItemCardProps = {
 const PostItemCard = ({ post }: PostItemCardProps) => {
 	const [commentsVisibility, setCommentsVisibility] = useState<boolean>(false);
 
+	const [comments, setComments] = useState<IComment[]>([]);
+
+	useEffect(() => {
+		apiClient.get(`api/comment/${post.id}`).then((res) => {
+			setComments(res.data);
+		});
+	}, [post.id]);
+	
 	if (!post || !post.user) {
 		return null;
 	}
@@ -155,11 +164,15 @@ const PostItemCard = ({ post }: PostItemCardProps) => {
 					}}
 				/>
 
-				<AddCommentForm post={post} />
+				<AddCommentForm
+					post={post}
+					comments={comments}
+					setComments={setComments}
+				/>
 
-				{commentsVisibility && <CommentsList postId={post.id} />}
+				{commentsVisibility && <CommentsList comments={comments} />}
 			</Flex>
-		</Card>
+		</Card> 	
 	);
 };
 

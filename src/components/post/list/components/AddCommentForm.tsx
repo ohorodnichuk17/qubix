@@ -1,14 +1,22 @@
 import { Flex, Avatar, Form, Input, Button } from "antd";
 import FormItem from "antd/es/form/FormItem";
 import useAvatar from "../../../../hooks/useAvatar";
-import type { ICreateComment, IPost } from "../types";
+import type { IComment, ICreateComment, IPost } from "../types";
 import { apiClient } from "../../../../utils/api/apiClient";
+import { useAppSelector } from "../../../../hooks/redux";
 
 type AddCommentFormProps = {
 	post: IPost;
+	comments: IComment[];
+	setComments: React.Dispatch<React.SetStateAction<IComment[]>>;
 };
 
-const AddCommentForm = ({ post }: AddCommentFormProps) => {
+const AddCommentForm = ({
+	post,
+	comments,
+	setComments,
+}: AddCommentFormProps) => {
+	const { user } = useAppSelector((state) => state.account);
 	const [form] = Form.useForm();
 	const avatarImg = useAvatar();
 
@@ -19,12 +27,28 @@ const AddCommentForm = ({ post }: AddCommentFormProps) => {
 			})
 			.then(() => {
 				form.resetFields();
+
+				if (user === null) {
+					return;
+				}
+
+				const newComment: IComment = {
+					message: values.message,
+					userEntity: user,
+					createdAt: new Date().toDateString(),
+					id: "",
+					userId: "",
+					parentCommentId: null,
+					childComments: [],
+				};
+
+				setComments([...comments, newComment]);
 			})
 			.catch((error) => {
 				console.error(error);
 			});
 	};
-
+	
 	return (
 		<Flex style={{ width: "100%" }} gap={5}>
 			<Avatar
@@ -38,7 +62,7 @@ const AddCommentForm = ({ post }: AddCommentFormProps) => {
 					<Flex vertical align="end" gap={3}>
 						<Input.TextArea
 							style={{ width: "100%" }}
-							placeholder={`Comment as ${post.user.firstName} ${post.user.lastName}`}
+							placeholder={`Comment as ${user?.firstName} ${user?.lastName}`}
 						/>
 						<Button htmlType="submit" style={{ width: "fit-content" }}>
 							Comment

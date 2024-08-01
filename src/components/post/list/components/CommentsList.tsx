@@ -1,22 +1,12 @@
-import { useEffect, useState } from "react";
 import type { IComment } from "../types";
-import { apiClient } from "../../../../utils/api/apiClient";
 import { Flex } from "antd";
 import CommentItem from "./CommentItem";
 
 type CommentsListProps = {
-	postId: string;
+	comments: IComment[];
 };
 
-const CommentsList = ({ postId }: CommentsListProps) => {
-	const [comments, setComments] = useState<IComment[]>([]);
-
-	useEffect(() => {
-		apiClient.get(`api/comment/${postId}`).then((res) => {
-			setComments(res.data);
-		});
-	}, [postId]);
-
+const CommentsList = ({ comments }: CommentsListProps) => {
 	return (
 		<Flex vertical gap="small" style={{ overflowY: "auto", maxHeight: 250 }}>
 			{comments.map((comment) => (
