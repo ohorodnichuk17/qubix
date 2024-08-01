@@ -1,4 +1,4 @@
-import { Row, Typography } from "antd";
+import { Flex, Row, Typography } from "antd";
 import { useEffect, useState } from "react";
 import { useAppSelector } from "../../../hooks/redux";
 import { apiClient } from "../../../utils/api/apiClient";
@@ -37,10 +37,15 @@ const FriendRequests = () => {
 	return (
 		<>
 			{friends.length === 0 && (
-				<>
+				<Flex
+					vertical
+					justify="center"
+					align="center"
+					style={{ height: "100%" }}
+				>
 					<UserAddOutlined style={{ fontSize: "64px" }} />
 					<Title level={3}>Friend requests will be shown here</Title>
-				</>
+				</Flex>
 			)}
 			{friends.length > 0 && (
 				<Row gutter={[16, 16]} wrap={true}>

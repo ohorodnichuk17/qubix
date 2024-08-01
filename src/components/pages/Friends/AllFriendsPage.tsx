@@ -1,4 +1,4 @@
-import { Row, Typography } from "antd";
+import { Flex, Row, Typography } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import { useEffect, useState } from "react";
 import type { IFriendRecommendation } from "./types";
@@ -34,10 +34,15 @@ const AllFriendsPage = () => {
 	return (
 		<>
 			{friends.length === 0 && (
-				<>
+				<Flex
+					vertical
+					justify="center"
+					align="center"
+					style={{ height: "100%" }}
+				>
 					<UserOutlined style={{ fontSize: "64px" }} />
 					<Title level={3}>Your friends will be shown here</Title>
-				</>
+				</Flex>
 			)}
 			{friends.length > 0 && (
 				<Row gutter={[16, 16]} wrap={true}>
