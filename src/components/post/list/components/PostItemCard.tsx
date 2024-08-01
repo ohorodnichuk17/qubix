@@ -30,7 +30,7 @@ const PostItemCard = ({ post }: PostItemCardProps) => {
 			setComments(res.data);
 		});
 	}, [post.id]);
-	
+
 	if (!post || !post.user) {
 		return null;
 	}
@@ -164,15 +164,13 @@ const PostItemCard = ({ post }: PostItemCardProps) => {
 					}}
 				/>
 
-				<AddCommentForm
-					post={post}
-					comments={comments}
-					setComments={setComments}
-				/>
+				<AddCommentForm post={post} setComments={setComments} />
 
-				{commentsVisibility && <CommentsList comments={comments} />}
+				{commentsVisibility && (
+					<CommentsList comments={comments} setComments={setComments} />
+				)}
 			</Flex>
-		</Card> 	
+		</Card>
 	);
 };
 

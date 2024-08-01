@@ -12,9 +12,10 @@ import { useAppSelector } from "../../../../hooks/redux";
 
 type CommentItemProps = {
 	comment: IComment;
+	setComments: React.Dispatch<React.SetStateAction<IComment[]>>;
 };
 
-const CommentItem = ({ comment }: CommentItemProps) => {
+const CommentItem = ({ comment, setComments }: CommentItemProps) => {
 	const { user } = useAppSelector((state) => state.account);
 	const [answerVisibility, setAnswerVisibility] = useState<boolean>(false);
 	const [form] = Form.useForm();
@@ -29,8 +30,16 @@ const CommentItem = ({ comment }: CommentItemProps) => {
 			.post("api/comment/add-reply", values, {
 				headers: { "Content-Type": "multipart/form-data" },
 			})
-			.then(() => {
+			.then((res) => {
 				form.resetFields();
+
+				const updatedComment = {
+					...comment,
+					childComments: [...comment.childComments, res.data],
+				};
+				setComments((prevComments) =>
+					prevComments.map((c) => (c.id === comment.id ? updatedComment : c)),
+				);
 			})
 			.catch((error) => {
 				console.error(error);

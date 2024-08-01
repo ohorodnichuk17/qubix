@@ -7,48 +7,28 @@ import { useAppSelector } from "../../../../hooks/redux";
 
 type AddCommentFormProps = {
 	post: IPost;
-	comments: IComment[];
 	setComments: React.Dispatch<React.SetStateAction<IComment[]>>;
 };
 
-const AddCommentForm = ({
-	post,
-	comments,
-	setComments,
-}: AddCommentFormProps) => {
+const AddCommentForm = ({ post, setComments }: AddCommentFormProps) => {
 	const { user } = useAppSelector((state) => state.account);
 	const [form] = Form.useForm();
 	const avatarImg = useAvatar();
 
 	const postComment = (values: ICreateComment) => {
 		apiClient
-			.post("api/comment/add", values, {
+			.post<IComment>("api/comment/add", values, {
 				headers: { "Content-Type": "multipart/form-data" },
 			})
-			.then(() => {
+			.then((res) => {
 				form.resetFields();
-
-				if (user === null) {
-					return;
-				}
-
-				const newComment: IComment = {
-					message: values.message,
-					userEntity: user,
-					createdAt: new Date().toDateString(),
-					id: "",
-					userId: "",
-					parentCommentId: null,
-					childComments: [],
-				};
-
-				setComments([...comments, newComment]);
+				setComments((prevComments) => [...prevComments, res.data]);
 			})
 			.catch((error) => {
 				console.error(error);
 			});
 	};
-	
+
 	return (
 		<Flex style={{ width: "100%" }} gap={5}>
 			<Avatar
