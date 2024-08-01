@@ -53,7 +53,12 @@ const StoryList = () => {
 							setCurrentStory(story);
 							setIsModalOpen(true);
 						}}
-						style={{ border: " 3px solid #7F50FF", cursor: "pointer" }}
+						style={{
+							border: " 3px solid #7F50FF",
+							cursor: "pointer",
+							minHeight: 80,
+							minWidth: 80,
+						}}
 						size={80}
 						src={
 							story.user.avatar === null
