@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { apiClient } from "../../../utils/api/apiClient";
 import { Card, Avatar, Button, message } from "antd";
+import { APP_ENV } from "../../../env";
+import { avatar } from "../../../utils/images";
 
 interface IUser {
    id: number;
@@ -41,31 +43,33 @@ const FriendsSearchPage = () => {
       }
    }, [location.search]);
 
+
+
    return (
       <div>
          {users.length > 0 ? (
-            users.map((user) => (
-               <Card
-                  key={user.id}
-                  style={{ maxWidth: "400px", margin: "10px auto" }}
-               >
-                  <Avatar
-                     size={60}
-                     src={
-                        user.avatar
-                           ? `${process.env.REACT_APP_BASE_URL}/images/avatars/${user.avatar}`
-                           : "/default-avatar.png"
-                     }
-                  />
-                  <h3>{`${user.firstName} ${user.lastName}`}</h3>
-                  <Button
-                     type="primary"
-                     style={{ backgroundColor: "orange", borderColor: "orange" }}
+            users.map((user) => {
+               const avatarUrl = user.avatar
+                  ? `${APP_ENV.BASE_URL}/images/avatars/${user.avatar}`
+                  : avatar;
+               console.log('Avatar URL:', avatarUrl);
+
+               return (
+                  <Card
+                     key={user.id}
+                     style={{ maxWidth: "400px", margin: "10px auto" }}
                   >
-                     Add Friend
-                  </Button>
-               </Card>
-            ))
+                     <Avatar size={60} src={avatarUrl} />
+                     <h3>{`${user.firstName} ${user.lastName}`}</h3>
+                     <Button
+                        type="primary"
+                        style={{ backgroundColor: "orange", borderColor: "orange" }}
+                     >
+                        Add Friend
+                     </Button>
+                  </Card>
+               );
+            })
          ) : (
             <p>No friends found with the given name.</p>
          )}
