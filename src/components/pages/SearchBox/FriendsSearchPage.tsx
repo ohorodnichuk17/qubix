@@ -43,8 +43,6 @@ const FriendsSearchPage = () => {
       }
    }, [location.search]);
 
-
-
    return (
       <div>
          {users.length > 0 ? (
@@ -59,14 +57,18 @@ const FriendsSearchPage = () => {
                      key={user.id}
                      style={{ maxWidth: "400px", margin: "10px auto" }}
                   >
-                     <Avatar size={60} src={avatarUrl} />
-                     <h3>{`${user.firstName} ${user.lastName}`}</h3>
-                     <Button
-                        type="primary"
-                        style={{ backgroundColor: "orange", borderColor: "orange" }}
-                     >
-                        Add Friend
-                     </Button>
+                     <div style={{ display: "flex", alignItems: "center" }}>
+                        <Avatar size={60} src={avatarUrl} />
+                        <h3 style={{ marginLeft: "10px" }}>{`${user.firstName} ${user.lastName}`}</h3>
+                     </div>
+                     <div style={{ marginTop: "10px", textAlign: "center" }}>
+                        <Button
+                           type="primary"
+                           style={{ backgroundColor: "orange", borderColor: "orange" }}
+                        >
+                           Add Friend
+                        </Button>
+                     </div>
                   </Card>
                );
             })
