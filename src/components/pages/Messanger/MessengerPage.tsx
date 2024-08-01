@@ -21,13 +21,13 @@ const { Title } = Typography;
 const messages = [
    {
       name: "Lili_NK",
-      message: "Привіт, можеш оч...",
+      message: "Hi, can you please...",
       time: "15 хв.",
       avatar: <img src={avatar} alt="Avatar" style={{ height: "40px" }} />,
    },
    {
       name: "Den_V",
-      message: "Ще раз дякую!",
+      message: "Thank you!",
       time: "40 хв.",
       avatar: <img src={avatar} alt="Avatar" style={{ height: "40px" }} />,
    },
@@ -55,7 +55,6 @@ function MessengerPage() {
 
    return (
       <Layout style={{ minHeight: "100vh" }}>
-         {/* Sidebar for larger screens */}
          <Sider
             width={300}
             breakpoint="lg"
@@ -81,7 +80,7 @@ function MessengerPage() {
                }}
             >
                <Title level={4} style={{ margin: 0 }}>
-                  Повідомлення
+                  Messages
                </Title>
                <EditOutlined style={{ fontSize: "18px", color: "#1890ff" }} />
             </div>
@@ -120,7 +119,6 @@ function MessengerPage() {
             />
          </Sider>
 
-         {/* Drawer for smaller screens */}
          <Drawer
             title="Повідомлення"
             placement="left"
@@ -232,10 +230,10 @@ function MessengerPage() {
                   </svg>
                </div>
                <Title level={4} style={{ color: "#8c8c8c" }}>
-                  Ваші повідомлення
+                  Your messages
                </Title>
                <p style={{ color: "#8c8c8c" }}>
-                  Надсилайте приватні світлини та повідомлення другу або групі
+                  Send photos and messages to a friend
                </p>
                <Button
                   type="primary"
@@ -245,13 +243,13 @@ function MessengerPage() {
                   }}
                   onClick={showModal}
                >
-                  Надіслати повідомлення
+                  Send a message
                </Button>
             </Content>
          </Layout>
 
          <Modal
-            title="Нове повідомлення"
+            title="New message"
             visible={isModalVisible}
             onCancel={handleCancel}
             footer={[
@@ -270,7 +268,7 @@ function MessengerPage() {
          >
             <Input placeholder="Кому..." />
             <p style={{ color: "#888", marginTop: "10px" }}>
-               Облікового запису не знайдено.
+               Account was not found.
             </p>
          </Modal>
       </Layout>
