@@ -21,6 +21,7 @@ import FriendRequest from "./components/pages/Friends/FriendRequest/FriendReques
 import AllFriends from "./components/pages/Friends/FriendPage/AllFriendsPage";
 import PostsByTagPage from "./components/pages/SearchBox/PostsByTagPage";
 import FriendsSearchPage from "./components/pages/SearchBox/FriendsSearchPage";
+import MessengerPage from "./components/pages/Messanger/MessengerPage";
 
 const App = () => {
    return (
@@ -117,6 +118,17 @@ const App = () => {
                      element={
                         <PrivateRoute>
                            <AllFriends />
+                        </PrivateRoute>
+                     }
+                  />
+               </Route>
+
+               <Route path="messenger">
+                  <Route
+                     index
+                     element={
+                        <PrivateRoute>
+                           <MessengerPage />
                         </PrivateRoute>
                      }
                   />
