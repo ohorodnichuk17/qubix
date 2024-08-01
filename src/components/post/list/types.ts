@@ -35,4 +35,6 @@ export interface IComment {
     createdAt: string;
     userId: string;
     userEntity: IUser;
+    parentCommentId: string | null;
+    childComments: IComment[];
 } 
