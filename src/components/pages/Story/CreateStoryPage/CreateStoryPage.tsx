@@ -1,7 +1,6 @@
 import { Flex, Grid, Layout, message } from "antd";
 import "./CreateStoryPage.css";
 import { Content } from "antd/es/layout/layout";
-import { useAppSelector } from "../../../../hooks/redux";
 import { apiClient } from "../../../../utils/api/apiClient";
 import CreateStorySideBar from "./components/CreateStorySideBar";
 import SelectStoryType from "./components/SelectStoryType";
@@ -11,8 +10,6 @@ import { CreateStoryProvider, useCreateStory } from "./context";
 import useCapture from "./hooks/useCapture";
 
 const CreateStoryContent = () => {
-	const { user } = useAppSelector((state) => state.account);
-
 	const { storyType, setStoryType, text } = useCreateStory();
 
 	const { captureAreaRef, getCapture } = useCapture();
@@ -24,7 +21,6 @@ const CreateStoryContent = () => {
 		const formData = new FormData();
 		formData.append("Content", text ?? "");
 		formData.append("Image", story as Blob);
-		formData.append("UserId", user?.id ?? "");
 
 		apiClient
 			.post("/api/story/create", formData)
