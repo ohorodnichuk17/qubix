@@ -29,6 +29,11 @@ export interface ICreateComment{
     postId:string;
 }
 
+export interface ICreateCommentReply{
+    message: string;
+    parentId: string;
+}
+
 export interface IComment {
     id: string;
     message: string;

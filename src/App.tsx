@@ -50,6 +50,7 @@ const App = () => {
                   colorPrimaryHover: "#FFA07A",
                   colorPrimaryBgHover: "#FFA07A",
                   fontFamily: "Montserrat",
+                  textHoverBg: "transparent"
                },
                Input: {
                   colorBorder: "#FF7F50",
