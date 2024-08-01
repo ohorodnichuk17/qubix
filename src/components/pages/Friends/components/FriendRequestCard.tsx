@@ -1,7 +1,7 @@
 import { UserOutlined } from "@ant-design/icons";
 import { Col, Card, Button, message } from "antd";
 import { useNavigate } from "react-router-dom";
-import { apiClient } from "../../../../../utils/api/apiClient";
+import { apiClient } from "../../../../utils/api/apiClient";
 import { useState } from "react";
 import type { IFriendRecommendation } from "../types";
 

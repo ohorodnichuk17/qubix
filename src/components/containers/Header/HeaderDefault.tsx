@@ -10,7 +10,10 @@ const HeaderDefault = () => {
 	const { isLogin } = useAppSelector((state) => state.account);
 
 	return (
-		<Header className="custom-header">
+		<Header
+			className="custom-header"
+			style={{ position: "sticky", top: 0, zIndex: 1 }}
+		>
 			{isLogin ? <LoggedInHeader /> : <NotLoggedInHeader />}
 		</Header>
 	);

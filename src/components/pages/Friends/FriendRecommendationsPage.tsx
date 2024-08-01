@@ -1,11 +1,10 @@
 import { Row, message } from "antd";
 import { useEffect, useState } from "react";
-import { apiClient } from "../../../../utils/api/apiClient";
+import { apiClient } from "../../../utils/api/apiClient";
 import type { IFriendRecommendation } from "./types";
-import { avatar } from "../../../../utils/images";
-import { APP_ENV } from "../../../../env";
+import { avatar } from "../../../utils/images";
+import { APP_ENV } from "../../../env";
 import FriendRecommendationCard from "./components/FriendRecommendationCard";
-import FriendSidebar from "./FriendSidebar";
 
 const FriendRecommendationsPage = () => {
 	const [friends, setFriends] = useState<IFriendRecommendation[]>([]);
@@ -38,21 +37,18 @@ const FriendRecommendationsPage = () => {
 		);
 
 	return (
-		<div>
-			<FriendSidebar select="1"/>
-			<div style={{ padding: "20px" }}>
-				<h2>People you may know</h2>
-				<Row gutter={[16, 16]}>
-					{friends.map((friend) => (
-						<FriendRecommendationCard
-							key={friend.id}
-							friend={friend}
-							removeSenderRequestFriend={removeSenderRequestFriend}
-						/>
-					))}
-				</Row>
-			</div>
-		</div>
+		<>
+			<h2>People you may know</h2>
+			<Row gutter={[16, 16]}>
+				{friends.map((friend) => (
+					<FriendRecommendationCard
+						key={friend.id}
+						friend={friend}
+						removeSenderRequestFriend={removeSenderRequestFriend}
+					/>
+				))}
+			</Row>
+		</>
 	);
 };
 

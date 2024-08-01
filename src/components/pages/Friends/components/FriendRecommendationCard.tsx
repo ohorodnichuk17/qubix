@@ -1,8 +1,8 @@
 import { UserOutlined } from "@ant-design/icons";
 import { Col, Card, Button, message } from "antd";
 import type { IFriendRecommendation, ISendFriendRequest } from "../types";
-import { useAppSelector } from "../../../../../hooks/redux";
-import { apiClient } from "../../../../../utils/api/apiClient";
+import { useAppSelector } from "../../../../hooks/redux";
+import { apiClient } from "../../../../utils/api/apiClient";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -50,7 +50,15 @@ const FriendRecommendationCard = ({
 	};
 
 	return (
-		<Col span={6} key={friend.id}>
+		<Col
+			style={{ minWidth: 250 }}
+			xs={{ flex: "100%" }}
+			sm={{ flex: "50%" }}
+			md={{ flex: "40%" }}
+			lg={{ flex: "20%" }}
+			xl={{ flex: "10%" }}
+			key={friend.id}
+		>
 			<Card
 				onClick={() => navigate(`/profile?userId=${friend.id}`)}
 				cover={<img alt="Friend recommendation avatar" src={friend.avatar} />}

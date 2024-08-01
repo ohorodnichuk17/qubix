@@ -21,5 +21,17 @@
 .main-content {
    flex: 1;
    padding: 0 48px;
-   /* padding-bottom: 100px;  */
+}
+
+@media (max-width:1150px) {
+   .main-content {
+      padding: 0;
+   }
+}
+
+
+@media (max-width:950px) {
+   .main-content {
+      padding: 0;
+   }
 }
