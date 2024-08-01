@@ -33,6 +33,7 @@ const updateLoginUserState = (state: IAccountState, token: string): void => {
       birthday: birthday,
       gender: gender,
       avatar: avatar,
+      isOnline: false,
    };
 
    state.token = token;
@@ -40,6 +41,7 @@ const updateLoginUserState = (state: IAccountState, token: string): void => {
 
    addLocalStorage('authToken', token);
 };
+
 
 const initialState: IAccountState = {
    user: null,
