@@ -19,14 +19,13 @@ const { Sider } = Layout;
 
 export const SideBar = () => {
 	const { user, isLogin } = useAppSelector((state) => state.account);
-
+	const avatarImg = useAvatar();
+	const screens = useBreakpoint();
+	const [isModalOpen, setIsModalOpen] = useState(false);
+	
 	if (!isLogin) {
 		return null;
 	}
-
-	const avatarImg = useAvatar();
-
-	const [isModalOpen, setIsModalOpen] = useState(false);
 
 	const showModal = () => setIsModalOpen(true);
 
@@ -34,7 +33,6 @@ export const SideBar = () => {
 
 	const handleCancel = () => setIsModalOpen(false);
 
-	const screens = useBreakpoint();
 	const isScreenSmallerThatMd =
 		(screens.xs || screens.sm) &&
 		!screens.md &&
@@ -87,7 +85,6 @@ export const SideBar = () => {
 			onClick: showModal,
 		},
 	];
-
 
 	return (
 		<Sider
