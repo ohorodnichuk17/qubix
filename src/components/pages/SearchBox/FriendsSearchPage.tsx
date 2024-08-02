@@ -6,21 +6,8 @@ import { APP_ENV } from "../../../env";
 import { avatar } from "../../../utils/images";
 import { ArrowLeftOutlined, ArrowRightOutlined } from "@ant-design/icons";
 import { NavLink } from "react-router-dom";
-
-interface IUser {
-   id: number;
-   firstName: string;
-   lastName: string;
-   avatar: string | null;
-}
-
-interface IStory {
-   id: string;
-   content: string;
-   image: string;
-   createdAt: string;
-   user: IUser;
-}
+import { IStory } from "../Story/list/types";
+import { IUser } from "./types";
 
 const FriendsSearchPage = () => {
    const [users, setUsers] = useState<IUser[]>([]);
