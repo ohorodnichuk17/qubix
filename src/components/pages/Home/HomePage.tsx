@@ -21,7 +21,7 @@ export const HomePage = () => {
 		<div
 			className="homepage-container"
 			style={{
-				padding: isScreenSmallerThatLg ? "0 5px" : "0 50px",
+				padding: isScreenSmallerThatLg ? "20px 5px" : "20px 50px",
 			}}
 		>
 			{isLogin ? (
