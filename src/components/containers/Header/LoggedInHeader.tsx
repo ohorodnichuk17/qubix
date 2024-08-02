@@ -103,7 +103,9 @@ const LoggedInHeader = () => {
    return (
       <>
          <div className="navbar-left">
-            <img src={logo} alt="logo" className="logo" />
+            <NavLink to="/" style={{ display: 'flex' }}>
+               <img src={logo} alt="logo" className="logo" />
+            </NavLink>
             <Input
                className="search-bar"
                placeholder="Search friends or posts by tag"
