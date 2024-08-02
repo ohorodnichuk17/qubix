@@ -7,6 +7,7 @@ import {
 	Divider,
 	Dropdown,
 	Flex,
+	Grid,
 	Menu,
 	Row,
 	message,
@@ -33,11 +34,12 @@ import AvatarMenu from "./menus/AvatarMenu";
 import type { ISendFriendRequest } from "../Friends/types";
 
 const UserProfilePage: React.FC = () => {
+	const { user } = useAppSelector((state) => state.account);
+	const screens = Grid.useBreakpoint();
 	const [coverPhoto, setCoverPhoto] = useState(bg6);
 	const [avatar, setAvatar] = useState(avatarImg);
 	const [userProfile, setUserProfile] = useState<IUserProfile | null>(null);
 	const dispatch = useDispatch();
-	const { user } = useAppSelector((state) => state.account);
 	const [isModalVisible, setIsModalVisible] = useState(false);
 	const [relationshipsStatus, setRelationshipsStatus] = useState<number>();
 	const [loading, setLoading] = useState<boolean>(false);
@@ -45,6 +47,13 @@ const UserProfilePage: React.FC = () => {
 	const [searchParams] = useSearchParams();
 	const userId = searchParams.get("userId");
 	const isCurrentUserProfile = userId === null || userId === user?.id;
+
+	const isScreenSmallerThatMd =
+		(screens.xs || screens.sm) &&
+		!screens.md &&
+		!screens.lg &&
+		!screens.xl &&
+		!screens.xxl;
 
 	useEffect(() => {
 		if (!user?.id && !userId) {
@@ -204,7 +213,7 @@ const UserProfilePage: React.FC = () => {
 					>
 						<Flex align="center" wrap="wrap" gap="middle">
 							<Avatar
-								size={160}
+								size={isScreenSmallerThatMd ? 80 : 160}
 								src={avatar}
 								style={{ border: "5px solid #ffebe0" }}
 							/>
@@ -221,7 +230,7 @@ const UserProfilePage: React.FC = () => {
 									<AvatarButton icon={<CameraOutlined />} />
 								</Dropdown>
 							)}
-							<p style={{ fontSize: 24 }}>
+							<p style={{ fontSize: isScreenSmallerThatMd ? 20 : 24 }}>
 								{`${userProfile?.userEntity.firstName} ${userProfile?.userEntity.lastName}`}
 							</p>
 						</Flex>
