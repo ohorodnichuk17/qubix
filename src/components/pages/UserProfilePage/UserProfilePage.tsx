@@ -1,6 +1,7 @@
 import { CameraOutlined, EditOutlined } from "@ant-design/icons";
 import {
 	Avatar,
+	Badge,
 	Button,
 	Card,
 	Divider,
@@ -29,6 +30,7 @@ import { useSearchParams } from "react-router-dom";
 import * as styles from "./styles";
 import ShortInformationCard from "./components/ShortInformationCard";
 import AvatarMenu from "./menus/AvatarMenu";
+import type { ISendFriendRequest } from "../Friends/types";
 
 const UserProfilePage: React.FC = () => {
 	const [coverPhoto, setCoverPhoto] = useState(bg6);
@@ -37,6 +39,8 @@ const UserProfilePage: React.FC = () => {
 	const dispatch = useDispatch();
 	const { user } = useAppSelector((state) => state.account);
 	const [isModalVisible, setIsModalVisible] = useState(false);
+	const [relationshipsStatus, setRelationshipsStatus] = useState<number>();
+	const [loading, setLoading] = useState<boolean>(false);
 
 	const [searchParams] = useSearchParams();
 	const userId = searchParams.get("userId");
@@ -70,6 +74,8 @@ const UserProfilePage: React.FC = () => {
 				message.error("There was an error fetching the user data!");
 				console.error("There was an error fetching the user data!", error);
 			});
+
+		updateRelationshipStatus();
 	}, [isCurrentUserProfile, user?.id, userId]);
 
 	const handleUploadChange = async (
@@ -106,6 +112,71 @@ const UserProfilePage: React.FC = () => {
 			.catch((error) => {
 				console.error(error);
 				message.error(`Failed to change ${type}`);
+			});
+	};
+
+	const updateRelationshipStatus = () => {
+		if (!isCurrentUserProfile && userId !== null) {
+			apiClient
+				.get(`api/friends/relationships-status?friendId=${userId}`)
+				.then((res) => {
+					setRelationshipsStatus(res.data);
+				});
+		}
+	};
+
+	const sendFriendRequest = () => {
+		if (user?.id === undefined) {
+			message.error("Send friend request error");
+			return;
+		}
+
+		if (userId === null) {
+			return;
+		}
+
+		const sendFriendRequestBody: ISendFriendRequest = {
+			friendId: userId,
+			userId: user?.id,
+		};
+
+		setLoading(true);
+		apiClient
+			.post("/api/friends/send-friend-request", sendFriendRequestBody)
+			.then(() => {
+				message.success("Request successfully sended!");
+				updateRelationshipStatus();
+			})
+			.catch(() => {
+				message.error("Request sending error");
+			})
+			.finally(() => {
+				setLoading(false);
+			});
+	};
+
+	const acceptFriendRequest = () => {
+		if (userId === null) {
+			return;
+		}
+
+		const values = {
+			friendId: userId,
+		};
+
+		setLoading(true);
+
+		apiClient
+			.post("/api/friends/accept-friend-request", values)
+			.then(() => {
+				message.success("Friend Request accepted!");
+				updateRelationshipStatus();
+			})
+			.catch(() => {
+				message.error("Friend request accepting error!");
+			})
+			.finally(() => {
+				setLoading(false);
 			});
 	};
 
@@ -168,6 +239,26 @@ const UserProfilePage: React.FC = () => {
 									setIsModalVisible={setIsModalVisible}
 									userProfile={userProfile}
 								/>
+							</>
+						)}
+						{!isCurrentUserProfile && (
+							<>
+								{relationshipsStatus === 0 && (
+									<Button loading={loading} onClick={sendFriendRequest}>
+										Send friend request
+									</Button>
+								)}
+								{relationshipsStatus === 1 && (
+									<Badge count={"friend"} color="orange" />
+								)}
+								{relationshipsStatus === 2 && (
+									<Button loading={loading} onClick={acceptFriendRequest}>
+										Accept friend request
+									</Button>
+								)}
+								{relationshipsStatus === 3 && (
+									<Badge count={"wait to accept"} color="orange" />
+								)}
 							</>
 						)}
 					</Flex>
