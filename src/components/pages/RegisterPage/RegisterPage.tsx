@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { Form, Input, Button, Row, Col, Typography, Space, Select, DatePicker, Card, message, Upload } from 'antd';
 import { LockOutlined, MailOutlined } from '@ant-design/icons';
 import { apiClient } from '../../../utils/api/apiClient.ts';
-import { reactAmico, lateAtNight } from '../../../utils/images/index.tsx';
 import './RegisterPage.css';
 
 const { Link } = Typography;
@@ -60,32 +59,6 @@ const RegisterPage = () => {
 
    return (
       <Row justify="center" align="middle" className="register-page">
-         {!isMobile && (
-            <>
-               <img
-                  src={reactAmico}
-                  alt="React Amico"
-                  style={{
-                     position: 'absolute',
-                     bottom: 0,
-                     left: 0,
-                     width: '25%',
-                     zIndex: 1
-                  }}
-               />
-               <img
-                  src={lateAtNight}
-                  alt="Late at Night"
-                  style={{
-                     position: 'absolute',
-                     top: '10%',
-                     right: 0,
-                     width: '25%',
-                     zIndex: 1
-                  }}
-               />
-            </>
-         )}
          <Col xs={24} sm={20} md={16} lg={14} xl={12}>
             <Space direction="vertical" size="large" style={{ width: '100%' }}>
                <Card>
