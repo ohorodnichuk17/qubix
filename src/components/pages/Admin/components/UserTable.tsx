@@ -1,10 +1,6 @@
 import React from "react";
 import { Table, Button } from "antd";
-
-interface User {
-   id: string;
-   email: string;
-}
+import { User } from "../types";
 
 interface UserTableProps {
    users: User[];
@@ -19,6 +15,11 @@ const UserTable: React.FC<UserTableProps> = ({ users, loading, onAction, onDelet
          title: "Email",
          dataIndex: "email",
          key: "email",
+      },
+      {
+         title: "Role",
+         dataIndex: "role",
+         key: "role",
       },
       {
          title: "Actions",
