@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Form, Input, Button, Row, Col, Typography, Space, Select, DatePicker, Card, message, Upload } from 'antd';
 import { LockOutlined, MailOutlined } from '@ant-design/icons';
-import { IRegisterModel } from '../../../interfaces/account/index.ts';
 import { apiClient } from '../../../utils/api/apiClient.ts';
 import { reactAmico, lateAtNight } from '../../../utils/images/index.tsx';
 import './RegisterPage.css';
@@ -48,7 +47,6 @@ const RegisterPage = () => {
             }
          });
          message.success("Successfully registered!");
-         window.location.href = '/email-confirmation-required';
       } catch (error) {
          message.error("Registration error!");
          console.log(error);
@@ -57,7 +55,7 @@ const RegisterPage = () => {
 
    const onFinishFailed = (errorInfo: any) => {
       console.log('Failed:', errorInfo);
-      message.error('Помилка реєстрації');
+      message.error('Registration error');
    };
 
    return (
@@ -181,7 +179,7 @@ const RegisterPage = () => {
                      >
                         <Upload
                            accept="image/*"
-                           beforeUpload={() => false} // Prevent automatic upload
+                           beforeUpload={() => false}
                         >
                            <Button>Upload Avatar</Button>
                         </Upload>

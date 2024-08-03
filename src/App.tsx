@@ -51,7 +51,7 @@ const App = () => {
             } />
             <Route path="/" element={<ContainerDefault />}>
                <Route path="login" element={<LoginPage />} />
-               <Route path="register" element={<RegisterPage />} />
+               <Route path="register" element={<PrivateRoute><RegisterPage /></PrivateRoute>} />
             </Route>
          </Routes>
       </ConfigProvider>

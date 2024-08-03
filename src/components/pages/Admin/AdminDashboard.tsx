@@ -8,6 +8,7 @@ import UserModal from "./components/UserModal";
 import DeleteModal from "./components/DeleteModal";
 import { apiClient } from "../../../utils/api/apiClient";
 import LogoutButton from "./components/LogoutButton";
+import RegisterButton from "./components/RegisterButton";
 
 const { Content } = Layout;
 
@@ -178,7 +179,8 @@ const AdminDashboard: React.FC = () => {
    return (
       <Layout>
          <Content style={{ padding: "20px" }}>
-            <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", margin: "10px" }}>
+            <div style={{ display: "flex", justifyContent: "flex-end", alignItems: "center", gap: "10px", margin: "10px" }}>
+               <RegisterButton />
                <LogoutButton />
                <Input.Search
                   placeholder="Enter user email"
@@ -189,6 +191,7 @@ const AdminDashboard: React.FC = () => {
                   style={{ marginTop: 10 }}
                />
             </div>
+
             {user && <UserModal user={user} onClose={() => setUser(null)} />}
             <UserTable users={users} loading={loading} onAction={handleAction} onDelete={(id) => { setSelectedId(id); setModalType("delete-user"); }} />
             <PostTable posts={posts} loading={loading} onDelete={(id) => { setSelectedId(id); setModalType("delete-post"); }} />
