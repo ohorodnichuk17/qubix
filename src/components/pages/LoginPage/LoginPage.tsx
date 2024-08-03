@@ -10,9 +10,9 @@ import { unwrapResult } from '@reduxjs/toolkit';
 const LoginPage: React.FC = () => {
    const navigate = useNavigate();
    const dispatch = useAppDispatch();
-   
+
    const [searchParams] = useSearchParams();
-	const redirectAddress = searchParams.get("redirect-to");
+   const redirectAddress = searchParams.get("redirect-to");
 
    const onFinish = async (values: any) => {
       try {
@@ -20,7 +20,7 @@ const LoginPage: React.FC = () => {
          console.log(response)
          unwrapResult(response);
 
-         if(redirectAddress){
+         if (redirectAddress) {
             navigate(redirectAddress);
             return;
          }

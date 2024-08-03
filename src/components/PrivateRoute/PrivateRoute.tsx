@@ -3,16 +3,29 @@ import { Navigate, useLocation } from "react-router-dom";
 import { useAppSelector } from "../../hooks/redux";
 
 type PrivateRouteProps = {
-	children: ReactNode;
+   children: ReactNode;
+   roles?: string[];
 };
 
-const PrivateRoute = ({ children }: PrivateRouteProps) => {
-	const { isLogin } = useAppSelector((state) => state.account);
+const PrivateRoute = ({ children, roles = [] }: PrivateRouteProps) => {
+   const { isLogin, user } = useAppSelector((state) => state.account);
 
-	const location = useLocation();
-	const redirectAddress = `/login?redirect-to=${location.pathname}`;
+   const location = useLocation();
+   const redirectAddress = `/login?redirect-to=${location.pathname}`;
 
-	return isLogin ? children : <Navigate to={redirectAddress} />;
+   if (!isLogin) {
+      return <Navigate to={redirectAddress} />;
+   }
+
+   if (!user) {
+      return <Navigate to={redirectAddress} />;
+   }
+
+   if (roles.length > 0 && !roles.includes(user.role)) {
+      return <Navigate to="/" />;
+   }
+
+   return children;
 };
 
 export default PrivateRoute;
