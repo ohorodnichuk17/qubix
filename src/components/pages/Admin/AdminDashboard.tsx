@@ -9,6 +9,7 @@ import DeleteModal from "./components/DeleteModal";
 import { apiClient } from "../../../utils/api/apiClient";
 import LogoutButton from "./components/LogoutButton";
 import RegisterButton from "./components/RegisterButton";
+import './AdminDashboard.css'
 
 const { Content } = Layout;
 
@@ -178,8 +179,8 @@ const AdminDashboard: React.FC = () => {
 
    return (
       <Layout>
-         <Content style={{ padding: "20px" }}>
-            <div style={{ display: "flex", justifyContent: "flex-end", alignItems: "center", gap: "10px", margin: "10px" }}>
+         <Content style={{ padding: "10px", maxWidth: "1200px", margin: "0 auto" }}>
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "10px", marginBottom: "20px" }}>
                <RegisterButton />
                <LogoutButton />
                <Input.Search
@@ -188,20 +189,21 @@ const AdminDashboard: React.FC = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   onSearch={fetchUserByEmail}
-                  style={{ marginTop: 10 }}
+                  style={{ width: "100%", maxWidth: "400px" }}
                />
             </div>
 
             {user && <UserModal user={user} onClose={() => setUser(null)} />}
-            <UserTable users={users} loading={loading} onAction={handleAction} onDelete={(id) => { setSelectedId(id); setModalType("delete-user"); }} />
-            <PostTable posts={posts} loading={loading} onDelete={(id) => { setSelectedId(id); setModalType("delete-post"); }} />
-            <CommentTable comments={comments} loading={loading} onDelete={(id) => { setSelectedId(id); setModalType("delete-comment"); }} />
-            <StoryTable stories={stories} loading={loading} onDelete={(id) => { setSelectedId(id); setModalType("delete-story"); }} />
+            <div style={{ overflowX: "auto" }}>
+               <UserTable users={users} loading={loading} onAction={handleAction} onDelete={(id) => { setSelectedId(id); setModalType("delete-user"); }} />
+               <PostTable posts={posts} loading={loading} onDelete={(id) => { setSelectedId(id); setModalType("delete-post"); }} />
+               <CommentTable comments={comments} loading={loading} onDelete={(id) => { setSelectedId(id); setModalType("delete-comment"); }} />
+               <StoryTable stories={stories} loading={loading} onDelete={(id) => { setSelectedId(id); setModalType("delete-story"); }} />
+            </div>
             <DeleteModal visible={!!modalType} modalType={modalType} onCancel={() => setModalType(null)} onDelete={handleDelete} />
          </Content>
       </Layout>
    );
-
 };
 
 export default AdminDashboard;
