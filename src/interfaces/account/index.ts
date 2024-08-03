@@ -1,15 +1,18 @@
 import { Status } from "../../utils/enum";
 
 export interface IRegisterModel {
-   firstName: string,
-   lastName: string,
-   email: string,
-   password: string,
-   confirmPassword: string,
-   birthday: Date,
-   gender: string,
-   avatar: File | undefined | null,
+   firstName: string;
+   lastName: string;
+   email: string;
+   password: string;
+   confirmPassword: string;
+   birthday: Date;
+   gender: string;
+   avatar: File | undefined | null;
+   role: string;
+   emailConfirmed?: boolean;
 }
+
 
 export interface IAccountState {
    user: IUser | null,

@@ -1,14 +1,15 @@
 import { useState, useEffect } from 'react';
-import { Form, Input, Button, Row, Col, Typography, Space, Radio, DatePicker, Card, message } from 'antd';
+import { Form, Input, Button, Row, Col, Typography, Space, Select, DatePicker, Card, message, Upload } from 'antd';
 import { LockOutlined, MailOutlined } from '@ant-design/icons';
 import { IRegisterModel } from '../../../interfaces/account/index.ts';
 import { apiClient } from '../../../utils/api/apiClient.ts';
 import { reactAmico, lateAtNight } from '../../../utils/images/index.tsx';
-import './RegisterPage.css'
+import './RegisterPage.css';
 
 const { Link } = Typography;
+const { Option } = Select;
 
-const validGenders = ['Male', 'Female', 'Other'];
+const roles = ['User', 'Admin'];
 
 const RegisterPage = () => {
    const [isFieldActive, setIsFieldActive] = useState(false);
@@ -25,18 +26,33 @@ const RegisterPage = () => {
       return () => window.removeEventListener('resize', handleResize);
    }, []);
 
-   const onFinish = (values: IRegisterModel) => {
-      apiClient.post('/api/authentication/register', values, {
-         headers: {
-            'Content-Type': 'multipart/form-data'
-         }
-      }).then(() => {
+   const onFinish = async (values: any) => {
+      const formData = new FormData();
+      formData.append('firstName', values.firstName);
+      formData.append('lastName', values.lastName);
+      formData.append('email', values.email);
+      formData.append('password', values.password);
+      formData.append('confirmPassword', values.confirmPassword);
+      formData.append('birthday', values.birthday.toISOString());
+      formData.append('gender', values.gender);
+      formData.append('role', values.role);
+
+      if (values.avatar && values.avatar.fileList.length > 0) {
+         formData.append('avatar', values.avatar.fileList[0].originFileObj);
+      }
+
+      try {
+         await apiClient.post('/api/authentication/register', formData, {
+            headers: {
+               'Content-Type': 'multipart/form-data'
+            }
+         });
          message.success("Successfully registered!");
          window.location.href = '/email-confirmation-required';
-      }).catch(error => {
-         message.error("Registration error!")
+      } catch (error) {
+         message.error("Registration error!");
          console.log(error);
-      });
+      }
    };
 
    const onFinishFailed = (errorInfo: any) => {
@@ -83,56 +99,21 @@ const RegisterPage = () => {
                      onFinishFailed={onFinishFailed}
                      requiredMark={false}
                   >
+                     <Form.Item
+                        label="First Name"
+                        name="firstName"
+                        rules={[{ required: true, message: 'Please input your first name!' }]}
+                     >
+                        <Input placeholder="Enter your First Name" />
+                     </Form.Item>
 
-                     <Row gutter={[16, 16]}>
-                        <Col xs={24} sm={12}>
-                           <Form.Item
-                              label="First Name"
-                              name="firstName"
-                              rules={[
-                                 { required: true, message: 'First name must not be empty' },
-                                 { min: 3, message: 'First name must be at least 3 characters long' },
-                                 { max: 50, message: 'First name must be less than 50 characters long' },
-                                 { pattern: /^[A-Za-z\s]+$/, message: 'First name must contain only letters and spaces' },
-                                 { pattern: /^[^£#“”]*$/, message: 'First name must not contain the following characters: £ # “”' },
-                              ]}
-                           >
-                              <Input
-                                 placeholder='Enter your first name'
-                                 style={{
-                                    borderColor: isFieldActive ? '#FF6347' : '#FF7F50',
-                                 }}
-                                 onFocus={() => setIsFieldActive(true)}
-                                 onBlur={() => setIsFieldActive(false)}
-                                 onMouseEnter={(e) => (e.target as HTMLInputElement).style.borderColor = '#FFA07A'}
-                                 onMouseLeave={(e) => (e.target as HTMLInputElement).style.borderColor = isFieldActive ? '#FF6347' : '#FF7F50'}
-                              />
-                           </Form.Item>
-                        </Col>
-                        <Col xs={24} sm={12}>
-                           <Form.Item
-                              label="Last Name"
-                              name="lastName"
-                              rules={[
-                                 { required: true, message: 'Last name must not be empty' },
-                                 { min: 3, message: 'Last name must be at least 3 characters long' },
-                                 { max: 50, message: 'Last name must be less than 50 characters long' },
-                                 { pattern: /^[A-Za-z\s]+$/, message: 'Last name must contain only letters and spaces' },
-                                 { pattern: /^[^£#“”]*$/, message: 'Last name must not contain the following characters: £ # “”' },
-                              ]}
-                           >
-                              <Input placeholder='Enter your last name'
-                                 style={{
-                                    borderColor: isFieldActive ? '#FF6347' : '#FF7F50',
-                                 }}
-                                 onFocus={() => setIsFieldActive(true)}
-                                 onBlur={() => setIsFieldActive(false)}
-                                 onMouseEnter={(e) => (e.target as HTMLInputElement).style.borderColor = '#FFA07A'}
-                                 onMouseLeave={(e) => (e.target as HTMLInputElement).style.borderColor = isFieldActive ? '#FF6347' : '#FF7F50'}
-                              />
-                           </Form.Item>
-                        </Col>
-                     </Row>
+                     <Form.Item
+                        label="Last Name"
+                        name="lastName"
+                        rules={[{ required: true, message: 'Please input your last name!' }]}
+                     >
+                        <Input placeholder="Enter your Last Name" />
+                     </Form.Item>
 
                      <Form.Item
                         label="Email"
@@ -156,106 +137,66 @@ const RegisterPage = () => {
                         />
                      </Form.Item>
 
-                     <Row gutter={[16, 16]}>
-                        <Col xs={24} sm={12}>
-                           <Form.Item
-                              label="Password"
-                              name="password"
-                              rules={[
-                                 { required: true, message: 'Password must not be empty' },
-                                 { min: 8, message: 'Password must be at least 8 characters long' },
-                                 { max: 24, message: 'Password must be less than 24 characters long' },
-                                 { pattern: /[A-Z]/, message: 'Password must contain at least one uppercase letter' },
-                                 { pattern: /[a-z]/, message: 'Password must contain at least one lowercase letter' },
-                                 { pattern: /\d/, message: 'Password must contain at least one digit' },
-                                 { pattern: /[!"#$%&'()*+,\-./:;<=>?@[\\\]^_`{|}~]/, message: 'Password must contain at least one special character' },
-                                 { pattern: /^[^£#“”]*$/, message: 'Password must not contain the following characters: £ # “”' },
-                                 { pattern: /^[^а-яА-Я]*$/, message: 'First name must not contain Cyrillic characters' },
-                              ]}
-                           >
-                              <Input.Password prefix={<LockOutlined />}
-                                 style={{
-                                    borderColor: isFieldActive ? '#FF6347' : '#FF7F50',
-                                 }}
-                                 onFocus={() => setIsFieldActive(true)}
-                                 onBlur={() => setIsFieldActive(false)}
-                                 onMouseEnter={(e) => (e.target as HTMLInputElement).style.borderColor = '#FFA07A'}
-                                 onMouseLeave={(e) => (e.target as HTMLInputElement).style.borderColor = isFieldActive ? '#FF6347' : '#FF7F50'}
-                              />
-                           </Form.Item>
-                        </Col>
-                        <Col xs={24} sm={12}>
-                           <Form.Item
-                              label="Confirm password"
-                              name="confirmPassword"
-                              dependencies={['password']}
-                              rules={[
-                                 { required: true, message: 'Please confirm your password' },
-                                 ({ getFieldValue }) => ({
-                                    validator(_, value) {
-                                       if (!value || getFieldValue('password') === value) {
-                                          return Promise.resolve();
-                                       }
-                                       return Promise.reject(new Error('The two passwords that you entered do not match!'));
-                                    },
-                                 }),
-                              ]}
-                           >
-                              <Input.Password prefix={<LockOutlined />}
-                                 style={{
-                                    borderColor: isFieldActive ? '#FF6347' : '#FF7F50',
-                                 }}
-                                 onFocus={() => setIsFieldActive(true)}
-                                 onBlur={() => setIsFieldActive(false)}
-                                 onMouseEnter={(e) => (e.target as HTMLInputElement).style.borderColor = '#FFA07A'}
-                                 onMouseLeave={(e) => (e.target as HTMLInputElement).style.borderColor = isFieldActive ? '#FF6347' : '#FF7F50'}
-                              />
-                           </Form.Item>
-                        </Col>
-                     </Row>
+                     <Form.Item
+                        label="Password"
+                        name="password"
+                        rules={[{ required: true, message: 'Please input your password!' }]}
+                     >
+                        <Input.Password prefix={<LockOutlined />} placeholder="Enter your Password" />
+                     </Form.Item>
 
                      <Form.Item
-                        label="Birth Date"
-                        name="birthday"
-                        rules={[
-                           { required: true, message: 'Birthday must not be empty' },
-                           {
-                              validator: (_, value) => {
-                                 const today = new Date();
-                                 if (value && value > today) {
-                                    return Promise.reject('Birthday cannot be in the future');
-                                 }
-                                 return Promise.resolve();
-                              },
-                           }]}
+                        label="Confirm Password"
+                        name="confirmPassword"
+                        rules={[{ required: true, message: 'Please confirm your password!' }]}
                      >
-                        <DatePicker
-                           placeholder='Enter your birth date'
-                           style={{
-                              borderColor: isFieldActive ? '#FF6347' : '#FF7F50',
-                              width: '100%',
-                           }}
-                           onFocus={() => setIsFieldActive(true)}
-                           onBlur={() => setIsFieldActive(false)}
-                           onMouseEnter={(e) => (e.target as HTMLElement).parentElement?.parentElement?.querySelector('.ant-picker-input')?.setAttribute('style', `border-color: #FFA07A`)}
-                           onMouseLeave={(e) => (e.target as HTMLElement).parentElement?.parentElement?.querySelector('.ant-picker-input')?.setAttribute('style', `border-color: ${isFieldActive ? '#FF6347' : '#FF7F50'}`)}
-                        />
+                        <Input.Password prefix={<LockOutlined />} placeholder="Confirm your Password" />
+                     </Form.Item>
+
+                     <Form.Item
+                        label="Date of Birth"
+                        name="birthday"
+                        rules={[{ required: true, message: 'Please select your date of birth!' }]}
+                     >
+                        <DatePicker placeholder="Select your Date of Birth" style={{ width: '100%' }} />
                      </Form.Item>
 
                      <Form.Item
                         label="Gender"
                         name="gender"
-                        rules={[
-                           { required: true, message: 'Gender must not be empty' },
-                           { type: 'enum', enum: validGenders, message: `Gender must be one of the following: ${validGenders.join(", ")}` },
-                        ]}
+                        rules={[{ required: true, message: 'Please select your gender!' }]}
                      >
+                        <Select placeholder="Select your Gender">
+                           <Option value="Male">Male</Option>
+                           <Option value="Female">Female</Option>
+                           <Option value="Other">Other</Option>
+                        </Select>
+                     </Form.Item>
 
-                        <Radio.Group>
-                           <Radio value="Male">Male</Radio>
-                           <Radio value="Female">Female</Radio>
-                           <Radio value="Other">Other</Radio>
-                        </Radio.Group>
+                     <Form.Item
+                        label="Avatar"
+                        name="avatar"
+                        valuePropName="fileList"
+                        getValueFromEvent={(e) => e.fileList}
+                     >
+                        <Upload
+                           accept="image/*"
+                           beforeUpload={() => false} // Prevent automatic upload
+                        >
+                           <Button>Upload Avatar</Button>
+                        </Upload>
+                     </Form.Item>
+
+                     <Form.Item
+                        label="Role"
+                        name="role"
+                        rules={[{ required: true, message: 'Please select a role' }]}
+                     >
+                        <Select placeholder="Select a role">
+                           {roles.map(role => (
+                              <Option key={role} value={role}>{role}</Option>
+                           ))}
+                        </Select>
                      </Form.Item>
 
                      <Form.Item>
@@ -264,7 +205,9 @@ const RegisterPage = () => {
                         </Button>
                      </Form.Item>
                   </Form>
-                  <Link href="/authentication/login" style={{ color: '#FF7F50', textDecoration: 'none' }}>Already have an account? <span style={{ color: '#FF6347' }}>Sign in</span></Link>
+                  <Link href="/authentication/login" style={{ color: '#FF7F50', textDecoration: 'none' }}>
+                     Already have an account? <span style={{ color: '#FF6347' }}>Sign in</span>
+                  </Link>
                </Card>
             </Space>
          </Col>
