@@ -145,20 +145,6 @@ const RegisterPage = () => {
                      </Form.Item>
 
                      <Form.Item
-                        label="Avatar"
-                        name="avatar"
-                        valuePropName="fileList"
-                        getValueFromEvent={(e) => e.fileList}
-                     >
-                        <Upload
-                           accept="image/*"
-                           beforeUpload={() => false}
-                        >
-                           <Button>Upload Avatar</Button>
-                        </Upload>
-                     </Form.Item>
-
-                     <Form.Item
                         label="Role"
                         name="role"
                         rules={[{ required: true, message: 'Please select a role' }]}
