@@ -103,6 +103,8 @@ import questionmark from "../../assets/settings/questionmark.png";
 import shield from "../../assets/settings/shield.png";
 import mail from "../../assets/settings/mail.png";
 
+import tetraHomeHeader from "../../assets/memories/tetra_home_header.png"
+
 export {
    photoImg,
    locationImg,
@@ -199,5 +201,6 @@ export {
    questionmark,
    shield,
    mail,
-   bluePlus
+   bluePlus,
+   tetraHomeHeader
 };

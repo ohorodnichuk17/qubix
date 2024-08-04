@@ -23,6 +23,7 @@ import FriendsSearchPage from "./components/pages/SearchBox/FriendsSearchPage";
 import MessengerPage from "./components/pages/Messenger/MessengerPage";
 import FriendsContainer from "./components/containers/FriendsContainer/FriendsContainer";
 import FriendRecommendationsPage from "./components/pages/Friends/FriendRecommendationsPage";
+import MemoriesPage from "./components/pages/Memories/MemoriesPage";
 
 const App = () => {
    return (
@@ -178,6 +179,14 @@ const App = () => {
                </Route>
                <Route path="/search/posts" element={<PostsByTagPage />} />
                <Route path="/search/friends" element={<FriendsSearchPage />} />
+               <Route
+                  path="memories"
+                  element={
+                     <PrivateRoute>
+                        <MemoriesPage />
+                     </PrivateRoute>
+                  }
+               />
             </Route>
          </Routes>
       </ConfigProvider>
