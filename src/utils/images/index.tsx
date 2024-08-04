@@ -22,6 +22,7 @@ import friends from '../../assets/navbar/friends.png';
 import activeFriends from '../../assets/navbar/active_friends.png';
 import plus from '../../assets/navbar/plus.png';
 import activePlus from '../../assets/navbar/active_plus.png';
+import bluePlus from '../../assets/navbar/blue_plus.png';
 import messanger from '../../assets/navbar/messanger.png';
 import activeMessanger from '../../assets/navbar/messanger_active.png';
 import glyph from '../../assets/profile/glyph.png';
@@ -197,5 +198,6 @@ export {
    blocked,
    questionmark,
    shield,
-   mail
+   mail,
+   bluePlus
 };

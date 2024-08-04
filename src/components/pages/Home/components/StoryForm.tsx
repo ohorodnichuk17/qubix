@@ -1,19 +1,17 @@
-import { activePlus } from '../../../../utils/images/index';
+import { bluePlus } from '../../../../utils/images/index';
 import './StoryForm.css';
-import { useNavigate } from 'react-router-dom'; // для використання хука useNavigate
+import { useNavigate } from 'react-router-dom';
 
 export const StoryForm = () => {
-   const navigate = useNavigate(); // отримуємо доступ до навігації
+   const navigate = useNavigate();
 
    const handleClick = () => {
-      navigate('/story'); // перенаправлення на сторінку /story
+      navigate('/story');
    };
 
    return (
       <div className="create-story" onClick={handleClick}>
-         <div className="icon-wrapper">
-            <img src={activePlus} alt="Create story" className="icon" />
-         </div>
+         <img src={bluePlus} alt="Create story" className="icon" />
          <div className="text">
             <strong>Create story</strong>
             <p>Share a photo or write something</p>
