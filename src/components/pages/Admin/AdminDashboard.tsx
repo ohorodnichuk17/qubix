@@ -10,31 +10,9 @@ import { apiClient } from "../../../utils/api/apiClient";
 import LogoutButton from "./components/LogoutButton";
 import RegisterButton from "./components/RegisterButton";
 import './AdminDashboard.css'
+import { User, Post, Story, Comment } from "./types";
 
 const { Content } = Layout;
-
-interface User {
-   id: string;
-   email: string;
-   role: string;
-}
-
-interface Post {
-   id: string;
-   title: string;
-   content: string;
-   images: { id: string; imagePath: string }[];
-}
-
-interface Comment {
-   id: string;
-   message: string;
-}
-
-interface Story {
-   id: string;
-   content: string;
-}
 
 const AdminDashboard: React.FC = () => {
    const [users, setUsers] = useState<User[]>([]);
