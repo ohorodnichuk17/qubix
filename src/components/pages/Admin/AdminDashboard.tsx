@@ -16,6 +16,7 @@ const { Content } = Layout;
 interface User {
    id: string;
    email: string;
+   role: string;
 }
 
 interface Post {
