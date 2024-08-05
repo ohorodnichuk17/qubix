@@ -1,6 +1,6 @@
 import { Grid, Layout, Menu, MenuProps } from 'antd';
 import Sider from 'antd/es/layout/Sider';
-import { blocked, questionmark, lockImg, shield, mail } from '../../../../utils/images/index';
+import { blocked, questionmark, lockImg, shield, mail, userImg } from '../../../../utils/images/index';
 import { NavLink } from 'react-router-dom';
 
 const { useBreakpoint } = Grid;
@@ -30,11 +30,16 @@ export const SettingsSideBar = () => {
          icon: <img src={mail} alt="Mail Icon" style={{ width: '22px', height: '24px' }} />,
       },
       {
+         key: "5",
+         label: <NavLink to="./delete-profile">Delete profile</NavLink>,
+         icon: <img src={userImg} alt="Profile Icon" style={{ width: '24px', height: '24px' }} />,
+      },
+      {
          type: 'divider',
          key: "divider-1"
       },
       {
-         key: "5",
+         key: "6",
          label: <NavLink to="./help">Questions/help</NavLink>,
          icon: <img src={questionmark} alt="Question Icon" style={{ width: '24px', height: '24px' }} />,
       },

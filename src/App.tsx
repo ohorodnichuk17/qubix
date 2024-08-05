@@ -24,6 +24,8 @@ import MessengerPage from "./components/pages/Messenger/MessengerPage";
 import FriendsContainer from "./components/containers/FriendsContainer/FriendsContainer";
 import FriendRecommendationsPage from "./components/pages/Friends/FriendRecommendationsPage";
 import MemoriesPage from "./components/pages/Memories/MemoriesPage";
+import DeleteProfilePage from "./components/pages/Settings/components/DeleteProfilePage";
+import AccountDeletedSuccessfullyPage from "./components/pages/Settings/components/AccountDeletedSuccessfullyPage";
 
 const App = () => {
    return (
@@ -176,6 +178,14 @@ const App = () => {
                         </PrivateRoute>
                      }
                   />
+                  <Route
+                     path="delete-profile"
+                     element={
+                        <PrivateRoute>
+                           <DeleteProfilePage />
+                        </PrivateRoute>
+                     }
+                  />
                </Route>
                <Route path="/search/posts" element={<PostsByTagPage />} />
                <Route path="/search/friends" element={<FriendsSearchPage />} />
@@ -188,6 +198,12 @@ const App = () => {
                   }
                />
             </Route>
+            <Route
+               path="account-deleted-successfully"
+               element={
+                  <AccountDeletedSuccessfullyPage />
+               }
+            />
          </Routes>
       </ConfigProvider>
    );
