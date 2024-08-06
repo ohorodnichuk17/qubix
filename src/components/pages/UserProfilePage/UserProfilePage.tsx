@@ -4,6 +4,7 @@ import {
 	Badge,
 	Button,
 	Card,
+	Col,
 	Divider,
 	Dropdown,
 	Flex,
@@ -32,6 +33,10 @@ import * as styles from "./styles";
 import ShortInformationCard from "./components/ShortInformationCard";
 import AvatarMenu from "./menus/AvatarMenu";
 import type { ISendFriendRequest } from "../Friends/types";
+import { IStory } from "../Story/list/types";
+import StoryModal from "../../storyModal/StoryModal";
+import PostItemCard from "../../post/list/components/PostItemCard";
+import { IPost } from "../../post/list/types";
 
 const UserProfilePage: React.FC = () => {
 	const { user } = useAppSelector((state) => state.account);
@@ -43,6 +48,15 @@ const UserProfilePage: React.FC = () => {
 	const [isModalVisible, setIsModalVisible] = useState(false);
 	const [relationshipsStatus, setRelationshipsStatus] = useState<number>();
 	const [loading, setLoading] = useState<boolean>(false);
+	const [posts, setPosts] = useState<IPost[]>([]);
+	const [stories, setStories] = useState<IStory[]>([]);
+	const [currentStory, setCurrentStory] = useState<IStory>();
+	const [selectedMenu, setSelectedMenu] = useState("2");
+	const [isModalOpen, setIsModalOpen] = useState(false);
+
+	const handleMenuClick = (e : any) => {
+        setSelectedMenu(e.key);
+    };
 
 	const [searchParams] = useSearchParams();
 	const userId = searchParams.get("userId");
@@ -85,7 +99,33 @@ const UserProfilePage: React.FC = () => {
 			});
 
 		updateRelationshipStatus();
+		fetchPosts();
+		fetchStories();
 	}, [isCurrentUserProfile, user?.id, userId]);
+
+	const fetchPosts = () => {
+		apiClient
+			.get(`/api/user-profile/getPostsBy/${userId || user?.id}`)
+			.then((response) => {
+				setPosts(response.data);
+			})
+			.catch((error) => {
+				message.error("There was an error fetching posts!");
+				console.error("Error fetching posts:", error);
+			});
+	};
+
+	const fetchStories = () => {
+		apiClient
+			.get(`/api/user-profile/getStoriesBy/${userId || user?.id}`)
+			.then((response) => {
+				setStories(response.data);
+			})
+			.catch((error) => {
+				message.error("There was an error fetching stories!");
+				console.error("Error fetching stories:", error);
+			});
+	};
 
 	const handleUploadChange = async (
 		info: UploadChangeParam,
@@ -195,6 +235,34 @@ const UserProfilePage: React.FC = () => {
 	const handleAvatarChange = async (info: UploadChangeParam) =>
 		handleUploadChange(info, "avatar");
 
+	const handleNavigateStory = (type: "next" | "prev") => {
+		if (!currentStory) return;
+
+		let index = stories.indexOf(currentStory);
+		type === "next" ? index++ : index--;
+
+		if (index >= 0 && index < stories.length) {
+			setCurrentStory(stories[index]);
+		} else {
+			setIsModalOpen(false);
+		}
+	};
+
+	const groupedStories = stories.reduce(
+		(acc: Record<string, IStory[]>, story: IStory) => {
+			if (!acc[story.user.id]) {
+				acc[story.user.id] = [];
+			}
+			acc[story.user.id].push(story);
+			return acc;
+		},
+		{},
+	);
+
+	const uniqueUsers = Object.values(groupedStories).map(
+		(stories) => stories[0],
+	);
+
 	return (
 		<div style={{ backgroundColor: "#FFEBE0", padding: 0, height: "100%" }}>
 			<Row justify="center" align="middle">
@@ -212,11 +280,28 @@ const UserProfilePage: React.FC = () => {
 						style={{ marginTop: "-5%" }}
 					>
 						<Flex align="center" wrap="wrap" gap="middle">
-							<Avatar
+						{stories.length > 0 ? (
+							<div>
+							{uniqueUsers.map((story) => (
+								<Avatar
+								size={160}
+								src={avatar}
+								style={{ border: '3px solid #7F50FF', cursor: 'pointer' }}
+								onClick={ () => {
+									setCurrentStory(story);
+									setIsModalOpen(true);}}
+								/>
+							))}
+						  </div>
+						) : (
+							<>
+								<Avatar
 								size={isScreenSmallerThatMd ? 80 : 160}
 								src={avatar}
-								style={{ border: "5px solid #ffebe0" }}
-							/>
+								style={{ border: "3px solid #ffebe0" }}
+								/>
+							</>
+						)}
 							{isCurrentUserProfile && (
 								<Dropdown
 									menu={{
@@ -284,21 +369,45 @@ const UserProfilePage: React.FC = () => {
 					) : (
 						<>
 							<Divider />
-
 							<Flex justify="center">
 								<Menu
 									style={styles.profileMenu}
 									mode="horizontal"
-									defaultSelectedKeys={["1"]}
+									selectedKeys={[selectedMenu]}
+                    				onClick={handleMenuClick}
 								>
 									<Menu.Item key="1">Posts</Menu.Item>
 									<Menu.Item key="2">Information</Menu.Item>
 									<Menu.Item key="3">Friends</Menu.Item>
 								</Menu>
 							</Flex>
-							<ShortInformationCard userProfile={userProfile} />
+							<Divider />
+							{selectedMenu === "1" && (
+								<>
+									{posts.length > 0 && (
+									<div>
+										<Row gutter={[16, 16]}>
+										{posts.map((post, index) => (
+											<Col key={index} xs={24} sm={24} md={24} lg={8} xl={8}>
+												<div style={{ width: '100%', height: 'auto' }}>
+													<PostItemCard key={post.id} post={post} />
+												</div>
+											</Col>
+										))}
+										</Row>
+									</div>
+									)}
+								</>
+							)}
+							{selectedMenu === "2" && <ShortInformationCard userProfile={userProfile} />}
 						</>
 					)}
+					<StoryModal
+						currentStory={currentStory}
+						isModalOpen={isModalOpen}
+						onClose={() => setIsModalOpen(false)}
+						onNavigate={handleNavigateStory}
+					/>
 				</Card>
 			</Row>
 		</div>
