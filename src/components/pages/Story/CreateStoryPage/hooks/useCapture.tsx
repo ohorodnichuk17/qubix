@@ -11,10 +11,23 @@ const useCapture = () => {
 			return null;
 		}
 
+		const captureDiv = captureAreaRef.current as HTMLDivElement;
+		captureDiv.style.border = "none";
+
+		const captureDivWidth = captureDiv.offsetWidth;
+		const captureDivHeight = captureDiv.offsetHeight;
+		const scale = 5.5;
+
 		try {
 			const dataUrl = await domtoimage.toJpeg(captureAreaRef.current, {
+				width: captureDivWidth * scale,
+				height: captureDivHeight * scale,
 				quality: 1,
-				style: { overflow: "hidden" },
+				style: {
+					overflow: "hidden",
+					transform: `scale(${scale})`,
+					transformOrigin: "top left",
+				},
 			});
 			const blob = dataURLToBlob(dataUrl);
 			return blob;
