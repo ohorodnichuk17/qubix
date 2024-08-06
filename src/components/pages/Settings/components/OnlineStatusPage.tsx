@@ -1,15 +1,26 @@
 import React, { useState } from 'react';
 import { Button, Radio, message } from 'antd';
 import { apiClient } from '../../../../utils/api/apiClient';
+import { useAppSelector } from '../../../../hooks/redux';
 
 const OnlineStatusPage: React.FC = () => {
+   const { user } = useAppSelector(state => state.account);
    const [status, setStatus] = useState<boolean | undefined>(undefined);
 
    const saveStatus = async (newStatus: boolean) => {
       try {
-         await apiClient.put('api/user-profile/edit-profile', {
-            isOnline: newStatus,
-         });
+         await apiClient.put(
+            "api/user-profile/edit-profile",
+            {
+               userId: user?.id,
+               isOnline: newStatus,
+            },
+            {
+               headers: {
+                  "Content-Type": "multipart/form-data",
+               },
+            },
+         );
          message.success('Status successfully updated');
       } catch (error) {
          message.error('Failed to update status');
