@@ -18,17 +18,38 @@ const useCapture = () => {
 		const captureDivHeight = captureDiv.offsetHeight;
 		const scale = 5.5;
 
+		const clone = captureDiv.cloneNode(true) as HTMLDivElement;
+
+		const cloneContents = clone.innerHTML;
+		clone.innerHTML = "";
+		clone.style.position = "absolute";
+		clone.style.top = "0";
+		clone.style.left = "0";
+		clone.style.width = `${captureDiv.offsetWidth * scale}px`;
+		clone.style.height = `${captureDiv.offsetHeight * scale}px`;
+		clone.style.overflow = "hidden";
+
+		const contentsDiv = document.createElement("div");
+		contentsDiv.innerHTML = cloneContents;
+		contentsDiv.style.transform = `scale(${scale})`;
+		contentsDiv.style.transformOrigin = "top left";
+		contentsDiv.style.width = `${captureDiv.offsetWidth}px`;
+		contentsDiv.style.height = `${captureDiv.offsetHeight}px`;
+
+		clone.appendChild(contentsDiv);
+
+		document.body.appendChild(clone);
+
 		try {
-			const dataUrl = await domtoimage.toJpeg(captureAreaRef.current, {
+			const dataUrl = await domtoimage.toJpeg(clone, {
 				width: captureDivWidth * scale,
 				height: captureDivHeight * scale,
 				quality: 1,
 				style: {
 					overflow: "hidden",
-					transform: `scale(${scale})`,
-					transformOrigin: "top left",
 				},
 			});
+			document.body.removeChild(clone);
 			const blob = dataURLToBlob(dataUrl);
 			return blob;
 		} catch (error) {
