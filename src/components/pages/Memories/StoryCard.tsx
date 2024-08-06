@@ -2,12 +2,14 @@ import React from "react";
 import { Avatar } from "antd";
 import { APP_ENV } from "../../../env";
 import type { IStory } from "../Story/list/types";
+import useAvatar from "../../../hooks/useAvatar";
 
 interface StoryCardProps {
    story: IStory;
 }
 
 const StoryCard: React.FC<StoryCardProps> = ({ story }) => {
+   const avatarImg = useAvatar();
    return (
       <div
          style={{
@@ -27,9 +29,7 @@ const StoryCard: React.FC<StoryCardProps> = ({ story }) => {
          <Avatar
             size={80}
             src={
-               story.user.avatar === null
-                  ? "default-avatar-url"
-                  : `${APP_ENV.BASE_URL}/images/avatars/${story.user.avatar}`
+               avatarImg
             }
             style={{
                margin: "15px",

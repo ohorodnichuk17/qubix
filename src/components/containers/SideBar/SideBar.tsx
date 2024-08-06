@@ -75,11 +75,6 @@ export const SideBar = () => {
             />
          ),
       },
-      //{
-      //   key: "3",
-      //   label: "Memories",
-      //   icon: <img src={memories} alt="Memories" className="menu-icon" />,
-      //},
       {
          key: "3",
          label: (

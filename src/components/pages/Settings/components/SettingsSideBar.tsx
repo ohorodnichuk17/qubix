@@ -35,11 +35,16 @@ export const SettingsSideBar = () => {
          icon: <img src={userImg} alt="Profile Icon" style={{ width: '24px', height: '24px' }} />,
       },
       {
+         key: "6",
+         label: <NavLink to="./online-status">Online status</NavLink>,
+         icon: <img src={userImg} alt="Online Icon" style={{ width: '24px', height: '24px' }} />,
+      },
+      {
          type: 'divider',
          key: "divider-1"
       },
       {
-         key: "6",
+         key: "7",
          label: <NavLink to="./help">Questions/help</NavLink>,
          icon: <img src={questionmark} alt="Question Icon" style={{ width: '24px', height: '24px' }} />,
       },

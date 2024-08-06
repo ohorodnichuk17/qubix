@@ -26,6 +26,7 @@ import FriendRecommendationsPage from "./components/pages/Friends/FriendRecommen
 import MemoriesPage from "./components/pages/Memories/MemoriesPage";
 import DeleteProfilePage from "./components/pages/Settings/components/DeleteProfilePage";
 import AccountDeletedSuccessfullyPage from "./components/pages/Settings/components/AccountDeletedSuccessfullyPage";
+import OnlineStatusPage from "./components/pages/Settings/components/OnlineStatusPage";
 
 const App = () => {
    return (
@@ -183,6 +184,14 @@ const App = () => {
                      element={
                         <PrivateRoute>
                            <DeleteProfilePage />
+                        </PrivateRoute>
+                     }
+                  />
+                  <Route
+                     path="online-status"
+                     element={
+                        <PrivateRoute>
+                           <OnlineStatusPage />
                         </PrivateRoute>
                      }
                   />
