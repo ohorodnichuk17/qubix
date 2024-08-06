@@ -1,6 +1,6 @@
-export interface IUser {
-   id: number;
-   firstName: string;
-   lastName: string;
-   avatar: string | null;
+import type { IUser } from "../../../interfaces/account";
+import type { IStory } from "../Story/list/types";
+
+export interface ISearchUserResult extends IUser {
+   stories: IStory[];
 }
