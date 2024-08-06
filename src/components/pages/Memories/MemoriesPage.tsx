@@ -4,20 +4,24 @@ import type { IStory } from "../Story/list/types";
 import { Row, Col, message } from "antd";
 import { tetraHomeHeader } from "../../../utils/images";
 import StoryCard from "./StoryCard";
+import { useAppSelector } from "../../../hooks/redux";
 
 const MemoriesPage = () => {
+   const { user } = useAppSelector(state => state.account);
    const [stories, setStories] = useState<IStory[]>([]);
 
    useEffect(() => {
       apiClient
-         .get("api/story/getAll")
+         .get(
+            `api/user-profile/getStoriesBy/${user?.id}`,
+         )
          .then((res) => {
             setStories(res.data);
          })
          .catch(() => {
             message.error("Error fetching stories");
          });
-   }, []);
+   }, [user]);
 
    if (stories.length === 0) {
       return (
