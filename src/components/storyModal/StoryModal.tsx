@@ -34,7 +34,7 @@ const StoryModal: React.FC<StoryModalProps> = ({
 			}}
 		>
 			<Modal
-				visible={isModalOpen}
+				open={isModalOpen}
 				onCancel={onClose}
 				footer={null}
 				width="fit-content"
