@@ -1,10 +1,6 @@
 import { useEffect, useState } from "react";
 import { Card, Flex, Avatar, Divider, Carousel, Tag, Badge } from "antd";
-import {
-	CommentOutlined,
-	LeftOutlined,
-	RightOutlined,
-} from "@ant-design/icons";
+import { CommentOutlined } from "@ant-design/icons";
 import { APP_ENV } from "../../../../env";
 import { avatar, locationImg } from "../../../../utils/images";
 import { getRandomTagColor } from "../../create/components/Tags/TagsList";
@@ -15,6 +11,7 @@ import { NavLink } from "react-router-dom";
 import CommentsList from "./CommentsList";
 import AddCommentForm from "./AddCommentForm";
 import { apiClient } from "../../../../utils/api/apiClient";
+import Arrow from "../../../featured/Arrow/Arrow";
 
 type PostItemCardProps = {
 	post: IPost;
@@ -114,8 +111,8 @@ const PostItemCard = ({ post }: PostItemCardProps) => {
 					arrows
 					draggable
 					infinite
-					prevArrow={<LeftOutlined />}
-					nextArrow={<RightOutlined />}
+					nextArrow={<Arrow direction="right" />}
+					prevArrow={<Arrow direction="left" />}
 				>
 					{post.images.map((image) => (
 						<img
