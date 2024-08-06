@@ -4,13 +4,13 @@ import {
 	Badge,
 	Button,
 	Card,
-	Col,
 	Divider,
 	Dropdown,
 	Flex,
 	Grid,
-	Menu,
 	Row,
+	Tabs,
+	type TabsProps,
 	message,
 } from "antd";
 import type React from "react";
@@ -33,10 +33,10 @@ import * as styles from "./styles";
 import ShortInformationCard from "./components/ShortInformationCard";
 import AvatarMenu from "./menus/AvatarMenu";
 import type { ISendFriendRequest } from "../Friends/types";
-import { IStory } from "../Story/list/types";
+import type { IStory } from "../Story/list/types";
 import StoryModal from "../../storyModal/StoryModal";
-import PostItemCard from "../../post/list/components/PostItemCard";
-import { IPost } from "../../post/list/types";
+import type { IPost } from "../../post/list/types";
+import UserProfilePostList from "./components/UserProfilePostList";
 
 const UserProfilePage: React.FC = () => {
 	const { user } = useAppSelector((state) => state.account);
@@ -51,12 +51,7 @@ const UserProfilePage: React.FC = () => {
 	const [posts, setPosts] = useState<IPost[]>([]);
 	const [stories, setStories] = useState<IStory[]>([]);
 	const [currentStory, setCurrentStory] = useState<IStory>();
-	const [selectedMenu, setSelectedMenu] = useState("2");
 	const [isModalOpen, setIsModalOpen] = useState(false);
-
-	const handleMenuClick = (e : any) => {
-        setSelectedMenu(e.key);
-    };
 
 	const [searchParams] = useSearchParams();
 	const userId = searchParams.get("userId");
@@ -248,21 +243,23 @@ const UserProfilePage: React.FC = () => {
 		}
 	};
 
-	const groupedStories = stories.reduce(
-		(acc: Record<string, IStory[]>, story: IStory) => {
-			if (!acc[story.user.id]) {
-				acc[story.user.id] = [];
-			}
-			acc[story.user.id].push(story);
-			return acc;
+	const tabsItems: TabsProps["items"] = [
+		{
+			key: "posts",
+			label: "Posts",
+			children: <UserProfilePostList posts={posts} />,
 		},
-		{},
-	);
-
-	const uniqueUsers = Object.values(groupedStories).map(
-		(stories) => stories[0],
-	);
-
+		{
+			key: "information",
+			label: "Information",
+			children: <ShortInformationCard userProfile={userProfile} />,
+		},
+		{
+			key: "friends",
+			label: "Friends",
+		},
+	];
+	
 	return (
 		<div style={{ backgroundColor: "#FFEBE0", padding: 0, height: "100%" }}>
 			<Row justify="center" align="middle">
@@ -280,28 +277,23 @@ const UserProfilePage: React.FC = () => {
 						style={{ marginTop: "-5%" }}
 					>
 						<Flex align="center" wrap="wrap" gap="middle">
-						{stories.length > 0 ? (
-							<div>
-							{uniqueUsers.map((story) => (
-								<Avatar
-								size={160}
-								src={avatar}
-								style={{ border: '3px solid #7F50FF', cursor: 'pointer' }}
-								onClick={ () => {
-									setCurrentStory(story);
-									setIsModalOpen(true);}}
-								/>
-							))}
-						  </div>
-						) : (
-							<>
-								<Avatar
+							<Avatar
 								size={isScreenSmallerThatMd ? 80 : 160}
 								src={avatar}
-								style={{ border: "3px solid #ffebe0" }}
-								/>
-							</>
-						)}
+								style={{
+									border:
+										stories.length > 0
+											? "3px solid #7F50FF"
+											: "3px solid #ffebe0",
+									cursor: stories.length > 0 ? "pointer" : "inherit",
+								}}
+								onClick={() => {
+									if (stories.length > 0) {
+										setCurrentStory(stories[0]);
+										setIsModalOpen(true);
+									}
+								}}
+							/>
 							{isCurrentUserProfile && (
 								<Dropdown
 									menu={{
@@ -370,38 +362,11 @@ const UserProfilePage: React.FC = () => {
 						<>
 							<Divider />
 							<Flex justify="center">
-								<Menu
-									style={styles.profileMenu}
-									mode="horizontal"
-									selectedKeys={[selectedMenu]}
-                    				onClick={handleMenuClick}
-								>
-									<Menu.Item key="1">Posts</Menu.Item>
-									<Menu.Item key="2">Information</Menu.Item>
-									<Menu.Item key="3">Friends</Menu.Item>
-								</Menu>
+								<Tabs items={tabsItems} style={{ width: "100%" }} />
 							</Flex>
-							<Divider />
-							{selectedMenu === "1" && (
-								<>
-									{posts.length > 0 && (
-									<div>
-										<Row gutter={[16, 16]}>
-										{posts.map((post, index) => (
-											<Col key={index} xs={24} sm={24} md={24} lg={8} xl={8}>
-												<div style={{ width: '100%', height: 'auto' }}>
-													<PostItemCard key={post.id} post={post} />
-												</div>
-											</Col>
-										))}
-										</Row>
-									</div>
-									)}
-								</>
-							)}
-							{selectedMenu === "2" && <ShortInformationCard userProfile={userProfile} />}
 						</>
 					)}
+
 					<StoryModal
 						currentStory={currentStory}
 						isModalOpen={isModalOpen}
