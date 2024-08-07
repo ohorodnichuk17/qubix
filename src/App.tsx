@@ -27,6 +27,7 @@ import MemoriesPage from "./components/pages/Memories/MemoriesPage";
 import DeleteProfilePage from "./components/pages/Settings/components/DeleteProfilePage";
 import AccountDeletedSuccessfullyPage from "./components/pages/Settings/components/AccountDeletedSuccessfullyPage";
 import OnlineStatusPage from "./components/pages/Settings/components/OnlineStatusPage";
+import CreateStoryContainer from "./components/containers/CreateStoryContainer/CreateStoryContainer";
 
 const App = () => {
    return (
@@ -93,6 +94,16 @@ const App = () => {
                   }
                />
             </Route>
+            <Route path="/story" element={<CreateStoryContainer />}>
+               <Route
+                  index
+                  element={
+                     <PrivateRoute>
+                        <CreateStoryPage />
+                     </PrivateRoute>
+                  }
+               />
+            </Route>
             <Route path="/" element={<ContainerDefault />}>
                <Route index element={<HomePage />} />
                <Route path="login" element={<LoginPage />} />
@@ -115,17 +126,6 @@ const App = () => {
                   path="email-confirmation-required"
                   element={<EmailConfirmationRequired />}
                />
-
-               <Route path="story">
-                  <Route
-                     index
-                     element={
-                        <PrivateRoute>
-                           <CreateStoryPage />
-                        </PrivateRoute>
-                     }
-                  />
-               </Route>
 
                <Route path="messenger">
                   <Route
