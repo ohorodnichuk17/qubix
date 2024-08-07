@@ -1,9 +1,9 @@
-import { AnyAction, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { type AnyAction, createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import { jwtDecode } from 'jwt-decode';
 import { addLocalStorage, deleteLocalStorage } from "../../utils/storage/localStorageUtils.ts";
-import { RejectedAction } from "../../utils/types";
+import type { RejectedAction } from "../../utils/types";
 import { Status } from "../../utils/enum";
-import { IAccountState } from "../../interfaces/account";
+import type { IAccountState } from "../../interfaces/account";
 import { changeEmail, confirmEmail, forgotPassword, login, resetPassword, userRegister, userLogout } from "./account.actions.ts";
 
 function isRejectedAction(action: AnyAction): action is RejectedAction {
@@ -13,15 +13,15 @@ function isRejectedAction(action: AnyAction): action is RejectedAction {
 const updateLoginUserState = (state: IAccountState, token: string): void => {
    const decodedToken: { [key: string]: string } = jwtDecode(token);
 
-   const id = decodedToken["sub"];
-   const email = decodedToken["email"];
+   const id = decodedToken.sub;
+   const email = decodedToken.email;
    const role = decodedToken["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
-   const firstName = decodedToken["given_name"];
-   const lastName = decodedToken["family_name"];
-   const birthday = new Date(decodedToken["birthdate"] || '1970-01-01');
-   const gender = decodedToken["gender"] || '';
-   const avatar = decodedToken["Avatar"];
-   const userName = decodedToken["userName"] || '';
+   const firstName = decodedToken.given_name;
+   const lastName = decodedToken.family_name;
+   const birthday = new Date(decodedToken.birthdate || '1970-01-01');
+   const gender = decodedToken.gender || '';
+   const avatar = decodedToken.Avatar;
+   const userName = decodedToken.userName || '';
 
    state.user = {
       id: id,
