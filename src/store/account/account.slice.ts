@@ -18,7 +18,7 @@ const updateLoginUserState = (state: IAccountState, token: string): void => {
    const role = decodedToken["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
    const firstName = decodedToken["given_name"];
    const lastName = decodedToken["family_name"];
-   const birthday = new Date(decodedToken["birthday"] || '1970-01-01');
+   const birthday = new Date(decodedToken["birthdate"] || '1970-01-01');
    const gender = decodedToken["gender"] || '';
    const avatar = decodedToken["Avatar"];
    const userName = decodedToken["userName"] || '';
