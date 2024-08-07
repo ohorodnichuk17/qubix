@@ -30,7 +30,7 @@ const updateLoginUserState = (state: IAccountState, token: string): void => {
       role: role,
       firstName: firstName,
       lastName: lastName,
-      birthday: birthday,
+      birthday: birthday.toString(),
       gender: gender,
       avatar: avatar,
       isOnline: false,

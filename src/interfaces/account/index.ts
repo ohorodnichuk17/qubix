@@ -31,7 +31,7 @@ export interface IUser {
    firstName: string,
    lastName: string,
    // phoneNumber: string | null,
-   birthday: Date,
+   birthday: string,
    gender: string,
    avatar: string | null,
    isOnline: boolean;
