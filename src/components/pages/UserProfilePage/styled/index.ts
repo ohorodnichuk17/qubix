@@ -13,11 +13,18 @@ export const CoverButton = styled(Button)`
   padding: 2px;
   text-transform: none;
   color: #000000;
+  margin: 20px;
+
   &:hover {
     background-color: #ff7f50;
     box-shadow: none;
   }
-  margin: 20px;
+  
+  img{
+    width: 26px;
+    height: 22px;
+    margin: 5px;
+  }
 `;
 
 export const EditButton = styled(Button)`

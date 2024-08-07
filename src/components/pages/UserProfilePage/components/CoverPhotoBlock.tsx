@@ -49,11 +49,7 @@ const CoverPhotoBlock = ({
 							defaultFileList={[]}
 						>
 							<CoverButton>
-								<img
-									src={cameraImg}
-									alt="coverPhoto"
-									style={{ width: 26, height: 22, margin: 5 }}
-								/>
+								<img src={cameraImg} alt="coverPhoto" />
 								Add cover photo
 							</CoverButton>
 						</Upload>
@@ -68,11 +64,7 @@ const CoverPhotoBlock = ({
 							}}
 						>
 							<CoverButton>
-								<img
-									src={editImg}
-									alt="editCoverPhoto"
-									style={{ width: 26, height: 22, margin: 5 }}
-								/>
+								<img src={editImg} alt="editCoverPhoto" />
 								Edit cover photo
 							</CoverButton>
 						</Dropdown>
