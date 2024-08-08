@@ -1,14 +1,11 @@
-import { Flex, Avatar, Button, Form, Input } from "antd";
+import { Flex, Avatar, Button } from "antd";
 import { NavLink } from "react-router-dom";
 import { APP_ENV } from "../../../../env";
 import { avatar } from "../../../../utils/images";
-import type { IComment, ICreateCommentReply } from "../types";
+import type { IComment } from "../types";
 import ChildCommentItem from "./ChildCommentItem";
 import { useState } from "react";
-import FormItem from "antd/es/form/FormItem";
-import useAvatar from "../../../../hooks/useAvatar";
-import { apiClient } from "../../../../utils/api/apiClient";
-import { useAppSelector } from "../../../../hooks/redux";
+import AddCommentReplyForm from "./AddCommentReplyForm";
 
 type CommentItemProps = {
 	comment: IComment;
@@ -16,36 +13,11 @@ type CommentItemProps = {
 };
 
 const CommentItem = ({ comment, setComments }: CommentItemProps) => {
-	const { user } = useAppSelector((state) => state.account);
 	const [answerVisibility, setAnswerVisibility] = useState<boolean>(false);
-	const [form] = Form.useForm();
-	const avatarImg = useAvatar();
 
 	if (comment.parentCommentId !== null) {
 		return null;
 	}
-
-	const postComment = (values: ICreateCommentReply) => {
-		apiClient
-			.post("api/comment/add-reply", values, {
-				headers: { "Content-Type": "multipart/form-data" },
-			})
-			.then((res) => {
-				form.resetFields();
-
-				const updatedComment = {
-					...comment,
-					childComments: [...comment.childComments, res.data],
-				};
-				setComments((prevComments) =>
-					prevComments.map((c) => (c.id === comment.id ? updatedComment : c)),
-				);
-				setAnswerVisibility(false);
-			})
-			.catch((error) => {
-				console.error(error);
-			});
-	};
 
 	return (
 		<>
@@ -95,27 +67,11 @@ const CommentItem = ({ comment, setComments }: CommentItemProps) => {
 				</Flex>
 			</Flex>
 			{answerVisibility && (
-				<Flex style={{ width: "100%" }} gap={5}>
-					<Avatar
-						size={45}
-						src={avatarImg}
-						style={{ minHeight: 45, minWidth: 45 }}
-					/>
-					<Form form={form} style={{ width: "100%" }} onFinish={postComment}>
-						<FormItem hidden name="parentId" initialValue={comment.id} />
-						<FormItem name="message" rules={[{ required: true }]}>
-							<Flex vertical align="end" gap={3}>
-								<Input.TextArea
-									style={{ width: "100%" }}
-									placeholder={`Comment as ${user?.firstName} ${user?.lastName}`}
-								/>
-								<Button htmlType="submit" style={{ width: "fit-content" }}>
-									Comment
-								</Button>
-							</Flex>
-						</FormItem>
-					</Form>
-				</Flex>
+				<AddCommentReplyForm
+					comment={comment}
+					setComments={setComments}
+					setAnswerVisibility={setAnswerVisibility}
+				/>
 			)}
 			{comment.childComments.map((comment) => (
 				<ChildCommentItem key={comment.id} comment={comment} />
