@@ -1,9 +1,11 @@
-import { Flex, Avatar, Form, Input, Button } from "antd";
-import FormItem from "antd/es/form/FormItem";
+import { Flex, Avatar, Input, Button } from "antd";
 import useAvatar from "../../../../hooks/useAvatar";
-import type { IComment, ICreateComment, IPost } from "../types";
+import type { IComment, IPost } from "../types";
 import { apiClient } from "../../../../utils/api/apiClient";
 import { useAppSelector } from "../../../../hooks/redux";
+import EmojiPicker, { type EmojiClickData } from "emoji-picker-react";
+import { useState } from "react";
+import { SmileTwoTone } from "@ant-design/icons";
 
 type AddCommentFormProps = {
 	post: IPost;
@@ -12,21 +14,33 @@ type AddCommentFormProps = {
 
 const AddCommentForm = ({ post, setComments }: AddCommentFormProps) => {
 	const { user } = useAppSelector((state) => state.account);
-	const [form] = Form.useForm();
+	const [message, setMessage] = useState<string>("");
+	const [showPicker, setShowPicker] = useState<boolean>(false);
+
 	const avatarImg = useAvatar();
 
-	const postComment = (values: ICreateComment) => {
+	const postComment = () => {
+		const formData = {
+			postId: post.id,
+			message,
+		};
+
 		apiClient
-			.post<IComment>("api/comment/add", values, {
+			.post<IComment>("api/comment/add", formData, {
 				headers: { "Content-Type": "multipart/form-data" },
 			})
 			.then((res) => {
-				form.resetFields();
+				setMessage("");
 				setComments((prevComments) => [...prevComments, res.data]);
 			})
 			.catch((error) => {
 				console.error(error);
 			});
+	};
+
+	const onEmojiClick = (event: EmojiClickData) => {
+		setMessage((prevInput) => prevInput + event.emoji);
+		setShowPicker(false);
 	};
 
 	return (
@@ -36,20 +50,26 @@ const AddCommentForm = ({ post, setComments }: AddCommentFormProps) => {
 				src={avatarImg}
 				style={{ minHeight: 45, minWidth: 45 }}
 			/>
-			<Form form={form} style={{ width: "100%" }} onFinish={postComment}>
-				<FormItem hidden name="postId" initialValue={post.id} />
-				<FormItem name="message" rules={[{ required: true }]}>
-					<Flex vertical align="end" gap={3}>
-						<Input.TextArea
-							style={{ width: "100%" }}
-							placeholder={`Comment as ${user?.firstName} ${user?.lastName}`}
-						/>
-						<Button htmlType="submit" style={{ width: "fit-content" }}>
-							Comment
-						</Button>
-					</Flex>
-				</FormItem>
-			</Form>
+			<Flex vertical align="end" gap={3} style={{ width: "100%" }}>
+				<Flex style={{ width: "100%" }}>
+					<Input.TextArea
+						value={message}
+						onChange={(e) => setMessage(e.target.value)}
+						style={{ width: "100%" }}
+						placeholder={`Comment as ${user?.firstName} ${user?.lastName}`}
+					/>
+					<SmileTwoTone
+						onClick={() => {
+							setShowPicker(!showPicker);
+						}}
+						style={{ fontSize: 30 }}
+					/>
+				</Flex>
+				<EmojiPicker open={showPicker} onEmojiClick={onEmojiClick} />
+				<Button style={{ width: "fit-content" }} onClick={postComment}>
+					Comment
+				</Button>
+			</Flex>
 		</Flex>
 	);
 };
