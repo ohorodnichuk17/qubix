@@ -182,7 +182,7 @@ const PostItemCard = ({ post }: PostItemCardProps) => {
 
 				<Flex gap="small">
 					{isLiked ? (
-						<Flex gap="small">
+						<Flex className="reactions-flex">
 							<LikeTwoTone twoToneColor="red" />
 							<span>Liked</span>
 						</Flex>
@@ -199,8 +199,7 @@ const PostItemCard = ({ post }: PostItemCardProps) => {
 						</>
 					)}
 					<Flex
-						gap="small"
-						style={{ cursor: "pointer" }}
+						className="reactions-flex"
 						onClick={() => setShowPicker(!showPicker)}
 					>
 						<SmileTwoTone style={{ fontSize: 20 }} />

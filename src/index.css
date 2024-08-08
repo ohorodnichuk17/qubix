@@ -25,3 +25,15 @@ body {
     height: 50px;
     width: 50px;
 }
+
+.reactions-flex{
+    border-radius: 8px;
+    padding: 2.5px 5px;
+    gap: 8px;
+    cursor: pointer;
+    transition: .5s;
+}
+
+.reactions-flex:hover{
+    background-color: lightgray;
+}
