@@ -40,6 +40,7 @@ const CommentItem = ({ comment, setComments }: CommentItemProps) => {
 				setComments((prevComments) =>
 					prevComments.map((c) => (c.id === comment.id ? updatedComment : c)),
 				);
+				setAnswerVisibility(false);
 			})
 			.catch((error) => {
 				console.error(error);
