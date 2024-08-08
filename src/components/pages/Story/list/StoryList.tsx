@@ -13,7 +13,7 @@ const StoryList = () => {
 
 	useEffect(() => {
 		apiClient
-			.get("api/story/getAll")
+			.get("api/story/friends")
 			.then((res) => {
 				setStories(res.data);
 			})
