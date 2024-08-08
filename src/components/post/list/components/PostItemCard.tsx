@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Card, Flex, Avatar, Divider, Carousel, Tag, Badge } from "antd";
+import { Card, Flex, Avatar, Divider, Carousel, Tag, Badge, message, Tooltip } from "antd";
 import { CommentOutlined, LikeTwoTone, SmileTwoTone } from "@ant-design/icons";
 import { APP_ENV } from "../../../../env";
 import { avatar, likeImg, locationImg } from "../../../../utils/images";
@@ -68,6 +68,22 @@ const PostItemCard = ({ post }: PostItemCardProps) => {
 		};
 		apiClient.post("/api/reaction",data);
 		setShowPicker(false);
+	};
+
+	const unlikePost = () => {
+		const data = {
+			postId: post.id,
+		};
+		apiClient
+			.delete("/api/like", {
+				data,
+			})
+			.then(() => {
+				setIsLiked(false);
+			})
+			.catch(() => {
+				message.error("Unlike post error!");
+			});
 	};
 
 	return (
@@ -182,10 +198,12 @@ const PostItemCard = ({ post }: PostItemCardProps) => {
 
 				<Flex gap="small">
 					{isLiked ? (
-						<Flex className="reactions-flex">
-							<LikeTwoTone twoToneColor="red" />
-							<span>Liked</span>
-						</Flex>
+						<Tooltip title="Unlike post">
+							<Flex className="reactions-flex" onClick={unlikePost}>
+								<LikeTwoTone twoToneColor="red" />
+								<span>Liked</span>
+							</Flex>
+						</Tooltip>
 					) : (
 						<>
 							{/* biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
