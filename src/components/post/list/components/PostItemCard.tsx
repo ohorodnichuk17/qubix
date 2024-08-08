@@ -12,12 +12,14 @@ import CommentsList from "./CommentsList";
 import AddCommentForm from "./AddCommentForm";
 import { apiClient } from "../../../../utils/api/apiClient";
 import Arrow from "../../../featured/Arrow/Arrow";
+import { useAppSelector } from "../../../../hooks/redux";
 
 type PostItemCardProps = {
 	post: IPost;
 };
 
 const PostItemCard = ({ post }: PostItemCardProps) => {
+	const { user } = useAppSelector((state) => state.account);
 	const [commentsVisibility, setCommentsVisibility] = useState<boolean>(false);
 	const [comments, setComments] = useState<IComment[]>([]);
 	const [isLiked, setIsLiked] = useState<boolean>(false);
@@ -26,7 +28,14 @@ const PostItemCard = ({ post }: PostItemCardProps) => {
 		apiClient.get(`api/comment/${post.id}`).then((res) => {
 			setComments(res.data);
 		});
-	}, [post.id]);
+
+		for (const like of post.likes) {
+			if (like.userId === user?.id) {
+				setIsLiked(true);
+				return;
+			}
+		}
+	}, [post.id, post.likes, user]);
 
 	if (!post || !post.user) {
 		return null;

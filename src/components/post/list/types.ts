@@ -6,6 +6,12 @@ interface IImage {
     imagePath: string;
 }
 
+interface ILike {
+    id: string;
+    postId: string;
+    userId: string;
+}
+
 export interface IPost {
     id: string;
     content: string;
@@ -22,14 +28,15 @@ export interface IPost {
     subAction: ISubAction;
     feelingId: string;
     feeling: IFeeling;
+    likes: ILike[];
 }
 
-export interface ICreateComment{
-    message:string;
-    postId:string;
+export interface ICreateComment {
+    message: string;
+    postId: string;
 }
 
-export interface ICreateCommentReply{
+export interface ICreateCommentReply {
     message: string;
     parentId: string;
 }
