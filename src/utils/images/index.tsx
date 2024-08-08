@@ -104,6 +104,7 @@ import shield from "../../assets/settings/shield.png";
 import mail from "../../assets/settings/mail.png";
 
 import tetraHomeHeader from "../../assets/memories/tetra_home_header.png"
+import likeImg from "../../assets/post/like.png"
 
 export {
    photoImg,
@@ -202,5 +203,6 @@ export {
    shield,
    mail,
    bluePlus,
-   tetraHomeHeader
+   tetraHomeHeader,
+   likeImg
 };

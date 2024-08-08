@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { Card, Flex, Avatar, Divider, Carousel, Tag, Badge } from "antd";
-import { CommentOutlined } from "@ant-design/icons";
+import { CommentOutlined, LikeTwoTone } from "@ant-design/icons";
 import { APP_ENV } from "../../../../env";
-import { avatar, locationImg } from "../../../../utils/images";
+import { avatar, likeImg, locationImg } from "../../../../utils/images";
 import { getRandomTagColor } from "../../create/components/Tags/TagsList";
 import type { IComment, IPost } from "../types";
 import { ACTION_OPTIONS, FEELING_OPTIONS } from "../../../feelings/constants";
@@ -19,8 +19,8 @@ type PostItemCardProps = {
 
 const PostItemCard = ({ post }: PostItemCardProps) => {
 	const [commentsVisibility, setCommentsVisibility] = useState<boolean>(false);
-
 	const [comments, setComments] = useState<IComment[]>([]);
+	const [isLiked, setIsLiked] = useState<boolean>(false);
 
 	useEffect(() => {
 		apiClient.get(`api/comment/${post.id}`).then((res) => {
@@ -43,6 +43,12 @@ const PostItemCard = ({ post }: PostItemCardProps) => {
 
 	const getFeelingImage = (feeling: IFeeling) =>
 		FEELING_OPTIONS.find((f) => f.name === feeling.name)?.emoji;
+
+	const likePost = () => {
+		apiClient.post("api/like", { postId: post.id }).then(() => {
+			setIsLiked(true);
+		});
+	};
 
 	return (
 		<Card
@@ -154,12 +160,31 @@ const PostItemCard = ({ post }: PostItemCardProps) => {
 					</Flex>
 				)}
 
-				<CommentOutlined
-					style={{ cursor: "pointer" }}
-					onClick={() => {
-						setCommentsVisibility(!commentsVisibility);
-					}}
-				/>
+				<Flex gap="small">
+					{isLiked ? (
+						<Flex gap="small">
+							<LikeTwoTone twoToneColor="red" />
+							<span>Liked</span>
+						</Flex>
+					) : (
+						<>
+							{/* biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
+							<img
+								src={likeImg}
+								alt="Like"
+								width={30}
+								onClick={likePost}
+								style={{ cursor: "pointer" }}
+							/>
+						</>
+					)}
+					<CommentOutlined
+						style={{ cursor: "pointer" }}
+						onClick={() => {
+							setCommentsVisibility(!commentsVisibility);
+						}}
+					/>
+				</Flex>
 
 				<AddCommentForm post={post} setComments={setComments} />
 
