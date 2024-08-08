@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Card, Flex, Avatar, Divider, Carousel, Tag, Badge } from "antd";
-import { CommentOutlined, LikeTwoTone } from "@ant-design/icons";
+import { CommentOutlined, LikeTwoTone, SmileTwoTone } from "@ant-design/icons";
 import { APP_ENV } from "../../../../env";
 import { avatar, likeImg, locationImg } from "../../../../utils/images";
 import { getRandomTagColor } from "../../create/components/Tags/TagsList";
@@ -13,6 +13,7 @@ import AddCommentForm from "./AddCommentForm";
 import { apiClient } from "../../../../utils/api/apiClient";
 import Arrow from "../../../featured/Arrow/Arrow";
 import { useAppSelector } from "../../../../hooks/redux";
+import EmojiPicker, { type EmojiClickData } from "emoji-picker-react";
 
 type PostItemCardProps = {
 	post: IPost;
@@ -23,6 +24,7 @@ const PostItemCard = ({ post }: PostItemCardProps) => {
 	const [commentsVisibility, setCommentsVisibility] = useState<boolean>(false);
 	const [comments, setComments] = useState<IComment[]>([]);
 	const [isLiked, setIsLiked] = useState<boolean>(false);
+	const [showPicker, setShowPicker] = useState<boolean>(false);
 
 	useEffect(() => {
 		apiClient.get(`api/comment/${post.id}`).then((res) => {
@@ -57,6 +59,15 @@ const PostItemCard = ({ post }: PostItemCardProps) => {
 		apiClient.post("api/like", { postId: post.id }).then(() => {
 			setIsLiked(true);
 		});
+	};
+
+	const onEmojiClick = (event: EmojiClickData) => {
+		const data = {
+			postId: post.id,
+			emoji: event.emoji,
+		};
+		apiClient.post("/api/reaction",data);
+		setShowPicker(false);
 	};
 
 	return (
@@ -187,6 +198,15 @@ const PostItemCard = ({ post }: PostItemCardProps) => {
 							/>
 						</>
 					)}
+					<Flex
+						gap="small"
+						style={{ cursor: "pointer" }}
+						onClick={() => setShowPicker(!showPicker)}
+					>
+						<SmileTwoTone style={{ fontSize: 20 }} />
+						<span>Reactions</span>
+					</Flex>
+
 					<CommentOutlined
 						style={{ cursor: "pointer" }}
 						onClick={() => {
@@ -194,6 +214,7 @@ const PostItemCard = ({ post }: PostItemCardProps) => {
 						}}
 					/>
 				</Flex>
+				<EmojiPicker open={showPicker} onEmojiClick={onEmojiClick} />
 
 				<AddCommentForm post={post} setComments={setComments} />
 
