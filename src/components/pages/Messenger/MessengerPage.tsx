@@ -1,38 +1,94 @@
-import { useState } from "react";
-import { Layout, Drawer, Grid, Typography } from "antd";
+import { useEffect, useState } from "react";
+import { Layout, Drawer, Grid, Typography, message as antdMessage } from "antd";
 import ChatList from "./components/ChatList";
 import ChatWindow from "./components/ChatWindow";
 import ProfileInfo from "./components/ProfileInfo";
-import { avatar } from "../../../utils/images";
 import "./MessengerPage.css";
 import {ChatItemData} from "./types.ts";
 
 const { Sider, Content } = Layout;
 const { useBreakpoint } = Grid;
 const { Title } = Typography;
-
-const initialMessages: ChatItemData[] = [
-    {
-        name: "Lili_NK",
-        messages: [{ text: "Hi, can you please help me with the project?", time: "15 хв." }],
-        avatar: avatar,
-        profile: "Profile information for Lili_NK",
-    },
-    {
-        name: "Den_V",
-        messages: [{ text: "Thank you! Your assistance was really helpful.", time: "40 хв." }],
-        avatar: avatar,
-        profile: "Profile information for Den_V",
-    },
-];
+import { HubConnectionBuilder, LogLevel } from '@microsoft/signalr';
 
 function MessengerPage() {
-    const [messages, setMessages] = useState<ChatItemData[]>(initialMessages);
+    // const [messages, setMessages] = useState<ChatItemData[]>(initialMessages);
     const [isDrawerVisible, setIsDrawerVisible] = useState(false);
     const [selectedChat, setSelectedChat] = useState<ChatItemData | null>(null);
     const [selectedProfile, setSelectedProfile] = useState<string | null>(null);
     const [newMessage, setNewMessage] = useState("");
     const screens = useBreakpoint();
+    const [fromUserEmail, setFromUserEmail] = useState('');
+    const [toUserEmail, setToUserEmail] = useState('');
+    const [messageContent, setMessageContent] = useState('');
+    const [messages, setMessages] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [connection, setConnection] = useState(null);
+    const chatId = "9e171657-58b0-4687-8282-b794682bc28c";
+
+    useEffect(() => {
+      const initializeChat = async () => {
+        const connection = new HubConnectionBuilder()
+          .withUrl('http://localhost:5181/chathub') // Adjust URL to your backend URL
+          .configureLogging(LogLevel.Information)
+          .build();
+  
+        connection.on('ReceiveMessage', (fromUserEmail, messageContent) => {
+          antdMessage.info(`New message from ${fromUserEmail}: ${messageContent}`);
+          loadMessages();
+        });
+  
+        try {
+          await connection.start();
+          console.log('SignalR Connected.');
+          setConnection(connection);
+        } catch (err) {
+          console.error('SignalR Connection Error: ', err);
+        }
+      };
+  
+      initializeChat();
+  
+      return () => {
+        if (connection) {
+          connection.stop();
+        }
+      };
+    }, []);
+  
+    const handleSendMessage = async () => {
+      if (!fromUserEmail || !toUserEmail || !messageContent) {
+        antdMessage.error('Please fill in all fields.');
+        return;
+      }
+  
+      try {
+        await connection.invoke('SendMessage', fromUserEmail, toUserEmail, messageContent);
+        setMessageContent('');
+        loadMessages();
+      } catch (err) {
+        console.error('Send Message Error: ', err);
+        antdMessage.error('Failed to send message.');
+      }
+    };
+  
+    const loadMessages = async () => {
+      if (!fromUserEmail || !toUserEmail) {
+        return;
+      }
+  
+      setLoading(true);
+      try {
+        const response = await fetch(`http://localhost:5181/api/message/${chatId}`);
+        const data = await response.json();
+        setMessages(data);
+      } catch (err) {
+        console.error('Get Messages Error: ', err);
+        antdMessage.error('Failed to load messages.');
+      } finally {
+        setLoading(false);
+      }
+    };
 
     const showModal = () => {
         console.log("Modal shown");
@@ -52,30 +108,30 @@ function MessengerPage() {
         setSelectedChat(null);
     };
 
-    const handleSendMessage = () => {
-        if (newMessage.trim() !== "") {
-            const updatedMessages = messages.map((chat) => {
-                if (chat === selectedChat) {
-                    return {
-                        ...chat,
-                        messages: [...chat.messages, { text: newMessage, time: "Just now" }],
-                    };
-                }
-                return chat;
-            });
+    // const handleSendMessage = () => {
+    //     if (newMessage.trim() !== "") {
+    //         const updatedMessages = messages.map((chat) => {
+    //             if (chat === selectedChat) {
+    //                 return {
+    //                     ...chat,
+    //                     messages: [...chat.messages, { text: newMessage, time: "Just now" }],
+    //                 };
+    //             }
+    //             return chat;
+    //         });
 
-            setMessages(updatedMessages);
+    //         setMessages(updatedMessages);
 
-            if (selectedChat) {
-                setSelectedChat({
-                    ...selectedChat,
-                    messages: [...selectedChat.messages, { text: newMessage, time: "Just now" }],
-                });
-            }
+    //         if (selectedChat) {
+    //             setSelectedChat({
+    //                 ...selectedChat,
+    //                 messages: [...selectedChat.messages, { text: newMessage, time: "Just now" }],
+    //             });
+    //         }
 
-            setNewMessage("");
-        }
-    };
+    //         setNewMessage("");
+    //     }
+    // };
 
     return (
         <Layout style={{ minHeight: "100vh" }}>
