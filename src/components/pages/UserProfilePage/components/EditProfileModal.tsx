@@ -3,11 +3,8 @@ import { useState } from "react";
 import { CountryDropdown, RegionDropdown } from "react-country-region-selector";
 import { useAppSelector } from "../../../../hooks/redux";
 import { apiClient } from "../../../../utils/api/apiClient";
-import {
-	type IUserProfile,
-	type IUserProfileEditModel,
-	PronounsOptions,
-} from "../types";
+import type { IUserProfile, IUserProfileEditModel } from "../types";
+import { PronounsOptions } from "../constants";
 
 type EditProfileModalProps = {
 	isModalVisible: boolean;
