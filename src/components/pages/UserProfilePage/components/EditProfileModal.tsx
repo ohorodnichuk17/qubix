@@ -94,9 +94,6 @@ const EditProfileModal = ({
 				<Form.Item name="pronouns" label="Pronouns">
 					<Select defaultValue="do not specify" options={PronounsOptions} />
 				</Form.Item>
-				<Form.Item name="isBlocked" valuePropName="checked" label="Is Blocked">
-					<Switch />
-				</Form.Item>
 				<Form.Item
 					name="isProfilePublic"
 					valuePropName="checked"
