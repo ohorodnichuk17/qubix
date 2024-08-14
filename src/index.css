@@ -37,3 +37,15 @@ body {
 .reactions-flex:hover{
     background-color: lightgray;
 }
+
+.delete-comment-icon{
+    position: relative;
+    left: -27.5px;
+    top: 5px;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.delete-comment-icon:hover{
+    scale: 1.2;
+}

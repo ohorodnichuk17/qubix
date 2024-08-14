@@ -1,4 +1,4 @@
-import { Flex, Avatar, Button } from "antd";
+import { Flex, Avatar, Button, Popconfirm } from "antd";
 import { NavLink } from "react-router-dom";
 import { APP_ENV } from "../../../../env";
 import { avatar } from "../../../../utils/images";
@@ -6,6 +6,9 @@ import type { IComment } from "../types";
 import ChildCommentItem from "./ChildCommentItem";
 import { useState } from "react";
 import AddCommentReplyForm from "./AddCommentReplyForm";
+import { CloseCircleTwoTone } from "@ant-design/icons";
+import { useAppSelector } from "../../../../hooks/redux";
+import { apiClient } from "../../../../utils/api/apiClient";
 
 type CommentItemProps = {
 	comment: IComment;
@@ -13,15 +16,29 @@ type CommentItemProps = {
 };
 
 const CommentItem = ({ comment, setComments }: CommentItemProps) => {
+	const { user } = useAppSelector((state) => state.account);
 	const [answerVisibility, setAnswerVisibility] = useState<boolean>(false);
 
 	if (comment.parentCommentId !== null) {
 		return null;
 	}
 
+	const deleteComment = () => {
+		const data = {
+			id: comment.id,
+		};
+		apiClient.delete("api/comment", { data }).then(() => {
+			setComments((prevComments) =>
+				prevComments.filter(
+					(commentFromList) => commentFromList.id !== comment.id,
+				),
+			);
+		});
+	};
+
 	return (
 		<>
-			<Flex gap="small">
+			<Flex gap="small" align="start">
 				<NavLink
 					to={`profile?userId=${comment.userId}`}
 					style={{ height: "fit-content" }}
@@ -65,6 +82,16 @@ const CommentItem = ({ comment, setComments }: CommentItemProps) => {
 						</Button>
 					)}
 				</Flex>
+				{comment.userId === user?.id && (
+					<Popconfirm
+						title="Delete comment ?"
+						onConfirm={deleteComment}
+						okText="Yes"
+						cancelText="No"
+					>
+						<CloseCircleTwoTone className="delete-comment-icon" />
+					</Popconfirm>
+				)}
 			</Flex>
 			{answerVisibility && (
 				<AddCommentReplyForm
@@ -74,7 +101,11 @@ const CommentItem = ({ comment, setComments }: CommentItemProps) => {
 				/>
 			)}
 			{comment.childComments.map((comment) => (
-				<ChildCommentItem key={comment.id} comment={comment} />
+				<ChildCommentItem
+					key={comment.id}
+					comment={comment}
+					setComments={setComments}
+				/>
 			))}
 		</>
 	);

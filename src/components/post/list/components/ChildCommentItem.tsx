@@ -1,14 +1,38 @@
-import { Flex, Avatar } from "antd";
+import { Flex, Avatar, Popconfirm } from "antd";
 import { NavLink } from "react-router-dom";
 import { APP_ENV } from "../../../../env";
 import type { IComment } from "../types";
 import { avatar } from "../../../../utils/images";
+import { useAppSelector } from "../../../../hooks/redux";
+import { CloseCircleTwoTone } from "@ant-design/icons";
+import { apiClient } from "../../../../utils/api/apiClient";
 
 type ChildCommentItemProps = {
 	comment: IComment;
+	setComments: React.Dispatch<React.SetStateAction<IComment[]>>;
 };
 
-const ChildCommentItem = ({ comment }: ChildCommentItemProps) => {
+const ChildCommentItem = ({ comment, setComments }: ChildCommentItemProps) => {
+	const { user } = useAppSelector((state) => state.account);
+	const deleteComment = () => {
+		const data = {
+			id: comment.id,
+		};
+		apiClient.delete("api/comment", { data }).then(() => {
+			setComments((prevComments) =>
+				prevComments.map((parentComment) =>
+					parentComment.childComments.some((child) => child.id === comment.id)
+						? {
+								...parentComment,
+								childComments: parentComment.childComments.filter(
+									(child) => child.id !== comment.id,
+								),
+							}
+						: parentComment,
+				),
+			);
+		});
+	};
 	return (
 		<Flex gap="small" style={{ marginLeft: 45 }}>
 			<NavLink
@@ -38,6 +62,19 @@ const ChildCommentItem = ({ comment }: ChildCommentItemProps) => {
 				>{`${comment.userEntity.firstName} ${comment.userEntity.lastName}`}</span>
 				<span> {comment.message}</span>
 			</Flex>
+			{comment.userId === user?.id && (
+				<Popconfirm
+					title="Delete comment ?"
+					onConfirm={deleteComment}
+					okText="Yes"
+					cancelText="No"
+				>
+					<CloseCircleTwoTone
+						className="delete-comment-icon"
+						style={{ top: -15 }}
+					/>
+				</Popconfirm>
+			)}
 		</Flex>
 	);
 };
