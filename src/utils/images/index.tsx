@@ -106,6 +106,9 @@ import mail from "../../assets/settings/mail.png";
 import tetraHomeHeader from "../../assets/memories/tetra_home_header.png"
 import likeImg from "../../assets/post/like.png"
 
+//Chat
+import messageImg from "../../assets/chat/message.svg"
+
 export {
    photoImg,
    locationImg,
@@ -204,5 +207,7 @@ export {
    mail,
    bluePlus,
    tetraHomeHeader,
-   likeImg
+   likeImg,
+   //Chat
+   messageImg
 };

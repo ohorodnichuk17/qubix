@@ -1,171 +1,205 @@
+import { Grid, Layout, message } from "antd";
 import { useEffect, useState } from "react";
-import { Layout, Drawer, Grid, Typography, message as antdMessage } from "antd";
 import ChatList from "./components/ChatList";
 import ChatWindow from "./components/ChatWindow";
 import ProfileInfo from "./components/ProfileInfo";
 import "./MessengerPage.css";
-import {ChatItemData} from "./types.ts";
+import {
+	type HubConnection,
+	HubConnectionBuilder,
+	LogLevel,
+} from "@microsoft/signalr";
+import { APP_ENV } from "../../../env/index.ts";
+import { useAppSelector } from "../../../hooks/redux/index.ts";
+import { apiClient } from "../../../utils/api/apiClient.ts";
+import { avatar } from "../../../utils/images/index.tsx";
+import WelcomeToChat from "./components/WelcomeToChat.tsx";
+import type { IChat, ISendMessage } from "./types.ts";
 
 const { Sider, Content } = Layout;
 const { useBreakpoint } = Grid;
-const { Title } = Typography;
-import { HubConnectionBuilder, LogLevel } from '@microsoft/signalr';
 
 function MessengerPage() {
-    // const [messages, setMessages] = useState<ChatItemData[]>(initialMessages);
-    const [isDrawerVisible, setIsDrawerVisible] = useState(false);
-    const [selectedChat, setSelectedChat] = useState<ChatItemData | null>(null);
-    const [selectedProfile, setSelectedProfile] = useState<string | null>(null);
-    const [newMessage, setNewMessage] = useState("");
-    const screens = useBreakpoint();
-    const [fromUserEmail, setFromUserEmail] = useState('');
-    const [toUserEmail, setToUserEmail] = useState('');
-    const [messageContent, setMessageContent] = useState('');
-    const [messages, setMessages] = useState([]);
-    const [loading, setLoading] = useState(false);
-    const [connection, setConnection] = useState(null);
-    const chatId = "9e171657-58b0-4687-8282-b794682bc28c";
+	const { user } = useAppSelector((state) => state.account);
+	const [chats, setChats] = useState<IChat[]>([]);
+	const [isCollapsed, setIsCollapsed] = useState<boolean>(false);
+	const [selectedChat, setSelectedChat] = useState<IChat | null>(null);
+	const screens = useBreakpoint();
+	const [connection, setConnection] = useState<HubConnection | null>(null);
 
-    useEffect(() => {
-      const initializeChat = async () => {
-        const connection = new HubConnectionBuilder()
-          .withUrl('http://localhost:5181/chathub') // Adjust URL to your backend URL
-          .configureLogging(LogLevel.Information)
-          .build();
-  
-        connection.on('ReceiveMessage', (fromUserEmail, messageContent) => {
-          antdMessage.info(`New message from ${fromUserEmail}: ${messageContent}`);
-          loadMessages();
-        });
-  
-        try {
-          await connection.start();
-          console.log('SignalR Connected.');
-          setConnection(connection);
-        } catch (err) {
-          console.error('SignalR Connection Error: ', err);
-        }
-      };
-  
-      initializeChat();
-  
-      return () => {
-        if (connection) {
-          connection.stop();
-        }
-      };
-    }, []);
-  
-    const handleSendMessage = async () => {
-      if (!fromUserEmail || !toUserEmail || !messageContent) {
-        antdMessage.error('Please fill in all fields.');
-        return;
-      }
-  
-      try {
-        await connection.invoke('SendMessage', fromUserEmail, toUserEmail, messageContent);
-        setMessageContent('');
-        loadMessages();
-      } catch (err) {
-        console.error('Send Message Error: ', err);
-        antdMessage.error('Failed to send message.');
-      }
-    };
-  
-    const loadMessages = async () => {
-      if (!fromUserEmail || !toUserEmail) {
-        return;
-      }
-  
-      setLoading(true);
-      try {
-        const response = await fetch(`http://localhost:5181/api/message/${chatId}`);
-        const data = await response.json();
-        setMessages(data);
-      } catch (err) {
-        console.error('Get Messages Error: ', err);
-        antdMessage.error('Failed to load messages.');
-      } finally {
-        setLoading(false);
-      }
-    };
+	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+	useEffect(() => {
+		const initializeChat = async () => {
+			const connection = new HubConnectionBuilder()
+				.withUrl(`${APP_ENV.BASE_URL}/chathub`)
+				.configureLogging(LogLevel.Information)
+				.build();
 
-    const showModal = () => {
-        console.log("Modal shown");
-    };
+			connection.on(
+				"ReceiveMessage",
+				(fromUserEmail, messageContent, chatId) => {
+					console.log(chatId);
+					if (fromUserEmail !== user?.email)
+						message.info(
+							`New message from ${fromUserEmail}: ${messageContent}`,
+						);
+					loadMessages(chatId);
+				},
+			);
 
-    const closeDrawer = () => {
-        setIsDrawerVisible(false);
-    };
+			try {
+				await connection.start();
+				console.log("SignalR Connected.");
+				setConnection(connection);
+			} catch (err) {
+				console.error("SignalR Connection Error: ", err);
+			}
+		};
 
-    const handleChatClick = (chat: ChatItemData) => {
-        setSelectedChat(chat);
-        setSelectedProfile(null);
-    };
+		initializeChat();
 
-    const handleAvatarClick = (profile: string) => {
-        setSelectedProfile(profile);
-        setSelectedChat(null);
-    };
+		loadChats();
 
-    // const handleSendMessage = () => {
-    //     if (newMessage.trim() !== "") {
-    //         const updatedMessages = messages.map((chat) => {
-    //             if (chat === selectedChat) {
-    //                 return {
-    //                     ...chat,
-    //                     messages: [...chat.messages, { text: newMessage, time: "Just now" }],
-    //                 };
-    //             }
-    //             return chat;
-    //         });
+		return () => {
+			if (connection) {
+				connection.stop();
+			}
+		};
+	}, []);
 
-    //         setMessages(updatedMessages);
+	const loadChats = () => {
+		apiClient.get<IChat[]>(`api/chat/${user?.id}`).then((res) => {
+			const newchats = res.data;
+			for (const chat of newchats) {
+				for (const chatUser of chat.chatUsers) {
+					chatUser.user.avatar =
+						chatUser.user.avatar === null
+							? avatar
+							: `${APP_ENV.BASE_URL}/images/avatars/${chatUser.user.avatar}`;
+					if (chatUser.user.id !== user?.id) {
+						chat.user = chatUser.user;
+					}
+				}
+			}
+			setChats(newchats);
+		});
+	};
 
-    //         if (selectedChat) {
-    //             setSelectedChat({
-    //                 ...selectedChat,
-    //                 messages: [...selectedChat.messages, { text: newMessage, time: "Just now" }],
-    //             });
-    //         }
+	const loadMessages = async (chatId?: string) => {
+		if (!selectedChat && !chatId) return;
 
-    //         setNewMessage("");
-    //     }
-    // };
+		try {
+			const response = await apiClient.get(
+				`/api/message/${chatId ?? selectedChat?.id}`,
+			);
+			if (!selectedChat) return;
 
-    return (
-        <Layout style={{ minHeight: "100vh" }}>
-            <Sider width={300} breakpoint="lg" collapsedWidth="0" style={{ backgroundColor: "#f9f9f9", padding: "16px", borderRight: "1px solid #e6e6e6" }}>
-                <ChatList messages={messages} handleChatClick={handleChatClick} handleAvatarClick={handleAvatarClick} showModal={showModal} />
-            </Sider>
+			const updatedChat = { ...selectedChat, messages: response.data };
+			setSelectedChat(updatedChat);
 
-            <Drawer title="Messages" placement="left" closable={false} onClose={closeDrawer} visible={!screens.lg && isDrawerVisible} className="drawer" width={300} bodyStyle={{ padding: "0px 16px" }}>
-                <ChatList messages={messages} handleChatClick={handleChatClick} handleAvatarClick={handleAvatarClick} showModal={showModal} />
-            </Drawer>
+			const updatedChats = chats.map((chat) =>
+				chat.id === updatedChat.id ? updatedChat : chat,
+			);
+			setChats(updatedChats);
+		} catch (err) {
+			console.error("Get Messages Error: ", err);
+			message.error("Failed to load messages.");
+		}
+	};
 
-            <Layout>
-                <Content style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start", alignItems: "flex-start", background: "#F5EBE0", padding: screens.lg ? "24px" : "16px", textAlign: "left", width: "100%" }}>
-                    {selectedChat ? (
-                        <ChatWindow selectedChat={selectedChat} newMessage={newMessage} setNewMessage={setNewMessage} handleSendMessage={handleSendMessage} />
-                    ) : (
-                        <>
-                            <div style={{ fontSize: "48px", color: "#8c8c8c", marginBottom: "16px", textAlign: "center", width: "100%" }}>
-                                <svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ verticalAlign: "middle" }}>
-                                    <path fillRule="evenodd" clipRule="evenodd" d="M12 2C6.48 2 2 6.48 2 12C2 13.97 2.72 15.75 3.91 17.12L2 22L7.08 20.09C8.45 21.28 10.24 22 12.2 22C17.72 22 22.2 17.52 22.2 12C22.2 6.48 17.72 2 12 2ZM10.2 15H8.2V13H10.2V15ZM14.2 15H12.2V13H14.2V15ZM16.2 15H18.2V13H16.2V15Z" fill="#8c8c8c" />
-                                </svg>
-                            </div>
-                            <Title level={4} style={{ color: "#8c8c8c", textAlign: "center", width: "100%" }}>Your messages</Title>
-                            <p style={{ color: "#8c8c8c", textAlign: "center", width: "100%" }}>Select a chat to view messages</p>
-                        </>
-                    )}
-                </Content>
-            </Layout>
+	const handleSendMessage = async (values: ISendMessage) => {
+		try {
+			await connection?.invoke(
+				"SendMessage",
+				values.fromUserEmail,
+				values.toUserEmail,
+				values.messageContent,
+			);
 
-            <Sider width={300} breakpoint="lg" collapsedWidth="0" style={{ backgroundColor: "#f9f9f9", padding: "16px", textAlign: "center", borderLeft: "1px solid #e6e6e6" }}>
-                <ProfileInfo selectedChat={selectedChat ?? undefined} selectedProfile={selectedProfile ?? undefined} />
-            </Sider>
-        </Layout>
-    );
+			loadMessages();
+		} catch (err) {
+			console.error("Send Message Error: ", err);
+			message.error("Failed to send message.");
+		}
+	};
+
+	const handleChatClick = (chat: IChat) => {
+		setSelectedChat(chat);
+		if (isScreenSmallerThatMd) setIsCollapsed(true);
+	};
+
+	const isScreenSmallerThatMd =
+		(screens.xs || screens.sm) &&
+		!screens.md &&
+		!screens.lg &&
+		!screens.xl &&
+		!screens.xxl;
+
+	return (
+		<Layout style={{ height: "100%" }}>
+			<Sider
+				width={350}
+				breakpoint="lg"
+				collapsedWidth="0"
+				collapsed={isCollapsed}
+				onCollapse={() => setIsCollapsed(!isCollapsed)}
+				theme="light"
+				style={{
+					backgroundColor: "#f9f9f9",
+					padding: isCollapsed ? 0 : 16,
+					borderRight: "1px solid #e6e6e6",
+					height: "100%",
+				}}
+			>
+				<ChatList
+					chats={chats}
+					selectedChat={selectedChat}
+					handleChatClick={handleChatClick}
+					loadChats={loadChats}
+				/>
+			</Sider>
+
+			<Layout>
+				<Content
+					style={{
+						display: "flex",
+						flexDirection: "column",
+						justifyContent: selectedChat ? "space-between" : "inherit",
+						background: "#F5EBE0",
+						padding: screens.lg ? "24px" : "16px",
+						textAlign: "left",
+						width: "100%",
+					}}
+				>
+					{selectedChat ? (
+						<ChatWindow
+							chat={selectedChat}
+							handleSendMessage={handleSendMessage}
+						/>
+					) : (
+						<WelcomeToChat />
+					)}
+				</Content>
+			</Layout>
+
+			<Sider
+				width={300}
+				breakpoint="xl"
+				collapsedWidth="0"
+				style={{
+					backgroundColor: "#f9f9f9",
+					padding: "16px",
+					textAlign: "center",
+					borderLeft: "1px solid #e6e6e6",
+				}}
+			>
+				<ProfileInfo
+					selectedChat={selectedChat ?? undefined}
+					selectedProfile={undefined}
+				/>
+			</Sider>
+		</Layout>
+	);
 }
 
 export default MessengerPage;

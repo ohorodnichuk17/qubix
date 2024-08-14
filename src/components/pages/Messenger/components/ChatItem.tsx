@@ -1,20 +1,42 @@
-import { List, Avatar } from "antd";
-import {ChatItemProps} from "../types.ts";
+import { Avatar, List } from "antd";
+import type { IChat } from "../types";
 
+export interface ChatItemProps {
+	chat: IChat;
+	isSelected: boolean;
+	handleChatClick: (item: IChat) => void;
+}
 
-const ChatItem: React.FC<ChatItemProps> = ({ item, handleChatClick, handleAvatarClick }) => (
-    <List.Item onClick={() => handleChatClick(item)}>
-        <List.Item.Meta
-            avatar={<Avatar src={item.avatar} onClick={() => handleAvatarClick(item.profile)} style={{ cursor: "pointer" }} />}
-            title={item.name}
-            description={
-                <>
-                    <div>{item.messages[item.messages.length - 1].text}</div>
-                    <div style={{ fontSize: "12px", color: "#888" }}>{item.messages[item.messages.length - 1].time}</div>
-                </>
-            }
-        />
-    </List.Item>
+const ChatItem: React.FC<ChatItemProps> = ({
+	chat,
+	isSelected,
+	handleChatClick,
+}) => (
+	<List.Item
+		onClick={() => handleChatClick(chat)}
+		className={isSelected ? "selected" : ""}
+	>
+		<List.Item.Meta
+			avatar={<Avatar src={chat.user.avatar} style={{ cursor: "pointer" }} />}
+			title={chat.user.email}
+			description={
+				// <>
+				chat.messages.length > 0 && (
+					<>
+						<div style={{ wordBreak: "break-word" }}>
+							{chat.messages[chat.messages?.length - 1].content}
+						</div>
+						<div style={{ fontSize: "12px", color: "#888" }}>
+							{new Date(
+								chat.messages[chat.messages?.length - 1].createdAt,
+							).toLocaleDateString()}
+						</div>
+					</>
+				)
+				// </>
+			}
+		/>
+	</List.Item>
 );
 
 export default ChatItem;

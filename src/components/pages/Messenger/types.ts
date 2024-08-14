@@ -1,54 +1,26 @@
-export interface Message {
-    text: string;
-    time: string;
+import type { IUser } from "../../../interfaces/account";
+
+export interface IMessage {
+	id: string;
+	content: string;
+	userId: string;
+	createdAt: string;
 }
 
-export interface ChatItemData {
-    avatar: string;
-    name: string;
-    messages: Message[];
-    profile: string;
+export interface IChat {
+	id: string;
+	name: string;
+	messages: IMessage[];
+	user: IUser;
+	chatUsers: IChatUser[];
 }
 
-export interface ChatItemProps {
-    item: ChatItemData;
-    handleChatClick: (item: ChatItemData) => void;
-    handleAvatarClick: (profile: string) => void;
+export interface IChatUser {
+	user: IUser;
 }
 
-export interface ChatListProps {
-    messages: ChatItemData[];
-    handleChatClick: (item: ChatItemData) => void;
-    handleAvatarClick: (profile: string) => void;
-    showModal: () => void;
-}
-
-export interface ChatWindowProps {
-    selectedChat: Chat;
-    newMessage: string;
-    setNewMessage: (message: string) => void;
-    handleSendMessage: () => void;
-}
-
-export interface MessageItemProps {
-    msg: Message;
-    avatar: string;
-}
-
-export interface Chat {
-    avatar: string;
-    name: string;
-    messages: Message[];
-}
-
-export interface ProfileInfoProps {
-    selectedChat?: Chat;
-    selectedProfile?: string;
-}
-
-export interface ChatItemData {
-    avatar: string;
-    name: string;
-    messages: Message[];
-    profile: string;
+export interface ISendMessage {
+	fromUserEmail: string;
+	toUserEmail: string;
+	messageContent: string;
 }
