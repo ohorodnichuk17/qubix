@@ -20,7 +20,6 @@ export interface IUserProfile {
 	pronouns: string;
 	country: string;
 	region: string;
-	isBlocked: boolean;
 	isProfilePublic: boolean;
 	userEntity: IUser;
 }
