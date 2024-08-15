@@ -31,22 +31,19 @@ function MessengerPage() {
 	useEffect(() => {
 		const initializeChat = async () => {
 			const connection = new HubConnectionBuilder()
-				.withUrl(`${APP_ENV.BASE_URL}/chathub`)
+				.withUrl(`${APP_ENV.BASE_URL}/chathub?email=${user.email}`)
 				.configureLogging(LogLevel.Information)
 				.build();
-
+	
 			connection.on(
 				"ReceiveMessage",
 				(fromUserEmail, messageContent, chatId) => {
-					console.log(chatId);
-					if (fromUserEmail !== user?.email)
-						message.info(
-							`New message from ${fromUserEmail}: ${messageContent}`,
-						);
+					console.log("ReceiveMessage event received. ChatId:", chatId);
+					message.info(`New message from ${fromUserEmail}: ${messageContent}`);
 					loadMessages(chatId);
-				},
+				}
 			);
-
+	
 			try {
 				await connection.start();
 				console.log("SignalR Connected.");
@@ -55,11 +52,11 @@ function MessengerPage() {
 				console.error("SignalR Connection Error: ", err);
 			}
 		};
-
+	
 		initializeChat();
-
+	
 		loadChats();
-
+	
 		return () => {
 			if (connection) {
 				connection.stop();
