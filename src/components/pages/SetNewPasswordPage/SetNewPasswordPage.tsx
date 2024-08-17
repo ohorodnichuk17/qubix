@@ -1,5 +1,5 @@
-import type React from 'react';
-import { Form, Input, Button, Flex, Card, message } from 'antd';
+import React, { useState } from 'react';
+import { Form, Input, Button, Flex, Card, message, Spin } from 'antd';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { LockOutlined } from '@ant-design/icons';
 import { setNewPasswordImg } from '../../../utils/images';
@@ -8,13 +8,13 @@ import type { IResetPassword } from '../../../interfaces/account';
 
 const SetNewPasswordPage: React.FC = () => {
    const navigate = useNavigate();
-
    const [searchParams] = useSearchParams();
    const email = searchParams.get("email");
    const token = searchParams.get("token");
 
-   const onFinish = (values: IResetPassword) => {
+   const [loading, setLoading] = useState<boolean>(false);
 
+   const onFinish = (values: IResetPassword) => {
       if (token === null || token === "" || email === null || email === "") {
          navigate("/");
       } else {
@@ -22,6 +22,7 @@ const SetNewPasswordPage: React.FC = () => {
          values.email = email;
       }
 
+      setLoading(true);
       apiClient.post('/api/authentication/reset-password', values)
          .then(res => {
             console.log(res);
@@ -32,8 +33,12 @@ const SetNewPasswordPage: React.FC = () => {
          })
          .catch(error => {
             console.error(error);
+            message.error("Error resetting password. Please try again later.");
          })
-   }
+         .finally(() => {
+            setLoading(false);
+         });
+   };
 
    return (
       <Flex justify='center' align='center' wrap='wrap' className='auth-pages-flex'>
@@ -95,11 +100,14 @@ const SetNewPasswordPage: React.FC = () => {
                </Form.Item>
 
                <Form.Item>
-                  <Button htmlType="submit" style={{ color: 'white', width: '100%' }}>
-                     Confirm
+                  <Button
+                     htmlType="submit"
+                     style={{ color: 'white', width: '100%' }}
+                     disabled={loading}
+                  >
+                     {loading ? <Spin size="small" /> : 'Confirm'}
                   </Button>
                </Form.Item>
-
 
                <Form.Item>
                   <Flex justify='center'>
