@@ -51,7 +51,7 @@ const OnlineStatusPage: React.FC = () => {
             }}
             style={{ marginTop: '20px' }}
          >
-            Зберегти
+            Save
          </Button>
       </div>
    );
