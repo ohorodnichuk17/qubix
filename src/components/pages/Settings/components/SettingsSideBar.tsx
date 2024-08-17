@@ -15,11 +15,6 @@ export const SettingsSideBar = () => {
          icon: <img src={shield} alt="Shield Icon" style={{ width: '24px', height: '24px' }} />,
       },
       {
-         key: "2",
-         label: <NavLink to="./blocked">Blocked users</NavLink>,
-         icon: <img src={blocked} alt="Blocked Icon" style={{ width: '24px', height: '24px' }} />,
-      },
-      {
          key: "3",
          label: <NavLink to="./reset-password">Reset password</NavLink>,
          icon: <img src={lockImg} alt="Lock Icon" style={{ width: '24px', height: '24px' }} />,
