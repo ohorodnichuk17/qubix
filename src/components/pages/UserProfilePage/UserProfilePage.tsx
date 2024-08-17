@@ -247,18 +247,15 @@ const UserProfilePage: React.FC = () => {
       {
          key: "posts",
          label: "Posts",
-         children: <UserProfilePostList posts={posts} setPosts={setPosts} />, // Pass setPosts here
+         children: <UserProfilePostList posts={posts} setPosts={setPosts} />,
       },
       {
          key: "information",
          label: "Information",
          children: <ShortInformationCard userProfile={userProfile} />,
       },
-      {
-         key: "friends",
-         label: "Friends",
-      },
    ];
+
 
 
    return (
