@@ -4,8 +4,6 @@ import { LockOutlined, MailOutlined } from '@ant-design/icons';
 import { IRegisterModel } from '../../../../interfaces/account/index.ts';
 import { apiClient } from '../../../../utils/api/apiClient.ts';
 import AvatarPreview from './AvatarPreview';
-import { IUploadedFile } from '../../../../types/IUploadedFile';
-import { UploadChangeParam } from 'antd/es/upload/interface';
 import { avatar } from '../../../../utils/images/index.tsx';
 
 const validGenders = ['Male', 'Female', 'Other'];
@@ -15,9 +13,21 @@ const RegisterForm: React.FC = () => {
    const [previewImage, setPreviewImage] = useState(avatar);
    const [loading, setLoading] = useState(false);
 
+   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+
    const onFinish = (values: IRegisterModel) => {
+      const formData = new FormData();
+
+      (Object.keys(values) as Array<keyof IRegisterModel>).forEach(key => {
+         formData.append(key, values[key] as string);
+      });
+
+      if (selectedFile) {
+         formData.append('avatar', selectedFile);
+      }
+
       setLoading(true);
-      apiClient.post('/api/authentication/register', values, {
+      apiClient.post('/api/authentication/register', formData, {
          headers: {
             'Content-Type': 'multipart/form-data'
          }
@@ -32,14 +42,18 @@ const RegisterForm: React.FC = () => {
       });
    };
 
+
+   const handleImageChange = (image: string, file: File | null) => {
+      setPreviewImage(image);
+      setSelectedFile(file);
+   };
+
    const onFinishFailed = (errorInfo: any) => {
       console.log('Failed:', errorInfo);
       message.error('Registration error');
    };
 
-   const handleImageChange = (image: string) => {
-      setPreviewImage(image);
-   };
+
 
    return (
       <Spin spinning={loading} tip="Registration in progress..." size="large">
@@ -54,10 +68,6 @@ const RegisterForm: React.FC = () => {
             <Form.Item
                name="avatar"
                valuePropName="image"
-               getValueFromEvent={(e: UploadChangeParam) => {
-                  const image = e?.fileList[0] as IUploadedFile;
-                  return image?.originFileObj;
-               }}
             >
                <AvatarPreview initialImage={previewImage} onImageChange={handleImageChange} />
             </Form.Item>

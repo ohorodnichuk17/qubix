@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Upload, Button } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
-import { UploadChangeParam, UploadFile } from 'antd/es/upload/interface';
+import { UploadChangeParam } from 'antd/es/upload/interface';
 import { getBase64 } from '../../../../utils/helpers/getBase64';
 import { FileType } from '../../../../types/FileType';
 
 interface AvatarPreviewProps {
    initialImage: string;
-   onImageChange: (image: string) => void;
+   onImageChange: (image: string, file: File | null) => void;
 }
 
 const AvatarPreview: React.FC<AvatarPreviewProps> = ({ initialImage, onImageChange }) => {
@@ -25,15 +25,8 @@ const AvatarPreview: React.FC<AvatarPreviewProps> = ({ initialImage, onImageChan
       const image = file?.url || (file?.preview as string);
       if (image) {
          setPreviewImage(image);
-         onImageChange(image);
+         onImageChange(image, file.originFileObj as File);
       }
-   };
-
-   const handlePreview = async (file: UploadFile) => {
-      if (!file.url && !file.preview) {
-         file.preview = await getBase64(file.originFileObj as FileType);
-      }
-      setPreviewImage(file.url || (file.preview as string));
    };
 
    return (
@@ -50,7 +43,6 @@ const AvatarPreview: React.FC<AvatarPreviewProps> = ({ initialImage, onImageChan
             beforeUpload={() => false}
             accept="image/*"
             onChange={handleAvatarChange}
-            onPreview={handlePreview}
             maxCount={1}
          >
             <Button icon={<UploadOutlined />}>Upload Image</Button>
