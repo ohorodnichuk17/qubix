@@ -1,4 +1,4 @@
-import { Form, Input, Button, Flex, Card, message } from 'antd';
+import { Form, Input, Button, Flex, Card, message, Spin } from 'antd';
 import { Link } from 'react-router-dom';
 import { MailOutlined } from '@ant-design/icons';
 import { forgotPasswordImage } from '../../../utils/images';
@@ -8,10 +8,11 @@ import { useState } from 'react';
 import ForgotPasswordSuccess from './ForgotPasswordSuccess';
 
 const ForgotPasswordPage = () => {
-
    const [forgotPasswordSuccess, setForgotPasswordSuccess] = useState<boolean>(false);
+   const [loading, setLoading] = useState<boolean>(false);
 
    const onFinish = (values: IForgotPassword) => {
+      setLoading(true);
       apiClient.get(`/api/authentication/forgot-password?email=${values.email}`)
          .then(res => {
             console.log(res);
@@ -22,12 +23,15 @@ const ForgotPasswordPage = () => {
          })
          .catch(error => {
             console.error(error);
-            message.error("Forgot password email sending error. Try later")
+            message.error("Forgot password email sending error. Try later");
          })
-   }
+         .finally(() => {
+            setLoading(false);
+         });
+   };
 
    if (forgotPasswordSuccess) {
-      return <ForgotPasswordSuccess/>
+      return <ForgotPasswordSuccess />;
    }
 
    return (
@@ -49,8 +53,12 @@ const ForgotPasswordPage = () => {
                </Form.Item>
 
                <Form.Item>
-                  <Button htmlType="submit" style={{ color: 'white', width: '100%' }}>
-                     Submit
+                  <Button
+                     htmlType="submit"
+                     style={{ color: 'white', width: '100%' }}
+                     disabled={loading}
+                  >
+                     {loading ? <Spin size="small" /> : 'Submit'}
                   </Button>
                </Form.Item>
 
