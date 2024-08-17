@@ -31,19 +31,19 @@ function MessengerPage() {
 	useEffect(() => {
 		const initializeChat = async () => {
 			const connection = new HubConnectionBuilder()
-				.withUrl(`${APP_ENV.BASE_URL}/chathub?email=${user.email}`)
+				.withUrl(`${APP_ENV.BASE_URL}/chathub?email=${user?.email}`)
 				.configureLogging(LogLevel.Information)
 				.build();
-	
+
 			connection.on(
 				"ReceiveMessage",
 				(fromUserEmail, messageContent, chatId) => {
 					console.log("ReceiveMessage event received. ChatId:", chatId);
 					message.info(`New message from ${fromUserEmail}: ${messageContent}`);
 					loadMessages(chatId);
-				}
+				},
 			);
-	
+
 			try {
 				await connection.start();
 				console.log("SignalR Connected.");
@@ -52,11 +52,11 @@ function MessengerPage() {
 				console.error("SignalR Connection Error: ", err);
 			}
 		};
-	
+
 		initializeChat();
-	
+
 		loadChats();
-	
+
 		return () => {
 			if (connection) {
 				connection.stop();
@@ -82,24 +82,24 @@ function MessengerPage() {
 		});
 	};
 
-	const loadMessages = async (chatId?: string) => {
-		if (!selectedChat && !chatId) return;
-
+	const loadMessages = async (chatId: string) => {
 		try {
-			const response = await apiClient.get(
-				`/api/message/${chatId ?? selectedChat?.id}`,
-			);
-			if (!selectedChat) return;
+			const response = await apiClient.get(`/api/message/${chatId}`);
 
-			const updatedChat = { ...selectedChat, messages: response.data };
+			let updatedChat = chats.find((chat) => chat.id === chatId);
+			console.log(updatedChat)
+			if (!updatedChat) {
+				message.error("Load new messages error");
+				return;
+			}
+			updatedChat = { ...updatedChat, messages: response.data };
 			setSelectedChat(updatedChat);
 
 			const updatedChats = chats.map((chat) =>
-				chat.id === updatedChat.id ? updatedChat : chat,
+				chat.id === updatedChat?.id ? updatedChat : chat,
 			);
 			setChats(updatedChats);
 		} catch (err) {
-			console.error("Get Messages Error: ", err);
 			message.error("Failed to load messages.");
 		}
 	};
@@ -113,7 +113,7 @@ function MessengerPage() {
 				values.messageContent,
 			);
 
-			loadMessages();
+			loadMessages(selectedChat?.id ?? "");
 		} catch (err) {
 			console.error("Send Message Error: ", err);
 			message.error("Failed to send message.");
