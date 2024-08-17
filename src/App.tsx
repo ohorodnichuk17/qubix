@@ -104,13 +104,6 @@ const App = () => {
                   }
                />
             </Route>
-            <Route path="/messenger" element={<CreateStoryContainer />}>
-               <Route index element={
-                  <PrivateRoute>
-                     <MessengerPage />
-                  </PrivateRoute>
-               } />
-            </Route>
             <Route path="/" element={<ContainerDefault />}>
                <Route index element={<HomePage />} />
                <Route path="login" element={<LoginPage />} />
@@ -133,6 +126,12 @@ const App = () => {
                   path="email-confirmation-required"
                   element={<EmailConfirmationRequired />}
                />
+
+               <Route path="/messenger" element={
+                  <PrivateRoute>
+                     <MessengerPage />
+                  </PrivateRoute>
+               } />
 
                <Route path="settings" element={<SettingsPage />}>
                   <Route
