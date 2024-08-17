@@ -30,7 +30,7 @@ const PostsByTagPage = () => {
       <div>
          {posts.length > 0 ? (
             posts.map((post) => (
-               <PostItemCard key={post.id} post={post} />
+               <PostItemCard key={post.id} post={post} setPosts={setPosts}/>
             ))
          ) : (
             <p>No posts found for this tag.</p>

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { Card, Flex, Avatar, Divider, Carousel, Tag, Badge, message, Tooltip } from "antd";
-import { CommentOutlined, LikeTwoTone, SmileTwoTone } from "@ant-design/icons";
+import { Card, Flex, Avatar, Divider, Carousel, Tag, Badge, message, Tooltip, Popconfirm } from "antd";
+import { CommentOutlined, DeleteTwoTone, LikeTwoTone, SmileTwoTone } from "@ant-design/icons";
 import { APP_ENV } from "../../../../env";
 import { avatar, likeImg, locationImg } from "../../../../utils/images";
 import { getRandomTagColor } from "../../create/components/Tags/TagsList";
@@ -17,9 +17,10 @@ import EmojiPicker, { type EmojiClickData } from "emoji-picker-react";
 
 type PostItemCardProps = {
 	post: IPost;
+	setPosts: React.Dispatch<React.SetStateAction<IPost[]>>;
 };
 
-const PostItemCard = ({ post }: PostItemCardProps) => {
+const PostItemCard = ({ post, setPosts }: PostItemCardProps) => {
 	const { user } = useAppSelector((state) => state.account);
 	const [commentsVisibility, setCommentsVisibility] = useState<boolean>(false);
 	const [comments, setComments] = useState<IComment[]>([]);
@@ -66,7 +67,7 @@ const PostItemCard = ({ post }: PostItemCardProps) => {
 			postId: post.id,
 			emoji: event.emoji,
 		};
-		apiClient.post("/api/reaction",data);
+		apiClient.post("/api/reaction", data);
 		setShowPicker(false);
 	};
 
@@ -86,41 +87,66 @@ const PostItemCard = ({ post }: PostItemCardProps) => {
 			});
 	};
 
+	const deletePost = () => {
+		try {
+			apiClient.delete("api/post", { data: { id: post.id } });
+			message.success("Post successfully deleted!");
+			setPosts((prevPosts) =>
+				prevPosts.filter((postFromList) => postFromList.id !== post.id),
+			);
+		} catch (error) {
+			message.error("Post deletion error!");
+		}
+	};
+
 	return (
 		<Card
 			key={post.id}
 			style={{ maxWidth: "600px", width: "100%", margin: "auto" }}
 		>
 			<Flex vertical gap="small">
-				<Flex align="center" gap="small">
-					<NavLink to={`/profile?userId=${post.user.id}`}>
-						<Avatar
-							size={60}
-							src={
-								post.user.avatar === null
-									? avatar
-									: `${APP_ENV.BASE_URL}/images/avatars/${post.user.avatar}`
-							}
-						/>
-					</NavLink>
-					<Flex vertical>
-						<Flex align="center" gap="small">
-							<NavLink
-								to={`/profile?userId=${post.user.id}`}
-								style={{ color: "black" }}
-							>
-								<span style={{ fontWeight: 600, fontSize: 20 }}>
-									{`${post.user.firstName} ${post.user.lastName}`}
-								</span>
-							</NavLink>
-							{post.user.isOnline ? (
-								<Badge color="green" count={"online"} />
-							) : (
-								<Badge color="gray" count={"offline"} />
-							)}
+				<Flex justify="space-between" align="center" gap="small">
+					<Flex align="center" gap="small">
+						<NavLink to={`/profile?userId=${post.user.id}`}>
+							<Avatar
+								size={60}
+								src={
+									post.user.avatar === null
+										? avatar
+										: `${APP_ENV.BASE_URL}/images/avatars/${post.user.avatar}`
+								}
+							/>
+						</NavLink>
+						<Flex vertical>
+							<Flex align="center" gap="small">
+								<NavLink
+									to={`/profile?userId=${post.user.id}`}
+									style={{ color: "black" }}
+								>
+									<span style={{ fontWeight: 600, fontSize: 20 }}>
+										{`${post.user.firstName} ${post.user.lastName}`}
+									</span>
+								</NavLink>
+								{post.user.isOnline ? (
+									<Badge color="green" count={"online"} />
+								) : (
+									<Badge color="gray" count={"offline"} />
+								)}
+							</Flex>
+							<span>{getPublicationDate(post.createdAt)}</span>
 						</Flex>
-						<span>{getPublicationDate(post.createdAt)}</span>
 					</Flex>
+
+					{post.userId === user?.id && (
+						<Popconfirm
+							title="Delete post ?"
+							onConfirm={deletePost}
+							okText="Yes"
+							cancelText="No"
+						>
+							<DeleteTwoTone style={{fontSize:18}}/>
+						</Popconfirm>
+					)}
 				</Flex>
 
 				<Divider style={{ margin: 0 }} />

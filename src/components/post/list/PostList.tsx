@@ -21,7 +21,7 @@ const PostList = () => {
 	return (
 		<>
 			{posts.map((post) => (
-				<PostItemCard key={post.id} post={post} />
+				<PostItemCard key={post.id} post={post} setPosts={setPosts}/>
 			))}
 		</>
 	);
