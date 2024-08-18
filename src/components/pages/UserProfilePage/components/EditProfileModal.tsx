@@ -1,4 +1,4 @@
-import { Button, Form, Input, Modal, Select, Switch, message } from "antd";
+import { Button, Form, Input, Modal, Select, message } from "antd";
 import { useState } from "react";
 import { CountryDropdown, RegionDropdown } from "react-country-region-selector";
 import { useAppSelector } from "../../../../hooks/redux";
@@ -94,13 +94,6 @@ const EditProfileModal = ({
             </Form.Item>
             <Form.Item name="pronouns" label="Pronouns">
                <Select defaultValue="do not specify" options={PronounsOptions} className="custom-select" />
-            </Form.Item>
-            <Form.Item
-               name="isProfilePublic"
-               valuePropName="checked"
-               label="Is Profile Public"
-            >
-               <Switch />
             </Form.Item>
          </Form>
       </Modal>

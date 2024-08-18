@@ -9,7 +9,6 @@ export interface IUserProfileEditModel {
 	country: string | null;
 	region: string | null;
 	userName: string | null;
-	isProfilePublic: boolean;
 }
 
 export interface IUserProfile {
