@@ -32,11 +32,11 @@ import { useSearchParams } from "react-router-dom";
 import * as styles from "./styles";
 import ShortInformationCard from "./components/ShortInformationCard";
 import AvatarMenu from "./menus/AvatarMenu";
-import type { ISendFriendRequest } from "../Friends/types";
 import type { IStory } from "../Story/list/types";
 import StoryModal from "../../storyModal/StoryModal";
 import type { IPost } from "../../post/list/types";
 import UserProfilePostList from "./components/UserProfilePostList";
+import SendFriendRequestButton from "../../featured/SendFriendRequestButton/SendFriendRequestButton";
 
 const UserProfilePage: React.FC = () => {
    const { user } = useAppSelector((state) => state.account);
@@ -169,36 +169,6 @@ const UserProfilePage: React.FC = () => {
       }
    };
 
-   const sendFriendRequest = () => {
-      if (user?.id === undefined) {
-         message.error("Send friend request error");
-         return;
-      }
-
-      if (userId === null) {
-         return;
-      }
-
-      const sendFriendRequestBody: ISendFriendRequest = {
-         friendId: userId,
-         userId: user?.id,
-      };
-
-      setLoading(true);
-      apiClient
-         .post("/api/friends/send-friend-request", sendFriendRequestBody)
-         .then(() => {
-            message.success("Request successfully sended!");
-            updateRelationshipStatus();
-         })
-         .catch(() => {
-            message.error("Request sending error");
-         })
-         .finally(() => {
-            setLoading(false);
-         });
-   };
-
    const acceptFriendRequest = () => {
       if (userId === null) {
          return;
@@ -255,8 +225,6 @@ const UserProfilePage: React.FC = () => {
          children: <ShortInformationCard userProfile={userProfile} />,
       },
    ];
-
-
 
    return (
       <div style={{ backgroundColor: "#FFEBE0", padding: 0, height: "100%" }}>
@@ -328,9 +296,7 @@ const UserProfilePage: React.FC = () => {
                   {!isCurrentUserProfile && (
                      <>
                         {relationshipsStatus === 0 && (
-                           <Button loading={loading} onClick={sendFriendRequest}>
-                              Send friend request
-                           </Button>
+                           <SendFriendRequestButton friendId={userId} afterSendRequestFn={updateRelationshipStatus} />
                         )}
                         {relationshipsStatus === 1 && (
                            <Badge count={"friend"} color="orange" />

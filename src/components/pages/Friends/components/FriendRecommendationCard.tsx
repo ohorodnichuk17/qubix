@@ -1,10 +1,8 @@
 import { UserOutlined } from "@ant-design/icons";
-import { Col, Card, Button, message } from "antd";
-import type { IFriendRecommendation, ISendFriendRequest } from "../types";
-import { useAppSelector } from "../../../../hooks/redux";
-import { apiClient } from "../../../../utils/api/apiClient";
-import { useState } from "react";
+import { Col, Card } from "antd";
+import type { IFriendRecommendation } from "../types";
 import { useNavigate } from "react-router-dom";
+import SendFriendRequestButton from "../../../featured/SendFriendRequestButton/SendFriendRequestButton";
 
 type FriendRecommendationCardProps = {
 	friend: IFriendRecommendation;
@@ -17,37 +15,7 @@ const FriendRecommendationCard = ({
 	friend,
 	removeSenderRequestFriend,
 }: FriendRecommendationCardProps) => {
-	const { user } = useAppSelector((state) => state.account);
 	const navigate = useNavigate();
-
-	const [loading, setloading] = useState<boolean>(false);
-
-	const sendFriendRequest = (friendId: string) => {
-		if (user?.id === undefined) {
-			message.error("Send friend request error");
-			return;
-		}
-
-		setloading(true);
-
-		const sendFriendRequestBody: ISendFriendRequest = {
-			friendId,
-			userId: user?.id,
-		};
-
-		apiClient
-			.post("/api/friends/send-friend-request", sendFriendRequestBody)
-			.then(() => {
-				message.success("Request successfully sended!");
-				removeSenderRequestFriend(friend);
-			})
-			.catch(() => {
-				message.error("Request sending error");
-			})
-			.finally(() => {
-				setloading(false);
-			});
-	};
 
 	return (
 		<Col
@@ -63,14 +31,11 @@ const FriendRecommendationCard = ({
 				onClick={() => navigate(`/profile?userId=${friend.id}`)}
 				cover={<img alt="Friend recommendation avatar" src={friend.avatar} />}
 				actions={[
-					<Button
-						type="primary"
-						key="add"
-						loading={loading}
-						onClick={() => sendFriendRequest(friend.id)}
-					>
-						Add friend
-					</Button>,
+					<SendFriendRequestButton
+						key={friend.id}
+						friendId={friend.id}
+						afterSendRequestFn={() => removeSenderRequestFriend(friend)}
+					/>,
 				]}
 			>
 				<Card.Meta

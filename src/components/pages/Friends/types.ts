@@ -4,8 +4,3 @@ export interface IFriendRecommendation {
     lastName: string;
     avatar: string;
 }
-
-export interface ISendFriendRequest {
-    userId: string;
-    friendId: string;
-}

@@ -1,10 +1,11 @@
-import { Card, Avatar, Button } from "antd";
+import { Card, Avatar } from "antd";
 import StoryModal from "../../../storyModal/StoryModal";
 import type { ISearchUserResult } from "../types";
 import { useEffect, useState } from "react";
 import type { IStory } from "../../Story/list/types";
 import { avatar } from "../../../../utils/images";
 import { APP_ENV } from "../../../../env";
+import SendFriendRequestButton from "../../../featured/SendFriendRequestButton/SendFriendRequestButton";
 
 type SearchFriendResultCardProps = {
    friend: ISearchUserResult;
@@ -60,12 +61,8 @@ const SearchFriendResultCard = ({ friend }: SearchFriendResultCardProps) => {
                >{`${friend.firstName} ${friend.lastName}`}</h3>
             </div>
             <div style={{ marginTop: "10px", textAlign: "center" }}>
-               <Button
-                  type="primary"
-                  style={{ backgroundColor: "orange", borderColor: "orange" }}
-               >
-                  Add Friend
-               </Button>
+               <SendFriendRequestButton friendId={friend.id} afterSendRequestFn={() => { }} type="primary"
+                  style={{ backgroundColor: "orange", borderColor: "orange" }} />
             </div>
          </Card>
          <StoryModal
