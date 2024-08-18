@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Row, Col, Space, Card, Typography } from 'antd';
 import RegisterForm from './components/RegisterForm';
 import { reactAmico, lateAtNight } from '../../../utils/images/index.tsx';
@@ -31,8 +31,8 @@ const RegisterPage: React.FC = () => {
                      bottom: 0,
                      left: 0,
                      width: '25%',
-                     zIndex: 1
                   }}
+                  className='register-page-image'
                />
                <img
                   src={lateAtNight}
