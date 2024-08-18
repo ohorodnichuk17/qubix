@@ -1,6 +1,6 @@
 import { Grid, Layout, Menu, MenuProps } from 'antd';
 import Sider from 'antd/es/layout/Sider';
-import { blocked, questionmark, lockImg, shield, mail, userImg } from '../../../../utils/images/index';
+import { questionmark, lockImg, shield, mail, userImg } from '../../../../utils/images/index';
 import { NavLink } from 'react-router-dom';
 
 const { useBreakpoint } = Grid;
