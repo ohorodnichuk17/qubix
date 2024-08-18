@@ -1,6 +1,5 @@
 import {
    Avatar,
-   Button,
    Divider,
    Flex,
    Form,
@@ -40,7 +39,6 @@ type CreatePostModalProps = {
 
 const CreatePostModal = ({
    isModalOpen,
-   handleOk,
    handleCancel,
 }: CreatePostModalProps) => {
    const { user } = useAppSelector((state) => state.account);
@@ -86,13 +84,11 @@ const CreatePostModal = ({
    };
 
    const handleChangeAction = (newAction: IAction | undefined) => {
-      console.log("NEW action: ", newAction);
       setAction(newAction);
       setFeelingModalVisible(false);
    };
 
    const handleChangeSubAction = (newAction: ISubAction | undefined) => {
-      console.log("NEW action: ", newAction);
       setSubAction(newAction);
       setFeelingModalVisible(false);
    };
@@ -173,6 +169,7 @@ const CreatePostModal = ({
          .then((res) => {
             console.log(res);
             message.success("Story successfully posted!");
+            handleCancel();
          })
          .catch((error) => {
             console.log(error);
@@ -180,13 +177,19 @@ const CreatePostModal = ({
          });
    };
 
+   const handleModalOk = () => {
+      form.submit();
+   };
+
    const avatarImg = useAvatar();
+
+   const [form] = Form.useForm();
 
    return (
       <Modal
          title="Create publication"
          open={isModalOpen}
-         onOk={handleOk}
+         onOk={handleModalOk}
          onCancel={handleCancel}
       >
          <Flex align="center" gap="middle">
@@ -215,7 +218,7 @@ const CreatePostModal = ({
             </Flex>
          </Flex>
          <Divider />
-         <Form onFinish={onFinish} layout="vertical" requiredMark={false}>
+         <Form form={form} onFinish={onFinish} layout="vertical" requiredMark={false}>
             <div ref={captureAreaRef}>
                <FormItem name="content">
                   <Input.TextArea
@@ -271,8 +274,6 @@ const CreatePostModal = ({
                handleTagsInputVisibilityChange={handleTagsVisibilityChange}
                feelingEmoji={feeling ? feeling.emoji : feelingPng}
             />
-
-            <Button htmlType="submit">Post</Button>
          </Form>
          <PostVisibilityModal
             visibility={postVisibility}
