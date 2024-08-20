@@ -170,9 +170,9 @@ const CreatePostModal = ({
                "content-type": "multipart/form-data",
             },
          })
-         .then((res) => {
-            console.log(res);
-            message.success("Story successfully posted!");
+         .then(async () => {
+            await message.success("Post successfully posted!",1);
+            window.location.reload();
             handleCancel();
          })
          .catch((error) => {
