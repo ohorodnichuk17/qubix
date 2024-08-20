@@ -58,6 +58,7 @@ const UserProfilePage: React.FC = () => {
    const [searchParams] = useSearchParams();
    const userId = searchParams.get("userId");
    const isCurrentUserProfile = userId === null || userId === user?.id;
+   const isFriend = relationshipsStatus === 1;
 
    const isScreenSmallerThatMd =
       (screens.xs || screens.sm) &&
@@ -282,8 +283,8 @@ const UserProfilePage: React.FC = () => {
                            </Flex>
                         )}
                         {relationshipsStatus === 2 && (
-                           <Flex vertical gap={5} style={{ marginTop: '5%' , padding: "0 5px" }}>
-                              <AcceptFriendRequestButton friendId={userId} afterAcceptRequestFn={updateRelationshipStatus}/>
+                           <Flex vertical gap={5} style={{ marginTop: '5%', padding: "0 5px" }}>
+                              <AcceptFriendRequestButton friendId={userId} afterAcceptRequestFn={updateRelationshipStatus} />
                               <RejectFriendRequestButton friendId={userId} afterRejectRequestFn={updateRelationshipStatus} />
                            </Flex>
                         )}
@@ -294,13 +295,13 @@ const UserProfilePage: React.FC = () => {
                   )}
                </Flex>
 
-               {!userProfile?.isProfilePublic && !isCurrentUserProfile ? (
+               {!userProfile?.isProfilePublic && !isCurrentUserProfile && !isFriend ? (
                   <Flex
                      style={{ width: "100%", height: "100%" }}
                      justify="center"
                      align="center"
                   >
-                     <img src={lockImg} alt="Lock icon " height={60} />
+                     <img src={lockImg} alt="Lock icon" height={60} />
                      <h1 style={{ fontSize: 40 }}>Private account</h1>
                   </Flex>
                ) : (
