@@ -1,4 +1,4 @@
-import { Card, Avatar } from "antd";
+import { Card, Avatar, message, Badge, Button } from "antd";
 import StoryModal from "../../../storyModal/StoryModal";
 import type { ISearchUserResult } from "../types";
 import { useEffect, useState } from "react";
@@ -6,20 +6,59 @@ import type { IStory } from "../../Story/list/types";
 import { avatar } from "../../../../utils/images";
 import { APP_ENV } from "../../../../env";
 import SendFriendRequestButton from "../../../featured/SendFriendRequestButton/SendFriendRequestButton";
+import { useAppSelector } from "../../../../hooks/redux";
+import { apiClient } from "../../../../utils/api/apiClient";
 
 type SearchFriendResultCardProps = {
    friend: ISearchUserResult;
 };
 
 const SearchFriendResultCard = ({ friend }: SearchFriendResultCardProps) => {
+	const { user } = useAppSelector((state) => state.account);
    const [currentStory, setCurrentStory] = useState<IStory>();
    const [isModalOpen, setIsModalOpen] = useState(false);
+   const [relationshipsStatus, setRelationshipsStatus] = useState<number>();
+	const [loading, setLoading] = useState<boolean>(false);
 
    useEffect(() => {
       for (const story of friend.stories) {
          story.user = friend;
       }
+		updateRelationshipStatus();
    }, [friend]);
+
+   const isCurrentUserProfile = friend.id === user?.id;
+
+	const updateRelationshipStatus = () => {
+		if (!isCurrentUserProfile) {
+			apiClient
+				.get(`api/friends/relationships-status?friendId=${friend.id}`)
+				.then((res) => {
+					setRelationshipsStatus(res.data);
+				});
+		}
+	};
+
+	const acceptFriendRequest = () => {
+		const values = {
+			friendId: friend.id,
+		};
+
+		setLoading(true);
+
+		apiClient
+			.post("/api/friends/accept-friend-request", values)
+			.then(() => {
+				message.success("Friend Request accepted!");
+				updateRelationshipStatus();
+			})
+			.catch(() => {
+				message.error("Friend request accepting error!");
+			})
+			.finally(() => {
+				setLoading(false);
+			});
+	};
 
    const handleNavigateStory = (type: "next" | "prev") => {
       if (!currentStory) return;
@@ -61,8 +100,29 @@ const SearchFriendResultCard = ({ friend }: SearchFriendResultCardProps) => {
                >{`${friend.firstName} ${friend.lastName}`}</h3>
             </div>
             <div style={{ marginTop: "10px", textAlign: "center" }}>
-               <SendFriendRequestButton friendId={friend.id} afterSendRequestFn={() => { }} type="primary"
-                  style={{ backgroundColor: "orange", borderColor: "orange" }} />
+               {!isCurrentUserProfile && (
+						<>
+							{relationshipsStatus === 0 && (
+								<SendFriendRequestButton
+									friendId={friend.id}
+									afterSendRequestFn={updateRelationshipStatus}
+									type="primary"
+									style={{ backgroundColor: "orange", borderColor: "orange" }}
+								/>
+							)}
+							{relationshipsStatus === 1 && (
+								<Badge count={"friend"} color="orange" />
+							)}
+							{relationshipsStatus === 2 && (
+								<Button loading={loading} onClick={acceptFriendRequest}>
+									Accept friend request
+								</Button>
+							)}
+							{relationshipsStatus === 3 && (
+								<Badge count={"wait to accept"} color="orange" />
+							)}
+						</>
+					)}
             </div>
          </Card>
          <StoryModal
