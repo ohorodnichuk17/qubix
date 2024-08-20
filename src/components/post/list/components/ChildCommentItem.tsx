@@ -31,6 +31,11 @@ const ChildCommentItem = ({ comment, setComments }: ChildCommentItemProps) => {
 						: parentComment,
 				),
 			);
+			setComments((prevComments) =>
+				prevComments.filter(
+					(commentFromList) => commentFromList.id !== comment.id,
+				),
+			);
 		});
 	};
 	return (

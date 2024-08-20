@@ -42,6 +42,7 @@ const AddCommentReplyForm = ({
 				setComments((prevComments) =>
 					prevComments.map((c) => (c.id === comment.id ? updatedComment : c)),
 				);
+				setComments((prevComments) => [...prevComments, res.data]);
 				setAnswerVisibility(false);
 			})
 			.catch((error) => {

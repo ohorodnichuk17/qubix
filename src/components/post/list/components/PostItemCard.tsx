@@ -250,12 +250,21 @@ const PostItemCard = ({ post, setPosts }: PostItemCardProps) => {
 						<span>Reactions</span>
 					</Flex>
 
-					<CommentOutlined
-						style={{ cursor: "pointer" }}
-						onClick={() => {
-							setCommentsVisibility(!commentsVisibility);
-						}}
-					/>
+					<Tooltip
+						title={commentsVisibility ? "Hide comments" : "Show comments"}
+					>
+						<Flex
+							align="center"
+							gap="small"
+							className="reactions-flex"
+							onClick={() => {
+								setCommentsVisibility(!commentsVisibility);
+							}}
+						>
+							<CommentOutlined />
+							<span>{comments.length > 0 ? comments.length : ""}</span>
+						</Flex>
+					</Tooltip>
 				</Flex>
 				<EmojiPicker open={showPicker} onEmojiClick={onEmojiClick} />
 
