@@ -124,7 +124,11 @@ const CreatePostModal = ({
 
       formData.append("content", values.content);
       formData.append("isArchive", "false");
-      formData.append("location", values.location);
+
+      if (values.location) {
+         formData.append("location", values.location);
+      }
+
       formData.append("visibility", postVisibility);
 
       if (postVisibility === "friends except") {
