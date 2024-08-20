@@ -143,25 +143,16 @@ const LoginPage: React.FC = () => {
 						</Button>
 					</Form.Item>
 
-					<Flex justify="center">
+					<Divider />
+
+					<Flex vertical align="center" gap="middle">
 						<Link to="/forgot-password" style={{ color: "#FF6347" }}>
 							Forgot password?
 						</Link>
-					</Flex>
-
-					<Divider />
-
-					<Link to="/">
-						<Button
-							style={{
-								color: "white",
-								backgroundColor: "#FF6347",
-								width: "100%",
-							}}
-						>
+						<Link to="/register" style={{ color: "#FF6347" }}>
 							Create account
-						</Button>
-					</Link>
+						</Link>
+					</Flex>
 				</Form>
 			</Card>
 		</Flex>
