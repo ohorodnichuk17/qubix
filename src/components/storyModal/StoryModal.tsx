@@ -49,7 +49,7 @@ const StoryModal: React.FC<StoryModalProps> = ({
                {currentStory ? (
                   <Flex vertical justify="center">
                      <NavLink
-                        to={`profile?userId=${currentStory?.user.id}`}
+                        to={`/profile?userId=${currentStory?.user.id}`}
                         style={{
                            color: "black",
                            height: "fit-content",
