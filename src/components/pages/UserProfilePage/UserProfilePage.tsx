@@ -172,6 +172,19 @@ const UserProfilePage: React.FC = () => {
       }
    };
 
+
+   const handleDeleteStory = async (storyId: string) => {
+      try {
+         await apiClient.delete(`api/story/delete/${storyId}`);
+         setStories(stories.filter((story) => story.id !== storyId));
+         message.success("Story deleted successfully");
+         setIsModalOpen(false);
+      } catch (error) {
+         console.error("Error deleting story:", error);
+         message.error("Story deletion error");
+      }
+   };
+
    const handleCoverPhotoChange = async (info: UploadChangeParam) =>
       handleUploadChange(info, "coverPhoto");
 
@@ -318,6 +331,7 @@ const UserProfilePage: React.FC = () => {
                   isModalOpen={isModalOpen}
                   onClose={() => setIsModalOpen(false)}
                   onNavigate={handleNavigateStory}
+                  onDelete={(storyId) => handleDeleteStory(storyId)}
                />
             </Card>
          </Row>
