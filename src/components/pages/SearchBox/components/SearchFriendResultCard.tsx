@@ -10,12 +10,14 @@ import { useAppSelector } from "../../../../hooks/redux";
 import { apiClient } from "../../../../utils/api/apiClient";
 import AcceptFriendRequestButton from "../../../featured/AcceptFriendRequestButton/AcceptFriendRequestButton";
 import RemoveFriendButton from "../../../featured/RemoveFriendButton/RemoveFriendButton";
+import { NavLink, useNavigate } from "react-router-dom";
 
 type SearchFriendResultCardProps = {
    friend: ISearchUserResult;
 };
 
 const SearchFriendResultCard = ({ friend }: SearchFriendResultCardProps) => {
+   const navigate = useNavigate();
 	const { user } = useAppSelector((state) => state.account);
    const [currentStory, setCurrentStory] = useState<IStory>();
    const [isModalOpen, setIsModalOpen] = useState(false);
@@ -68,6 +70,8 @@ const SearchFriendResultCard = ({ friend }: SearchFriendResultCardProps) => {
                      if (friend.stories.length > 0) {
                         setCurrentStory(friend.stories[0]);
                         setIsModalOpen(true);
+                     } else {
+                        navigate(`/profile?userId=${friend.id}`);
                      }
                   }}
                   style={{
@@ -77,9 +81,11 @@ const SearchFriendResultCard = ({ friend }: SearchFriendResultCardProps) => {
                      minWidth: 60,
                   }}
                />
-               <h3
-                  style={{ marginLeft: "10px" }}
-               >{`${friend.firstName} ${friend.lastName}`}</h3>
+               <NavLink to={`/profile?userId=${friend.id}`} style={{ color: "black" }}>
+                  <h3 style={{ marginLeft: "10px" }}>
+                     {`${friend.firstName} ${friend.lastName}`}
+                  </h3>
+               </NavLink>
             </div>
             <div style={{ marginTop: "10px", textAlign: "center" }}>
                {!isCurrentUserProfile && (
