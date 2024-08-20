@@ -74,7 +74,7 @@ export const SideBar = () => {
       try {
          await apiClient.post("/api/post/create", formData)
          message.success("Feeling successfully posted!",0.5).then(()=>{
-            // window.location.reload();
+            window.location.reload();
          })
       } catch {
          message.error("Post feeling error!");
