@@ -37,6 +37,7 @@ import StoryModal from "../../storyModal/StoryModal";
 import type { IPost } from "../../post/list/types";
 import UserProfilePostList from "./components/UserProfilePostList";
 import SendFriendRequestButton from "../../featured/SendFriendRequestButton/SendFriendRequestButton";
+import AcceptFriendRequestButton from "../../featured/AcceptFriendRequestButton/AcceptFriendRequestButton";
 
 const UserProfilePage: React.FC = () => {
    const { user } = useAppSelector((state) => state.account);
@@ -47,7 +48,6 @@ const UserProfilePage: React.FC = () => {
    const dispatch = useDispatch();
    const [isModalVisible, setIsModalVisible] = useState(false);
    const [relationshipsStatus, setRelationshipsStatus] = useState<number>();
-   const [loading, setLoading] = useState<boolean>(false);
    const [posts, setPosts] = useState<IPost[]>([]);
    const [stories, setStories] = useState<IStory[]>([]);
    const [currentStory, setCurrentStory] = useState<IStory>();
@@ -169,31 +169,6 @@ const UserProfilePage: React.FC = () => {
       }
    };
 
-   const acceptFriendRequest = () => {
-      if (userId === null) {
-         return;
-      }
-
-      const values = {
-         friendId: userId,
-      };
-
-      setLoading(true);
-
-      apiClient
-         .post("/api/friends/accept-friend-request", values)
-         .then(() => {
-            message.success("Friend Request accepted!");
-            updateRelationshipStatus();
-         })
-         .catch(() => {
-            message.error("Friend request accepting error!");
-         })
-         .finally(() => {
-            setLoading(false);
-         });
-   };
-
    const handleCoverPhotoChange = async (info: UploadChangeParam) =>
       handleUploadChange(info, "coverPhoto");
 
@@ -302,9 +277,7 @@ const UserProfilePage: React.FC = () => {
                            <Badge count={"friend"} color="orange" />
                         )}
                         {relationshipsStatus === 2 && (
-                           <Button loading={loading} onClick={acceptFriendRequest}>
-                              Accept friend request
-                           </Button>
+                           <AcceptFriendRequestButton friendId={userId} afterAcceptRequestFn={updateRelationshipStatus}/>
                         )}
                         {relationshipsStatus === 3 && (
                            <Badge count={"wait to accept"} color="orange" />

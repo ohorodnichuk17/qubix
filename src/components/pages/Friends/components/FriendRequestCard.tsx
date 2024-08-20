@@ -1,9 +1,8 @@
 import { UserOutlined } from "@ant-design/icons";
-import { Col, Card, Button, message } from "antd";
+import { Col, Card } from "antd";
 import { useNavigate } from "react-router-dom";
-import { apiClient } from "../../../../utils/api/apiClient";
-import { useState } from "react";
 import type { IFriendRecommendation } from "../types";
+import AcceptFriendRequestButton from "../../../featured/AcceptFriendRequestButton/AcceptFriendRequestButton";
 
 type FriendRequestCardProps = {
 	friend: IFriendRecommendation;
@@ -17,31 +16,6 @@ const FriendRequestCard = ({
 	removeAcceptedRequestFriend,
 }: FriendRequestCardProps) => {
 	const navigate = useNavigate();
-
-	const [loading, setLoading] = useState<boolean>(false);
-
-	const acceptFriendRequest = (e: React.MouseEvent) => {
-		e.stopPropagation();
-
-		const values = {
-			friendId: friend.id,
-		};
-
-		setLoading(true);
-
-		apiClient
-			.post("/api/friends/accept-friend-request", values)
-			.then(() => {
-				message.success("Friend Request accepted!");
-				removeAcceptedRequestFriend(friend);
-			})
-			.catch(() => {
-				message.error("Friend request accepting error!");
-			})
-			.finally(() => {
-				setLoading(false);
-			});
-	};
 
 	return (
 		<Col
@@ -63,14 +37,11 @@ const FriendRequestCard = ({
 					/>
 				}
 				actions={[
-					<Button
-						type="primary"
+					<AcceptFriendRequestButton
 						key="add"
-						loading={loading}
-						onClick={acceptFriendRequest}
-					>
-						Accept friend request
-					</Button>,
+						friendId={friend.id}
+						afterAcceptRequestFn={() => removeAcceptedRequestFriend(friend)}
+					/>,
 				]}
 			>
 				<Card.Meta
