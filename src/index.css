@@ -38,15 +38,12 @@ body {
     background-color: lightgray;
 }
 
-.delete-comment-icon {
-    position: relative;
-    left: -27.5px;
-    top: 5px;
+.comment-icon {
     cursor: pointer;
     transition: .3s;
 }
 
-.delete-comment-icon:hover {
+.comment-icon:hover {
     scale: 1.2;
 }
 

@@ -4,8 +4,10 @@ import { APP_ENV } from "../../../../env";
 import type { IComment } from "../types";
 import { avatar } from "../../../../utils/images";
 import { useAppSelector } from "../../../../hooks/redux";
-import { CloseCircleTwoTone } from "@ant-design/icons";
+import { CloseCircleTwoTone, EditTwoTone } from "@ant-design/icons";
 import { apiClient } from "../../../../utils/api/apiClient";
+import { useState } from "react";
+import EditCommentForm from "./EditCommentForm";
 
 type ChildCommentItemProps = {
 	comment: IComment;
@@ -14,6 +16,9 @@ type ChildCommentItemProps = {
 
 const ChildCommentItem = ({ comment, setComments }: ChildCommentItemProps) => {
 	const { user } = useAppSelector((state) => state.account);
+	const [editCommentVisibility, setEditCommentVisibility] =
+		useState<boolean>(false);
+
 	const deleteComment = () => {
 		const data = {
 			id: comment.id,
@@ -38,6 +43,17 @@ const ChildCommentItem = ({ comment, setComments }: ChildCommentItemProps) => {
 			);
 		});
 	};
+
+	if (editCommentVisibility) {
+		return (
+			<EditCommentForm
+				comment={comment}
+				setComments={setComments}
+				setEditCommentVisibility={setEditCommentVisibility}
+			/>
+		);
+	}
+
 	return (
 		<Flex gap="small" style={{ marginLeft: 45 }}>
 			<NavLink
@@ -62,24 +78,29 @@ const ChildCommentItem = ({ comment, setComments }: ChildCommentItemProps) => {
 					width: "100%",
 				}}
 			>
-				<span
-					style={{ fontWeight: 500 }}
-				>{`${comment.userEntity.firstName} ${comment.userEntity.lastName}`}</span>
+				<Flex justify="space-between" align="center">
+					<span
+						style={{ fontWeight: 500 }}
+					>{`${comment.userEntity.firstName} ${comment.userEntity.lastName}`}</span>
+					{comment.userId === user?.id && (
+						<Flex gap="small">
+							<EditTwoTone
+								className="comment-icon"
+								onClick={() => setEditCommentVisibility(true)}
+							/>
+							<Popconfirm
+								title="Delete comment ?"
+								onConfirm={deleteComment}
+								okText="Yes"
+								cancelText="No"
+							>
+								<CloseCircleTwoTone className="comment-icon" />
+							</Popconfirm>
+						</Flex>
+					)}
+				</Flex>
 				<span> {comment.message}</span>
 			</Flex>
-			{comment.userId === user?.id && (
-				<Popconfirm
-					title="Delete comment ?"
-					onConfirm={deleteComment}
-					okText="Yes"
-					cancelText="No"
-				>
-					<CloseCircleTwoTone
-						className="delete-comment-icon"
-						style={{ top: -15 }}
-					/>
-				</Popconfirm>
-			)}
 		</Flex>
 	);
 };
