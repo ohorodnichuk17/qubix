@@ -1,4 +1,4 @@
-import { Avatar, Grid, Layout, Menu, type MenuProps } from "antd";
+import { Avatar, Grid, Layout, Menu, message, type MenuProps } from "antd";
 import { Link } from "react-router-dom";
 import {
    action,
@@ -14,6 +14,8 @@ import { useAppSelector } from "../../../hooks/redux";
 import useAvatar from "../../../hooks/useAvatar";
 import CreatePostModal from "../../post/create/CreatePostModal";
 import FeelingModal from "../../feelings/FeelingModal";
+import type { IFeeling } from "../../feelings/types";
+import { apiClient } from "../../../utils/api/apiClient";
 const { useBreakpoint } = Grid;
 
 const { Sider } = Layout;
@@ -34,8 +36,26 @@ export const SideBar = () => {
    const handleCreatePostCancel = () => setIsCreatePostModalOpen(false);
 
    const showFeelingModal = () => setIsFeelingModalOpen(true);
-   const handleFeelingOk = () => setIsFeelingModalOpen(false);
-   const handleFeelingCancel = () => setIsFeelingModalOpen(false);
+   const hideFeelingModal = () => setIsFeelingModalOpen(false);
+   
+   const handleFeelingOk =async (feeling: IFeeling | undefined) => {
+      if (!feeling?.id) return;
+
+      const formData = new FormData();
+      formData.append("visibility", "public");
+      formData.append("feelingId", feeling?.id);
+
+      try {
+         await apiClient.post("/api/post/create", formData)
+         message.success("Feeling successfully posted!",0.5).then(()=>{
+            window.location.reload();
+         })
+      } catch {
+         message.error("Post feeling error!");
+      }
+      setIsFeelingModalOpen(false);
+   };
+
 
    const isScreenSmallerThatMd =
       (screens.xs || screens.sm) &&
@@ -162,7 +182,7 @@ export const SideBar = () => {
                handleOk={handleFeelingOk}
                handleChangeAction={() => { }}
                handleChangeSubAction={() => { }}
-               handleCancel={handleFeelingCancel} />
+               handleCancel={hideFeelingModal} />
          </div>
       </Sider>
    );
