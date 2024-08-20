@@ -11,6 +11,7 @@ import LogoutButton from "./components/LogoutButton";
 import RegisterButton from "./components/RegisterButton";
 import './AdminDashboard.css'
 import { User, Post, Story, Comment } from "./types";
+import { useAppSelector } from "../../../hooks/redux";
 
 const { Content } = Layout;
 
@@ -24,6 +25,8 @@ const AdminDashboard: React.FC = () => {
    const [user, setUser] = useState<User | null>(null);
    const [selectedId, setSelectedId] = useState<string | null>(null);
    const [modalType, setModalType] = useState<string | null>(null);
+
+   const { isLogin } = useAppSelector((state) => state.account);
 
    useEffect(() => {
       fetchAllUsers();
@@ -159,8 +162,7 @@ const AdminDashboard: React.FC = () => {
       }
    };
 
-
-   return (
+   return isLogin ? (
       <Layout>
          <Content style={{ padding: "10px", maxWidth: "1200px", margin: "0 auto" }}>
             <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "10px", marginBottom: "20px" }}>
@@ -186,7 +188,21 @@ const AdminDashboard: React.FC = () => {
             <DeleteModal visible={!!modalType} modalType={modalType} onCancel={() => setModalType(null)} onDelete={handleDelete} />
          </Content>
       </Layout>
+   ) : (
+      <Layout className="admin-dashboard">
+         <Content style={{ padding: "20px", textAlign: "center" }}>
+            <div className="not-logged-in">
+               <h1>Welcome to Admin Dashboard</h1>
+               <p>Please log in to access the administration panel.</p>
+               <div className="decorative-element"></div>
+               <div className="login-button-container">
+                  <RegisterButton />
+               </div>
+            </div>
+         </Content>
+      </Layout>
    );
+
 };
 
 export default AdminDashboard;
