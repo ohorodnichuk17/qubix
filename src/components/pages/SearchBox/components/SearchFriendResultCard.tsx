@@ -64,11 +64,13 @@ const SearchFriendResultCard = ({ friend }: SearchFriendResultCardProps) => {
                   size={60}
                   src={avatarUrl}
                   onClick={() => {
-                     setCurrentStory(friend.stories[0]);
-                     setIsModalOpen(true);
+                     if (friend.stories.length > 0) {
+                        setCurrentStory(friend.stories[0]);
+                        setIsModalOpen(true);
+                     }
                   }}
                   style={{
-                     border: " 3px solid #7F50FF",
+                     border: friend.stories.length > 0 ? "3px solid #7F50FF" : "none",
                      cursor: "pointer",
                      minHeight: 60,
                      minWidth: 60,
