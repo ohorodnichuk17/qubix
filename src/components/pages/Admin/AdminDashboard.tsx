@@ -129,6 +129,9 @@ const AdminDashboard: React.FC = () => {
       try {
          let endpoint = "";
          switch (modalType) {
+            case "delete-user":
+               endpoint = "/api/admin/delete";
+               break;
             case "delete-post":
                endpoint = "/api/admin/delete-post";
                break;
@@ -155,6 +158,7 @@ const AdminDashboard: React.FC = () => {
          setLoading(false);
       }
    };
+
 
    return (
       <Layout>
