@@ -1,4 +1,4 @@
-import { Card, Avatar, Badge } from "antd";
+import { Card, Avatar, Badge, Flex } from "antd";
 import StoryModal from "../../../storyModal/StoryModal";
 import type { ISearchUserResult } from "../types";
 import { useEffect, useState } from "react";
@@ -9,6 +9,7 @@ import SendFriendRequestButton from "../../../featured/SendFriendRequestButton/S
 import { useAppSelector } from "../../../../hooks/redux";
 import { apiClient } from "../../../../utils/api/apiClient";
 import AcceptFriendRequestButton from "../../../featured/AcceptFriendRequestButton/AcceptFriendRequestButton";
+import RemoveFriendButton from "../../../featured/RemoveFriendButton/RemoveFriendButton";
 
 type SearchFriendResultCardProps = {
    friend: ISearchUserResult;
@@ -92,8 +93,11 @@ const SearchFriendResultCard = ({ friend }: SearchFriendResultCardProps) => {
 								/>
 							)}
 							{relationshipsStatus === 1 && (
-								<Badge count={"friend"} color="orange" />
-							)}
+                        <Flex vertical gap={5} >
+                           <Badge count={"friend"} color="orange" />
+                           <RemoveFriendButton friendId={friend.id} afterRemoveFriendFn={updateRelationshipStatus}/>
+                        </Flex>
+                     )}
 							{relationshipsStatus === 2 && (
                         <AcceptFriendRequestButton friendId={friend.id} afterAcceptRequestFn={updateRelationshipStatus}/>
 							)}
