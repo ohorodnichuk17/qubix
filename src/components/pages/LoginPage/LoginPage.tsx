@@ -1,5 +1,5 @@
 import type React from "react";
-import { Form, Input, Button, Flex, Card, Divider } from "antd";
+import { Form, Input, Button, Flex, Card, Divider, message } from "antd";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { LockOutlined, MailOutlined } from "@ant-design/icons";
 import "./LoginPage.css";
@@ -22,7 +22,7 @@ const LoginPage: React.FC = () => {
 		try {
 			setLoading(true);
 
-         const response = await dispatch(login(values));
+			const response = await dispatch(login(values));
 			unwrapResult(response);
 
 			if (redirectAddress) {
@@ -31,8 +31,18 @@ const LoginPage: React.FC = () => {
 			}
 			navigate("/");
 		} catch (error) {
-			console.log(error);
+			const typedError = error as ErrorResponse;
+
+			if (typedError.errors && typedError.errors.length > 0) {
+				if (typedError.errors[0].code === "Email is not confirmed") {
+					navigate("/email-confirmation-required")
+				} else {
+					message.error("Incorrect email or password!");
+				}
+			}
 		}
+
+		setLoading(false);
 	};
 
 	return (
