@@ -11,6 +11,7 @@ import { apiClient } from "../../../../utils/api/apiClient";
 import AcceptFriendRequestButton from "../../../featured/AcceptFriendRequestButton/AcceptFriendRequestButton";
 import RemoveFriendButton from "../../../featured/RemoveFriendButton/RemoveFriendButton";
 import { NavLink, useNavigate } from "react-router-dom";
+import RejectFriendRequestButton from "../../../featured/RejectFriendRequestButton/RejectFriendRequestButton";
 
 type SearchFriendResultCardProps = {
    friend: ISearchUserResult;
@@ -105,7 +106,10 @@ const SearchFriendResultCard = ({ friend }: SearchFriendResultCardProps) => {
                         </Flex>
                      )}
 							{relationshipsStatus === 2 && (
-                        <AcceptFriendRequestButton friendId={friend.id} afterAcceptRequestFn={updateRelationshipStatus}/>
+                        <Flex vertical gap={5} style={{ padding: "0 5px" }}>
+                           <AcceptFriendRequestButton friendId={friend.id} afterAcceptRequestFn={updateRelationshipStatus}/>
+                           <RejectFriendRequestButton friendId={friend.id} afterRejectRequestFn={updateRelationshipStatus} />
+                        </Flex>
 							)}
 							{relationshipsStatus === 3 && (
 								<Badge count={"wait to accept"} color="orange" />

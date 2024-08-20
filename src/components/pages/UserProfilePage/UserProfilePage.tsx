@@ -39,6 +39,7 @@ import UserProfilePostList from "./components/UserProfilePostList";
 import SendFriendRequestButton from "../../featured/SendFriendRequestButton/SendFriendRequestButton";
 import AcceptFriendRequestButton from "../../featured/AcceptFriendRequestButton/AcceptFriendRequestButton";
 import RemoveFriendButton from "../../featured/RemoveFriendButton/RemoveFriendButton";
+import RejectFriendRequestButton from "../../featured/RejectFriendRequestButton/RejectFriendRequestButton";
 
 const UserProfilePage: React.FC = () => {
    const { user } = useAppSelector((state) => state.account);
@@ -281,7 +282,10 @@ const UserProfilePage: React.FC = () => {
                            </Flex>
                         )}
                         {relationshipsStatus === 2 && (
-                           <AcceptFriendRequestButton friendId={userId} afterAcceptRequestFn={updateRelationshipStatus} />
+                           <Flex vertical gap={5} style={{ marginTop: '5%' , padding: "0 5px" }}>
+                              <AcceptFriendRequestButton friendId={userId} afterAcceptRequestFn={updateRelationshipStatus}/>
+                              <RejectFriendRequestButton friendId={userId} afterRejectRequestFn={updateRelationshipStatus} />
+                           </Flex>
                         )}
                         {relationshipsStatus === 3 && (
                            <Badge count={"wait to accept"} color="orange" />

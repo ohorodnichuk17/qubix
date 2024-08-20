@@ -1,8 +1,9 @@
 import { UserOutlined } from "@ant-design/icons";
-import { Col, Card } from "antd";
+import { Col, Card, Flex } from "antd";
 import { useNavigate } from "react-router-dom";
 import type { IFriendRecommendation } from "../types";
 import AcceptFriendRequestButton from "../../../featured/AcceptFriendRequestButton/AcceptFriendRequestButton";
+import RejectFriendRequestButton from "../../../featured/RejectFriendRequestButton/RejectFriendRequestButton";
 
 type FriendRequestCardProps = {
 	friend: IFriendRecommendation;
@@ -37,11 +38,15 @@ const FriendRequestCard = ({
 					/>
 				}
 				actions={[
-					<AcceptFriendRequestButton
-						key="add"
-						friendId={friend.id}
-						afterAcceptRequestFn={() => removeAcceptedRequestFriend(friend)}
-					/>,
+					<Flex vertical gap={5} style={{padding:"0 5px"}} key="actions">
+						<AcceptFriendRequestButton
+							friendId={friend.id}
+							afterAcceptRequestFn={() => removeAcceptedRequestFriend(friend)}
+						/>
+						<RejectFriendRequestButton 
+							friendId={friend.id} 
+							afterRejectRequestFn={() => removeAcceptedRequestFriend(friend)} />
+					</Flex>
 				]}
 			>
 				<Card.Meta
