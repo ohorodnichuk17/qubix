@@ -1,7 +1,7 @@
 import { Avatar, Grid, Layout, Menu, message, type MenuProps } from "antd";
 import { Link } from "react-router-dom";
 import {
-   action,
+   action as actionImg,
    createPost,
    feeling,
    friendsForSidePanel,
@@ -9,12 +9,12 @@ import {
    messengerForSidePanel,
 } from "../../../utils/images/index";
 import "./SideBar.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAppSelector } from "../../../hooks/redux";
 import useAvatar from "../../../hooks/useAvatar";
 import CreatePostModal from "../../post/create/CreatePostModal";
 import FeelingModal from "../../feelings/FeelingModal";
-import type { IFeeling } from "../../feelings/types";
+import type { IAction, IFeeling, ISubAction } from "../../feelings/types";
 import { apiClient } from "../../../utils/api/apiClient";
 const { useBreakpoint } = Grid;
 
@@ -26,6 +26,21 @@ export const SideBar = () => {
    const screens = useBreakpoint();
    const [isCreatePostModalOpen, setIsCreatePostModalOpen] = useState(false);
    const [isFeelingModalOpen, setIsFeelingModalOpen] = useState(false);
+
+   const [action, setAction] = useState<IAction>();
+   const [subAction, setSubAction] = useState<ISubAction>();
+   
+   const [modalType,setModalType]=useState<"feeling"|"action">();
+
+   useEffect(()=>{console.log(action)},[action])
+
+   const handleChangeAction = (newAction: IAction | undefined) => {
+      setAction(newAction);
+   };
+
+   const handleChangeSubAction = (newAction: ISubAction | undefined) => {
+      setSubAction(newAction);
+   };
 
    if (!isLogin) {
       return null;
@@ -39,16 +54,27 @@ export const SideBar = () => {
    const hideFeelingModal = () => setIsFeelingModalOpen(false);
    
    const handleFeelingOk =async (feeling: IFeeling | undefined) => {
-      if (!feeling?.id) return;
+      if (!modalType) return;
 
       const formData = new FormData();
       formData.append("visibility", "public");
-      formData.append("feelingId", feeling?.id);
 
+      if (modalType === "feeling" && feeling?.id) {
+         formData.append("feelingId", feeling?.id);
+      }
+      if (modalType === "action") {
+         if (action && action.id !== undefined) {
+            formData.append("actionId", action.id);
+         }
+
+         if (subAction && subAction.id !== undefined) {
+            formData.append("subActionId", subAction.id);
+         }
+      }
       try {
          await apiClient.post("/api/post/create", formData)
          message.success("Feeling successfully posted!",0.5).then(()=>{
-            window.location.reload();
+            // window.location.reload();
          })
       } catch {
          message.error("Post feeling error!");
@@ -114,13 +140,13 @@ export const SideBar = () => {
          key: "4",
          label: "Feelings",
          icon: <img src={feeling} alt="Feelings" className="menu-icon" />,
-         onClick: showFeelingModal,
+         onClick:()=>{setModalType("feeling"); showFeelingModal();},
       },
       {
          key: "5",
          label: "Actions",
-         icon: <img src={action} alt="Actions" className="menu-icon" />,
-         onClick: showFeelingModal,
+         icon: <img src={actionImg} alt="Actions" className="menu-icon" />,
+         onClick: () => { setModalType("action"); showFeelingModal(); },
       },
       {
          key: "6",
@@ -180,8 +206,8 @@ export const SideBar = () => {
             <FeelingModal
                isModalOpen={isFeelingModalOpen}
                handleOk={handleFeelingOk}
-               handleChangeAction={() => { }}
-               handleChangeSubAction={() => { }}
+               handleChangeAction={handleChangeAction}
+               handleChangeSubAction={handleChangeSubAction}
                handleCancel={hideFeelingModal} />
          </div>
       </Sider>

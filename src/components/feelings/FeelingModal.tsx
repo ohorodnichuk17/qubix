@@ -81,7 +81,7 @@ const FeelingModal = ({
       }
    };
 
-   const getSelectedAction = () => {
+   const getSelectedAction = (selectedAction: IAction) => {
       if (selectedAction === undefined) {
          return;
       }
@@ -96,7 +96,7 @@ const FeelingModal = ({
       }
    };
 
-   const getSelectedSubAction = () => {
+   const getSelectedSubAction = (selectedSubAction: ISubAction | undefined) => {
       if (selectedSubAction === undefined) {
          return;
       }
@@ -112,9 +112,9 @@ const FeelingModal = ({
    };
 
    const onOk = () => {
+      handleChangeSubAction(getSelectedSubAction(selectedSubAction));
+      handleChangeAction(getSelectedAction(selectedAction));
       handleOk(getSelectedFeelingId());
-      handleChangeAction(getSelectedAction());
-      handleChangeSubAction(getSelectedSubAction());
    };
 
    const items: TabsProps["items"] = [
@@ -162,6 +162,8 @@ const FeelingModal = ({
                      setIsSubActionsTabOpen={setIsSubActionsTabOpen}
                      selectedSubAction={selectedSubAction}
                      setSelectedSubAction={setSelectedSubAction}
+                     handleChangeSubAction={handleChangeSubAction}
+                     getSelectedSubAction={getSelectedSubAction}
                   />
                )}
                {!isSubActionsTabOpen && (
@@ -184,6 +186,7 @@ const FeelingModal = ({
                            onClick={() => {
                               setSelectedAction(action);
                               setIsSubActionsTabOpen(true);
+                              handleChangeAction(getSelectedAction(action));
                            }}
                         >
                            <img
