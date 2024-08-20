@@ -12,6 +12,7 @@ import RegisterButton from "./components/RegisterButton";
 import './AdminDashboard.css'
 import { User, Post, Story, Comment } from "./types";
 import { useAppSelector } from "../../../hooks/redux";
+import LoginButton from "./components/LoginButton";
 
 const { Content } = Layout;
 
@@ -29,11 +30,13 @@ const AdminDashboard: React.FC = () => {
    const { isLogin } = useAppSelector((state) => state.account);
 
    useEffect(() => {
-      fetchAllUsers();
-      fetchAllPosts();
-      fetchAllComments();
-      fetchAllStories();
-   }, []);
+      if (isLogin) {
+         fetchAllUsers();
+         fetchAllPosts();
+         fetchAllComments();
+         fetchAllStories();
+      }
+   }, [isLogin]);
 
    const fetchAllUsers = async () => {
       setLoading(true);
@@ -196,7 +199,7 @@ const AdminDashboard: React.FC = () => {
                <p>Please log in to access the administration panel.</p>
                <div className="decorative-element"></div>
                <div className="login-button-container">
-                  <RegisterButton />
+                  <LoginButton />
                </div>
             </div>
          </Content>

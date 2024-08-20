@@ -44,16 +44,17 @@ const App = () => {
          }}
       >
          <Routes>
-            <Route path="/" element={
+            <Route path="/" element={<ContainerDefault />}>
+               <Route index element={<AdminDashboard />} />
+               <Route path="login" element={<LoginPage />} />
+               <Route path="register" element={<RegisterPage />} />
+            </Route>
+
+            <Route path="/admin" element={
                <PrivateRoute roles={['admin']}>
                   <AdminDashboard />
                </PrivateRoute>
             } />
-            <Route path="/" element={<ContainerDefault />}>
-
-               <Route path="login" element={<LoginPage />} />
-               <Route path="register" element={<PrivateRoute roles={['admin']}><RegisterPage /></PrivateRoute>} />
-            </Route>
          </Routes>
       </ConfigProvider>
    );
