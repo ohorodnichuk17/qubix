@@ -19,7 +19,7 @@ import { feeling as feelingPng, postTypeImg } from "../../../utils/images";
 import FeelingModal from "../../feelings/FeelingModal";
 import type { IAction, IFeeling, ISubAction } from "../../feelings/types";
 import BackgroundOptions from "../../pages/Story/CreateStoryPage/components/BackgroundOptions";
-import useCapture from "../../pages/Story/CreateStoryPage/hooks/useCapture";
+import useCapture from "../../../hooks/useCapture";
 import AddToThePublicationButton from "./components/AddToThePublicationButton/AddToThePublicationButton";
 import AddToThePublicationCard from "./components/AddToThePublicationCard/AddToThePublicationCard";
 import ImagesCarousel from "./components/ImagesCarousel/ImagesCarousel";
@@ -171,7 +171,7 @@ const CreatePostModal = ({
             },
          })
          .then(async () => {
-            await message.success("Post successfully posted!",1);
+            await message.success("Post successfully posted!", 1);
             window.location.reload();
             handleCancel();
          })

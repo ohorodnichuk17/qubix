@@ -7,7 +7,7 @@ import SelectStoryType from "./components/SelectStoryType";
 import StoryPreview from "./components/StoryPreview";
 import StorySettingsCard from "./components/StorySettingsCard";
 import { CreateStoryProvider, useCreateStory } from "./context";
-import useCapture from "./hooks/useCapture";
+import useCapture from "../../../../hooks/useCapture";
 import { useNavigate } from "react-router-dom";
 
 const CreateStoryContent = () => {
