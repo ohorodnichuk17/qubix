@@ -1,4 +1,4 @@
-import { Flex, Avatar, Button, Popconfirm } from "antd";
+import { Flex, Avatar, Button, Popconfirm, message } from "antd";
 import { NavLink } from "react-router-dom";
 import { APP_ENV } from "../../../../env";
 import { avatar } from "../../../../utils/images";
@@ -26,17 +26,19 @@ const CommentItem = ({ comment, setComments }: CommentItemProps) => {
 		return null;
 	}
 
-	const deleteComment = () => {
-		const data = {
-			id: comment.id,
-		};
-		apiClient.delete("api/comment", { data }).then(() => {
+	const deleteComment = async () => {
+		try {
+			await apiClient.delete("api/comment", { data: { id: comment.id } });
 			setComments((prevComments) =>
 				prevComments.filter(
-					(commentFromList) => commentFromList.id !== comment.id,
-				),
+					(commentFromList) =>
+						commentFromList.id !== comment.id &&
+						!comment.childComments.some(child => child.id === commentFromList.id)
+				)
 			);
-		});
+		} catch {
+			message.error("Comment deletion error!");
+		}
 	};
 
 	if (editCommentVisibility) {
