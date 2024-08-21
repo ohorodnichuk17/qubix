@@ -28,7 +28,7 @@ import CoverPhotoBlock from "./components/CoverPhotoBlock";
 import EditProfileModal from "./components/EditProfileModal";
 import { AvatarButton } from "./styled";
 import type { IUserProfile } from "./types";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import * as styles from "./styles";
 import ShortInformationCard from "./components/ShortInformationCard";
 import AvatarMenu from "./menus/AvatarMenu";
@@ -43,6 +43,7 @@ import RejectFriendRequestButton from "../../featured/RejectFriendRequestButton/
 
 const UserProfilePage: React.FC = () => {
    const { user } = useAppSelector((state) => state.account);
+   const navigate = useNavigate();
    const screens = Grid.useBreakpoint();
    const [coverPhoto, setCoverPhoto] = useState(bg6);
    const [avatar, setAvatar] = useState(avatarImg);
@@ -54,6 +55,7 @@ const UserProfilePage: React.FC = () => {
    const [stories, setStories] = useState<IStory[]>([]);
    const [currentStory, setCurrentStory] = useState<IStory>();
    const [isModalOpen, setIsModalOpen] = useState(false);
+   const [countOfFfriends, setCountOfFriends] = useState<number>(0);
 
    const [searchParams] = useSearchParams();
    const userId = searchParams.get("userId");
@@ -99,6 +101,7 @@ const UserProfilePage: React.FC = () => {
       updateRelationshipStatus();
       fetchPosts();
       fetchStories();
+      fetchFriends();
    }, [isCurrentUserProfile, user?.id, userId]);
 
    const fetchPosts = () => {
@@ -124,6 +127,13 @@ const UserProfilePage: React.FC = () => {
             console.error("Error fetching stories:", error);
          });
    };
+
+   const fetchFriends = async () => {
+      apiClient.get(`/api/friends/get-all-friends?userId=${isCurrentUserProfile ? user?.id : userId}`)
+         .then((res) => {
+            setCountOfFriends(res.data.length);
+         })
+   }
 
    const handleUploadChange = async (
       info: UploadChangeParam,
@@ -264,9 +274,14 @@ const UserProfilePage: React.FC = () => {
                            <AvatarButton icon={<CameraOutlined />} />
                         </Dropdown>
                      )}
-                     <p style={{ fontSize: isScreenSmallerThatMd ? 20 : 24 }}>
+                     <Flex vertical gap={5}>
+
+                     <span style={{ fontSize: isScreenSmallerThatMd ? 20 : 24 }}>
                         {`${userProfile?.userEntity.firstName} ${userProfile?.userEntity.lastName}`}
-                     </p>
+                        </span>
+                        {/* biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
+                        <span onClick={isCurrentUserProfile ? () => navigate("/friends/all") : () => { }}>{countOfFfriends} Friends</span>
+                     </Flex>
                   </Flex>
                   {isCurrentUserProfile && (
                      <>
