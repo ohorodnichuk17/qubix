@@ -10,14 +10,14 @@ type AddToThePublicationButtonProps = {
 };
 
 const AddToThePublicationButton = ({
-	tooltipTitle: tooltioTitle,
+	tooltipTitle,
 	onClick = () => {},
 	imgSrc,
 	imgAlt,
 	imgStyle,
 }: AddToThePublicationButtonProps) => {
 	return (
-		<Tooltip title={tooltioTitle}>
+		<Tooltip title={tooltipTitle}>
 			<button
 				className="add-to-the-publication-button"
 				type="button"
