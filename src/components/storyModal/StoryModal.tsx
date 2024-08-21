@@ -5,6 +5,7 @@ import { NavLink } from "react-router-dom";
 import { avatar } from "../../utils/images";
 import { APP_ENV } from "../../env";
 import type { IStory } from "../pages/Story/list/types";
+import { useAppSelector } from "../../hooks/redux";
 
 interface StoryModalProps {
    currentStory?: IStory;
@@ -21,6 +22,8 @@ const StoryModal: React.FC<StoryModalProps> = ({
    onNavigate,
    onDelete,
 }) => {
+   const { user } = useAppSelector(state => state.account);
+   
    const getPublicationDate = (date: string) => new Date(date).toDateString();
 
    return (
@@ -84,13 +87,15 @@ const StoryModal: React.FC<StoryModalProps> = ({
                         alt="story"
                         style={{ height: "60vh" }}
                      />
-                     <Button
-                        icon={<DeleteOutlined />}
-                        onClick={() => onDelete(currentStory.id)}
-                        style={{ marginTop: 10 }}
-                     >
-                        Delete Story
-                     </Button>
+                     {currentStory.user.id === user?.id && (
+                        <Button
+                           icon={<DeleteOutlined />}
+                           onClick={() => onDelete(currentStory.id)}
+                           style={{ marginTop: 10 }}
+                        >
+                           Delete Story
+                        </Button>
+                     )}
                   </Flex>
                ) : (
                   <p>No story available</p>
