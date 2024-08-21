@@ -6,7 +6,7 @@ interface IImage {
     imagePath: string;
 }
 
-interface ILike {
+export interface ILike {
     id: string;
     postId: string;
     userId: string;

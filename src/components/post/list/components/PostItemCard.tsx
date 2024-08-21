@@ -1,10 +1,26 @@
 import { useEffect, useState } from "react";
-import { Card, Flex, Avatar, Divider, Carousel, Tag, Badge, message, Tooltip, Popconfirm } from "antd";
-import { CommentOutlined, DeleteTwoTone, LikeTwoTone, SmileTwoTone } from "@ant-design/icons";
+import {
+	Card,
+	Flex,
+	Avatar,
+	Divider,
+	Carousel,
+	Tag,
+	Badge,
+	message,
+	Tooltip,
+	Popconfirm,
+} from "antd";
+import {
+	CommentOutlined,
+	DeleteTwoTone,
+	LikeFilled,
+	SmileTwoTone,
+} from "@ant-design/icons";
 import { APP_ENV } from "../../../../env";
 import { avatar, likeImg, locationImg } from "../../../../utils/images";
 import { getRandomTagColor } from "../../create/components/Tags/TagsList";
-import type { IComment, IPost } from "../types";
+import type { IComment, ILike, IPost } from "../types";
 import { ACTION_OPTIONS, FEELING_OPTIONS } from "../../../feelings/constants";
 import type { IAction, ISubAction, IFeeling } from "../../../feelings/types";
 import { NavLink } from "react-router-dom";
@@ -57,8 +73,14 @@ const PostItemCard = ({ post, setPosts }: PostItemCardProps) => {
 		FEELING_OPTIONS.find((f) => f.name === feeling.name)?.emoji;
 
 	const likePost = () => {
-		apiClient.post("api/like", { postId: post.id }).then(() => {
-			setIsLiked(true);
+		apiClient.post<ILike>("api/like", { postId: post.id }).then((res) => {
+			setPosts((prevPosts) =>
+				prevPosts.map((prevPost) =>
+					prevPost.id === post.id
+						? { ...post, likes: [...prevPost.likes, res.data] }
+						: prevPost,
+				),
+			);
 		});
 	};
 
@@ -72,19 +94,25 @@ const PostItemCard = ({ post, setPosts }: PostItemCardProps) => {
 	};
 
 	const unlikePost = () => {
-		const data = {
-			postId: post.id,
-		};
-		apiClient
-			.delete("/api/like", {
-				data,
-			})
-			.then(() => {
-				setIsLiked(false);
-			})
-			.catch(() => {
-				message.error("Unlike post error!");
-			});
+		try {
+			apiClient.delete("/api/like", { data: { postId: post.id } });
+			setIsLiked(false);
+
+			setPosts((prevPosts) =>
+				prevPosts.map((prevPost) =>
+					prevPost.id === post.id
+						? {
+								...prevPost,
+								likes: prevPost.likes.filter(
+									(like) => like.userId !== user?.id,
+								),
+							}
+						: prevPost,
+				),
+			);
+		} catch (error) {
+			message.error("Unlike post error!");
+		}
 	};
 
 	const deletePost = () => {
@@ -144,7 +172,7 @@ const PostItemCard = ({ post, setPosts }: PostItemCardProps) => {
 							okText="Yes"
 							cancelText="No"
 						>
-							<DeleteTwoTone style={{fontSize:18}}/>
+							<DeleteTwoTone style={{ fontSize: 18 }} />
 						</Popconfirm>
 					)}
 				</Flex>
@@ -226,21 +254,19 @@ const PostItemCard = ({ post, setPosts }: PostItemCardProps) => {
 					{isLiked ? (
 						<Tooltip title="Unlike post">
 							<Flex className="reactions-flex" onClick={unlikePost}>
-								<LikeTwoTone twoToneColor="red" />
-								<span>Liked</span>
+								<LikeFilled style={{ color: "red" }} />
+								<span>{post.likes.length}</span>
 							</Flex>
 						</Tooltip>
 					) : (
-						<>
-							{/* biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
+						<Flex align="center" className="reactions-flex" onClick={likePost}>
 							<img
 								src={likeImg}
 								alt="Like"
 								width={30}
-								onClick={likePost}
-								style={{ cursor: "pointer" }}
 							/>
-						</>
+							<span>{post.likes.length}</span>
+						</Flex>
 					)}
 					<Flex
 						className="reactions-flex"
