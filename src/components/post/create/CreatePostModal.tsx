@@ -255,7 +255,7 @@ const CreatePostModal = ({
             {postType === "image" && images.length !== 0 && (
                <>
                   <Divider />
-                  <ImagesCarousel images={images} />
+                  <ImagesCarousel images={images} setImages={setImages}/>
                   <Divider />
                </>
             )}
@@ -274,6 +274,7 @@ const CreatePostModal = ({
                postType={postType}
                handleFeelingModalVisibilityChange={handleFeelingVisibilityChange}
                handleImagesChange={handleImagesChange}
+               images={images}
                handleLocationInputVisibilityChange={handleLocationVisibilityChange}
                handleTagsInputVisibilityChange={handleTagsVisibilityChange}
                feelingEmoji={feeling ? feeling.emoji : feelingPng}

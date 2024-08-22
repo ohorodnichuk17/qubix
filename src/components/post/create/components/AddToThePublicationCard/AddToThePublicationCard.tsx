@@ -9,6 +9,7 @@ type AddToThePublicationProps = {
 	handleLocationInputVisibilityChange: () => void;
 	handleTagsInputVisibilityChange: () => void;
 	handleFeelingModalVisibilityChange: () => void;
+	images: UploadFile[];
 	handleImagesChange:
 		| ((info: UploadChangeParam<UploadFile>) => void)
 		| undefined;
@@ -20,6 +21,7 @@ const AddToThePublicationCard = ({
 	handleLocationInputVisibilityChange,
 	handleTagsInputVisibilityChange,
 	handleFeelingModalVisibilityChange,
+	images,
 	handleImagesChange,
 	feelingEmoji,
 }: AddToThePublicationProps) => {
@@ -32,6 +34,7 @@ const AddToThePublicationCard = ({
 						multiple
 						showUploadList={false}
 						onChange={handleImagesChange}
+						fileList={images}
 					>
 						<AddToThePublicationButton
 							tooltipTitle="Image"
