@@ -1,4 +1,4 @@
-import { Card, Avatar, Badge, Flex } from "antd";
+import {Card, Avatar, Badge, Flex, message} from "antd";
 import StoryModal from "../../../storyModal/StoryModal";
 import type { ISearchUserResult } from "../types";
 import { useEffect, useState } from "react";
@@ -23,6 +23,7 @@ const SearchFriendResultCard = ({ friend }: SearchFriendResultCardProps) => {
    const [currentStory, setCurrentStory] = useState<IStory>();
    const [isModalOpen, setIsModalOpen] = useState(false);
    const [relationshipsStatus, setRelationshipsStatus] = useState<number>();
+   const [stories, setStories] = useState<IStory[]>([]);
 
    useEffect(() => {
       for (const story of friend.stories) {
@@ -42,6 +43,18 @@ const SearchFriendResultCard = ({ friend }: SearchFriendResultCardProps) => {
 				});
 		}
 	};
+
+   const handleDeleteStory = async (storyId: string) => {
+      try {
+         await apiClient.delete(`api/story/delete/${storyId}`);
+         setStories(stories.filter((story) => story.id !== storyId));
+         message.success("Story deleted successfully");
+         setIsModalOpen(false);
+      } catch (error) {
+         console.error("Error deleting story:", error);
+         message.error("Story deletion error");
+      }
+   };
 
    const handleNavigateStory = (type: "next" | "prev") => {
       if (!currentStory) return;
@@ -123,6 +136,7 @@ const SearchFriendResultCard = ({ friend }: SearchFriendResultCardProps) => {
             isModalOpen={isModalOpen}
             onClose={() => setIsModalOpen(false)}
             onNavigate={handleNavigateStory}
+            onDelete={(storyId) => handleDeleteStory(storyId)}
          />
       </>
    );
