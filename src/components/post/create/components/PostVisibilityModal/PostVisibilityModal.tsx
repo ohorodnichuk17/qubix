@@ -53,14 +53,14 @@ const PostVisibilityModal = ({
 							imgSrc={planetImg}
 							imgAlt="Public post icon (planet)"
 							title="Public"
-							description="Everyone on and off the Quilt network"
+							description="Everyone on and off the Qubix network"
 						/>
 						<VisibilityOption
 							value="friends only"
 							imgSrc={friendsImg}
 							imgAlt="Post for friends icon (friends)"
 							title="Friends"
-							description="Your friends on Quilt"
+							description="Your friends on Qubix"
 						/>
 						<VisibilityOption
 							value="friends except"

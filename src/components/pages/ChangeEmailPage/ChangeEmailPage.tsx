@@ -55,7 +55,7 @@ const ChangeEmailPage: React.FC = () => {
          <Card style={{ width: "400px" }}>
             <h3 style={{ fontSize: 32 }}>Email change</h3>
             <p style={{ fontSize: 18 }}>
-               Change the email address for your Quilt account
+               Change the email address for your Qubix account
             </p>
             <Form onFinish={onFinish} layout="vertical" requiredMark={false}>
                <Form.Item label="Email" name="email">
