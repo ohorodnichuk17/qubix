@@ -6,6 +6,11 @@ interface IImage {
     imagePath: string;
 }
 
+export interface IPaginationResponse{
+    totalCount:number;
+    posts:IPost[];
+}
+
 export interface ILike {
     id: string;
     postId: string;
