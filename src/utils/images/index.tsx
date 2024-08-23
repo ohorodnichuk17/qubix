@@ -109,6 +109,8 @@ import likeImg from "../../assets/post/like.png"
 //Chat
 import messageImg from "../../assets/chat/message.svg"
 
+import dummy from "../../assets/dummy_data/dummy.png";
+
 export {
    photoImg,
    locationImg,
@@ -209,5 +211,6 @@ export {
    tetraHomeHeader,
    likeImg,
    //Chat
-   messageImg
+   messageImg,
+   dummy
 };

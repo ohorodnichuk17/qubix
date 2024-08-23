@@ -3,7 +3,11 @@ import { apiClient } from "../../../utils/api/apiClient";
 import type { IPaginationResponse, IPost } from "./types";
 import PostItemCard from "./components/PostItemCard";
 
-const PostList = () => {
+interface PostListProps {
+   setPostCount: (count: number) => void;
+}
+
+const PostList = ({ setPostCount }: PostListProps) => {
    const [posts, setPosts] = useState<IPost[]>([]);
    const [totalCount, setTotalCount] = useState<number>(1);
    const [pageNumber, setPageNumber] = useState(1);
@@ -11,6 +15,10 @@ const PostList = () => {
    const observerRef = useRef<IntersectionObserver | null>(null);
    const sentinelRef = useRef<HTMLDivElement | null>(null);
    const pageSize = 10;
+
+   useEffect(() => {
+      setPostCount(posts.length);
+   }, [posts, setPostCount]);
 
    // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
    useEffect(() => {
@@ -23,7 +31,7 @@ const PostList = () => {
                "/api/post/friends",
                {
                   params: { pageNumber, pageSize },
-               },
+               }
             );
             const { totalCount, posts } = response.data;
             setTotalCount(totalCount);
@@ -41,7 +49,7 @@ const PostList = () => {
                setPageNumber((prevPageNumber) => prevPageNumber + 1);
             }
          },
-         { threshold: 1.0 },
+         { threshold: 1.0 }
       );
 
       if (observerRef.current) observerRef.current.disconnect();
