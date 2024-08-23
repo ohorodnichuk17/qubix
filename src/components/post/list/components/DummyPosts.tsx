@@ -46,13 +46,17 @@ const DummyPosts = () => {
    return (
       <>
          {dummyPosts.map((post) => (
-            <Card key={post.id} style={{ width: '100%', marginBottom: 16 }}>
+            <Card
+               key={post.id}
+               style={{ width: '600px', marginBottom: 16, padding: 10 }}
+               bodyStyle={{ padding: '10px' }}
+            >
                <Flex align="center" gap="small">
                   <Avatar size={40} src={post.user.avatar} />
-                  <span style={{ fontWeight: 600 }}>{post.user.firstName}</span>
+                  <span style={{ fontWeight: 600, fontSize: '16px' }}>{post.user.firstName}</span>
                </Flex>
-               <Divider style={{ margin: '0 16px' }} />
-               <p>{post.content}</p>
+               <Divider style={{ margin: '10px 0' }} />
+               <p style={{ fontSize: '14px' }}>{post.content}</p>
                {post.images.length > 0 && (
                   <Carousel
                      arrows
@@ -60,13 +64,14 @@ const DummyPosts = () => {
                      infinite
                      nextArrow={<Arrow direction="right" />}
                      prevArrow={<Arrow direction="left" />}
+                     style={{ marginTop: '10px' }}
                   >
                      {post.images.map((image, index) => (
-                        <div key={index} style={{ width: 30, height: 30, overflow: 'hidden' }}>
+                        <div key={index} style={{ width: '100%', height: 'auto' }}>
                            <img
                               src={image}
                               alt={`Post Image ${index + 1}`}
-                              style={{ width: '40%', height: '40%', objectFit: 'cover', display: 'block' }}
+                              style={{ width: '100%', height: 'auto', objectFit: 'cover' }}
                            />
                         </div>
                      ))}
