@@ -25,14 +25,12 @@ const SetNewPasswordPage: React.FC = () => {
       setLoading(true);
       apiClient.post('/api/authentication/reset-password', values)
          .then(res => {
-            console.log(res);
             if (res.status === 200) {
                message.success("Success")
                   .then(() => navigate('/login'));
             }
          })
-         .catch(error => {
-            console.error(error);
+         .catch(() => {
             message.error("Error resetting password. Please try again later.");
          })
          .finally(() => {

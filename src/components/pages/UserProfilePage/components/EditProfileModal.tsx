@@ -30,12 +30,10 @@ const EditProfileModal = ({
                "Content-Type": "multipart/form-data",
             },
          })
-         .then((res) => {
-            console.log(res);
+         .then(() => {
             setIsModalVisible(false);
          })
-         .catch((error) => {
-            console.error(error);
+         .catch(() => {
             message.error("Failed to update profile");
          });
    };

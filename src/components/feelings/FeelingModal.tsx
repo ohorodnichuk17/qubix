@@ -46,8 +46,7 @@ const FeelingModal = ({
          .then((res) => {
             setFeelingsFromApi(res.data);
          })
-         .catch((error) => {
-            console.error(error);
+         .catch(() => {
             message.error("Feelings loading error!");
          });
       apiClient
@@ -55,8 +54,7 @@ const FeelingModal = ({
          .then((res) => {
             setActionsFromApi(res.data);
          })
-         .catch((error) => {
-            console.error(error);
+         .catch(() => {
             message.error("Actions loading error!");
          });
       apiClient
@@ -64,8 +62,7 @@ const FeelingModal = ({
          .then((res) => {
             setSubActionsFromApi(res.data);
          })
-         .catch((error) => {
-            console.error(error);
+         .catch(() => {
             message.error("Actions loading error!");
          });
    }, []);
@@ -85,11 +82,9 @@ const FeelingModal = ({
       if (selectedAction === undefined) {
          return;
       }
-      console.log("selected action getSelectedAction: ", selectedAction);
       const action = actionsFromApi.find(
          (action) => action.name === selectedAction.name,
       );
-      console.log("selected actionFROMapi getSelectedAction: ", action);
       if (action !== null && action !== undefined) {
          action.emoji = selectedFeeling.emoji;
          return action;
@@ -100,11 +95,9 @@ const FeelingModal = ({
       if (selectedSubAction === undefined) {
          return;
       }
-      console.log("selected sub-action getSelectedAction: ", selectedSubAction);
       const subAction = subActionsFromApi.find(
          (subAction) => subAction.name === selectedSubAction.name,
       );
-      console.log("selected actionFROMapi getSelectedAction: ", subAction);
       if (subAction !== null && subAction !== undefined) {
          subAction.emoji = selectedFeeling.emoji;
          return subAction;

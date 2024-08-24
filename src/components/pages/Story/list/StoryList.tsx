@@ -57,7 +57,6 @@ const StoryList = () => {
          message.success("Story deleted successfully");
          setIsModalOpen(false);
       } catch (error) {
-         console.error("Error deleting story:", error);
          message.error("Story deletion error");
       }
    };

@@ -45,8 +45,8 @@ const AddCommentReplyForm = ({
 				setComments((prevComments) => [...prevComments, res.data]);
 				setAnswerVisibility(false);
 			})
-			.catch((error) => {
-				console.error(error);
+			.catch(() => {
+				// console.error(error);
 			});
 	};
 

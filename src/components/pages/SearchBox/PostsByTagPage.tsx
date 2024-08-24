@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import { apiClient } from "../../../utils/api/apiClient";
 import type { IPost } from "../../post/list/types";
 import PostItemCard from "../../post/list/components/PostItemCard";
+import {message} from "antd";
 
 const PostsByTagPage = () => {
    const [posts, setPosts] = useState<IPost[]>([]);
@@ -17,11 +18,10 @@ const PostsByTagPage = () => {
          apiClient
             .post(`/api/post/search-posts-by-tags?tag=${tag}`)
             .then((res) => {
-               console.log("API response:", res.data);
                setPosts(res.data);
             })
-            .catch((error) => {
-               console.error("Error fetching posts by tag:", error);
+            .catch(() => {
+               message.error("Error fetching posts by tag:");
             });
       }
    }, [location.search]);

@@ -93,9 +93,8 @@ const UserProfilePage: React.FC = () => {
                );
             }
          })
-         .catch((error) => {
+         .catch(() => {
             message.error("There was an error fetching the user data!");
-            console.error("There was an error fetching the user data!", error);
          });
 
       updateRelationshipStatus();
@@ -110,9 +109,8 @@ const UserProfilePage: React.FC = () => {
          .then((response) => {
             setPosts(response.data);
          })
-         .catch((error) => {
+         .catch(() => {
             message.error("There was an error fetching posts!");
-            console.error("Error fetching posts:", error);
          });
    };
 
@@ -122,9 +120,8 @@ const UserProfilePage: React.FC = () => {
          .then((response) => {
             setStories(response.data);
          })
-         .catch((error) => {
+         .catch(() => {
             message.error("There was an error fetching stories!");
-            console.error("Error fetching stories:", error);
          });
    };
 
@@ -166,8 +163,7 @@ const UserProfilePage: React.FC = () => {
                dispatch(autoLogin(res.data.token));
             }
          })
-         .catch((error) => {
-            console.error(error);
+         .catch(() => {
             message.error(`Failed to change ${type}`);
          });
    };
@@ -190,7 +186,6 @@ const UserProfilePage: React.FC = () => {
          message.success("Story deleted successfully");
          setIsModalOpen(false);
       } catch (error) {
-         console.error("Error deleting story:", error);
          message.error("Story deletion error");
       }
    };

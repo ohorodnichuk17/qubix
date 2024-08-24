@@ -38,7 +38,6 @@ function MessengerPage() {
 			connection.on(
 				"ReceiveMessage",
 				(fromUserEmail, messageContent, chatId) => {
-					console.log("ReceiveMessage event received. ChatId:", chatId);
 					message.info(`New message from ${fromUserEmail}: ${messageContent}`);
 					loadMessages(chatId);
 				},
@@ -46,10 +45,9 @@ function MessengerPage() {
 
 			try {
 				await connection.start();
-				console.log("SignalR Connected.");
 				setConnection(connection);
-			} catch (err) {
-				console.error("SignalR Connection Error: ", err);
+			} catch (error) {
+				message.error("Connection Error");
 			}
 		};
 
@@ -114,8 +112,7 @@ function MessengerPage() {
 			);
 
 			loadMessages(selectedChat?.id ?? "");
-		} catch (err) {
-			console.error("Send Message Error: ", err);
+		} catch (error) {
 			message.error("Failed to send message.");
 		}
 	};

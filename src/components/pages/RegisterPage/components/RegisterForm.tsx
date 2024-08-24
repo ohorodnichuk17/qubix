@@ -34,9 +34,8 @@ const RegisterForm: React.FC = () => {
       }).then(() => {
          message.success("Successfully registered!");
          window.location.href = '/email-confirmation-required';
-      }).catch(error => {
+      }).catch(() => {
          message.error("Registration error!");
-         console.log(error);
       }).finally(() => {
          setLoading(false);
       });

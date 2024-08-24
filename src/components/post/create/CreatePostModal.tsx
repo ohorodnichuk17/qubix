@@ -175,8 +175,7 @@ const CreatePostModal = ({
             window.location.reload();
             handleCancel();
          })
-         .catch((error) => {
-            console.log(error);
+         .catch(() => {
             message.error("Post story error!");
          });
    };

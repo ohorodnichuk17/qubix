@@ -68,8 +68,7 @@ const PrivacyPage = () => {
 			.then(() => {
 				message.success("Privacy successfully changed!");
 			})
-			.catch((error) => {
-				console.error(error);
+			.catch(() => {
 				message.error("Failed to change privacy");
 			});
 	};

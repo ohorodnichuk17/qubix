@@ -27,8 +27,8 @@ const FriendsSearchPage = () => {
          .then((res) => {
             setUsers(res.data);
          })
-         .catch((error) => {
-            console.error("Error fetching friends by name:", error);
+         .catch(() => {
+            message.error("Error fetching friends by name");
          });
    }, [location.search]);
 

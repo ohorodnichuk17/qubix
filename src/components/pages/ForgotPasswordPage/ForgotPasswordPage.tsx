@@ -15,14 +15,12 @@ const ForgotPasswordPage = () => {
       setLoading(true);
       apiClient.get(`/api/authentication/forgot-password?email=${values.email}`)
          .then(res => {
-            console.log(res);
             if (res.status === 200) {
                message.success("Success");
                setForgotPasswordSuccess(true);
             }
          })
-         .catch(error => {
-            console.error(error);
+         .catch(() => {
             message.error("Forgot password email sending error. Try later");
          })
          .finally(() => {

@@ -20,7 +20,6 @@ const ChatItem: React.FC<ChatItemProps> = ({
 			avatar={<Avatar src={chat.user.avatar} style={{ cursor: "pointer" }} />}
 			title={chat.user.email}
 			description={
-				// <>
 				chat.messages.length > 0 && (
 					<>
 						<div style={{ wordBreak: "break-word" }}>
@@ -33,7 +32,6 @@ const ChatItem: React.FC<ChatItemProps> = ({
 						</div>
 					</>
 				)
-				// </>
 			}
 		/>
 	</List.Item>

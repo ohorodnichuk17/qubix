@@ -18,14 +18,13 @@ const ResetPasswordPage: React.FC = () => {
       values.email = account.user?.email;
       apiClient.post('/api/authentication/reset-password', values)
          .then(res => {
-            console.log(res);
             if (res.status === 200) {
                message.success("Success")
                   .then(() => navigate('/'));
             }
          })
-         .catch(error => {
-            console.error(error);
+         .catch(() => {
+            message.error("error");
          })
    }
 

@@ -33,8 +33,8 @@ const AddCommentForm = ({ post, setComments }: AddCommentFormProps) => {
 				setMessage("");
 				setComments((prevComments) => [...prevComments, res.data]);
 			})
-			.catch((error) => {
-				console.error(error);
+			.catch(() => {
+				// message.error("error");
 			});
 	};
 

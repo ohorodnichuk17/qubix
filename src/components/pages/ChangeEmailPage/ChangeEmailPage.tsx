@@ -33,8 +33,8 @@ const ChangeEmailPage: React.FC = () => {
                message.success("Success").then(() => navigate("/"));
             }
          })
-         .catch((error) => {
-            console.error(error);
+         .catch(() => {
+            message.error("error");
          });
    };
 

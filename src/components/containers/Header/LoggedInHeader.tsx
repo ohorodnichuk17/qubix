@@ -28,8 +28,8 @@ const LoggedInHeader = () => {
          if (result) {
             navigate("/");
          }
-      } catch (error) {
-         console.error("Failed to logout:", error);
+      } catch {
+         message.error("Failed to logout.");
       }
    };
 

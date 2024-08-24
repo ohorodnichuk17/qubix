@@ -25,13 +25,11 @@ const CreateStoryContent = () => {
 
       apiClient
          .post("/api/story/create", formData)
-         .then((res) => {
-            console.log(res);
+         .then(() => {
             message.success("Story successfully posted!");
             navigate("/");
          })
-         .catch((error) => {
-            console.log(error);
+         .catch(() => {
             message.error("Post story error!");
          });
    };

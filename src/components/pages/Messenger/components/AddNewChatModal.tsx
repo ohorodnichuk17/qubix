@@ -26,7 +26,7 @@ const AddNewChatModal: React.FC<AddNewChatModalProps> = ({
 			.then((res) => {
 				setFriends(res.data);
 			})
-			.catch((error) => console.error(error));
+			.catch(() => message.error("error"));
 	}, [user]);
 
 	const createChat = async (friendId: string) => {
