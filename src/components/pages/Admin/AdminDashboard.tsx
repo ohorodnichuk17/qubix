@@ -106,12 +106,6 @@ const AdminDashboard: React.FC = () => {
       try {
          let endpoint = "";
          switch (action) {
-            case "block":
-               endpoint = "/api/admin/block-user";
-               break;
-            case "unblock":
-               endpoint = "/api/admin/unblock-user";
-               break;
             case "ban":
                endpoint = "/api/admin/ban-user";
                break;

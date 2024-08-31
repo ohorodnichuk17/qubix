@@ -26,12 +26,6 @@ const UserTable: React.FC<UserTableProps> = ({ users, loading, onAction, onDelet
          key: "actions",
          render: (record: User) => (
             <>
-               <Button type="primary" danger onClick={() => onAction("block", record.id)} style={{ marginRight: 8 }}>
-                  Block
-               </Button>
-               <Button type="primary" onClick={() => onAction("unblock", record.id)} style={{ marginRight: 8 }}>
-                  Unblock
-               </Button>
                <Button type="primary" danger onClick={() => onAction("ban", record.id)} style={{ marginRight: 8 }}>
                   Ban
                </Button>
