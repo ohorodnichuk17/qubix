@@ -26,7 +26,8 @@ body {
     width: 50px;
 }
 
-.reactions-flex {
+.post-actions-flex {
+    align-items: center;
     border-radius: 8px;
     padding: 2.5px 5px;
     gap: 8px;
@@ -34,7 +35,7 @@ body {
     transition: .5s;
 }
 
-.reactions-flex:hover {
+.post-actions-flex:hover {
     background-color: lightgray;
 }
 

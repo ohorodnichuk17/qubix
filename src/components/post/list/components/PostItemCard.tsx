@@ -253,13 +253,13 @@ const PostItemCard = ({ post, setPosts }: PostItemCardProps) => {
             <Flex gap="small">
                {isLiked ? (
                   <Tooltip title="Unlike post">
-                     <Flex className="reactions-flex" onClick={unlikePost}>
+                     <Flex className="post-actions-flex" onClick={unlikePost}>
                         <LikeFilled style={{ color: "red" }} />
                         <span>{post.likes.length}</span>
                      </Flex>
                   </Tooltip>
                ) : (
-                  <Flex align="center" className="reactions-flex" onClick={likePost}>
+                  <Flex className="post-actions-flex" onClick={likePost}>
                      <img
                         src={likeImg}
                         alt="Like"
@@ -269,7 +269,7 @@ const PostItemCard = ({ post, setPosts }: PostItemCardProps) => {
                   </Flex>
                )}
                <Flex
-                  className="reactions-flex"
+                  className="post-actions-flex"
                   onClick={() => setShowPicker(!showPicker)}
                >
                   <SmileTwoTone style={{ fontSize: 20 }} />
@@ -280,9 +280,8 @@ const PostItemCard = ({ post, setPosts }: PostItemCardProps) => {
                   title={commentsVisibility ? "Hide comments" : "Show comments"}
                >
                   <Flex
-                     align="center"
                      gap="small"
-                     className="reactions-flex"
+                     className="post-actions-flex"
                      onClick={() => {
                         setCommentsVisibility(!commentsVisibility);
                      }}
