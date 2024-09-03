@@ -4,21 +4,15 @@ import type { IAction, ISubAction } from "../types";
 type SuActionsProps = {
 	action: IAction | undefined;
 	selectedSubAction: ISubAction | undefined;
-	setSelectedSubAction: React.Dispatch<
-		React.SetStateAction<ISubAction | undefined>
-	>;
 	setIsSubActionsTabOpen: React.Dispatch<React.SetStateAction<boolean>>;
-	handleChangeSubAction: (newAction: ISubAction | undefined) => void;
-	getSelectedSubAction: (selectedSubAction: ISubAction) => ISubAction | undefined;
+	onSubActionChange: (subAction: ISubAction) => void;
 };
 
 const SubActions = ({
 	action,
 	selectedSubAction,
-	setSelectedSubAction,
 	setIsSubActionsTabOpen,
-	handleChangeSubAction,
-	getSelectedSubAction
+	onSubActionChange
 }: SuActionsProps) => {
 	if (action?.subActions === undefined) {
 		return null;
@@ -51,9 +45,7 @@ const SubActions = ({
 										: "black",
 							transition: ".7s",
 						}}
-						onClick={() => { 
-							setSelectedSubAction(subAction); 
-							handleChangeSubAction(getSelectedSubAction(subAction))}}
+						onClick={() => { onSubActionChange(subAction) }}
 					>
 						<img
 							src={subAction.emoji}

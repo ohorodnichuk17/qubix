@@ -4,6 +4,7 @@ import { apiClient } from "../../utils/api/apiClient";
 import { ACTION_OPTIONS, FEELING_OPTIONS } from "./constants";
 import type { ISubAction, IAction, IFeeling } from "./types";
 import SubActions from "./components/SubActions";
+import getSelectedItem from "./utils/getSelectedItem";
 
 type FeelingModalProps = {
    isModalOpen: boolean;
@@ -13,7 +14,6 @@ type FeelingModalProps = {
    handleChangeSubAction: (newAction: ISubAction | undefined) => void;
    handleCancel: () => void;
 };
-
 
 const FeelingModal = ({
    isModalOpen,
@@ -63,44 +63,21 @@ const FeelingModal = ({
          });
    }, []);
 
-   const getSelectedFeelingId = () => {
-      if (!selectedFeeling) return;
-      const feeling = feelingsFromApi.find(
-         (feeling) => feeling.name === selectedFeeling.name,
-      );
-      console.log(feeling);
-      if (feeling !== null && feeling !== undefined) {
-         feeling.emoji = selectedFeeling.emoji;
-         return feeling;
-      }
-   };
+   const onActionChange = (action: IAction) => {
+      setSelectedAction(action);
+      setIsSubActionsTabOpen(true);
+      handleChangeAction(getSelectedItem(action, actionsFromApi));
+   }
 
-   const getSelectedAction = (selectedAction: IAction | undefined) => {
-      if (!selectedAction) return;
-      const action = actionsFromApi.find(
-         (action) => action.name === selectedAction.name,
-      );
-      if (action !== null && action !== undefined) {
-         action.emoji = selectedAction.emoji;
-         return action;
-      }
-   };
-
-   const getSelectedSubAction = (selectedSubAction: ISubAction | undefined) => {
-      if (!selectedSubAction) return;
-      const subAction = subActionsFromApi.find(
-         (subAction) => subAction.name === selectedSubAction.name,
-      );
-      if (subAction !== null && subAction !== undefined) {
-         subAction.emoji = selectedSubAction.emoji;
-         return subAction;
-      }
-   };
+   const onSubActionChange = (subAction: ISubAction) => {
+      setSelectedSubAction(subAction);
+      handleChangeSubAction(getSelectedItem(subAction, subActionsFromApi));
+   }
 
    const onOk = () => {
-      handleChangeSubAction(getSelectedSubAction(selectedSubAction));
-      handleChangeAction(getSelectedAction(selectedAction));
-      handleOk(getSelectedFeelingId());
+      handleChangeSubAction(getSelectedItem(selectedSubAction, subActionsFromApi));
+      handleChangeAction(getSelectedItem(selectedAction, actionsFromApi));
+      handleOk(getSelectedItem(selectedFeeling, feelingsFromApi));
    };
 
    const items: TabsProps["items"] = [
@@ -147,9 +124,7 @@ const FeelingModal = ({
                      action={selectedAction}
                      setIsSubActionsTabOpen={setIsSubActionsTabOpen}
                      selectedSubAction={selectedSubAction}
-                     setSelectedSubAction={setSelectedSubAction}
-                     handleChangeSubAction={handleChangeSubAction}
-                     getSelectedSubAction={getSelectedSubAction}
+                     onSubActionChange={onSubActionChange}
                   />
                )}
                {!isSubActionsTabOpen && (
@@ -169,11 +144,7 @@ const FeelingModal = ({
                                  action.name === selectedAction?.name ? "white" : "black",
                               transition: ".7s",
                            }}
-                           onClick={() => {
-                              setSelectedAction(action);
-                              setIsSubActionsTabOpen(true);
-                              handleChangeAction(getSelectedAction(action));
-                           }}
+                           onClick={() => { onActionChange(action) }}
                         >
                            <img
                               src={action.emoji}
