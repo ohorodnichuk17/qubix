@@ -36,6 +36,8 @@ const FeelingModal = ({
    const [actionsFromApi, setActionsFromApi] = useState<IAction[]>([]);
    const [subActionsFromApi, setSubActionsFromApi] = useState<ISubAction[]>([]);
 
+   useEffect(() => { setActiveKey(selectedTab) }, [selectedTab]);
+
    useEffect(() => {
       apiClient
          .get("/api/feeling/getAll")
