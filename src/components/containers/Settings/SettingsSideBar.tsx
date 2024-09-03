@@ -8,6 +8,7 @@ import {
 	userImg,
 } from "../../../utils/images/index";
 import { NavLink } from "react-router-dom";
+import { StyledTitle } from "./styles.ts";
 
 export const SettingsSideBar = () => {
 	const menuItems: MenuProps["items"] = [
@@ -93,18 +94,7 @@ export const SettingsSideBar = () => {
 			breakpoint="md"
 			collapsedWidth="80"
 		>
-			<h2
-				style={{
-					textAlign: "center",
-					background: "white",
-					padding: "10px",
-					margin: "0px",
-					marginBottom: "-10px",
-					borderRadius: "10px 10px 0px 0px",
-				}}
-			>
-				Settings
-			</h2>
+			<StyledTitle>Settings</StyledTitle>
 			<Menu mode="inline" items={menuItems} defaultSelectedKeys={["1"]} />
 		</Sider>
 	);
