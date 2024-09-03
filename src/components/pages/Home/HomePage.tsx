@@ -35,7 +35,7 @@ export const HomePage = () => {
                <PostList setPostCount={setPostCount} />
                {postCount === 0 && <DummyPosts />}
             </>
-         ) : null}
+         ) : <DummyPosts />}
       </div>
    );
 };
