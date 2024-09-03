@@ -57,3 +57,20 @@ body {
         z-index: 0 !important;
     }
 }
+
+.selectable-item-flex {
+    align-content: center;
+    width: 45%;
+    padding: 5px;
+    border-radius: 8px;
+    transition: .5s;
+
+    &:hover {
+        background: lightgray!important;
+    }
+
+    img {
+        height: 50px;
+        width: 50px;
+    }
+}
