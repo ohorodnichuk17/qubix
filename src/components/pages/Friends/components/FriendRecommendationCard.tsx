@@ -28,19 +28,29 @@ const FriendRecommendationCard = ({
 			key={friend.id}
 		>
 			<Card
+				style={{height:"100%",padding:0}}
 				onClick={() => navigate(`/profile?userId=${friend.id}`)}
-				cover={<img alt="Friend recommendation avatar" src={friend.avatar} />}
-				actions={[
-					<SendFriendRequestButton
-						key={friend.id}
-						friendId={friend.id}
-						afterSendRequestFn={() => removeSenderRequestFriend(friend)}
-					/>,
-				]}
 			>
+				<img
+					alt="Friend recommendation avatar"
+					src={friend.avatar}
+					style={{
+						width: "100%",
+						height: "auto",
+						borderRadius:"50%",
+						aspectRatio: "1/1",
+						objectFit: "cover",
+					}}
+				/>
 				<Card.Meta
+					style={{ margin: "10px 0" }}
 					avatar={<UserOutlined />}
 					title={`${friend.lastName} ${friend.firstName}`}
+				/>
+				<SendFriendRequestButton
+					key={friend.id}
+					friendId={friend.id}
+					afterSendRequestFn={() => removeSenderRequestFriend(friend)}
 				/>
 			</Card>
 		</Col>
