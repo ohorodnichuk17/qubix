@@ -34,7 +34,7 @@ const App = () => {
       <ConfigProvider
          theme={{
             token: {
-               fontFamily: "Roboto",
+               fontFamily: "Montserrat",
             },
             components: {
                Button: {
