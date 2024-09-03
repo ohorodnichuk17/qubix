@@ -2,7 +2,7 @@ import { Button, Flex } from "antd";
 import type { IAction, ISubAction } from "../types";
 import SelectableItem from "./SelectableItem";
 
-type SuActionsProps = {
+type SubActionsProps = {
 	action: IAction | undefined;
 	selectedSubAction: ISubAction | undefined;
 	setIsSubActionsTabOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -14,7 +14,7 @@ const SubActions = ({
 	selectedSubAction,
 	setIsSubActionsTabOpen,
 	onSubActionChange,
-}: SuActionsProps) => {
+}: SubActionsProps) => {
 	if (action?.subActions === undefined) {
 		return null;
 	}
