@@ -85,12 +85,10 @@ const CreatePostModal = ({
 
    const handleChangeAction = (newAction: IAction | undefined) => {
       setAction(newAction);
-      setFeelingModalVisible(false);
    };
 
    const handleChangeSubAction = (newAction: ISubAction | undefined) => {
       setSubAction(newAction);
-      setFeelingModalVisible(false);
    };
 
    const handleImagesChange: UploadProps["onChange"] = async ({ fileList }) => {

@@ -2,7 +2,7 @@ import { Button, Flex } from "antd";
 import type { IAction, ISubAction } from "../types";
 
 type SuActionsProps = {
-	action: IAction;
+	action: IAction | undefined;
 	selectedSubAction: ISubAction | undefined;
 	setSelectedSubAction: React.Dispatch<
 		React.SetStateAction<ISubAction | undefined>
@@ -20,7 +20,7 @@ const SubActions = ({
 	handleChangeSubAction,
 	getSelectedSubAction
 }: SuActionsProps) => {
-	if (action.subActions === undefined) {
+	if (action?.subActions === undefined) {
 		return null;
 	}
 

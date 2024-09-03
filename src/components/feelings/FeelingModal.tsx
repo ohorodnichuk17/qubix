@@ -21,17 +21,11 @@ const FeelingModal = ({
    handleChangeSubAction,
    handleCancel,
 }: FeelingModalProps) => {
-   const [selectedFeeling, setSelectedFeeling] = useState<IFeeling>(
-      FEELING_OPTIONS[0],
-   );
+   const [selectedFeeling, setSelectedFeeling] = useState<IFeeling>();
 
-   const [selectedAction, setSelectedAction] = useState<IAction>(
-      ACTION_OPTIONS[0],
-   );
+   const [selectedAction, setSelectedAction] = useState<IAction>();
 
-   const [selectedSubAction, setSelectedSubAction] = useState<
-      ISubAction | undefined
-   >();
+   const [selectedSubAction, setSelectedSubAction] = useState<ISubAction>();
 
    const [isSubActionsTabOpen, setIsSubActionsTabOpen] =
       useState<boolean>(false);
@@ -68,6 +62,7 @@ const FeelingModal = ({
    }, []);
 
    const getSelectedFeelingId = () => {
+      if (!selectedFeeling) return;
       const feeling = feelingsFromApi.find(
          (feeling) => feeling.name === selectedFeeling.name,
       );
@@ -78,28 +73,24 @@ const FeelingModal = ({
       }
    };
 
-   const getSelectedAction = (selectedAction: IAction) => {
-      if (selectedAction === undefined) {
-         return;
-      }
+   const getSelectedAction = (selectedAction: IAction | undefined) => {
+      if (!selectedAction) return;
       const action = actionsFromApi.find(
          (action) => action.name === selectedAction.name,
       );
       if (action !== null && action !== undefined) {
-         action.emoji = selectedFeeling.emoji;
+         action.emoji = selectedAction.emoji;
          return action;
       }
    };
 
    const getSelectedSubAction = (selectedSubAction: ISubAction | undefined) => {
-      if (selectedSubAction === undefined) {
-         return;
-      }
+      if (!selectedSubAction) return;
       const subAction = subActionsFromApi.find(
          (subAction) => subAction.name === selectedSubAction.name,
       );
       if (subAction !== null && subAction !== undefined) {
-         subAction.emoji = selectedFeeling.emoji;
+         subAction.emoji = selectedSubAction.emoji;
          return subAction;
       }
    };
@@ -126,9 +117,9 @@ const FeelingModal = ({
                         padding: "5px",
                         borderRadius: "8px",
                         background:
-                           feeling.name === selectedFeeling.name ? "gray" : "none",
+                           feeling.name === (selectedFeeling?.name) ? "gray" : "none",
                         color:
-                           feeling.name === selectedFeeling.name ? "white" : "black",
+                           feeling.name === selectedFeeling?.name ? "white" : "black",
                         transition: ".7s",
                      }}
                      onClick={() => setSelectedFeeling(feeling)}
@@ -171,9 +162,9 @@ const FeelingModal = ({
                               padding: "5px",
                               borderRadius: "8px",
                               background:
-                                 action.name === selectedAction.name ? "gray" : "none",
+                                 action.name === selectedAction?.name ? "gray" : "none",
                               color:
-                                 action.name === selectedAction.name ? "white" : "black",
+                                 action.name === selectedAction?.name ? "white" : "black",
                               transition: ".7s",
                            }}
                            onClick={() => {
