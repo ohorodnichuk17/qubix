@@ -1,5 +1,6 @@
 import { Button, Flex } from "antd";
 import type { IAction, ISubAction } from "../types";
+import SelectableItem from "./SelectableItem";
 
 type SuActionsProps = {
 	action: IAction | undefined;
@@ -12,7 +13,7 @@ const SubActions = ({
 	action,
 	selectedSubAction,
 	setIsSubActionsTabOpen,
-	onSubActionChange
+	onSubActionChange,
 }: SuActionsProps) => {
 	if (action?.subActions === undefined) {
 		return null;
@@ -23,37 +24,14 @@ const SubActions = ({
 			<Button onClick={() => setIsSubActionsTabOpen(false)}>Back</Button>
 			<Flex vertical gap="middle">
 				{action.subActions.map((subAction) => (
-					<Flex
+					<SelectableItem
 						key={subAction.name}
-						gap="small"
-						align="center"
-						style={{
-							width: "45%",
-							padding: "5px",
-							borderRadius: "8px",
-							background:
-								selectedSubAction === undefined
-									? "none"
-									: subAction.name === selectedSubAction.name
-										? "gray"
-										: "none",
-							color:
-								selectedSubAction === undefined
-									? "black"
-									: subAction.name === selectedSubAction.name
-										? "white"
-										: "black",
-							transition: ".7s",
+						item={subAction}
+						isSelected={subAction.name === selectedSubAction?.name}
+						onClick={() => {
+							onSubActionChange(subAction);
 						}}
-						onClick={() => { onSubActionChange(subAction) }}
-					>
-						<img
-							src={subAction.emoji}
-							alt="Feeling icon (emoji)"
-							className="h-50px"
-						/>
-						<span>{subAction.name}</span>
-					</Flex>
+					/>
 				))}
 			</Flex>
 		</Flex>

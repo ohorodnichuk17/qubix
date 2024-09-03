@@ -5,6 +5,7 @@ import { ACTION_OPTIONS, FEELING_OPTIONS } from "./constants";
 import type { ISubAction, IAction, IFeeling } from "./types";
 import SubActions from "./components/SubActions";
 import getSelectedItem from "./utils/getSelectedItem";
+import SelectableItem from "./components/SelectableItem";
 
 type FeelingModalProps = {
    isModalOpen: boolean;
@@ -89,29 +90,12 @@ const FeelingModal = ({
          children: (
             <Flex wrap="wrap" gap="middle">
                {FEELING_OPTIONS.map((feeling) => (
-                  <Flex
+                  <SelectableItem
                      key={feeling.name}
-                     gap="small"
-                     align="center"
-                     style={{
-                        width: "45%",
-                        padding: "5px",
-                        borderRadius: "8px",
-                        background:
-                           feeling.name === (selectedFeeling?.name) ? "gray" : "none",
-                        color:
-                           feeling.name === selectedFeeling?.name ? "white" : "black",
-                        transition: ".7s",
-                     }}
-                     onClick={() => setSelectedFeeling(feeling)}
-                  >
-                     <img
-                        src={feeling.emoji}
-                        alt="Feeling icon (emoji)"
-                        className="h-50px"
-                     />
-                     <span>{feeling.name}</span>
-                  </Flex>
+                     item={feeling}
+                     isSelected={feeling.name === selectedFeeling?.name}
+                     onClick={() => { setSelectedFeeling(feeling) }}
+                  />
                ))}
             </Flex>
          ),
@@ -132,29 +116,12 @@ const FeelingModal = ({
                {!isSubActionsTabOpen && (
                   <>
                      {ACTION_OPTIONS.map((action) => (
-                        <Flex
+                        <SelectableItem
                            key={action.name}
-                           gap="small"
-                           align="center"
-                           style={{
-                              width: "45%",
-                              padding: "5px",
-                              borderRadius: "8px",
-                              background:
-                                 action.name === selectedAction?.name ? "gray" : "none",
-                              color:
-                                 action.name === selectedAction?.name ? "white" : "black",
-                              transition: ".7s",
-                           }}
+                           item={action}
+                           isSelected={action.name === selectedAction?.name}
                            onClick={() => { onActionChange(action) }}
-                        >
-                           <img
-                              src={action.emoji}
-                              alt="Feeling icon (emoji)"
-                              className="h-50px"
-                           />
-                           <span>{action.name}</span>
-                        </Flex>
+                        />
                      ))}
                   </>
                )}
