@@ -111,9 +111,9 @@ const StorySettingsCard = ({
 				hideModal={hidePrivacyModal}
 			/>
 			<CancelStoryModal
-				isCancelModalOpen={isCancelModalOpen}
-				onOkCancelModal={onOkCancelModal}
-				onCancelCancelModal={onCancelCancelModal}
+				open={isCancelModalOpen}
+				onOk={onOkCancelModal}
+				onCancel={onCancelCancelModal}
 			/>
 		</Card>
 	);
