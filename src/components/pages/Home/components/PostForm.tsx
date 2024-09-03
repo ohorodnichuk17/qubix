@@ -45,48 +45,49 @@ export const PostForm = () => {
    };
 
    return (
-      <div className="whats-up">
-         <div className="top-section">
-            <Avatar
-               src={avatarImg}
-               size={50}
-            />
-            <div className="user-info">
-               <input
-                  type="text"
-                  placeholder={`What's up, ${user?.firstName} ${user?.lastName}?`}
-                  className="input-box"
-                  onClick={openCreatePostModal}
-               />
-            </div>
-         </div>
-         <Divider style={{ margin: '10px 0' }} />
+       <div className="whats-up">
+          <div className="top-section">
+             <Avatar
+                 src={avatarImg}
+                 size={50}
+             />
+             <div className="user-info">
+                <input
+                    type="text"
+                    placeholder={`What's up, ${user?.firstName} ${user?.lastName}?`}
+                    className="input-box"
+                    onClick={openCreatePostModal}
+                />
+             </div>
+          </div>
+          <Divider style={{ margin: '10px 0' }} />
 
-         <div className="actions">
-            <div className="action-item" onClick={openCreatePostModal}>
-               <img src={photoImg} alt="Photo" className="icon" />
-               <span className="action-label">Photo</span>
-            </div>
-            <div className="action-item" onClick={openFeelingModal}>
-               <img src={feeling} alt="Feelings" className="icon" />
-               <span className="action-label">Feelings/actions</span>
-            </div>
-         </div>
+          <div className="actions">
+             <div className="action-item" onClick={openCreatePostModal}>
+                <img src={photoImg} alt="Photo" className="icon" />
+                <span className="action-label">Photo</span>
+             </div>
+             <div className="action-item" onClick={openFeelingModal}>
+                <img src={feeling} alt="Feelings" className="icon" />
+                <span className="action-label">Feelings/actions</span>
+             </div>
+          </div>
 
-         <CreatePostModal
-            isModalOpen={isCreatePostModalOpen}
-            handleOk={handleCreatePostModalOk}
-            handleCancel={handleCreatePostModalCancel}
-         />
+          <CreatePostModal
+              isModalOpen={isCreatePostModalOpen}
+              handleOk={handleCreatePostModalOk}
+              handleCancel={handleCreatePostModalCancel}
+          />
 
-         <FeelingModal
-            isModalOpen={isFeelingModalOpen}
-            handleOk={handleFeelingModalOk}
-            handleChangeAction={handleChangeAction}
-            handleChangeSubAction={handleChangeSubAction}
-            handleCancel={handleFeelingModalCancel}
-         />
-      </div>
+          <FeelingModal
+              isModalOpen={isFeelingModalOpen}
+              selectedTab="feelings"
+              handleOk={handleFeelingModalOk}
+              handleChangeAction={handleChangeAction}
+              handleChangeSubAction={handleChangeSubAction}
+              handleCancel={handleFeelingModalCancel}
+          />
+       </div>
    );
 };
 
