@@ -1,37 +1,10 @@
 import { useEffect, useState } from "react";
-import { Card, Typography, Radio, type RadioChangeEvent, message } from "antd";
-import styled from "styled-components";
+import { Typography, Radio, type RadioChangeEvent, message } from "antd";
 import { useAppSelector } from "../../../../hooks/redux";
 import { apiClient } from "../../../../utils/api/apiClient";
+import { StyledCard, StyledRadio } from "../theme";
 
 const { Title, Paragraph } = Typography;
-
-const StyledCard = styled(Card)`
-  border-color: #FF7F50;
-`;
-
-const StyledRadio = styled(Radio)`
-  &&& {
-    .ant-radio-inner {
-      border-color: #FF7F50;
-    }
-    .ant-radio-inner:after {
-      background-color: #FF7F50;
-    }
-    &:hover .ant-radio-inner {
-      border-color: #FFA07A;
-    }
-    &:hover .ant-radio-inner:after {
-      background-color: #FFA07A;
-    }
-    .ant-radio-checked .ant-radio-inner {
-      border-color: #FF6347;
-    }
-    .ant-radio-checked .ant-radio-inner:after {
-      background-color: #FF6347;
-    }
-  }
-`;
 
 const PrivacyPage = () => {
 	const { user } = useAppSelector((state) => state.account);
