@@ -30,7 +30,7 @@ export const SideBar = () => {
    const [action, setAction] = useState<IAction>();
    const [subAction, setSubAction] = useState<ISubAction>();
    
-   const [modalType,setModalType]=useState<"feeling"|"action">();
+   const [modalType, setModalType] = useState<"feelings" | "actions">("feelings");
 
    useEffect(()=>{console.log(action)},[action])
 
@@ -59,10 +59,10 @@ export const SideBar = () => {
       const formData = new FormData();
       formData.append("visibility", "public");
 
-      if (modalType === "feeling" && feeling?.id) {
+      if (modalType === "feelings" && feeling?.id) {
          formData.append("feelingId", feeling?.id);
       }
-      if (modalType === "action") {
+      if (modalType === "actions") {
          if (action && action.id !== undefined) {
             formData.append("actionId", action.id);
          }
@@ -140,13 +140,13 @@ export const SideBar = () => {
          key: "4",
          label: "Feelings",
          icon: <img src={feeling} alt="Feelings" className="menu-icon" />,
-         onClick:()=>{setModalType("feeling"); showFeelingModal();},
+         onClick: () => { setModalType("feelings"); showFeelingModal(); },
       },
       {
          key: "5",
          label: "Actions",
          icon: <img src={actionImg} alt="Actions" className="menu-icon" />,
-         onClick: () => { setModalType("action"); showFeelingModal(); },
+         onClick: () => { setModalType("actions"); showFeelingModal(); },
       },
       {
          key: "6",
@@ -205,6 +205,7 @@ export const SideBar = () => {
             />
             <FeelingModal
                isModalOpen={isFeelingModalOpen}
+               selectedTab={modalType}
                handleOk={handleFeelingOk}
                handleChangeAction={handleChangeAction}
                handleChangeSubAction={handleChangeSubAction}

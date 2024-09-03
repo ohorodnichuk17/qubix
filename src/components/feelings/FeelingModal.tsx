@@ -7,6 +7,7 @@ import SubActions from "./components/SubActions";
 
 type FeelingModalProps = {
    isModalOpen: boolean;
+   selectedTab: "feelings" | "actions";
    handleOk: (newFeeling: IFeeling | undefined) => void;
    handleChangeAction: (newAction: IAction | undefined) => void;
    handleChangeSubAction: (newAction: ISubAction | undefined) => void;
@@ -16,15 +17,16 @@ type FeelingModalProps = {
 
 const FeelingModal = ({
    isModalOpen,
+   selectedTab,
    handleOk,
    handleChangeAction,
    handleChangeSubAction,
    handleCancel,
 }: FeelingModalProps) => {
+   const [activeKey, setActiveKey] = useState<"feelings" | "actions">(selectedTab);
+
    const [selectedFeeling, setSelectedFeeling] = useState<IFeeling>();
-
    const [selectedAction, setSelectedAction] = useState<IAction>();
-
    const [selectedSubAction, setSelectedSubAction] = useState<ISubAction>();
 
    const [isSubActionsTabOpen, setIsSubActionsTabOpen] =
@@ -103,7 +105,7 @@ const FeelingModal = ({
 
    const items: TabsProps["items"] = [
       {
-         key: "1",
+         key: "feelings",
          label: "Feelings",
          children: (
             <Flex wrap="wrap" gap="middle">
@@ -136,7 +138,7 @@ const FeelingModal = ({
          ),
       },
       {
-         key: "2",
+         key: "actions",
          label: "Actions",
          children: (
             <Flex wrap="wrap" gap="middle">
@@ -188,6 +190,8 @@ const FeelingModal = ({
       },
    ];
 
+   const changeTab = (activeKey: string) => setActiveKey(activeKey as "feelings" | "actions");
+
    return (
       <Modal
          title="How are you feeling ?"
@@ -195,7 +199,7 @@ const FeelingModal = ({
          onOk={onOk}
          onCancel={handleCancel}
       >
-         <Tabs defaultActiveKey="1" items={items} />
+         <Tabs activeKey={activeKey} onChange={changeTab} items={items} />
       </Modal>
    );
 };

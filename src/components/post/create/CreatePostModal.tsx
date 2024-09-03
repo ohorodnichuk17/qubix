@@ -286,6 +286,7 @@ const CreatePostModal = ({
          />
          <FeelingModal
             isModalOpen={feelingModalVisible}
+            selectedTab="feelings"
             handleOk={handleFeelingModalOk}
             handleCancel={() => {
                setFeelingModalVisible(false);
