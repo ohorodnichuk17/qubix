@@ -40,29 +40,18 @@ const FeelingModal = ({
    useEffect(() => { setActiveKey(selectedTab) }, [selectedTab]);
 
    useEffect(() => {
-      apiClient
-         .get("/api/feeling/getAll")
-         .then((res) => {
-            setFeelingsFromApi(res.data);
+      Promise.all([
+         apiClient.get("/api/feeling/getAll"),
+         apiClient.get("/api/action/getAll"),
+         apiClient.get("/api/subAction/getAll"),
+      ])
+         .then(([feelingsRes, actionsRes, subActionsRes]) => {
+            setFeelingsFromApi(feelingsRes.data);
+            setActionsFromApi(actionsRes.data);
+            setSubActionsFromApi(subActionsRes.data);
          })
          .catch(() => {
-            message.error("Feelings loading error!");
-         });
-      apiClient
-         .get("/api/action/getAll")
-         .then((res) => {
-            setActionsFromApi(res.data);
-         })
-         .catch(() => {
-            message.error("Actions loading error!");
-         });
-      apiClient
-         .get("/api/subAction/getAll")
-         .then((res) => {
-            setSubActionsFromApi(res.data);
-         })
-         .catch(() => {
-            message.error("Actions loading error!");
+            message.error("Error loading data!");
          });
    }, []);
 
