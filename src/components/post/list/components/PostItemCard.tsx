@@ -34,9 +34,10 @@ import EmojiPicker, { type EmojiClickData } from "emoji-picker-react";
 type PostItemCardProps = {
    post: IPost;
    setPosts: React.Dispatch<React.SetStateAction<IPost[]>>;
+   setTotalCount: React.Dispatch<React.SetStateAction<number>>;
 };
 
-const PostItemCard = ({ post, setPosts }: PostItemCardProps) => {
+const PostItemCard = ({ post, setPosts, setTotalCount }: PostItemCardProps) => {
    const { user } = useAppSelector((state) => state.account);
    const [commentsVisibility, setCommentsVisibility] = useState<boolean>(false);
    const [comments, setComments] = useState<IComment[]>([]);
@@ -118,10 +119,11 @@ const PostItemCard = ({ post, setPosts }: PostItemCardProps) => {
    const deletePost = () => {
       try {
          apiClient.delete("api/post", { data: { id: post.id } });
-         message.success("Post successfully deleted!");
          setPosts((prevPosts) =>
             prevPosts.filter((postFromList) => postFromList.id !== post.id),
          );
+         setTotalCount(totalCount => totalCount - 1);
+         message.success("Post successfully deleted!");
       } catch (error) {
          message.error("Post deletion error!");
       }

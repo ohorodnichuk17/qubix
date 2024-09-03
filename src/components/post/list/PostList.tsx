@@ -69,7 +69,7 @@ const PostList = ({ setPostCount }: PostListProps) => {
    return (
       <>
          {posts.map((post) => (
-            <PostItemCard key={post.id} post={post} setPosts={setPosts} />
+            <PostItemCard key={post.id} post={post} setPosts={setPosts} setTotalCount={setTotalCount}/>
          ))}
          {loading && <p>Loading...</p>}
          <div ref={sentinelRef} style={{ height: "1px" }} />
