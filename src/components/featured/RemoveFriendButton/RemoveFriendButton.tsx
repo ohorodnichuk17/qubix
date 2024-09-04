@@ -1,7 +1,7 @@
-import { Button, message, type ButtonProps } from "antd";
+import { DeleteOutlined } from "@ant-design/icons";
+import { Button, type ButtonProps, message } from "antd";
 import { useState } from "react";
 import { apiClient } from "../../../utils/api/apiClient";
-import { DeleteOutlined } from "@ant-design/icons";
 
 type RemoveFriendButtonProps = ButtonProps & {
 	friendId: string;

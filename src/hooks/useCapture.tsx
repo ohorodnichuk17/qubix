@@ -1,6 +1,6 @@
 import { message } from "antd";
-import { useRef } from "react";
 import domtoimage from "dom-to-image";
+import { useRef } from "react";
 
 const useCapture = () => {
 	const captureAreaRef = useRef(null);

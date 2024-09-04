@@ -12,7 +12,11 @@ export interface ICreatePost {
 
 export type PostType = "text" | "image";
 
-export type PostVisibility = "private" | "public" | "friends only" | "friends except";
+export type PostVisibility =
+	| "private"
+	| "public"
+	| "friends only"
+	| "friends except";
 
 export type PostVisibilityOption = {
 	visibility: PostVisibility;

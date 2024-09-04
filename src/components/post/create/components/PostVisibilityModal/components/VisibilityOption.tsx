@@ -1,4 +1,4 @@
-import { Radio, Flex } from "antd";
+import { Flex, Radio } from "antd";
 
 type VisibilityOptionProps = {
 	value: string;

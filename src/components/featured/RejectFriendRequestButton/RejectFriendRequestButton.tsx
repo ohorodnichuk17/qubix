@@ -1,4 +1,4 @@
-import { type ButtonProps, message, Button } from "antd";
+import { Button, type ButtonProps, message } from "antd";
 import { useState } from "react";
 import { apiClient } from "../../../utils/api/apiClient";
 
@@ -16,7 +16,7 @@ const RejectFriendRequestButton: React.FC<RejectFriendRequestButtonProps> = ({
 
 	const rejectFriendRequest = async (e: React.MouseEvent) => {
 		e.stopPropagation();
-		
+
 		setLoading(true);
 		try {
 			await apiClient.post("/api/friends/reject-request", { friendId });

@@ -1,11 +1,11 @@
-import { Flex, Avatar, Input, Button } from "antd";
-import useAvatar from "../../../../hooks/useAvatar";
-import type { IComment, IPost } from "../types";
-import { apiClient } from "../../../../utils/api/apiClient";
-import { useAppSelector } from "../../../../hooks/redux";
+import { SmileTwoTone } from "@ant-design/icons";
+import { Avatar, Button, Flex, Input } from "antd";
 import EmojiPicker, { type EmojiClickData } from "emoji-picker-react";
 import { useState } from "react";
-import { SmileTwoTone } from "@ant-design/icons";
+import { useAppSelector } from "../../../../hooks/redux";
+import useAvatar from "../../../../hooks/useAvatar";
+import { apiClient } from "../../../../utils/api/apiClient";
+import type { IComment, IPost } from "../types";
 
 type AddCommentFormProps = {
 	post: IPost;

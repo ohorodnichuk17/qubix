@@ -1,5 +1,5 @@
-import type { IComment } from "../types";
 import { Flex } from "antd";
+import type { IComment } from "../types";
 import CommentItem from "./CommentItem";
 
 type CommentsListProps = {

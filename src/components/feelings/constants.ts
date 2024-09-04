@@ -85,225 +85,225 @@ export const FEELING_OPTIONS = [
 		name: "Wink",
 	},
 ];
-export const CELEBRATION_SUB_ACTIONS_OPTIONS:ISubAction[] = [
+export const CELEBRATION_SUB_ACTIONS_OPTIONS: ISubAction[] = [
 	{
 		emoji: celebratingImg,
-		name: "New Year"
+		name: "New Year",
 	},
 	{
 		emoji: birthdayImg,
-		name: "Birthday"
+		name: "Birthday",
 	},
 	{
 		emoji: loveImg,
-		name: "Love"
+		name: "Love",
 	},
 	{
 		emoji: xmasImg,
-		name: "Christmas"
+		name: "Christmas",
 	},
 	{
 		emoji: celebratingImg,
-		name: "Friday"
+		name: "Friday",
 	},
-]
+];
 
-export const DRINKING_SUB_ACTIONS_OPTIONS:ISubAction[]=[
+export const DRINKING_SUB_ACTIONS_OPTIONS: ISubAction[] = [
 	{
 		emoji: waterImg,
-		name: "Water"
+		name: "Water",
 	},
 	{
 		emoji: juiceImg,
-		name: "Juice"
+		name: "Juice",
 	},
 	{
 		emoji: wineImg,
-		name: "Wine"
+		name: "Wine",
 	},
 	{
 		emoji: drinkingImg,
-		name: "Beer"
+		name: "Beer",
 	},
-]
+];
 
 export const EATING_SUB_ACTIONS_OPTIONS: ISubAction[] = [
 	{
 		emoji: eatingImg,
-		name: "Dinner"
+		name: "Dinner",
 	},
 	{
 		emoji: breakfastImg,
-		name: "Breakfast"
+		name: "Breakfast",
 	},
 	{
 		emoji: eatingImg,
-		name: "Lunch"
+		name: "Lunch",
 	},
-]
+];
 
 export const FLYING_SUB_ACTIONS_OPTIONS: ISubAction[] = [
 	{
 		emoji: usaImg,
-		name: "USA"
+		name: "USA",
 	},
 	{
 		emoji: franceImg,
-		name: "France"
+		name: "France",
 	},
 	{
 		emoji: portugalImg,
-		name: "Portugal"
+		name: "Portugal",
 	},
 	{
 		emoji: spainImg,
-		name: "Spain"
+		name: "Spain",
 	},
-]
+];
 
 export const HEARING_SUB_ACTIONS_OPTIONS: ISubAction[] = [
 	{
 		emoji: musicImg,
-		name: "Music"
+		name: "Music",
 	},
-]
+];
 
 export const PARTICIPATING_SUB_ACTIONS_OPTIONS: ISubAction[] = [
 	{
 		emoji: weddingImg,
-		name: "Wedding"
+		name: "Wedding",
 	},
 	{
 		emoji: xmasImg,
-		name: "Celebrating christmas"
+		name: "Celebrating christmas",
 	},
 	{
 		emoji: birthdayImg,
-		name: "Birthday organization"
+		name: "Birthday organization",
 	},
 	{
 		emoji: footballImg,
-		name: "Football match"
+		name: "Football match",
 	},
-]
+];
 
 export const PLAYING_SUB_ACTIONS_OPTIONS: ISubAction[] = [
 	{
 		emoji: playingImg,
-		name: "Xbox"
+		name: "Xbox",
 	},
 	{
 		emoji: playingImg,
-		name: "Playstation"
+		name: "Playstation",
 	},
 	{
 		emoji: basketballImg,
-		name: "Basketball"
+		name: "Basketball",
 	},
 	{
 		emoji: footballImg,
-		name: "Football"
+		name: "Football",
 	},
-]
+];
 
 export const READING_SUB_ACTIONS_OPTIONS: ISubAction[] = [
 	{
 		emoji: readingImg,
-		name: "Romance novel"
+		name: "Romance novel",
 	},
 	{
 		emoji: readingImg,
-		name: "Twilight"
+		name: "Twilight",
 	},
 	{
 		emoji: readingImg,
-		name: "The Da Vinci Code"
+		name: "The Da Vinci Code",
 	},
 	{
 		emoji: readingImg,
-		name: "Harry Potter"
+		name: "Harry Potter",
 	},
-]
+];
 
 export const SEARCHING_SUB_ACTIONS_OPTIONS: ISubAction[] = [
 	{
 		emoji: searchingImg,
-		name: "Balance"
+		name: "Balance",
 	},
 	{
 		emoji: searchingImg,
-		name: "Answers"
+		name: "Answers",
 	},
 	{
 		emoji: searchingImg,
-		name: "Perfection"
+		name: "Perfection",
 	},
-]
+];
 
 export const VIEWING_SUB_ACTIONS_OPTIONS: ISubAction[] = [
 	{
 		emoji: tvImg,
-		name: "Rick and Morty"
+		name: "Rick and Morty",
 	},
 	{
 		emoji: tvImg,
-		name: "Our Planet"
+		name: "Our Planet",
 	},
 	{
 		emoji: tvImg,
-		name: "News"
+		name: "News",
 	},
-]
+];
 
-export const ACTION_OPTIONS:IAction[]=[
+export const ACTION_OPTIONS: IAction[] = [
 	{
 		emoji: celebratingImg,
 		name: "Celebrating",
-		subActions: CELEBRATION_SUB_ACTIONS_OPTIONS
+		subActions: CELEBRATION_SUB_ACTIONS_OPTIONS,
 	},
 	{
 		emoji: playingImg,
 		name: "Playing",
-		subActions:PLAYING_SUB_ACTIONS_OPTIONS
+		subActions: PLAYING_SUB_ACTIONS_OPTIONS,
 	},
 	{
 		emoji: drinkingImg,
 		name: "Drinking",
-		subActions: DRINKING_SUB_ACTIONS_OPTIONS
+		subActions: DRINKING_SUB_ACTIONS_OPTIONS,
 	},
 	{
 		emoji: readingImg,
 		name: "Reading",
-		subActions:READING_SUB_ACTIONS_OPTIONS
+		subActions: READING_SUB_ACTIONS_OPTIONS,
 	},
 	{
 		emoji: eatingImg,
 		name: "Eating",
-		subActions: EATING_SUB_ACTIONS_OPTIONS
+		subActions: EATING_SUB_ACTIONS_OPTIONS,
 	},
 	{
 		emoji: searchingImg,
 		name: "Searching",
-		subActions:SEARCHING_SUB_ACTIONS_OPTIONS
+		subActions: SEARCHING_SUB_ACTIONS_OPTIONS,
 	},
 	{
 		emoji: flyingImg,
 		name: "Flying to",
-		subActions:FLYING_SUB_ACTIONS_OPTIONS
+		subActions: FLYING_SUB_ACTIONS_OPTIONS,
 	},
 	{
 		emoji: viewingImg,
 		name: "Viewing",
-		subActions:VIEWING_SUB_ACTIONS_OPTIONS
+		subActions: VIEWING_SUB_ACTIONS_OPTIONS,
 	},
 	{
 		emoji: hearingImg,
 		name: "Hearing",
-		subActions:HEARING_SUB_ACTIONS_OPTIONS
+		subActions: HEARING_SUB_ACTIONS_OPTIONS,
 	},
 	{
 		emoji: particicapingImg,
 		name: "Participating in",
-		subActions:PARTICIPATING_SUB_ACTIONS_OPTIONS
+		subActions: PARTICIPATING_SUB_ACTIONS_OPTIONS,
 	},
-]
+];

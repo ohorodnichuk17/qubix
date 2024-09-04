@@ -1,15 +1,15 @@
-import { Modal, Divider, Radio, Flex, type RadioChangeEvent } from "antd";
+import { Divider, Flex, Modal, Radio, type RadioChangeEvent } from "antd";
 import "./PostVisibilityModal.css";
+import { useState } from "react";
+import type { IUser } from "../../../../../interfaces/account";
 import {
-	planetImg,
-	friendsImg,
 	friendsExceptImg,
+	friendsImg,
+	planetImg,
 	userImg,
 } from "../../../../../utils/images";
-import { useState } from "react";
 import FriendsExceptModal from "../FriendsExceptModal/FriendsExceptModal";
 import VisibilityOption from "./components/VisibilityOption";
-import type { IUser } from "../../../../../interfaces/account";
 
 type PostVisibilityModalProps = {
 	visibilityModalVisible: boolean;

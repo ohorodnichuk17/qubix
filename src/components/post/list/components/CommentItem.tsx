@@ -1,14 +1,14 @@
-import { Flex, Avatar, Button, Popconfirm, message } from "antd";
+import { CloseCircleTwoTone, EditTwoTone } from "@ant-design/icons";
+import { Avatar, Button, Flex, Popconfirm, message } from "antd";
+import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { APP_ENV } from "../../../../env";
-import { avatar } from "../../../../utils/images";
-import type { IComment } from "../types";
-import ChildCommentItem from "./ChildCommentItem";
-import { useState } from "react";
-import AddCommentReplyForm from "./AddCommentReplyForm";
-import { CloseCircleTwoTone, EditTwoTone } from "@ant-design/icons";
 import { useAppSelector } from "../../../../hooks/redux";
 import { apiClient } from "../../../../utils/api/apiClient";
+import { avatarImg } from "../../../../utils/images";
+import type { IComment } from "../types";
+import AddCommentReplyForm from "./AddCommentReplyForm";
+import ChildCommentItem from "./ChildCommentItem";
 import EditCommentForm from "./EditCommentForm";
 
 type CommentItemProps = {
@@ -33,8 +33,10 @@ const CommentItem = ({ comment, setComments }: CommentItemProps) => {
 				prevComments.filter(
 					(commentFromList) =>
 						commentFromList.id !== comment.id &&
-						!comment.childComments.some(child => child.id === commentFromList.id)
-				)
+						!comment.childComments.some(
+							(child) => child.id === commentFromList.id,
+						),
+				),
 			);
 		} catch {
 			message.error("Comment deletion error!");
@@ -62,7 +64,7 @@ const CommentItem = ({ comment, setComments }: CommentItemProps) => {
 						size={45}
 						src={
 							comment.userEntity.avatar === null
-								? avatar
+								? avatarImg
 								: `${APP_ENV.BASE_URL}/images/avatars/${comment.userEntity.avatar}`
 						}
 					/>

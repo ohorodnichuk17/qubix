@@ -1,15 +1,15 @@
 import { Avatar, Card, Flex, Input, Modal, Tag } from "antd";
 import { useEffect, useState } from "react";
+import { APP_ENV } from "../../../../../env";
 import { useAppSelector } from "../../../../../hooks/redux";
 import type { IUser } from "../../../../../interfaces/account";
 import { apiClient } from "../../../../../utils/api/apiClient";
 import {
 	ActiveMinusImg,
-	avatar,
+	avatarImg,
 	hoverMinusImg,
 	minusImg,
 } from "../../../../../utils/images";
-import { APP_ENV } from "../../../../../env";
 
 type FriendsExceptModalProps = {
 	friendsExceptModalVisible: boolean;
@@ -100,7 +100,7 @@ const FriendsExceptModal = ({
 									size={50}
 									src={
 										friend.avatar === null
-											? avatar
+											? avatarImg
 											: `${APP_ENV.BASE_URL}/images/avatars/${friend.avatar}`
 									}
 								/>

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { APP_ENV } from "../env";
-import { avatar as defaultAvatar } from "../utils/images";
+import { avatarImg as defaultAvatar } from "../utils/images";
 import { useAppSelector } from "./redux";
 
 const useAvatar = () => {

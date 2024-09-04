@@ -1,12 +1,12 @@
-import { Flex, Avatar, Popconfirm } from "antd";
+import { CloseCircleTwoTone, EditTwoTone } from "@ant-design/icons";
+import { Avatar, Flex, Popconfirm } from "antd";
+import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { APP_ENV } from "../../../../env";
-import type { IComment } from "../types";
-import { avatar } from "../../../../utils/images";
 import { useAppSelector } from "../../../../hooks/redux";
-import { CloseCircleTwoTone, EditTwoTone } from "@ant-design/icons";
 import { apiClient } from "../../../../utils/api/apiClient";
-import { useState } from "react";
+import { avatarImg } from "../../../../utils/images";
+import type { IComment } from "../types";
 import EditCommentForm from "./EditCommentForm";
 
 type ChildCommentItemProps = {
@@ -64,7 +64,7 @@ const ChildCommentItem = ({ comment, setComments }: ChildCommentItemProps) => {
 					size={25}
 					src={
 						comment.userEntity.avatar === null
-							? avatar
+							? avatarImg
 							: `${APP_ENV.BASE_URL}/images/avatars/${comment.userEntity.avatar}`
 					}
 				/>

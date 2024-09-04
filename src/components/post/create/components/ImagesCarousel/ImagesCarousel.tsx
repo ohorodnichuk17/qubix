@@ -1,25 +1,28 @@
 import { Carousel, Flex, Tooltip, type UploadFile } from "antd";
 import "../../CreatePostModal.css";
-import Arrow from "../../../../featured/Arrow/Arrow";
 import { DeleteTwoTone } from "@ant-design/icons";
 import { useState } from "react";
+import Arrow from "../../../../featured/Arrow/Arrow";
 
 type ImagesCarousel = {
 	images: UploadFile[];
-	setImages: React.Dispatch<React.SetStateAction<UploadFile[]>>
+	setImages: React.Dispatch<React.SetStateAction<UploadFile[]>>;
 };
 
 const ImagesCarousel = ({ images, setImages }: ImagesCarousel) => {
 	const [currentImage, setCurrentImage] = useState<number>(0);
-	const onChange = (current: number) => setCurrentImage(current)
+	const onChange = (current: number) => setCurrentImage(current);
 	const deleteCurrentImage = () => {
-		setImages(images.filter(image => image.uid !== images[currentImage].uid));
-	}
+		setImages(images.filter((image) => image.uid !== images[currentImage].uid));
+	};
 	return (
 		<>
 			<Flex justify="end">
 				<Tooltip title="Delete current image">
-					<DeleteTwoTone onClick={deleteCurrentImage} className="comment-icon" />
+					<DeleteTwoTone
+						onClick={deleteCurrentImage}
+						className="comment-icon"
+					/>
 				</Tooltip>
 			</Flex>
 			<Carousel

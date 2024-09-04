@@ -1,39 +1,39 @@
-import { useEffect, useState } from "react";
-import {
-	Card,
-	Flex,
-	Avatar,
-	Divider,
-	Carousel,
-	Tag,
-	Badge,
-	message,
-	Tooltip,
-	Popconfirm,
-	Grid,
-} from "antd";
 import {
 	CommentOutlined,
 	DeleteTwoTone,
 	LikeFilled,
 	SmileTwoTone,
 } from "@ant-design/icons";
-import { APP_ENV } from "../../../../env";
-import { avatar, likeImg, locationImg } from "../../../../utils/images";
-import { getRandomTagColor } from "../../create/components/Tags/TagsList";
-import { NavLink } from "react-router-dom";
-import CommentsList from "./CommentsList";
-import AddCommentForm from "./AddCommentForm";
-import { apiClient } from "../../../../utils/api/apiClient";
-import Arrow from "../../../featured/Arrow/Arrow";
-import { useAppSelector } from "../../../../hooks/redux";
+import {
+	Avatar,
+	Badge,
+	Card,
+	Carousel,
+	Divider,
+	Flex,
+	Grid,
+	Popconfirm,
+	Tag,
+	Tooltip,
+	message,
+} from "antd";
 import EmojiPicker, { type EmojiClickData } from "emoji-picker-react";
+import { useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
+import { APP_ENV } from "../../../../env";
+import { useAppSelector } from "../../../../hooks/redux";
+import { apiClient } from "../../../../utils/api/apiClient";
+import { avatarImg, likeImg, locationImg } from "../../../../utils/images";
+import Arrow from "../../../featured/Arrow/Arrow";
+import { getRandomTagColor } from "../../create/components/Tags/TagsList";
 import type { IComment, ILike, IPost } from "../types.ts";
 import {
 	getActionImage,
 	getFeelingImage,
 	getPublicationDate,
 } from "../utils.ts";
+import AddCommentForm from "./AddCommentForm";
+import CommentsList from "./CommentsList";
 
 type PostItemCardProps = {
 	post: IPost;
@@ -168,7 +168,7 @@ const PostItemCard = ({ post, setPosts, setTotalCount }: PostItemCardProps) => {
 								size={60}
 								src={
 									post.user.avatar === null
-										? avatar
+										? avatarImg
 										: `${APP_ENV.BASE_URL}/images/avatars/${post.user.avatar}`
 								}
 							/>

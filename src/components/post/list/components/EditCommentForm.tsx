@@ -1,11 +1,11 @@
 import { SmileTwoTone } from "@ant-design/icons";
-import { Flex, Avatar, Input, Button, message as antdMessage } from "antd";
+import { Avatar, Button, Flex, Input, message as antdMessage } from "antd";
 import EmojiPicker, { type EmojiClickData } from "emoji-picker-react";
-import type { IComment } from "../types";
+import { useState } from "react";
 import { useAppSelector } from "../../../../hooks/redux";
 import useAvatar from "../../../../hooks/useAvatar";
-import { useState } from "react";
 import { apiClient } from "../../../../utils/api/apiClient";
+import type { IComment } from "../types";
 
 type EditCommentFormProps = {
 	comment: IComment;
@@ -33,7 +33,7 @@ const EditCommentForm: React.FC<EditCommentFormProps> = ({
 		try {
 			apiClient.put("api/comment", { id: comment.id, message });
 			const updatedComment = { ...comment, message: message };
-            
+
 			updateCommentInList(updatedComment);
 
 			if (comment.parentCommentId !== null) {

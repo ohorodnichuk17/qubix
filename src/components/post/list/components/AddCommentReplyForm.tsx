@@ -1,11 +1,11 @@
-import { Flex, Avatar, Input, Button } from "antd";
-import { apiClient } from "../../../../utils/api/apiClient";
-import type { IComment } from "../types";
+import { SmileTwoTone } from "@ant-design/icons";
+import { Avatar, Button, Flex, Input } from "antd";
+import EmojiPicker, { type EmojiClickData } from "emoji-picker-react";
+import { useState } from "react";
 import { useAppSelector } from "../../../../hooks/redux";
 import useAvatar from "../../../../hooks/useAvatar";
-import { useState } from "react";
-import { SmileTwoTone } from "@ant-design/icons";
-import EmojiPicker, { type EmojiClickData } from "emoji-picker-react";
+import { apiClient } from "../../../../utils/api/apiClient";
+import type { IComment } from "../types";
 
 type AddCommentReplyFormProps = {
 	comment: IComment;
@@ -54,7 +54,7 @@ const AddCommentReplyForm = ({
 		setMessage((prevInput) => prevInput + event.emoji);
 		setShowPicker(false);
 	};
-    
+
 	return (
 		<Flex style={{ width: "100%" }} gap={5}>
 			<Avatar

@@ -1,13 +1,13 @@
 import { Menu, type MenuProps } from "antd";
 import Sider from "antd/es/layout/Sider";
+import { NavLink } from "react-router-dom";
 import {
-	questionmark,
 	lockImg,
-	shield,
 	mail,
+	questionmark,
+	shield,
 	userImg,
 } from "../../../utils/images/index";
-import { NavLink } from "react-router-dom";
 import { StyledTitle } from "./styles.ts";
 
 export const SettingsSideBar = () => {
