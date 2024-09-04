@@ -10,7 +10,6 @@ import {
 	Spin,
 	message,
 } from "antd";
-import type React from "react";
 import { useState } from "react";
 import type { IRegisterModel } from "../../../../interfaces/account/index.ts";
 import { apiClient } from "../../../../utils/api/apiClient.ts";
@@ -19,7 +18,7 @@ import AvatarPreview from "./AvatarPreview.tsx";
 
 const validGenders = ["Male", "Female", "Other"];
 
-const RegisterForm: React.FC = () => {
+const RegisterForm = () => {
 	const [isFieldActive, setIsFieldActive] = useState(false);
 	const [previewImage, setPreviewImage] = useState(avatarImg);
 	const [loading, setLoading] = useState(false);
@@ -29,9 +28,9 @@ const RegisterForm: React.FC = () => {
 	const onFinish = (values: IRegisterModel) => {
 		const formData = new FormData();
 
-		(Object.keys(values) as Array<keyof IRegisterModel>).forEach((key) => {
+		for (const key of Object.keys(values) as Array<keyof IRegisterModel>) {
 			formData.append(key, values[key] as string);
-		});
+		}
 
 		if (selectedFile) {
 			formData.append("avatar", selectedFile);
@@ -61,11 +60,6 @@ const RegisterForm: React.FC = () => {
 		setSelectedFile(file);
 	};
 
-	const onFinishFailed = (errorInfo: any) => {
-		console.log("Failed:", errorInfo);
-		message.error("Registration error");
-	};
-
 	return (
 		<Spin spinning={loading} tip="Registration in progress..." size="large">
 			<Form
@@ -73,7 +67,6 @@ const RegisterForm: React.FC = () => {
 				layout="vertical"
 				initialValues={{ remember: true }}
 				onFinish={onFinish}
-				onFinishFailed={onFinishFailed}
 				requiredMark={false}
 			>
 				<Form.Item name="avatar" valuePropName="image">
