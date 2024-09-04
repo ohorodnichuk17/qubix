@@ -15,23 +15,20 @@ const RejectFriendRequestButton: React.FC<RejectFriendRequestButtonProps> = ({
 	const [loading, setLoading] = useState<boolean>(false);
 
 	const rejectFriendRequest = (e: React.MouseEvent) => {
-        e.stopPropagation();
+		e.stopPropagation();
 
 		setLoading(true);
 
-		apiClient
-			.post("/api/friends/reject-request", {friendId})
-			.then(() => {
-				message.success("Friend Request rejected!");
-				afterRejectRequestFn();
-			})
-			.catch(() => {
-				message.error("Friend request rejecting error!");
-			})
-			.finally(() => {
-				setLoading(false);
-			});
+		try {
+			apiClient.post("/api/friends/reject-request", { friendId });
+			message.success("Friend Request rejected!");
+			afterRejectRequestFn();
+		} catch (error) {
+			message.error("Friend request rejecting error!");
+		}
+		setLoading(false);
 	};
+	
 	return (
 		<Button loading={loading} onClick={rejectFriendRequest} {...buttonProps}>
 			Reject friend request

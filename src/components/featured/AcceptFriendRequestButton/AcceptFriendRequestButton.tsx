@@ -15,26 +15,20 @@ const AcceptFriendRequestButton: React.FC<AcceptFriendRequestButtonProps> = ({
 	const [loading, setLoading] = useState<boolean>(false);
 
 	const acceptFriendRequest = (e: React.MouseEvent) => {
-        e.stopPropagation();
-		const values = {
-			friendId,
-		};
+		e.stopPropagation();
 
 		setLoading(true);
 
-		apiClient
-			.post("/api/friends/accept-friend-request", values)
-			.then(() => {
-				message.success("Friend Request accepted!");
-				afterAcceptRequestFn();
-			})
-			.catch(() => {
-				message.error("Friend request accepting error!");
-			})
-			.finally(() => {
-				setLoading(false);
-			});
+		try {
+			apiClient.post("/api/friends/accept-friend-request", { friendId });
+			message.success("Friend Request accepted!");
+			afterAcceptRequestFn();
+		} catch (error) {
+			message.error("Friend request accepting error!");
+		}
+		setLoading(false);
 	};
+	
 	return (
 		<Button loading={loading} onClick={acceptFriendRequest} {...buttonProps}>
 			Accept friend request

@@ -14,24 +14,26 @@ const RemoveFriendButton: React.FC<RemoveFriendButtonProps> = ({
 	...buttonProps
 }) => {
 	const [loading, setLoading] = useState<boolean>(false);
+
 	const removeFriend = () => {
 		setLoading(true);
-
-		apiClient
-			.delete("api/friends", { data: { friendId } })
-			.then(() => {
-				message.success("Friend successfully removed!");
-				afterRemoveFriendFn();
-			})
-			.catch(() => {
-				message.error("Friend remove error");
-			})
-			.finally(() => {
-				setLoading(false);
-			});
+		try {
+			apiClient.delete("api/friends", { data: { friendId } });
+			message.success("Friend successfully removed!");
+			afterRemoveFriendFn();
+		} catch (error) {
+			message.error("Friend remove error");
+		}
+		setLoading(false);
 	};
+
 	return (
-		<Button icon={<DeleteOutlined/>} loading={loading} onClick={removeFriend} {...buttonProps}>
+		<Button
+			icon={<DeleteOutlined />}
+			loading={loading}
+			onClick={removeFriend}
+			{...buttonProps}
+		>
 			Remove friend
 		</Button>
 	);

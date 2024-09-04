@@ -14,24 +14,20 @@ const SendFriendRequestButton: React.FC<SendFriendRequestButtonProps> = ({
 }) => {
 	const [loading, setLoading] = useState<boolean>(false);
 
-	const sendFriendRequest = () => {
+	const sendFriendRequest = async () => {
 		if (friendId === null) {
 			return;
 		}
 
 		setLoading(true);
-		apiClient
-			.post("/api/friends/send-request", { friendId })
-			.then(() => {
-				message.success("Request successfully sended!");
-				afterSendRequestFn();
-			})
-			.catch(() => {
-				message.error("Request sending error");
-			})
-			.finally(() => {
-				setLoading(false);
-			});
+		try {
+			await apiClient.post("/api/friends/send-request", { friendId });
+			message.success("Request successfully sended!");
+			afterSendRequestFn();
+		} catch (error) {
+			message.error("Request sending error");
+		}
+		setLoading(false);
 	};
 
 	return (
