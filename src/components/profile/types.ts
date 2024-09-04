@@ -1,4 +1,4 @@
-import type { IUser } from "../../../interfaces/account";
+import type { IUser } from "../../interfaces/account";
 
 export interface IUserProfileEditModel {
 	userId: string;
