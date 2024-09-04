@@ -11,8 +11,8 @@ import { apiClient } from "../../../../utils/api/apiClient";
 import Arrow from "../../../featured/Arrow/Arrow";
 import { useAppSelector } from "../../../../hooks/redux";
 import EmojiPicker, { type EmojiClickData } from "emoji-picker-react";
-import {IComment, ILike, IPost} from "../types.ts";
-import {getActionImage, getFeelingImage, getPublicationDate} from "../utils.ts";
+import { IComment, ILike, IPost } from "../types.ts";
+import { getActionImage, getFeelingImage, getPublicationDate } from "../utils.ts";
 
 type PostItemCardProps = {
    post: IPost;
@@ -50,8 +50,8 @@ const PostItemCard = ({ post, setPosts, setTotalCount }: PostItemCardProps) => {
              prevPosts.map((prevPost) =>
                  prevPost.id === post.id
                      ? { ...post, likes: [...prevPost.likes, res.data] }
-                     : prevPost,
-             ),
+                     : prevPost
+             )
          );
       });
    };
@@ -76,11 +76,11 @@ const PostItemCard = ({ post, setPosts, setTotalCount }: PostItemCardProps) => {
                      ? {
                         ...prevPost,
                         likes: prevPost.likes.filter(
-                            (like) => like.userId !== user?.id,
+                            (like) => like.userId !== user?.id
                         ),
                      }
-                     : prevPost,
-             ),
+                     : prevPost
+             )
          );
       } catch (error) {
          message.error("Unlike post error!");
@@ -91,9 +91,9 @@ const PostItemCard = ({ post, setPosts, setTotalCount }: PostItemCardProps) => {
       try {
          apiClient.delete("api/post", { data: { id: post.id } });
          setPosts((prevPosts) =>
-             prevPosts.filter((postFromList) => postFromList.id !== post.id),
+             prevPosts.filter((postFromList) => postFromList.id !== post.id)
          );
-         if (setTotalCount) setTotalCount(totalCount => totalCount - 1);
+         if (setTotalCount) setTotalCount((totalCount) => totalCount - 1);
          message.success("Post successfully deleted!");
       } catch (error) {
          message.error("Post deletion error!");
@@ -103,8 +103,27 @@ const PostItemCard = ({ post, setPosts, setTotalCount }: PostItemCardProps) => {
    return (
        <Card
            key={post.id}
-           style={{ maxWidth: "600px", width: "100%", margin: "auto" }}
+           className="card-container"
+           style={{ maxWidth: "600px", width: "100%", margin: "auto", position: "relative" }}
        >
+          {/* Top icons container */}
+          <div className="top-icons">
+             {post.user.isOnline && (
+                 <Badge color="green" count={"online"} className="online-badge" />
+             )}
+             {post.userId === user?.id && (
+                 <Popconfirm
+                     title="Delete post ?"
+                     onConfirm={deletePost}
+                     okText="Yes"
+                     cancelText="No"
+                     className="trash-icon"
+                 >
+                    <DeleteTwoTone />
+                 </Popconfirm>
+             )}
+          </div>
+
           <Flex vertical gap="small">
              <Flex justify="space-between" align="center" gap="small">
                 <Flex align="center" gap="small">
@@ -120,34 +139,17 @@ const PostItemCard = ({ post, setPosts, setTotalCount }: PostItemCardProps) => {
                    </NavLink>
                    <Flex vertical>
                       <Flex align="center" gap="small">
-                         <NavLink
-                             to={`/profile?userId=${post.user.id}`}
-                             style={{ color: "black" }}
-                         >
-                           <span style={{ fontWeight: 600, fontSize: 20 }}>
-                              {`${post.user.firstName} ${post.user.lastName}`}
-                           </span>
+                         <NavLink to={`/profile?userId=${post.user.id}`} style={{ color: "black" }}>
+                  <span style={{ fontWeight: 600, fontSize: 20 }}>
+                    {`${post.user.firstName} ${post.user.lastName}`}
+                  </span>
                          </NavLink>
-                         {post.user.isOnline ? (
-                             <Badge color="green" count={"online"} />
-                         ) : (
-                             <Badge color="gray" count={"offline"} />
-                         )}
                       </Flex>
-                      <span>{getPublicationDate(post.createdAt)}</span>
+                      <div className="date-container">
+                         <span>{getPublicationDate(post.createdAt)}</span>
+                      </div>
                    </Flex>
                 </Flex>
-
-                {post.userId === user?.id && (
-                    <Popconfirm
-                        title="Delete post ?"
-                        onConfirm={deletePost}
-                        okText="Yes"
-                        cancelText="No"
-                    >
-                       <DeleteTwoTone style={{ fontSize: 18 }} />
-                    </Popconfirm>
-                )}
              </Flex>
 
              <Divider style={{ margin: 0 }} />
@@ -196,7 +198,7 @@ const PostItemCard = ({ post, setPosts, setTotalCount }: PostItemCardProps) => {
 
              {post.location && (
                  <Flex align="center" gap="small">
-                    <img src={locationImg} height={35} alt="Post images" />
+                    <img src={locationImg} height={35} alt="Location icon" />
                     <span>{post.location}</span>
                  </Flex>
              )}
@@ -233,11 +235,7 @@ const PostItemCard = ({ post, setPosts, setTotalCount }: PostItemCardProps) => {
                     </Tooltip>
                 ) : (
                     <Flex className="post-actions-flex" onClick={likePost}>
-                       <img
-                           src={likeImg}
-                           alt="Like"
-                           width={30}
-                       />
+                       <img src={likeImg} alt="Like" width={30} />
                        <span>{post.likes.length}</span>
                     </Flex>
                 )}
@@ -249,15 +247,11 @@ const PostItemCard = ({ post, setPosts, setTotalCount }: PostItemCardProps) => {
                    <span>Reactions</span>
                 </Flex>
 
-                <Tooltip
-                    title={commentsVisibility ? "Hide comments" : "Show comments"}
-                >
+                <Tooltip title={commentsVisibility ? "Hide comments" : "Show comments"}>
                    <Flex
                        gap="small"
                        className="post-actions-flex"
-                       onClick={() => {
-                          setCommentsVisibility(!commentsVisibility);
-                       }}
+                       onClick={() => setCommentsVisibility(!commentsVisibility)}
                    >
                       <CommentOutlined />
                       <span>{comments.length > 0 ? comments.length : ""}</span>
@@ -277,3 +271,4 @@ const PostItemCard = ({ post, setPosts, setTotalCount }: PostItemCardProps) => {
 };
 
 export default PostItemCard;
+

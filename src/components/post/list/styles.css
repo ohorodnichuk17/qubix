@@ -1,0 +1,44 @@
+.card-container {
+    position: relative;
+    padding: 20px;
+}
+
+.top-icons {
+    position: absolute;
+    top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0 10px;
+    z-index: 10;
+}
+
+.online-badge {
+    position: absolute;
+    left: 10px;
+}
+
+.trash-icon {
+    position: absolute;
+    right: 10px;
+}
+
+.date-container {
+    margin-top: 40px;
+}
+
+@media (max-width: 768px) {
+    .card-container {
+        padding: 10px;
+    }
+
+    .top-icons {
+        top: 5px;
+        gap: 5px;
+    }
+
+    .date-container {
+        margin-top: 30px;
+    }
+}
