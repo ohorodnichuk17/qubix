@@ -1,23 +1,16 @@
-import { Modal } from "antd";
+import { Modal, type ModalProps } from "antd";
 
-type StoryPrivacyModalProps = {
-    isModalOpen: boolean;
-    hideModal: () => void;
-}
-
-const StoryPrivacyModal = ({ isModalOpen, hideModal }: StoryPrivacyModalProps) => {
-    return (
-        <Modal title="Privacy of story"
-            open={isModalOpen}
-            onOk={hideModal}
-            okText="Save"
-            okType="default"
-            onCancel={hideModal}
-            cancelButtonProps={{ className: "gray-button" }}>
-            <p>Who can see your story?</p>
-            <p>Your story will be visible on Quilt for 24 hours.</p>
-        </Modal>
-    );
-}
+const StoryPrivacyModal: React.FC<ModalProps> = ({ ...props }) => (
+	<Modal
+		{...props}
+		title="Privacy of story"
+		okText="Save"
+		okType="default"
+		cancelButtonProps={{ className: "gray-button" }}
+	>
+		<p>Who can see your story?</p>
+		<p>Your story will be visible on Quilt for 24 hours.</p>
+	</Modal>
+);
 
 export default StoryPrivacyModal;

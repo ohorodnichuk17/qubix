@@ -107,8 +107,9 @@ const StorySettingsCard = ({
 				)}
 			</Flex>
 			<StoryPrivacyModal
-				isModalOpen={isPrivacyModalOpen}
-				hideModal={hidePrivacyModal}
+				open={isPrivacyModalOpen}
+				onOk={hidePrivacyModal}
+				onCancel={hidePrivacyModal}
 			/>
 			<CancelStoryModal
 				open={isCancelModalOpen}
