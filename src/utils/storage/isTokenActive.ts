@@ -1,21 +1,29 @@
-import {jwtDecode} from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 
-export const isTokenActive = (token : string | null) => {
-    if(!token) {
+interface DecodedToken {
+    exp?: number;
+}
+
+export const isTokenActive = (token: string | null): boolean => {
+    if (!token) {
         return false;
     }
 
     try {
-        const decodedToken = jwtDecode(token) as any;
+        const decodedToken = jwtDecode<DecodedToken>(token);
 
-        if(decodedToken.exp) {
+        if (decodedToken.exp) {
             const expirationTime = decodedToken.exp * 1000;
             return expirationTime > Date.now();
         }
 
         return true;
     } catch (error) {
-        console.error('Error decoding token: ', error);
+        if (error instanceof Error) {
+            console.error('Error decoding token: ', error.message);
+        } else {
+            console.error('Unknown error occurred');
+        }
         return false;
     }
 };
