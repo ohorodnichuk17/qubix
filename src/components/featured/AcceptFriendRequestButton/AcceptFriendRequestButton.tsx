@@ -14,13 +14,12 @@ const AcceptFriendRequestButton: React.FC<AcceptFriendRequestButtonProps> = ({
 }) => {
 	const [loading, setLoading] = useState<boolean>(false);
 
-	const acceptFriendRequest = (e: React.MouseEvent) => {
+	const acceptFriendRequest = async (e: React.MouseEvent) => {
 		e.stopPropagation();
-
+		
 		setLoading(true);
-
 		try {
-			apiClient.post("/api/friends/accept-friend-request", { friendId });
+			await apiClient.post("/api/friends/accept-friend-request", { friendId });
 			message.success("Friend Request accepted!");
 			afterAcceptRequestFn();
 		} catch (error) {
@@ -28,7 +27,7 @@ const AcceptFriendRequestButton: React.FC<AcceptFriendRequestButtonProps> = ({
 		}
 		setLoading(false);
 	};
-	
+
 	return (
 		<Button loading={loading} onClick={acceptFriendRequest} {...buttonProps}>
 			Accept friend request

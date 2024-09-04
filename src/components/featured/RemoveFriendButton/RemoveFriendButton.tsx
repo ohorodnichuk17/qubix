@@ -15,10 +15,10 @@ const RemoveFriendButton: React.FC<RemoveFriendButtonProps> = ({
 }) => {
 	const [loading, setLoading] = useState<boolean>(false);
 
-	const removeFriend = () => {
+	const removeFriend = async () => {
 		setLoading(true);
 		try {
-			apiClient.delete("api/friends", { data: { friendId } });
+			await apiClient.delete("api/friends", { data: { friendId } });
 			message.success("Friend successfully removed!");
 			afterRemoveFriendFn();
 		} catch (error) {
