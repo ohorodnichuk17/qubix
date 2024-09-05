@@ -2,7 +2,7 @@ import { Carousel, Flex, Tooltip, type UploadFile } from "antd";
 import "../../CreatePostModal.css";
 import { DeleteTwoTone } from "@ant-design/icons";
 import { useState } from "react";
-import Arrow from "../../../../featured/Arrow/Arrow";
+import Arrow from "../../../../featured/arrow/Arrow";
 
 type ImagesCarousel = {
 	images: UploadFile[];

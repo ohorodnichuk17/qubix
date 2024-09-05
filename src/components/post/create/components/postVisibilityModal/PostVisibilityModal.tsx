@@ -8,7 +8,7 @@ import {
 	planetImg,
 	userImg,
 } from "../../../../../utils/images";
-import FriendsExceptModal from "../FriendsExceptModal/FriendsExceptModal";
+import FriendsExceptModal from "../friendsExceptModal/FriendsExceptModal";
 import VisibilityOption from "./components/VisibilityOption";
 
 type PostVisibilityModalProps = {

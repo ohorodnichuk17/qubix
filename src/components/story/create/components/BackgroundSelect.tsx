@@ -1,5 +1,5 @@
 import { Collapse } from "antd";
-import BackgroundOptions from "../../../featured/BackgroundOptions/BackgroundOptions";
+import BackgroundOptions from "../../../featured/backgroundOptions/BackgroundOptions";
 
 type BackgroundSelectProps = {
 	setBackground: React.Dispatch<React.SetStateAction<string>>;

@@ -2,7 +2,7 @@ import { Avatar, Card, Carousel, Divider, Flex } from "antd";
 import { useId } from "react";
 import { avatarImg } from "../../../../utils/images";
 import { dummy } from "../../../../utils/images";
-import Arrow from "../../../featured/Arrow/Arrow";
+import Arrow from "../../../featured/arrow/Arrow";
 
 const dummyPosts = [
 	{

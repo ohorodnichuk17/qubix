@@ -24,8 +24,8 @@ import { APP_ENV } from "../../../../env";
 import { useAppSelector } from "../../../../hooks/redux";
 import { apiClient } from "../../../../utils/api/apiClient";
 import { avatarImg, likeImg, locationImg } from "../../../../utils/images";
-import Arrow from "../../../featured/Arrow/Arrow";
-import { getRandomTagColor } from "../../create/components/Tags/TagsList";
+import Arrow from "../../../featured/arrow/Arrow";
+import { getRandomTagColor } from "../../create/components/tags/TagsList";
 import type { IComment, ILike, IPost } from "../types.ts";
 import {
 	getActionImage,

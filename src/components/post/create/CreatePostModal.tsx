@@ -19,16 +19,16 @@ import type { FileType } from "../../../types/FileType";
 import { apiClient } from "../../../utils/api/apiClient";
 import { getBase64 } from "../../../utils/helpers/getBase64";
 import { feeling as feelingPng, postTypeImg } from "../../../utils/images";
-import BackgroundOptions from "../../featured/BackgroundOptions/BackgroundOptions";
+import BackgroundOptions from "../../featured/backgroundOptions/BackgroundOptions";
 import FeelingModal from "../../feelings/FeelingModal";
 import type { IAction, IFeeling, ISubAction } from "../../feelings/types";
-import AddToThePublicationButton from "./components/AddToThePublicationButton/AddToThePublicationButton";
-import AddToThePublicationCard from "./components/AddToThePublicationCard/AddToThePublicationCard";
-import ImagesCarousel from "./components/ImagesCarousel/ImagesCarousel";
-import PostVisibilityModal from "./components/PostVisibilityModal/PostVisibilityModal";
-import TagInput from "./components/Tags/TagInput";
-import TagsList from "./components/Tags/TagsList";
-import VisibilityButton from "./components/VisibilityButton/VisibilityButton";
+import AddToThePublicationButton from "./components/addToThePublicationButton/AddToThePublicationButton";
+import AddToThePublicationCard from "./components/addToThePublicationCard/AddToThePublicationCard";
+import ImagesCarousel from "./components/imagesCarousel/ImagesCarousel";
+import PostVisibilityModal from "./components/postVisibilityModal/PostVisibilityModal";
+import TagInput from "./components/tags/TagInput";
+import TagsList from "./components/tags/TagsList";
+import VisibilityButton from "./components/visibilityButton/VisibilityButton";
 import type { ICreatePost, PostType, PostVisibility } from "./types";
 
 type CreatePostModalProps = {

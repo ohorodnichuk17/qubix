@@ -1,8 +1,8 @@
 import { UserOutlined } from "@ant-design/icons";
 import { Card, Col, Flex } from "antd";
 import { useNavigate } from "react-router-dom";
-import AcceptFriendRequestButton from "../../featured/AcceptFriendRequestButton/AcceptFriendRequestButton";
-import RejectFriendRequestButton from "../../featured/RejectFriendRequestButton/RejectFriendRequestButton";
+import AcceptFriendRequestButton from "../../featured/acceptFriendRequestButton/AcceptFriendRequestButton";
+import RejectFriendRequestButton from "../../featured/rejectFriendRequestButton/RejectFriendRequestButton";
 import type { IFriendRecommendation } from "../recommendations/types";
 
 type FriendRequestCardProps = {

@@ -1,7 +1,7 @@
 import { UserOutlined } from "@ant-design/icons";
 import { Card, Col } from "antd";
 import { useNavigate } from "react-router-dom";
-import SendFriendRequestButton from "../../featured/SendFriendRequestButton/SendFriendRequestButton";
+import SendFriendRequestButton from "../../featured/sendFriendRequestButton/SendFriendRequestButton";
 import type { IFriendRecommendation } from "./types";
 
 type FriendRecommendationCardProps = {
