@@ -25,7 +25,7 @@ const FriendRecommendationsPage = () => {
 				setFriends(updatedFriends);
 			})
 			.catch(() => {
-				message.error("Friends recommendations error!");
+				message.error("friends recommendations error!");
 			});
 	}, []);
 

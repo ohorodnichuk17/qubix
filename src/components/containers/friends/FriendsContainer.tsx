@@ -1,7 +1,7 @@
 import { Layout } from "antd";
 import { Content } from "antd/es/layout/layout";
 import { Outlet } from "react-router-dom";
-import HeaderDefault from "../Default/Header/HeaderDefault";
+import HeaderDefault from "../default/Header/HeaderDefault";
 import FriendSidebar from "./FriendSidebar";
 
 const FriendsContainer = () => (

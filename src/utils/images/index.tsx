@@ -101,7 +101,7 @@ import basketballImg from "../../assets/actions/playing/subactions/basketball.pn
 import footballImg from "../../assets/actions/playing/subactions/football.png";
 import tvImg from "../../assets/actions/viewing/subactions/tv.png";
 
-// Settings
+// settings
 import blocked from "../../assets/settings/blocked.png";
 import mail from "../../assets/settings/mail.png";
 import questionmark from "../../assets/settings/questionmark.png";
@@ -218,7 +218,7 @@ export {
 	basketballImg,
 	footballImg,
 	tvImg,
-	// Settings
+	// settings
 	blocked,
 	questionmark,
 	shield,
