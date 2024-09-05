@@ -8,7 +8,7 @@ import LoginPage from "./components/authentication/LoginPage/LoginPage";
 import RegisterPage from "./components/authentication/RegisterPage/RegisterPage";
 import ResetPasswordPage from "./components/authentication/ResetPasswordPage/ResetPasswordPage";
 import SetNewPasswordPage from "./components/authentication/SetNewPasswordPage/SetNewPasswordPage";
-import CreateStoryContainer from "./components/containers/CreateStoryContainer/CreateStoryContainer";
+import CreateStoryContainer from "./components/containers/CreateStory/CreateStoryContainer";
 import ContainerDefault from "./components/containers/Default/ContainerDefault";
 import FriendsContainer from "./components/containers/Friends/FriendsContainer";
 import SettingsContainer from "./components/containers/Settings/SettingsContainer";
