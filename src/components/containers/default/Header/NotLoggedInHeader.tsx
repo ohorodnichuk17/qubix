@@ -6,6 +6,7 @@ import {
 import { Button, Input } from "antd";
 import { NavLink } from "react-router-dom";
 import { logo } from "../../../../utils/images";
+import './NotLoggedInHeader.css';
 
 const LoggedOutHeader = () => (
 	<>
@@ -19,8 +20,8 @@ const LoggedOutHeader = () => (
 		<div className="center-section">
 			<img src={logo} alt="logo" className="header-logo" />
 			<div className="header-text">
-				<span className="header-text-regular">This is</span>
-				<span className="header-text-bold">Qubix</span>
+				<span className="header-text-regular text-hide">This is</span>
+				<span className="header-text-bold text-hide">Qubix</span>
 			</div>
 		</div>
 		<div className="right-section">

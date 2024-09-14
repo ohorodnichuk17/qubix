@@ -3,6 +3,7 @@ import { useId } from "react";
 import { avatarImg } from "../../../../utils/images";
 import { dummy } from "../../../../utils/images";
 import Arrow from "../../../featured/arrow/Arrow";
+import './DummyPosts.css';
 
 const dummyPosts = [
 	{
@@ -48,21 +49,21 @@ const dummyPosts = [
 
 const DummyPosts = () => {
 	return (
-		<>
+		<div className="post-container">
 			{dummyPosts.map((post) => (
 				<Card
 					key={post.id}
-					style={{ width: "600px", marginBottom: 16, padding: 10 }}
+					className="post-card"
 					bodyStyle={{ padding: "10px" }}
 				>
 					<Flex align="center" gap="small">
 						<Avatar size={40} src={post.user.avatar} />
-						<span style={{ fontWeight: 600, fontSize: "16px" }}>
+						<span className="post-user-name">
 							{post.user.firstName}
 						</span>
 					</Flex>
 					<Divider style={{ margin: "10px 0" }} />
-					<p style={{ fontSize: "14px" }}>{post.content}</p>
+					<p className="post-content">{post.content}</p>
 					{post.images.length > 0 && (
 						<Carousel
 							arrows
@@ -70,18 +71,14 @@ const DummyPosts = () => {
 							infinite
 							nextArrow={<Arrow direction="right" />}
 							prevArrow={<Arrow direction="left" />}
-							style={{ marginTop: "10px" }}
+							className="post-carousel"
 						>
 							{post.images.map((image, index) => (
-								<div key={useId()} style={{ width: "100%", height: "auto" }}>
+								<div key={useId()} className="carousel-image-container">
 									<img
 										src={image}
 										alt={`Post Image ${index + 1}`}
-										style={{
-											width: "100%",
-											height: "auto",
-											objectFit: "cover",
-										}}
+										className="carousel-image"
 									/>
 								</div>
 							))}
@@ -89,7 +86,7 @@ const DummyPosts = () => {
 					)}
 				</Card>
 			))}
-		</>
+		</div>
 	);
 };
 
