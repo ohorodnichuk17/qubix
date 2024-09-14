@@ -174,7 +174,7 @@ const CreatePostModal = ({
 				handleCancel();
 			})
 			.catch(() => {
-				message.error("Post story error!");
+				message.error("Post post error!");
 			});
 	};
 
