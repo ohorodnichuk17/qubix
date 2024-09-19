@@ -11,7 +11,7 @@ const UserProfilePostItem: React.FC<UserProfilePostItemProps> = ({
 	post,
 	setPosts,
 }) => (
-	<Col key={post.id} xs={24} sm={24} md={24} lg={8} xl={8}>
+	<Col key={post.id}>
 		<div style={{ width: "100%", height: "auto" }}>
 			<PostItemCard key={post.id} post={post} setPosts={setPosts} />
 		</div>

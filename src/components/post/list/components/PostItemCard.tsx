@@ -34,6 +34,7 @@ import {
 } from "../utils.ts";
 import AddCommentForm from "./AddCommentForm";
 import CommentsList from "./CommentsList";
+import './PostItemCard.css';
 
 type PostItemCardProps = {
 	post: IPost;
@@ -123,28 +124,13 @@ const PostItemCard = ({ post, setPosts, setTotalCount }: PostItemCardProps) => {
 		}
 	};
 
-	const isScreenSmallerThatMd =
-		(screens.xs || screens.sm) &&
-		!screens.md &&
-		!screens.lg &&
-		!screens.xl &&
-		!screens.xxl;
-
 	return (
 		<Card
 			key={post.id}
 			className="card-container"
-			style={{
-				maxWidth: "600px",
-				width: "100%",
-				margin: "auto",
-				position: "relative",
-			}}
 		>
-			{isScreenSmallerThatMd && (
 				<Flex
-					justify="space-between"
-					style={{ width: "100%", marginBottom: 5 }}
+					className="post-header"
 				>
 					{post.user.isOnline && <Badge color="green" count={"online"} />}
 					{post.userId === user?.id && (
@@ -158,14 +144,13 @@ const PostItemCard = ({ post, setPosts, setTotalCount }: PostItemCardProps) => {
 						</Popconfirm>
 					)}
 				</Flex>
-			)}
 
 			<Flex vertical gap="small">
 				<Flex justify="space-between">
-					<Flex align="center" gap="small">
+					<Flex className="post-content-center" align="center" gap="small">
 						<NavLink to={`/profile?userId=${post.user.id}`}>
 							<Avatar
-								size={60}
+								size={screens.xs ? 40 : 60}
 								src={
 									post.user.avatar === null
 										? avatarImg
@@ -179,37 +164,14 @@ const PostItemCard = ({ post, setPosts, setTotalCount }: PostItemCardProps) => {
 									to={`/profile?userId=${post.user.id}`}
 									style={{ color: "black" }}
 								>
-									<span style={{ fontWeight: 600, fontSize: 20 }}>
+									<span style={{ fontWeight: 600, fontSize: screens.xs ? 16 : 20 }}>
 										{`${post.user.firstName} ${post.user.lastName}`}
 									</span>
 								</NavLink>
 							</Flex>
 							<span>{getPublicationDate(post.createdAt)}</span>
 						</Flex>
-						{!isScreenSmallerThatMd && (
-							<>
-								{post.user.isOnline ? (
-									<Badge color="green" count={"online"} />
-								) : (
-									<Badge color="gray" count={"offline"} />
-								)}
-							</>
-						)}
 					</Flex>
-					{!isScreenSmallerThatMd && (
-						<Flex justify="end">
-							{post.userId === user?.id && (
-								<Popconfirm
-									title="Delete post ?"
-									onConfirm={deletePost}
-									okText="Yes"
-									cancelText="No"
-								>
-									<DeleteTwoTone style={{ fontSize: 18 }} />
-								</Popconfirm>
-							)}
-						</Flex>
-					)}
 				</Flex>
 
 				<Divider style={{ margin: 0 }} />
@@ -264,7 +226,7 @@ const PostItemCard = ({ post, setPosts, setTotalCount }: PostItemCardProps) => {
 				)}
 
 				{post.content !== "undefined" && (
-					<p style={{ margin: 0 }}>{post.content}</p>
+					<p style={{ margin: 0, fontSize: screens.xs ? 14 : 16, wordBreak: "break-word" }}>{post.content}</p>
 				)}
 
 				{post.tags && (
@@ -276,7 +238,7 @@ const PostItemCard = ({ post, setPosts, setTotalCount }: PostItemCardProps) => {
 								style={{
 									margin: 0,
 									width: "fit-content",
-									fontSize: "14px",
+									fontSize: screens.xs ? "12px" : "14px",
 								}}
 							>
 								{`#${tag}`}
@@ -285,7 +247,7 @@ const PostItemCard = ({ post, setPosts, setTotalCount }: PostItemCardProps) => {
 					</Flex>
 				)}
 
-				<Flex gap="small">
+				<Flex gap="small" style={{display: "flex", flexWrap: "wrap"}}>
 					{isLiked ? (
 						<Tooltip title="Unlike post">
 							<Flex className="post-actions-flex" onClick={unlikePost}>

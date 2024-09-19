@@ -45,13 +45,13 @@ const AddCommentForm = ({ post, setComments }: AddCommentFormProps) => {
 
 	return (
 		<Flex style={{ width: "100%" }} gap={5}>
-			<Avatar
-				size={45}
-				src={avatarImg}
-				style={{ minHeight: 45, minWidth: 45 }}
-			/>
-			<Flex vertical align="end" gap={3} style={{ width: "100%" }}>
+			<Flex vertical align="end" gap={3} style={{ width: "100%", display: "flex", alignItems: "center" }}>
 				<Flex style={{ width: "100%" }}>
+					<Avatar
+						size={45}
+						src={avatarImg}
+						style={{ minHeight: 45, minWidth: 45 }}
+					/>
 					<Input.TextArea
 						value={message}
 						onChange={(e) => setMessage(e.target.value)}
