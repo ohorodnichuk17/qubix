@@ -28,13 +28,15 @@ const StoryPreview = ({ captureAreaRef }: StoryPreviewProps) => {
 				>
 					{storyType === "image" && (
 						<>
-							<Draggable>
-								<img
-									alt="Your story"
-									style={{ width: `${width}%`, rotate: `${rotate}deg` }}
-									src={image}
-								/>
-							</Draggable>
+							{image && (
+								<Draggable>
+									<img
+										alt="Your story"
+										style={{ width: `${width}%`, rotate: `${rotate}deg` }}
+										src={image}
+									/>
+								</Draggable>
+							)}
 							<Draggable>
 								<p style={{ cursor: "pointer", color: `${textColorString}` }}>
 									{text}
