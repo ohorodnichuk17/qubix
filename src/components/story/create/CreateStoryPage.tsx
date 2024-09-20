@@ -16,22 +16,16 @@ const CreateStoryContent = () => {
 	const navigate = useNavigate();
 
 	const postStory = async () => {
-		if (storyType == null) return;
 		const story = await getCapture();
+		const createStoryData = { content: text ?? "", image: story };
 
-		const formData = new FormData();
-		formData.append("Content", text ?? "");
-		formData.append("Image", story as Blob);
-
-		apiClient
-			.post("/api/story/create", formData)
-			.then(() => {
-				message.success("Story successfully posted!");
-				navigate("/");
-			})
-			.catch(() => {
-				message.error("Post story error!");
-			});
+		try {
+			await apiClient.postForm("/api/story/create", createStoryData);
+			message.success("Story successfully posted!");
+			navigate("/");
+		} catch (error) {
+			message.error("Post story error!");
+		}
 	};
 
 	const screens = Grid.useBreakpoint();
