@@ -25,34 +25,22 @@ const RegisterForm = () => {
 
 	const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
-	const onFinish = (values: IRegisterModel) => {
-		const formData = new FormData();
-
-		for (const key of Object.keys(values) as Array<keyof IRegisterModel>) {
-			formData.append(key, values[key] as string);
-		}
-
+	const onFinish = async (values: IRegisterModel) => {
 		if (selectedFile) {
-			formData.append("avatar", selectedFile);
+			values.avatar = selectedFile;
 		}
 
 		setLoading(true);
-		apiClient
-			.post("/api/authentication/register", formData, {
-				headers: {
-					"Content-Type": "multipart/form-data",
-				},
-			})
-			.then(() => {
-				message.success("Successfully registered!");
-				window.location.href = "/email-confirmation-required";
-			})
-			.catch(() => {
-				message.error("Registration error!");
-			})
-			.finally(() => {
-				setLoading(false);
-			});
+		try {
+			await apiClient.postForm("/api/authentication/register", values)
+			message.success("Successfully registered!");
+			window.location.href = "/email-confirmation-required";
+
+		} catch (error) {
+			message.error("Registration error!");
+
+		}
+		setLoading(false);
 	};
 
 	const handleImageChange = (image: string, file: File | null) => {
