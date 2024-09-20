@@ -1,7 +1,7 @@
 import { Modal, message } from "antd";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAppSelector } from "../../../hooks/redux/index.ts";
+import { useAppDispatch, useAppSelector } from "../../../hooks/redux/index.ts";
 import { apiClient } from "../../../utils/api/apiClient.ts";
 import {
 	StyledButton,
@@ -9,8 +9,10 @@ import {
 	StyledParagraph,
 	StyledTitle,
 } from "../styled.ts";
+import { userLogout } from "../../../store/account/account.actions.ts";
 
 const DeleteProfilePage = () => {
+	const dispatch = useAppDispatch();
 	const { user } = useAppSelector((state) => state.account);
 	const [isModalVisible, setIsModalVisible] = useState(false);
 	const navigate = useNavigate();
@@ -19,19 +21,17 @@ const DeleteProfilePage = () => {
 		setIsModalVisible(true);
 	};
 
-	const handleOk = () => {
-		if (user?.id) {
-			apiClient
-				.delete("/api/user-profile/delete-profile", {
-					data: { Id: user.id },
-				})
-				.then(() => {
-					message.success("Account deleted successfully!");
-					navigate("/account-deleted-successfully");
-				})
-				.catch(() => {
-					message.error("Failed to delete account");
-				});
+	const handleOk = async () => {
+		if (!user?.id) return;
+		try {
+			await apiClient.delete("/api/user-profile/delete-profile", {
+				data: { Id: user.id },
+			})
+			message.success("Account deleted successfully!");
+			await dispatch(userLogout());
+			navigate("/account-deleted-successfully");
+		} catch (error) {
+			message.error("Failed to delete account");
 		}
 		setIsModalVisible(false);
 	};
