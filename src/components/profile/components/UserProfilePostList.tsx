@@ -1,7 +1,6 @@
-import { Row } from "antd";
 import type React from "react";
 import type { IPost } from "../../post/list/types";
-import UserProfilePostItem from "./UserProfilePostItem";
+import PostItemCard from "../../post/list/components/PostItemCard";
 
 type UserProfilePostListProps = {
 	posts: IPost[];
@@ -15,11 +14,13 @@ const UserProfilePostList = ({ posts, setPosts }: UserProfilePostListProps) => {
 
 	return (
 		<>
-			<Row gutter={[16, 16]}>
+			<div style={{ columns: "300px" }}>
 				{posts.map((post) => (
-					<UserProfilePostItem key={post.id} post={post} setPosts={setPosts} />
+					<div key={post.id} style={{ breakInside: "avoid", marginBottom: 10 }}>
+						<PostItemCard post={post} setPosts={setPosts} />
+					</div>
 				))}
-			</Row>
+			</div>
 		</>
 	);
 };

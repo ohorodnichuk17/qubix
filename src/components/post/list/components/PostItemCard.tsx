@@ -19,7 +19,7 @@ import {
 } from "antd";
 import EmojiPicker, { type EmojiClickData } from "emoji-picker-react";
 import { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { APP_ENV } from "../../../../env";
 import { useAppSelector } from "../../../../hooks/redux";
 import { apiClient } from "../../../../utils/api/apiClient";
@@ -34,7 +34,7 @@ import {
 } from "../utils.ts";
 import AddCommentForm from "./AddCommentForm";
 import CommentsList from "./CommentsList";
-import './PostItemCard.css';
+import "./PostItemCard.css";
 
 type PostItemCardProps = {
 	post: IPost;
@@ -50,6 +50,9 @@ const PostItemCard = ({ post, setPosts, setTotalCount }: PostItemCardProps) => {
 	const [showPicker, setShowPicker] = useState<boolean>(false);
 
 	const screens = Grid.useBreakpoint();
+
+	const location = useLocation();
+	const isProfilePageLocation = location.pathname === "/profile";
 
 	useEffect(() => {
 		apiClient.get(`api/comment/${post.id}`).then((res) => {
@@ -125,54 +128,64 @@ const PostItemCard = ({ post, setPosts, setTotalCount }: PostItemCardProps) => {
 	};
 
 	return (
-		<Card
-			key={post.id}
-			className="card-container"
-		>
-				<Flex
-					className="post-header"
-				>
-					{post.user.isOnline && <Badge color="green" count={"online"} />}
-					{post.userId === user?.id && (
-						<Popconfirm
-							title="Delete post ?"
-							onConfirm={deletePost}
-							okText="Yes"
-							cancelText="No"
-						>
-							<DeleteTwoTone />
-						</Popconfirm>
-					)}
-				</Flex>
+		<Card key={post.id} className="card-container">
+			<Flex
+				className="post-header"
+				// justify={isProfilePageLocation?"end":"space-between"}
+			>
+				{isProfilePageLocation && (
+					<span>{getPublicationDate(post.createdAt)}</span>
+				)}
+				{post.user.isOnline && !isProfilePageLocation && (
+					<Badge color="green" count={"online"} />
+				)}
+				{post.userId === user?.id && (
+					<Popconfirm
+						title="Delete post ?"
+						onConfirm={deletePost}
+						okText="Yes"
+						cancelText="No"
+					>
+						<DeleteTwoTone />
+					</Popconfirm>
+				)}
+			</Flex>
 
 			<Flex vertical gap="small">
-				<Flex justify="space-between">
-					<Flex className="post-content-center" align="center" gap="small">
-						<NavLink to={`/profile?userId=${post.user.id}`}>
-							<Avatar
-								size={screens.xs ? 40 : 60}
-								src={
-									post.user.avatar === null
-										? avatarImg
-										: `${APP_ENV.BASE_URL}/images/avatars/${post.user.avatar}`
-								}
-							/>
-						</NavLink>
-						<Flex vertical>
-							<Flex align="center" gap="small">
-								<NavLink
-									to={`/profile?userId=${post.user.id}`}
-									style={{ color: "black" }}
-								>
-									<span style={{ fontWeight: 600, fontSize: screens.xs ? 16 : 20 }}>
-										{`${post.user.firstName} ${post.user.lastName}`}
-									</span>
-								</NavLink>
+				{!isProfilePageLocation && (
+					<Flex justify="space-between">
+						<Flex className="post-content-center" align="center" gap="small">
+							<NavLink to={`/profile?userId=${post.user.id}`}>
+								<Avatar
+									size={screens.xs ? 40 : 60}
+									src={
+										post.user.avatar === null
+											? avatarImg
+											: `${APP_ENV.BASE_URL}/images/avatars/${post.user.avatar}`
+									}
+								/>
+							</NavLink>
+							<Flex vertical>
+								<Flex align="center" gap="small">
+									<NavLink
+										to={`/profile?userId=${post.user.id}`}
+										style={{ color: "black" }}
+									>
+										<span
+											style={{
+												fontWeight: 600,
+												fontSize: screens.xs ? 16 : 20,
+											}}
+										>
+											{`${post.user.firstName} ${post.user.lastName}`}
+										</span>
+									</NavLink>
+								</Flex>
+								<span>{getPublicationDate(post.createdAt)}</span>
 							</Flex>
-							<span>{getPublicationDate(post.createdAt)}</span>
 						</Flex>
 					</Flex>
-				</Flex>
+				)}
 
 				<Divider style={{ margin: 0 }} />
 
@@ -226,7 +239,15 @@ const PostItemCard = ({ post, setPosts, setTotalCount }: PostItemCardProps) => {
 				)}
 
 				{post.content !== "undefined" && (
-					<p style={{ margin: 0, fontSize: screens.xs ? 14 : 16, wordBreak: "break-word" }}>{post.content}</p>
+					<p
+						style={{
+							margin: 0,
+							fontSize: screens.xs ? 14 : 16,
+							wordBreak: "break-word",
+						}}
+					>
+						{post.content}
+					</p>
 				)}
 
 				{post.tags && (
@@ -247,7 +268,7 @@ const PostItemCard = ({ post, setPosts, setTotalCount }: PostItemCardProps) => {
 					</Flex>
 				)}
 
-				<Flex gap="small" style={{display: "flex", flexWrap: "wrap"}}>
+				<Flex gap="small" style={{ display: "flex", flexWrap: "wrap" }}>
 					{isLiked ? (
 						<Tooltip title="Unlike post">
 							<Flex className="post-actions-flex" onClick={unlikePost}>
@@ -266,7 +287,7 @@ const PostItemCard = ({ post, setPosts, setTotalCount }: PostItemCardProps) => {
 						onClick={() => setShowPicker(!showPicker)}
 					>
 						<SmileTwoTone style={{ fontSize: 20 }} />
-						<span>Reactions</span>
+						<span className="reactions-label">Reactions</span>
 					</Flex>
 
 					<Tooltip

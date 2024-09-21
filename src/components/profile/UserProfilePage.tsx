@@ -228,7 +228,7 @@ const UserProfilePage: React.FC = () => {
 	return (
 		<div style={{ backgroundColor: "#FFEBE0", padding: 0, height: "100%" }}>
 			<Row justify="center" align="middle">
-				<Card style={styles.profileCard}>
+				<Card style={styles.profileCard} className="user-profile-page-card">
 					<CoverPhotoBlock
 						coverPhoto={coverPhoto}
 						setCoverPhoto={setCoverPhoto}
@@ -239,7 +239,7 @@ const UserProfilePage: React.FC = () => {
 						align="center"
 						justify="space-between"
 						wrap="wrap"
-						style={{ marginTop: "-5%" }}
+						style={{ marginTop: "-2.5%" }}
 					>
 						<Flex align="center" wrap="wrap" gap="middle">
 							<Avatar
@@ -286,6 +286,9 @@ const UserProfilePage: React.FC = () => {
 								>
 									{countOfFfriends} Friends
 								</span>
+								{userProfile?.userEntity.isOnline && (
+									<Badge color="green" count={"online"} />
+								)}
 							</Flex>
 						</Flex>
 						{isCurrentUserProfile && (

@@ -28,10 +28,3 @@
       padding: 0;
    }
 }
-
-
-@media (max-width:950px) {
-   .main-content {
-      padding: 0;
-   }
-}

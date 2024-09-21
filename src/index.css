@@ -19,6 +19,15 @@ body {
     .auth-pages-flex {
         gap: 2vw;
     }
+
+    .user-profile-page-card .ant-card-body {
+        padding: 0 !important;
+    }
+
+    .reactions-label,
+    .comment-avatar {
+        display: none;
+    }
 }
 
 .h-50px {
@@ -66,7 +75,7 @@ body {
     transition: .5s;
 
     &:hover {
-        background: lightgray!important;
+        background: lightgray !important;
     }
 
     img {
