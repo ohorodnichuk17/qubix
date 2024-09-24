@@ -2,6 +2,10 @@
 
 This is the admin panel for **Qubix**, a Facebook clone developed as part of a diploma project at IT Step Academy.
 
+## Project Links
+
+- **Admin Panel:** [Qubix Admin Panel](https://admin-qubix.itstep.click/)
+
 ## Technologies Used
 
 - **Frontend Framework:** React with TypeScript
