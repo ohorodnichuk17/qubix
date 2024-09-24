@@ -2,6 +2,10 @@
 
 This is the client-side of **Qubix**, a Facebook clone developed as part of a diploma project at IT Step Academy.
 
+## Project Links
+
+- **Live Demo:** [Qubix Client](https://qubix.itstep.click/)
+
 ## Technologies Used
 
 - **Frontend Framework:** React with TypeScript
