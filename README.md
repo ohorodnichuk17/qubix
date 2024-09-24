@@ -33,7 +33,7 @@ This is the client-side of **Qubix**, a Facebook clone developed as part of a di
    - Reactions include emojis and other expressions.
 
 6. **Chat:**
-   - Users can chat in one-on-one or group settings.
+   - Users can chat in one-on-one chats.
 
 ## Getting Started
 
