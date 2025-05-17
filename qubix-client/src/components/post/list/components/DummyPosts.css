@@ -1,0 +1,62 @@
+.post-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 16px;
+}
+
+/* Make cards responsive */
+.post-card {
+	width: 100%;
+	max-width: 600px;
+	margin-bottom: 16px;
+}
+
+.post-user-name {
+	font-weight: 600;
+	font-size: 16px;
+}
+
+.post-content {
+	font-size: 14px;
+}
+
+.carousel-image-container {
+	width: 100%;
+	height: auto;
+}
+
+.carousel-image {
+	width: 100%;
+	height: auto;
+	object-fit: cover;
+}
+
+/* Media query for smaller screens */
+@media (max-width: 768px) {
+	.post-card {
+		max-width: 90%;
+	}
+
+	.post-user-name {
+		font-size: 14px;
+	}
+
+	.post-content {
+		font-size: 12px;
+	}
+}
+
+@media (max-width: 480px) {
+	.post-card {
+		max-width: 95%;
+	}
+
+	.post-user-name {
+		font-size: 12px;
+	}
+
+	.post-content {
+		font-size: 10px;
+	}
+}
