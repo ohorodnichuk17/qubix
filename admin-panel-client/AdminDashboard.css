@@ -1,0 +1,33 @@
+@media (max-width: 768px) {
+   .ant-layout-content {
+     padding: 10px;
+   }
+ 
+   .ant-input-search {
+     width: 100%;
+   }
+ 
+   .ant-table {
+     font-size: 12px;
+     overflow-x: auto;
+   }
+ 
+   .ant-table th,
+   .ant-table td {
+     padding: 8px;
+     white-space: nowrap;
+   }
+ 
+   .button-container {
+     display: flex;
+     justify-content: space-between;
+     width: 100%;
+   }
+ 
+   .button-container .ant-btn {
+     flex: 1;
+     margin: 5px;
+   }
+ }
+ 
+ 
