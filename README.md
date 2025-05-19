@@ -63,26 +63,3 @@ This is **Qubix**, a social networking app developed as part of a diploma projec
 
 6. **Chat:**
    - Users can chat in one-on-one chats.
-
-## Getting Started
-
-### Prerequisites:
-- **Node.js** version >= 16.x
-- **Vite CLI**
-
-### Installation:
-
-1. Clone the repository:
-    ```bash
-    git clone https://github.com/ohorodnichuk17/facebook-client.git
-    ```
-2. Install the dependencies:
-    ```bash
-    npm install
-    ```
-3. Start the development server:
-    ```bash
-    npm run dev
-    ```
-4. Visit `http://localhost:5173` to view the app in the browser.
-
