@@ -1,4 +1,4 @@
-# Qubix - Social Network (Client-Side)
+# Qubix - Social Network 
 
 This is **Qubix**, a social networking app developed as part of a diploma project at IT Step Academy.
 
